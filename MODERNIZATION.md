@@ -4,7 +4,8 @@ This repository now includes a root `pnpm` workspace and a modern .NET API skele
 
 ## Scope
 
-- Modern workspace code lives under `modern/packages/*`.
+- Modern workspace apps live under `modern/apps/*`.
+- Modern shared packages live under `modern/packages/*`.
 - Modern API skeleton lives under `modern/apps/api/*`.
 - Legacy `src/webapp` keeps its current npm/bower-based flow.
 - Legacy `src/api` keeps its current .NET flow.
@@ -50,9 +51,9 @@ Default routes in this modernization skeleton:
 
 OpenAPI/Swagger UI is enabled in Development environment.
 
-## New React Webapp Package
+## New React Webapp App
 
-Package path: `modern/packages/webapp`
+App path: `modern/apps/webapp`
 
 Commands:
 
