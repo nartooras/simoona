@@ -1,0 +1,16 @@
+@Simoona.Modern.Api_HostAddress = http://localhost:5050
+
+GET {{Simoona.Modern.Api_HostAddress}}/health
+Accept: application/json
+
+###
+GET {{Simoona.Modern.Api_HostAddress}}/api/v1/ping
+Accept: application/json
+
+###
+GET {{Simoona.Modern.Api_HostAddress}}/api/v1/tenant-context
+X-Tenant-Id: tenant-a
+X-Org-Id: org-b
+Accept: application/json
+
+###
