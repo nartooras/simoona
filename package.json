@@ -9,6 +9,8 @@
         "test": "pnpm -r --if-present run test",
         "lint": "pnpm -r --if-present run lint",
         "typecheck": "pnpm -r --if-present run typecheck",
+        "modern:api:build": "dotnet build modern/apps/api/Simoona.Modern.Api.sln",
+        "modern:api:test": "dotnet test modern/apps/api/Simoona.Modern.Api.sln",
         "format": "prettier --write \"MODERNIZATION.md\" \"package.json\" \"pnpm-lock.yaml\" \"pnpm-workspace.yaml\" \"tsconfig.base.json\" \"eslint.config.mjs\" \".prettierrc.json\" \".github/workflows/*.yml\" \"modern/**/*.{ts,js,json}\"",
         "format:check": "prettier --check \"MODERNIZATION.md\" \"package.json\" \"pnpm-lock.yaml\" \"pnpm-workspace.yaml\" \"tsconfig.base.json\" \"eslint.config.mjs\" \".prettierrc.json\" \".github/workflows/*.yml\" \"modern/**/*.{ts,js,json}\""
     },

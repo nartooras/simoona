@@ -1,0 +1,44 @@
+using Simoona.Modern.Api.TenantContext;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+builder.Logging.AddJsonConsole();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddTenantContext();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseTenantContext();
+
+app.MapGet("/health", () => Results.Ok(new { status = "healthy" }))
+    .WithName("Health");
+
+var apiV1 = app.MapGroup("/api/v1");
+
+apiV1.MapGet("/ping", () => Results.Ok(new { message = "pong" }))
+    .WithName("Ping");
+
+apiV1.MapGet("/tenant-context", (ITenantContextAccessor tenantContextAccessor) =>
+    {
+        var tenantContext = tenantContextAccessor.Current;
+        return Results.Ok(new
+        {
+            tenantId = tenantContext.TenantId,
+            organizationId = tenantContext.OrganizationId
+        });
+    })
+    .WithName("GetTenantContext");
+
+app.Run();
+
+public partial class Program;
