@@ -29,7 +29,7 @@ importers:
 
   modern/packages/foundation: {}
 
-  modern/packages/webapp:
+  modern/apps/webapp:
     dependencies:
       i18next:
         specifier: ^25.4.2

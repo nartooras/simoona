@@ -229,3 +229,5 @@ src/Premium.WithForkedOss.sln
 modern/**/node_modules/
 modern/**/.vite/
 modern/**/dist/
+modern/**/bin/
+modern/**/obj/
