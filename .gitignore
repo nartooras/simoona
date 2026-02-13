@@ -226,4 +226,6 @@ src/Premium.WithForkedOss.sln
 !modern/
 !modern/packages/
 !modern/packages/**
+modern/**/node_modules/
+modern/**/.vite/
 modern/**/dist/
