@@ -220,3 +220,10 @@ src/.nuget/nuget.config
 src/Shrooms.Premium.Tests/Shrooms.Premium.Tests.props
 src/Shrooms.Premium/Shrooms.Premium.props
 src/Premium.WithForkedOss.sln
+
+# Modernization workspace artifacts
+/node_modules/
+!modern/
+!modern/packages/
+!modern/packages/**
+modern/**/dist/
