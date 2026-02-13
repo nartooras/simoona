@@ -51,6 +51,12 @@ Default routes in this modernization skeleton:
 
 OpenAPI/Swagger UI is enabled in Development environment.
 
+## API Contract Baseline
+
+A first-pass legacy-to-modern API contract baseline for prioritized migration endpoints lives at:
+
+- `modern/docs/api-contracts.md`
+
 ## New React Webapp App
 
 App path: `modern/apps/webapp`
