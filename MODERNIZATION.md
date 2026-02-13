@@ -7,6 +7,7 @@ This repository now includes a root `pnpm` workspace for incremental modernizati
 - Modern workspace code lives under `modern/packages/*`.
 - Legacy `src/webapp` keeps its current npm/bower-based flow.
 - Legacy `src/api` keeps its current .NET flow.
+- Coexistence rule: modernization work must not modify legacy AngularJS runtime behavior in `src/webapp`.
 
 ## Prerequisites
 
@@ -27,6 +28,18 @@ pnpm install
 - `pnpm typecheck`: run TypeScript no-emit checks for modern workspace packages.
 - `pnpm test`: run workspace tests.
 - `pnpm build`: run workspace builds.
+
+## New React Webapp Package
+
+Package path: `modern/packages/webapp`
+
+Commands:
+
+- `pnpm --filter @simoona/webapp dev --host`: run the Vite dev server.
+- `pnpm --filter @simoona/webapp lint`: lint the package.
+- `pnpm --filter @simoona/webapp typecheck`: run package type checks.
+- `pnpm --filter @simoona/webapp test`: run Vitest + React Testing Library tests.
+- `pnpm --filter @simoona/webapp build`: build production assets with Vite.
 
 ## CI Skeleton
 

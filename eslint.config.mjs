@@ -9,10 +9,11 @@ export default tseslint.config(
     js.configs.recommended,
     ...tseslint.configs.recommended,
     {
-        files: ['modern/**/*.{ts,js,mjs,cjs}'],
+        files: ['modern/**/*.{ts,tsx,js,mjs,cjs}'],
         languageOptions: {
             globals: {
                 ...globals.node,
+                ...globals.browser,
             },
         },
         rules: {
