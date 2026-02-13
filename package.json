@@ -1,0 +1,23 @@
+{
+    "name": "simoona-modernization-workspace",
+    "private": true,
+    "version": "0.0.0",
+    "description": "Modernization workspace foundation for incremental migration",
+    "packageManager": "pnpm@10.12.1",
+    "scripts": {
+        "build": "pnpm -r --if-present run build",
+        "test": "pnpm -r --if-present run test",
+        "lint": "pnpm -r --if-present run lint",
+        "typecheck": "pnpm -r --if-present run typecheck",
+        "format": "prettier --write \"MODERNIZATION.md\" \"package.json\" \"pnpm-lock.yaml\" \"pnpm-workspace.yaml\" \"tsconfig.base.json\" \"eslint.config.mjs\" \".prettierrc.json\" \".github/workflows/*.yml\" \"modern/**/*.{ts,js,json}\"",
+        "format:check": "prettier --check \"MODERNIZATION.md\" \"package.json\" \"pnpm-lock.yaml\" \"pnpm-workspace.yaml\" \"tsconfig.base.json\" \"eslint.config.mjs\" \".prettierrc.json\" \".github/workflows/*.yml\" \"modern/**/*.{ts,js,json}\""
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.18.0",
+        "eslint": "^9.18.0",
+        "globals": "^15.14.0",
+        "prettier": "^3.4.2",
+        "typescript": "^5.7.3",
+        "typescript-eslint": "^8.21.0"
+    }
+}
