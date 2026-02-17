@@ -3,13 +3,10 @@
 ## 1) Scope (branch + compared base)
 - Reviewed branch: `codex/thread-l-frontend-visual-parity-foundation`
 - Compared against: `modernization-main`
-- Re-check commit: `d8be061deadea908d669f44baf382d0393886984`
+- Re-check commit: `8ce96039f9a759b365ab0bbd84fe9dccf7370f72`
 
 ## 2) Findings by severity (P0/P1/P2/P3) with file paths
-### P1
-- Required validation fails: `pnpm test` is broken by an ambiguous role query in layout test.
-  - File: `modern/apps/webapp/src/app/layout/AppLayout.test.tsx:43`
-  - Details: `within(screen.getByRole('banner'))` throws because multiple `banner` elements are present in the test runtime, causing the mobile-nav toggle test to fail and breaking the mandatory validation gate.
+- No findings.
 
 ## 3) Architecture conformance section (pass/fail + issues)
 - Result: **PASS**
@@ -25,21 +22,19 @@
   - `pnpm run arch:check` -> PASS
 
 ## 4) Blocking vs non-blocking list
-- Blocking:
-  - P1 `pnpm test` failure in `modern/apps/webapp/src/app/layout/AppLayout.test.tsx`.
-- Non-blocking:
-  - none.
+- Blocking: none.
+- Non-blocking: none.
 
 ## 5) Validation results
 - `pnpm run arch:check` -> PASS
 - `pnpm lint` -> PASS
 - `pnpm typecheck` -> PASS
-- `pnpm test` -> **FAIL** (`TestingLibraryElementError: Found multiple elements with the role "banner"` in `modern/apps/webapp/src/app/layout/AppLayout.test.tsx:43`)
+- `pnpm test` -> PASS
 - `pnpm build` -> PASS
 - `dotnet build modern/apps/api/Simoona.Modern.Api.sln` -> PASS
 - `dotnet test modern/apps/api/Simoona.Modern.Api.sln --no-build` -> PASS
-- `git status --short` -> PASS (clean before review doc update)
+- `git status --short` -> PASS
 - `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'` -> PASS (no tracked generated artifacts)
 
 ## 6) Final decision
-`RETURN_TO_DEV`
+`CONTINUE_TO_QA`
