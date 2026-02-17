@@ -33,6 +33,7 @@ function emptyResponse(status: number): Response {
 describe('UserInfoPage', () => {
     beforeEach(() => {
         vi.stubEnv('VITE_API_ORGANIZATION_ID', '7');
+        vi.stubEnv('VITE_API_BEARER_TOKEN', 'test-token');
     });
 
     afterEach(() => {
@@ -71,7 +72,9 @@ describe('UserInfoPage', () => {
 
         const [requestPath, requestInit] = fetchMock.mock.calls[0] as [string, RequestInit];
         expect(requestPath).toBe('/api/v1/account/user-info');
-        expect(new Headers(requestInit.headers).get('X-Org-Id')).toBe('7');
+        const headers = new Headers(requestInit.headers);
+        expect(headers.get('X-Org-Id')).toBe('7');
+        expect(headers.get('Authorization')).toBe('Bearer test-token');
     });
 
     it('renders unauthorized state for 401 response', async () => {
@@ -82,6 +85,20 @@ describe('UserInfoPage', () => {
         expect(
             await screen.findByText('You are not authorized. Sign in and try again.'),
         ).toBeInTheDocument();
+    });
+
+    it('renders unauthorized state when token is missing and API responds 401', async () => {
+        vi.stubEnv('VITE_API_BEARER_TOKEN', '');
+        const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(emptyResponse(401));
+
+        render(<UserInfoPage />);
+
+        expect(
+            await screen.findByText('You are not authorized. Sign in and try again.'),
+        ).toBeInTheDocument();
+
+        const [, requestInit] = fetchMock.mock.calls[0] as [string, RequestInit];
+        expect(new Headers(requestInit.headers).get('Authorization')).toBeNull();
     });
 
     it('renders not-found state for 404 response', async () => {
