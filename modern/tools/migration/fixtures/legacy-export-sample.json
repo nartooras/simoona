@@ -1,0 +1,71 @@
+{
+  "users": [
+    {
+      "id": "user-1",
+      "organizationId": 7,
+      "firstName": "Marta",
+      "lastName": "Kavaliauske",
+      "email": "marta@example.com",
+      "userName": "mkavaliauske",
+      "jobTitle": "Engineering Manager",
+      "departmentName": "Engineering",
+      "officeName": "Vilnius HQ",
+      "cultureCode": "lt-LT",
+      "timeZone": "Europe/Vilnius",
+      "pictureId": "pic-101",
+      "legacySalaryBand": "S3"
+    },
+    {
+      "id": "user-2",
+      "organizationId": 7,
+      "firstName": "Jonas",
+      "lastName": "Petraitis",
+      "email": "jonas@example.com",
+      "userName": "jpetraitis",
+      "jobTitle": "Software Engineer",
+      "departmentName": "Engineering",
+      "officeName": "Vilnius HQ",
+      "cultureCode": "en-US",
+      "timeZone": "Europe/Vilnius",
+      "pictureId": "pic-102",
+      "legacySlackHandle": "@jonas"
+    }
+  ],
+  "organizations": [
+    {
+      "id": 7,
+      "name": "Simoona Org",
+      "tenantId": "tenant-a",
+      "legacyRegionCode": "LT"
+    }
+  ],
+  "employeeDirectory": [
+    {
+      "id": "user-1",
+      "organizationId": 7,
+      "firstName": "Marta",
+      "lastName": "Kavaliauske",
+      "jobTitle": "Engineering Manager",
+      "email": "marta@example.com",
+      "legacyDeskLocation": "V-101"
+    },
+    {
+      "id": "user-2",
+      "organizationId": 7,
+      "firstName": "Jonas",
+      "lastName": "Petraitis",
+      "jobTitle": "Software Engineer",
+      "email": "jonas@example.com",
+      "legacyDeskLocation": "V-220"
+    }
+  ],
+  "generalSettings": [
+    {
+      "organizationId": 7,
+      "supportedLanguages": ["en-US", "lt-LT"],
+      "defaultLanguage": "lt-LT",
+      "supportedTimeZones": ["Europe/Vilnius", "UTC"],
+      "legacyTheme": "classic"
+    }
+  ]
+}

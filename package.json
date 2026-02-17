@@ -6,7 +6,8 @@
     "packageManager": "pnpm@10.12.1",
     "scripts": {
         "build": "pnpm -r --if-present run build",
-        "test": "node --test modern/scripts/*.test.mjs && pnpm -r --if-present run test",
+        "test": "node --test modern/scripts/*.test.mjs modern/tools/migration/test/*.test.mjs && pnpm -r --if-present run test",
+        "migration:dryrun:v1": "node modern/tools/migration/scripts/run-dryrun.mjs",
         "smoke:webapp": "pnpm --filter @simoona/webapp run test:smoke",
         "smoke:webapp:ci": "pnpm --filter @simoona/webapp run test:smoke:ci",
         "smoke:api": "dotnet test modern/apps/api/Simoona.Modern.Api.sln --no-build --disable-build-servers --filter \"Category=Smoke\"",
