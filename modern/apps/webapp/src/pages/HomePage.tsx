@@ -4,9 +4,9 @@ export function HomePage() {
     const { t } = useTranslation();
 
     return (
-        <section>
-            <h1>{t('home.title')}</h1>
-            <p>{t('home.welcomeMessage')}</p>
+        <section className="page-section">
+            <h1 className="page-title">{t('home.title')}</h1>
+            <p className="status-message">{t('home.welcomeMessage')}</p>
         </section>
     );
 }

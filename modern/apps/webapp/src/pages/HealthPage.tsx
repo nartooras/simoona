@@ -1,8 +1,8 @@
 export function HealthPage() {
     return (
-        <section>
-            <h1>Health</h1>
-            <p>Status: OK</p>
+        <section className="page-section">
+            <h1 className="page-title">Health</h1>
+            <p className="status-message">Status: OK</p>
         </section>
     );
 }

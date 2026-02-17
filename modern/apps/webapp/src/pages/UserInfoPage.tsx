@@ -26,9 +26,9 @@ export function UserInfoPage() {
 
     if (result === null) {
         return (
-            <section>
-                <h1>{t('userInfo.title')}</h1>
-                <p>{t('userInfo.states.loading')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('userInfo.title')}</h1>
+                <p className="status-message">{t('userInfo.states.loading')}</p>
             </section>
         );
     }
@@ -37,30 +37,30 @@ export function UserInfoPage() {
         const { userInfo } = result;
 
         return (
-            <section>
-                <h1>{t('userInfo.title')}</h1>
-                <dl className="user-info-list">
-                    <div>
+            <section className="page-section">
+                <h1 className="page-title">{t('userInfo.title')}</h1>
+                <dl className="info-grid">
+                    <div className="info-card">
                         <dt>{t('userInfo.fields.fullName')}</dt>
                         <dd>{userInfo.fullName || t('userInfo.fallback.notAvailable')}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('userInfo.fields.email')}</dt>
                         <dd>{userInfo.email ?? t('userInfo.fallback.notAvailable')}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('userInfo.fields.userName')}</dt>
                         <dd>{userInfo.userName ?? t('userInfo.fallback.notAvailable')}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('userInfo.fields.organizationId')}</dt>
                         <dd>{userInfo.organizationId}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('userInfo.fields.cultureCode')}</dt>
                         <dd>{userInfo.cultureCode ?? t('userInfo.fallback.notAvailable')}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('userInfo.fields.timeZone')}</dt>
                         <dd>{userInfo.timeZone ?? t('userInfo.fallback.notAvailable')}</dd>
                     </div>
@@ -71,35 +71,35 @@ export function UserInfoPage() {
 
     if (result.kind === 'unauthorized') {
         return (
-            <section>
-                <h1>{t('userInfo.title')}</h1>
-                <p>{t('userInfo.states.unauthorized')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('userInfo.title')}</h1>
+                <p className="status-message">{t('userInfo.states.unauthorized')}</p>
             </section>
         );
     }
 
     if (result.kind === 'notFound') {
         return (
-            <section>
-                <h1>{t('userInfo.title')}</h1>
-                <p>{t('userInfo.states.notFound')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('userInfo.title')}</h1>
+                <p className="status-message">{t('userInfo.states.notFound')}</p>
             </section>
         );
     }
 
     if (result.kind === 'badRequest') {
         return (
-            <section>
-                <h1>{t('userInfo.title')}</h1>
-                <p>{t('userInfo.states.badRequest')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('userInfo.title')}</h1>
+                <p className="status-message">{t('userInfo.states.badRequest')}</p>
             </section>
         );
     }
 
     return (
-        <section>
-            <h1>{t('userInfo.title')}</h1>
-            <p>{t('userInfo.states.error')}</p>
+        <section className="page-section">
+            <h1 className="page-title">{t('userInfo.title')}</h1>
+            <p className="status-message">{t('userInfo.states.error')}</p>
         </section>
     );
 }
