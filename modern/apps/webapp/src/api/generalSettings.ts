@@ -1,6 +1,5 @@
 import { buildApiAuthHeaders } from './authHeaders';
 import { ApiHttpError, apiFetch } from './client';
-import { fetchGeneralSettingsViaStub } from './generalSettingsStub';
 
 export type GeneralSettingsOption = {
     displayName: string;
@@ -25,7 +24,6 @@ export type GeneralSettingsResult =
     | { kind: 'unauthorized' }
     | { kind: 'forbidden' }
     | { kind: 'badRequest' }
-    | { kind: 'apiGap' }
     | { kind: 'serverError' }
     | { kind: 'unknownError' };
 
@@ -55,7 +53,7 @@ export async function fetchGeneralSettings(): Promise<GeneralSettingsResult> {
                 case 403:
                     return { kind: 'forbidden' };
                 case 404:
-                    return fetchGeneralSettingsViaStub();
+                    return { kind: 'empty' };
                 default:
                     if (error.status >= 500) {
                         return { kind: 'serverError' };

@@ -55,7 +55,7 @@ OpenAPI/Swagger UI is enabled in Development environment.
 
 ## Read-only DB Integration Milestone
 
-Modern API now includes a read-only EF Core integration against the legacy SQL Server schema for the first real migrated endpoint.
+Modern API now includes a read-only EF Core integration against the legacy SQL Server schema for real migrated endpoints.
 
 - Read DB context: `ModernReadDbContext` (`AspNetUsers` projection only for this milestone).
 - Safety guard: `ReadOnlySaveGuardInterceptor` throws for any `SaveChanges` invocation to enforce no writes.
@@ -64,6 +64,16 @@ Modern API now includes a read-only EF Core integration against the legacy SQL S
   - Requires authenticated caller.
   - Requires organization header: `X-Org-Id` (or `Organization`) and user context from JWT claims.
   - Temporary `X-User-Id` header fallback is enabled for Development/Testing only.
+
+## General Settings Read Endpoint (API-backed)
+
+Modern API now also exposes the General Settings read contract with read-only legacy data access:
+
+- Implemented endpoint: `GET /api/v1/user/general-settings`.
+  - Reads current user `CultureCode` and `TimeZone` from `AspNetUsers`.
+  - Returns language options (`en-US`, `lt-LT`) and system time zones in legacy-compatible shape.
+  - Uses the same authenticated user + org scope enforcement flow as `GET /api/v1/account/user-info`.
+  - Returns `404 Not Found` when the user does not exist in the requested organization.
 
 ### Local Run/Config Notes
 
@@ -183,7 +193,7 @@ Current migrated scope vs legacy:
 | Area | Legacy route/API | React route | Status |
 |---|---|---|---|
 | Current user context | `GET /Account/UserInfo` | `/user-info` | Migrated on modern API |
-| General settings (read) | `/:organizationName/Settings/General` + `GET /User/GeneralSettings` | `/settings/general` | React route migrated with API-gap stub fallback |
+| General settings (read) | `/:organizationName/Settings/General` + `GET /User/GeneralSettings` | `/settings/general` | Migrated on modern API |
 | General settings (write) | `PUT /User/GeneralSettings` | N/A | Still legacy |
 
 ## CI Skeleton

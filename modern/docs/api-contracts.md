@@ -36,6 +36,7 @@ Legacy routing note:
 
 ## 2) `GET /User/GeneralSettings`
 - Migration priority: `P1`
+- Modern status: `implemented` as `GET /api/v1/user/general-settings`
 - Purpose: load localization preferences and selectable language/timezone options.
 - Request shape:
   - headers: `Authorization: Bearer <token>`
@@ -49,7 +50,11 @@ Legacy routing note:
   - `[Authorize]` + `[PermissionAuthorize(BasicPermissions.ApplicationUser)]`
   - user/org inferred from auth claims
 - Notes/risks:
-  - permission-gated, not just authentication-gated.
+  - legacy returns languages from supported app cultures (`en-US`, `lt-LT`) and time zones from `TimeZoneInfo.GetSystemTimeZones()`.
+  - modern implementation enforces authenticated user plus org scope checks (`X-Org-Id`/`org_id`) consistent with `GET /api/v1/account/user-info`.
+  - modern implementation currently does not enforce legacy permission claim parity (`BasicPermissions.ApplicationUser`) yet; this remains part of authz migration.
+  - if stored user culture code is missing/invalid, language options still return but with no selected language.
+  - timezone display names are OS/runtime dependent, so only `id` should be treated as stable across environments.
 
 ## 3) `PUT /User/GeneralSettings`
 - Migration priority: `P1`

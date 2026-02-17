@@ -97,13 +97,13 @@ describe('GeneralSettingsPage', () => {
         ).toBeInTheDocument();
     });
 
-    it('renders API gap state for 404 response from modern API', async () => {
+    it('renders empty state for 404 response from modern API', async () => {
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(emptyResponse(404));
 
         render(<GeneralSettingsPage />);
 
         expect(
-            await screen.findByText('This screen is wired, but the modern API endpoint is not available yet.'),
+            await screen.findByText('General settings were returned without language or time zone options.'),
         ).toBeInTheDocument();
     });
 });
