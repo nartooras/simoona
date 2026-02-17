@@ -37,9 +37,6 @@ export function EmployeeDirectoryPage() {
         return (
             <section className="page-section">
                 <h1 className="page-title">{t('employeeDirectory.title')}</h1>
-                {result.source === 'temporary-stub' ? (
-                    <p className="helper-note">{t('employeeDirectory.states.temporaryAdapter')}</p>
-                ) : null}
                 <div className="data-table-shell">
                     <table className="data-table">
                         <thead>

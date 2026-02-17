@@ -78,7 +78,7 @@ Legacy routing note:
 
 ## 4) `GET /Employees`
 - Migration priority: `P1`
-- Modern status: `missing` (Wave 2 webapp uses temporary adapter fallback while waiting for `GET /api/v1/employees`)
+- Modern status: `implemented` as `GET /api/v1/employees`
 - Purpose: paged employee directory listing.
 - Request shape:
   - headers: `Authorization: Bearer <token>`
@@ -100,7 +100,9 @@ Legacy routing note:
   - organization is always read from current identity context
 - Notes/risks:
   - response relies on `X.PagedList` serialization for `pagedList` metadata.
-  - Wave 2 frontend route `/employees` is migrated in `modern/apps/webapp` and currently falls back to a temporary adapter when modern endpoint returns `404`.
+  - modern implementation enforces authenticated user + organization context checks consistent with `GET /api/v1/account/user-info` and `GET /api/v1/user/general-settings`.
+  - modern implementation supports `search`, `page`, and `pageSize`; unsupported legacy filters (`sortByProperties`, `showOnlyBlacklisted`) are not yet implemented.
+  - modern implementation returns `200` with empty `pagedList` for empty search results.
 
 ## 5) `GET /Wall/AllPosts`
 - Migration priority: `P1`
@@ -214,7 +216,7 @@ Legacy routing note:
 
 ## 10) `GET /ApplicationUser/GetProfile` and `GET /ApplicationUser/GetUserProfile/{id}`
 - Migration priority: `P2`
-- Modern status: `missing` (Wave 2 webapp uses temporary adapter fallback while waiting for `GET /api/v1/profiles/me`)
+- Modern status: `partially implemented` as `GET /api/v1/profiles/me` (self profile read)
 - Purpose: read full profile aggregate (self or explicit user).
 - Request shape:
   - headers: `Authorization: Bearer <token>`
@@ -236,7 +238,9 @@ Legacy routing note:
   - some nested/profile-part endpoints allow full access only to self or admin (`AdministrationPermissions.ApplicationUser`)
 - Notes/risks:
   - profile visibility rules vary by sub-endpoint and caller role; modern contract should document privacy masking explicitly.
-  - Wave 2 frontend route `/profiles/me` is migrated in `modern/apps/webapp` and currently falls back to a temporary adapter when modern endpoint returns `404`.
+  - modern implementation enforces authenticated user + organization context checks consistent with `GET /api/v1/account/user-info` and `GET /api/v1/user/general-settings`.
+  - modern implementation returns a Wave 2 summary contract (`id`, `fullName`, `email`, `jobTitle`, `department`, `office`, `timeZone`) and currently maps `department`/`office` as `null`.
+  - profile-by-id (`/api/v1/profiles/{id}`) and full legacy tab parity remain pending.
 
 ## Cross-cutting migration notes
 - Many endpoints return either ASP.NET model-state errors or domain validation payload `{ errorCode, errorMessage }`; normalize this early in modern API.

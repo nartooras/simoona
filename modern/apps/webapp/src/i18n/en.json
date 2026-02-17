@@ -51,7 +51,6 @@
         },
         "states": {
             "loading": "Loading employee directory...",
-            "temporaryAdapter": "Showing temporary fallback data until the modern Employee Directory endpoint is available.",
             "empty": "No employees matched the current query.",
             "notFound": "Employee directory data was not found.",
             "unauthorized": "You are not authorized. Sign in and try again.",
@@ -75,7 +74,6 @@
         },
         "states": {
             "loading": "Loading profile details...",
-            "temporaryAdapter": "Showing temporary fallback data until the modern Profile endpoint is available.",
             "notFound": "Profile details were not found.",
             "unauthorized": "You are not authorized. Sign in and try again.",
             "forbidden": "You do not have permission to view this profile.",

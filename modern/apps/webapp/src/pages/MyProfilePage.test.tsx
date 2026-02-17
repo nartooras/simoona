@@ -70,17 +70,12 @@ describe('MyProfilePage', () => {
         expect(headers.get('Authorization')).toBe('Bearer test-token');
     });
 
-    it('renders temporary adapter fallback for 404 response', async () => {
+    it('renders not found state for 404 response', async () => {
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(emptyResponse(404));
 
         render(<MyProfilePage />);
 
-        expect(
-            await screen.findByText(
-                'Showing temporary fallback data until the modern Profile endpoint is available.',
-            ),
-        ).toBeInTheDocument();
-        expect(screen.getByText('Ada Lovelace')).toBeInTheDocument();
+        expect(await screen.findByText('Profile details were not found.')).toBeInTheDocument();
     });
 
     it('renders unauthorized state for 401 response', async () => {

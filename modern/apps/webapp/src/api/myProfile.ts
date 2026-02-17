@@ -1,9 +1,18 @@
 import { buildApiAuthHeaders } from './authHeaders';
 import { ApiHttpError, apiFetch } from './client';
-import { getTemporaryMyProfile, type MyProfileResponse } from './wave2TemporaryAdapters';
+
+export type MyProfileResponse = {
+    id: string;
+    fullName: string;
+    email: string | null;
+    jobTitle: string | null;
+    department: string | null;
+    office: string | null;
+    timeZone: string | null;
+};
 
 export type MyProfileResult =
-    | { kind: 'success'; source: 'api' | 'temporary-stub'; profile: MyProfileResponse }
+    | { kind: 'success'; profile: MyProfileResponse }
     | { kind: 'unauthorized' }
     | { kind: 'forbidden' }
     | { kind: 'notFound' }
@@ -22,7 +31,7 @@ export async function fetchMyProfile(): Promise<MyProfileResult> {
             headers: authHeadersResult.headers,
         });
 
-        return { kind: 'success', source: 'api', profile };
+        return { kind: 'success', profile };
     } catch (error) {
         if (error instanceof ApiHttpError) {
             switch (error.status) {
@@ -32,23 +41,8 @@ export async function fetchMyProfile(): Promise<MyProfileResult> {
                     return { kind: 'unauthorized' };
                 case 403:
                     return { kind: 'forbidden' };
-                case 404: {
-                    const temporaryAdapterResult = getTemporaryMyProfile(authHeadersResult.headers);
-
-                    if (temporaryAdapterResult.kind === 'unauthorized') {
-                        return { kind: 'unauthorized' };
-                    }
-
-                    if (temporaryAdapterResult.kind === 'notFound') {
-                        return { kind: 'notFound' };
-                    }
-
-                    return {
-                        kind: 'success',
-                        source: 'temporary-stub',
-                        profile: temporaryAdapterResult.data,
-                    };
-                }
+                case 404:
+                    return { kind: 'notFound' };
                 default:
                     if (error.status >= 500) {
                         return { kind: 'serverError' };

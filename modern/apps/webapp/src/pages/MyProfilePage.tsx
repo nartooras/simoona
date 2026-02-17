@@ -37,9 +37,6 @@ export function MyProfilePage() {
         return (
             <section className="page-section">
                 <h1 className="page-title">{t('myProfile.title')}</h1>
-                {result.source === 'temporary-stub' ? (
-                    <p className="helper-note">{t('myProfile.states.temporaryAdapter')}</p>
-                ) : null}
                 <dl className="info-grid">
                     <div className="info-card">
                         <dt>{t('myProfile.fields.fullName')}</dt>

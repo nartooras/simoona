@@ -206,10 +206,12 @@ Current migrated scope vs legacy:
 
 | Bucket | Items | Endpoint status |
 |---|---|---|
-| Migrated now (Wave 2) | Employee Directory (`/employees`) | Temporary adapter fallback while `GET /api/v1/employees` is missing |
-| Migrated now (Wave 2) | My Profile (`/profiles/me`) | Temporary adapter fallback while `GET /api/v1/profiles/me` is missing |
+| Migrated now (Wave 2) | Employee Directory (`/employees`) | Real modern API endpoint `GET /api/v1/employees` |
+| Migrated now (Wave 2) | My Profile (`/profiles/me`) | Real modern API endpoint `GET /api/v1/profiles/me` |
 | Migrated in Wave 1 | User Info (`/user-info`), General Settings read (`/settings/general`) | Real modern API endpoints |
 | Still legacy | General settings write, profile edit flows, non-migrated settings/profile/wall areas | Not yet migrated |
+
+Wave 2 frontend temporary adapters have been retired from the migrated Employee Directory and My Profile screens; these routes now rely on modern API responses directly.
 
 ## Frontend Visual Parity Foundation
 

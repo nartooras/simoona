@@ -25,10 +25,9 @@ Wave 2 migrates two additional high-impact read-first legacy screens to React ro
   - `/employees`
 - Required API contract/endpoint:
   - Target modern contract: `GET /api/v1/employees`
-  - Current state: **missing in modern API**
+- Current state: **implemented in modern API**
 - Implementation status in modern webapp:
-  - Implemented page and typed API client.
-  - Uses temporary isolated adapter on `404` to provide migration-safe read fallback.
+  - Implemented page and typed API client backed by real modern endpoint.
 - Risk/complexity notes:
   - Pagination and filtering parity are partial in this wave.
   - Permission parity (`BasicPermissions.EmployeeList`) depends on backend policy migration.
@@ -44,10 +43,9 @@ Wave 2 migrates two additional high-impact read-first legacy screens to React ro
   - `/profiles/me`
 - Required API contract/endpoint:
   - Target modern contract: `GET /api/v1/profiles/me`
-  - Current state: **missing in modern API**
+- Current state: **implemented in modern API** (Wave 2 summary shape)
 - Implementation status in modern webapp:
-  - Implemented page and typed API client.
-  - Uses temporary isolated adapter on `404` to provide migration-safe read fallback.
+  - Implemented page and typed API client backed by real modern endpoint.
 - Risk/complexity notes:
   - This wave includes a summary profile read view only; edit flows remain legacy.
   - Authorization/self-vs-admin visibility parity is pending backend policy convergence.
@@ -57,8 +55,8 @@ Wave 2 migrates two additional high-impact read-first legacy screens to React ro
 
 | Screen | Legacy API | Modern endpoint target | Wave 2 frontend status | Endpoint readiness |
 |---|---|---|---|---|
-| Employee Directory | `GET /Employees` | `GET /api/v1/employees` | Migrated route/page | Temporary stub fallback (`404` -> adapter) |
-| My Profile Details | `GET /ApplicationUser/GetProfile` | `GET /api/v1/profiles/me` | Migrated route/page | Temporary stub fallback (`404` -> adapter) |
+| Employee Directory | `GET /Employees` | `GET /api/v1/employees` | Migrated route/page | Real modern endpoint |
+| My Profile Details | `GET /ApplicationUser/GetProfile` | `GET /api/v1/profiles/me` | Migrated route/page | Real modern endpoint (summary read model) |
 
 ## Migration progress table
 
@@ -70,6 +68,6 @@ Wave 2 migrates two additional high-impact read-first legacy screens to React ro
 
 ## Backend gap notes for follow-up
 
-1. Add `GET /api/v1/employees` with read-first pagination/filter contract parity to legacy `GET /Employees`.
-2. Add `GET /api/v1/profiles/me` (and later `/api/v1/profiles/{id}`) with explicit profile visibility/authorization rules.
-3. After real endpoints land, remove the temporary adapters in `modern/apps/webapp/src/api/wave2TemporaryAdapters.ts`.
+1. Expand employee listing parity for legacy-only filters/sorts (`sortByProperties`, `showOnlyBlacklisted`) if required by migrated UX.
+2. Add profile-by-id and explicit visibility masking rules (`/api/v1/profiles/{id}`) for non-self profile scenarios.
+3. Expand My Profile beyond summary read model to full legacy parity when downstream screens migrate.

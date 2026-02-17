@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Simoona.Modern.Api.Endpoints.Employees;
 using Simoona.Modern.Api.Auth;
 using Simoona.Modern.Api.Endpoints.GeneralSettings;
+using Simoona.Modern.Api.Endpoints.Profiles;
 using Simoona.Modern.Api.Endpoints.UserInfo;
 using Simoona.Modern.Api.ReadDb;
 using Simoona.Modern.Api.TenantContext;
@@ -51,6 +53,8 @@ apiV1.MapGet("/tenant-context", (ITenantContextAccessor tenantContextAccessor) =
 
 apiV1.MapUserInfoEndpoints();
 apiV1.MapGeneralSettingsEndpoints();
+apiV1.MapEmployeeDirectoryEndpoints();
+apiV1.MapMyProfileEndpoints();
 apiV1.MapDevelopmentAuthEndpoints(app.Environment);
 
 app.Run();
