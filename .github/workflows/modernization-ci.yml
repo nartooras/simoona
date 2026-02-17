@@ -5,6 +5,13 @@ on:
     push:
         branches:
             - master
+    workflow_dispatch:
+        inputs:
+            run_smoke:
+                description: "Run release-readiness smoke checks"
+                required: false
+                default: false
+                type: boolean
 
 permissions:
     contents: read
@@ -82,3 +89,25 @@ jobs:
               run: dotnet build modern/apps/api/Simoona.Modern.Api.sln
             - name: Test modern API solution
               run: dotnet test modern/apps/api/Simoona.Modern.Api.sln --no-build
+
+    smoke:
+        if: github.event_name == 'workflow_dispatch' && inputs.run_smoke
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
+              with:
+                  version: 10
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: pnpm
+            - uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: 8.0.x
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+            - name: Build modern API solution
+              run: dotnet build modern/apps/api/Simoona.Modern.Api.sln
+            - name: Run smoke checks
+              run: pnpm smoke:ci

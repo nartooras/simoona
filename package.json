@@ -7,6 +7,11 @@
     "scripts": {
         "build": "pnpm -r --if-present run build",
         "test": "node --test modern/scripts/*.test.mjs && pnpm -r --if-present run test",
+        "smoke:webapp": "pnpm --filter @simoona/webapp run test:smoke",
+        "smoke:webapp:ci": "pnpm --filter @simoona/webapp run test:smoke:ci",
+        "smoke:api": "dotnet test modern/apps/api/Simoona.Modern.Api.sln --no-build --disable-build-servers --filter \"Category=Smoke\"",
+        "smoke": "pnpm smoke:webapp && pnpm smoke:api",
+        "smoke:ci": "pnpm smoke:webapp:ci && pnpm smoke:api",
         "lint": "pnpm run arch:check && pnpm -r --if-present run lint",
         "typecheck": "pnpm -r --if-present run typecheck",
         "arch:check": "node modern/scripts/check-modern-boundaries.mjs",

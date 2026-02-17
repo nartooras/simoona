@@ -29,6 +29,8 @@ pnpm install
 - `pnpm format:check`: verify modernization workspace formatting without modifying files.
 - `pnpm typecheck`: run TypeScript no-emit checks for modern workspace packages.
 - `pnpm test`: run workspace tests.
+- `pnpm smoke`: run release-readiness smoke checks (modern webapp route smoke + modern API smoke probes).
+- `pnpm smoke:ci`: run smoke checks in CI-friendly reporter mode.
 - `pnpm build`: run workspace builds.
 - `pnpm modern:api:build`: run `dotnet build` for modern API solution only.
 - `pnpm modern:api:test`: run `dotnet test` for modern API tests only.
@@ -128,6 +130,7 @@ Expected endpoint behavior:
 A first-pass legacy-to-modern API contract baseline for prioritized migration endpoints lives at:
 
 - `modern/docs/api-contracts.md`
+- `modern/docs/release-readiness-checklist.md`
 
 ## Architecture Baseline and ADRs
 
@@ -240,5 +243,8 @@ Jobs:
 - `lint`: install dependencies, run `pnpm lint`
 - `test`: install dependencies, run `pnpm test`
 - `build`: install dependencies, run `pnpm typecheck` and `pnpm build`
+- `dotnet-build`: build modern API solution with `dotnet build`
+- `dotnet-test`: test modern API solution with `dotnet test --no-build`
+- `smoke`: opt-in manual `workflow_dispatch` job (`run_smoke=true`) that runs `pnpm smoke:ci`
 
 This keeps modernization checks isolated while allowing legacy systems to continue their current pipelines.
