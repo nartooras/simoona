@@ -43,6 +43,8 @@ dotnet test modern/apps/api/Simoona.Modern.Api.sln
 dotnet run --project modern/apps/api/src/Simoona.Modern.Api/Simoona.Modern.Api.csproj
 ```
 
+Default Development launch profile binds to `http://localhost:5187`.
+
 Default routes in this modernization skeleton:
 
 - `GET /health`
