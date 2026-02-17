@@ -120,6 +120,12 @@ Commands:
 - `pnpm --filter @simoona/webapp test`: run Vitest + React Testing Library tests.
 - `pnpm --filter @simoona/webapp build`: build production assets with Vite.
 
+Environment:
+
+- `VITE_API_BASE_URL` (optional): base URL used by the modern webapp API client.
+  - default: `/api`
+  - user info endpoint call resolves to `${VITE_API_BASE_URL}/v1/account/user-info` (or `/api/v1/account/user-info` by default).
+
 ## CI Skeleton
 
 Workflow file: `.github/workflows/modernization-ci.yml`

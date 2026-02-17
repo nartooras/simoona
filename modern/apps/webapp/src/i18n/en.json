@@ -2,5 +2,26 @@
     "home": {
         "title": "Home",
         "welcomeMessage": "Modern webapp shell is running."
+    },
+    "userInfo": {
+        "title": "User Info",
+        "fields": {
+            "fullName": "Full name",
+            "email": "Email",
+            "userName": "Username",
+            "organizationId": "Organization ID",
+            "cultureCode": "Culture",
+            "timeZone": "Time zone"
+        },
+        "states": {
+            "loading": "Loading user information...",
+            "unauthorized": "You are not authorized. Sign in and try again.",
+            "notFound": "User information was not found.",
+            "badRequest": "User context is incomplete. Check authentication and organization headers.",
+            "error": "Something went wrong while loading user information."
+        },
+        "fallback": {
+            "notAvailable": "Not available"
+        }
     }
 }

@@ -4,7 +4,22 @@ export type ApiRequestInit = Omit<RequestInit, 'body'> & {
     body?: unknown;
 };
 
+export class ApiHttpError extends Error {
+    constructor(
+        public readonly status: number,
+        public readonly statusText: string,
+        public readonly payload?: unknown,
+    ) {
+        super(`API request failed: ${status} ${statusText}`);
+        this.name = 'ApiHttpError';
+    }
+}
+
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? DEFAULT_BASE_URL;
+
+export function getApiBaseUrl(): string {
+    return apiBaseUrl;
+}
 
 export async function apiFetch<TResponse>(
     path: string,
@@ -23,7 +38,15 @@ export async function apiFetch<TResponse>(
     });
 
     if (!response.ok) {
-        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+        let payload: unknown;
+
+        try {
+            payload = await response.json();
+        } catch {
+            payload = undefined;
+        }
+
+        throw new ApiHttpError(response.status, response.statusText, payload);
     }
 
     return (await response.json()) as TResponse;
