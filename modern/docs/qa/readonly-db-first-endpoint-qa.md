@@ -55,5 +55,11 @@ Local QA run matched all enforced quality gates (install command run without `--
 1. Local API run command documented in `MODERNIZATION.md` (`dotnet run --project ...`) is currently unreliable with existing launch profile (`http://localhost:0`) and fails on this macOS environment.
 2. Runtime smoke did not validate a successful authenticated `GET /api/v1/account/user-info` 200-path because no test JWT/token issuer was configured for manual local run.
 
+## Revalidation Update (2026-02-17)
+- Revalidated default startup path after launch profile/docs fix on branch `codex/qa-readonly-db-first-endpoint`.
+- Command: `dotnet run --project modern/apps/api/src/Simoona.Modern.Api/Simoona.Modern.Api.csproj`
+- Probe: `GET http://localhost:5187/health` -> `HTTP/1.1 200 OK`
+- Result: previously reported `localhost:0` startup blocker is resolved.
+
 ## Release Recommendation
-**NO-GO** until local API startup command/path is corrected (either launch profile update or docs updated to include `--no-launch-profile` plus explicit URL binding). All CI parity gates pass, but local runtime startup mismatch is a release-readiness blocker for reproducible macOS validation.
+**GO**. Required CI-parity validations pass, runtime smoke checks pass for webapp and API startup/health/ping/tenant-context behavior, and the previous local-run blocker has been closed.
