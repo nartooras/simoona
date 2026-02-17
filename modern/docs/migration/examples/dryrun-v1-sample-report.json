@@ -1,0 +1,68 @@
+{
+  "run": {
+    "id": "dryrun-v1-20260217120000000",
+    "runAtUtc": "2026-02-17T12:00:00.000Z",
+    "mode": "dry-run",
+    "source": "legacy-export-json",
+    "dryRun": true,
+    "writesExecuted": false
+  },
+  "counts": {
+    "extracted": {
+      "users": 2,
+      "organizations": 1,
+      "employeeDirectory": 2,
+      "generalSettings": 1
+    },
+    "transformed": {
+      "usersProfileBasics": 2,
+      "organizationReferences": 1,
+      "employeeDirectory": 2,
+      "generalSettingsEssentials": 1
+    }
+  },
+  "validation": {
+    "isValid": true,
+    "errorCount": 0,
+    "warningCount": 4,
+    "errors": [],
+    "warnings": [
+      {
+        "code": "UNMAPPED_FIELDS",
+        "entity": "users",
+        "message": "Unmapped fields in users: legacySalaryBand, legacySlackHandle."
+      },
+      {
+        "code": "UNMAPPED_FIELDS",
+        "entity": "organizations",
+        "message": "Unmapped fields in organizations: legacyRegionCode."
+      },
+      {
+        "code": "UNMAPPED_FIELDS",
+        "entity": "employeeDirectory",
+        "message": "Unmapped fields in employeeDirectory: legacyDeskLocation."
+      },
+      {
+        "code": "UNMAPPED_FIELDS",
+        "entity": "generalSettings",
+        "message": "Unmapped fields in generalSettings: legacyTheme."
+      }
+    ]
+  },
+  "unmappedFields": {
+    "users": ["legacySalaryBand", "legacySlackHandle"],
+    "organizations": ["legacyRegionCode"],
+    "employeeDirectory": ["legacyDeskLocation"],
+    "generalSettings": ["legacyTheme"]
+  },
+  "assumptions": [
+    "When legacy organizations are missing, organization references are derived from users using ORG-{organizationId} placeholders.",
+    "When legacy employee directory rows are missing, employee directory is derived from users/profile basics.",
+    "When legacy general settings rows are missing, general settings are derived from users culture/timezone values."
+  ],
+  "todos": [
+    "TODO: Replace organization placeholder names with authoritative organization lookup from legacy source.",
+    "TODO: Confirm final legacy source for department and office mappings for profile response parity.",
+    "TODO: Replace derived general settings fallback with dedicated legacy settings source once available."
+  ]
+}

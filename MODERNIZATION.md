@@ -164,6 +164,52 @@ pnpm run arch:check
 This check is also included in root `pnpm lint`.
 Coverage includes `import/export ... from`, `import("...")`, and `require("...")` forms for `src/**`, `@/src/**`, `../src/**`, and absolute `.../src/**` paths, with tests in `modern/scripts/check-modern-boundaries.test.mjs`.
 
+## Data Migration Dry-Run v1
+
+Read-only migration rehearsal tooling now lives under:
+
+- `modern/tools/migration/`
+
+Scope covered by v1:
+
+- users/profile basics
+- organization references
+- employee directory fields
+- general settings essentials
+
+Primary command:
+
+```bash
+pnpm migration:dryrun:v1 --input modern/tools/migration/fixtures/legacy-export-sample.json --output-dir /tmp/simoona-migration-dryrun-v1 --mode dry-run
+```
+
+Safety guardrails:
+
+- default mode is `dry-run`
+- `--mode write` is explicitly blocked and not implemented
+- scripts print warning banners before execution
+
+Environment variables (optional):
+
+- `MIGRATION_INPUT_PATH`
+- `MIGRATION_OUTPUT_DIR`
+- `MIGRATION_MODE`
+- `MIGRATION_SOURCE`
+
+Expected output artifacts (example output dir):
+
+- `/tmp/simoona-migration-dryrun-v1/dryrun-v1.extracted.json`
+- `/tmp/simoona-migration-dryrun-v1/dryrun-v1.transformed.json`
+- `/tmp/simoona-migration-dryrun-v1/dryrun-v1.report.json`
+- `/tmp/simoona-migration-dryrun-v1/dryrun-v1.report.md`
+
+Machine-readable report fields include extracted/transformed counts, validation errors/warnings, and unmapped fields.
+
+Detailed runbook:
+
+- `modern/docs/migration/dryrun-v1.md`
+- `modern/docs/migration/dryrun-v1-report-template.md`
+
 ## New React Webapp App
 
 App path: `modern/apps/webapp`
