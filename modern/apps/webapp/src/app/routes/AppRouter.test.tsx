@@ -51,7 +51,7 @@ describe('AppRouter', () => {
 
         expect(await screen.findByRole('heading', { name: 'General Settings' })).toBeInTheDocument();
         expect(
-            screen.getByText('This screen is wired, but the modern API endpoint is not available yet.'),
+            screen.getByText('General settings were returned without language or time zone options.'),
         ).toBeInTheDocument();
     });
 });

@@ -94,15 +94,6 @@ export function GeneralSettingsPage() {
         );
     }
 
-    if (result.kind === 'apiGap') {
-        return (
-            <section>
-                <h1>{t('generalSettings.title')}</h1>
-                <p>{t('generalSettings.states.apiGap')}</p>
-            </section>
-        );
-    }
-
     return (
         <section>
             <h1>{t('generalSettings.title')}</h1>

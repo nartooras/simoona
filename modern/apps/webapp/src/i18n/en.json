@@ -36,7 +36,6 @@
             "unauthorized": "You are not authorized. Sign in and try again.",
             "forbidden": "You do not have permission to view general settings.",
             "badRequest": "User context is incomplete. Check authentication and organization headers.",
-            "apiGap": "This screen is wired, but the modern API endpoint is not available yet.",
             "error": "Something went wrong while loading general settings."
         },
         "fallback": {
