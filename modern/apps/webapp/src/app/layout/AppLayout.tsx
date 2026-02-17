@@ -1,31 +1,10 @@
 import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { navigationGroups } from '../routes/navigation';
 
 export function AppLayout({ children }: PropsWithChildren) {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-
-    const navGroups = [
-        {
-            title: 'Workspace',
-            links: [
-                { to: '/', label: 'Home', end: true },
-                { to: '/employees', label: 'Employees' },
-            ],
-        },
-        {
-            title: 'Account',
-            links: [
-                { to: '/profiles/me', label: 'My Profile' },
-                { to: '/settings/general', label: 'General Settings' },
-                { to: '/user-info', label: 'User Info' },
-            ],
-        },
-        {
-            title: 'System',
-            links: [{ to: '/health', label: 'Health' }],
-        },
-    ];
 
     function closeMobileNav() {
         setIsMobileNavOpen(false);
@@ -48,19 +27,29 @@ export function AppLayout({ children }: PropsWithChildren) {
                         <span />
                     </button>
                     <strong className="app-brand">Simoona</strong>
+                    <div className="app-header-affordances">
+                        <span className="header-chip">Prototype IA</span>
+                        <span className="header-chip">Org: Demo</span>
+                    </div>
                 </div>
             </header>
             <div className="app-layout">
                 <aside className={`app-sidebar${isMobileNavOpen ? ' open' : ''}`} id="app-sidebar-nav">
                     <nav aria-label="Main" className="app-nav">
-                        {navGroups.map((group) => (
+                        {navigationGroups.map((group) => (
                             <section className="app-nav-group" key={group.title}>
                                 <h2>{group.title}</h2>
                                 <ul>
-                                    {group.links.map((link) => (
-                                        <li key={link.to}>
-                                            <NavLink end={link.end} onClick={closeMobileNav} to={link.to}>
-                                                {link.label}
+                                    {group.items.map((item) => (
+                                        <li key={item.to}>
+                                            <NavLink end={item.end} onClick={closeMobileNav} to={item.to}>
+                                                {item.label}
+                                                <span
+                                                    aria-hidden="true"
+                                                    className={`nav-availability nav-availability--${item.availability}`}
+                                                >
+                                                    {item.availability}
+                                                </span>
                                             </NavLink>
                                         </li>
                                     ))}

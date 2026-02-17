@@ -280,6 +280,19 @@ Current parity snapshot:
 | Table/list/card patterns | partially matched |
 | Legacy iconography/module-specific chrome | not matched yet |
 
+## Prototype Shell Parity Pass (Thread P)
+
+Prototype shell parity details and availability map:
+
+- `modern/docs/prototype-shell-parity.md`
+
+Highlights from this pass:
+
+- Modern shell navigation now follows legacy-style IA grouping (`Activities`, `Company`, `Externals`, `System`).
+- Key placeholder/demo routes are visible in navigation for prototype completeness.
+- Route availability labeling is explicit via `real`, `mock`, and `disabled` notices.
+- Placeholder prototype routes are populated with realistic static content and non-production markers.
+
 ## CI Skeleton
 
 Workflow file: `.github/workflows/modernization-ci.yml`
