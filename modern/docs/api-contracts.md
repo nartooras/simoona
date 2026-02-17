@@ -31,7 +31,7 @@ Legacy routing note:
   - modern milestone assumptions:
     - user id is resolved from authenticated claims (`nameidentifier`/`sub`) with temporary header fallback `X-User-Id` for local/testing.
     - organization scope is required from `X-Org-Id` (or `Organization`) and must be numeric.
-    - currently returns the registered-user shape only; `permissions` and `roles` are temporarily empty until authz integration lands.
+    - currently returns the registered-user shape only; `organizationName` is not returned yet, and `permissions`/`roles` are temporarily empty until authz integration lands.
 
 ## 2) `GET /User/GeneralSettings`
 - Migration priority: `P1`
