@@ -1,12 +1,23 @@
 import { buildApiAuthHeaders } from './authHeaders';
 import { ApiHttpError, apiFetch } from './client';
-import {
-    getTemporaryEmployeeDirectory,
-    type EmployeeDirectoryResponse,
-} from './wave2TemporaryAdapters';
+
+export type EmployeeDirectoryItem = {
+    id: string;
+    firstName: string;
+    lastName: string;
+    jobTitle: string | null;
+    email: string | null;
+};
+
+export type EmployeeDirectoryResponse = {
+    pagedList: EmployeeDirectoryItem[];
+    pageCount: number;
+    itemCount: number;
+    pageSize: number;
+};
 
 export type EmployeeDirectoryResult =
-    | { kind: 'success'; source: 'api' | 'temporary-stub'; directory: EmployeeDirectoryResponse }
+    | { kind: 'success'; directory: EmployeeDirectoryResponse }
     | { kind: 'empty' }
     | { kind: 'unauthorized' }
     | { kind: 'forbidden' }
@@ -30,7 +41,7 @@ export async function fetchEmployeeDirectory(): Promise<EmployeeDirectoryResult>
             return { kind: 'empty' };
         }
 
-        return { kind: 'success', source: 'api', directory };
+        return { kind: 'success', directory };
     } catch (error) {
         if (error instanceof ApiHttpError) {
             switch (error.status) {
@@ -40,25 +51,8 @@ export async function fetchEmployeeDirectory(): Promise<EmployeeDirectoryResult>
                     return { kind: 'unauthorized' };
                 case 403:
                     return { kind: 'forbidden' };
-                case 404: {
-                    const temporaryAdapterResult = getTemporaryEmployeeDirectory(
-                        authHeadersResult.headers,
-                    );
-
-                    if (temporaryAdapterResult.kind === 'unauthorized') {
-                        return { kind: 'unauthorized' };
-                    }
-
-                    if (temporaryAdapterResult.data.pagedList.length === 0) {
-                        return { kind: 'empty' };
-                    }
-
-                    return {
-                        kind: 'success',
-                        source: 'temporary-stub',
-                        directory: temporaryAdapterResult.data,
-                    };
-                }
+                case 404:
+                    return { kind: 'notFound' };
                 default:
                     if (error.status >= 500) {
                         return { kind: 'serverError' };

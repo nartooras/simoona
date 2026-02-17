@@ -10,6 +10,7 @@ public sealed class ModernReadDbContext : DbContext
     }
 
     public DbSet<LegacyUserReadModel> Users => Set<LegacyUserReadModel>();
+    public DbSet<LegacyJobPositionReadModel> JobPositions => Set<LegacyJobPositionReadModel>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,6 +24,13 @@ public sealed class ModernReadDbContext : DbContext
             entity.Property(x => x.OrganizationId);
             entity.Property(x => x.Email).HasMaxLength(256);
             entity.Property(x => x.UserName).HasMaxLength(256);
+        });
+
+        modelBuilder.Entity<LegacyJobPositionReadModel>(entity =>
+        {
+            entity.ToTable("JobPositions");
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Title).HasMaxLength(256);
         });
     }
 }

@@ -41,6 +41,22 @@ public sealed class ModernApiTestFactory : WebApplicationFactory<Program>
         using var scope = host.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<ModernReadDbContext>();
         dbContext.Database.EnsureCreated();
+        if (!dbContext.JobPositions.Any())
+        {
+            dbContext.JobPositions.AddRange(
+                new LegacyJobPositionReadModel
+                {
+                    Id = 1,
+                    Title = "Engineering Manager"
+                },
+                new LegacyJobPositionReadModel
+                {
+                    Id = 2,
+                    Title = "Principal Engineer"
+                });
+            dbContext.SaveChanges();
+        }
+
         if (!dbContext.Users.Any())
         {
             dbContext.Users.AddRange(
@@ -52,6 +68,7 @@ public sealed class ModernApiTestFactory : WebApplicationFactory<Program>
                     UserName = "user1",
                     FirstName = "Ada",
                     LastName = "Lovelace",
+                    JobPositionId = 1,
                     CultureCode = "en-US",
                     TimeZone = "UTC",
                     PictureId = "pic-1"
@@ -64,6 +81,7 @@ public sealed class ModernApiTestFactory : WebApplicationFactory<Program>
                     UserName = "user2",
                     FirstName = "Grace",
                     LastName = "Hopper",
+                    JobPositionId = 2,
                     CultureCode = "en-US",
                     TimeZone = "UTC",
                     PictureId = "pic-2"
