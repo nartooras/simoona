@@ -38,6 +38,7 @@ Repository instructions for AI agent threads working on modernization.
   - tests can depend on apps/packages
   - no legacy `src/**` imports/references from `modern/**`
 - Read architecture and ADR docs before implementation and review tasks.
+- Auth-related endpoint changes must reference `modern/docs/auth-migration.md` and `modern/docs/adr/0003-auth-migration-strategy.md` in thread notes/reviews.
 
 ## 4) Required Validation Before Handoff
 

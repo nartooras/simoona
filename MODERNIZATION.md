@@ -97,6 +97,15 @@ Architecture decisions (ADRs):
 
 Use these as default references before implementing modernization changes.
 
+## Auth Migration Direction
+
+Auth migration source of truth:
+
+- `modern/docs/auth-migration.md`
+- `modern/docs/adr/0003-auth-migration-strategy.md`
+
+Any modernization thread that changes authenticated endpoints, tenant/org resolution, claims handling, token/session lifecycle, or authorization policies must consult and reference both documents before implementation and review.
+
 ## Architecture Guardrail
 
 Boundary check for forbidden modern-to-legacy imports/references:
