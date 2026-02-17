@@ -24,9 +24,32 @@ export type UserInfoResult =
     | { kind: 'serverError' }
     | { kind: 'unknownError' };
 
+function getOrganizationIdHeaderValue(): string | null {
+    const rawValue = import.meta.env.VITE_API_ORGANIZATION_ID?.trim();
+
+    if (!rawValue) {
+        return null;
+    }
+
+    if (!/^\d+$/.test(rawValue)) {
+        return null;
+    }
+
+    return rawValue;
+}
+
 export async function fetchUserInfo(): Promise<UserInfoResult> {
+    const organizationId = getOrganizationIdHeaderValue();
+    if (!organizationId) {
+        return { kind: 'badRequest' };
+    }
+
     try {
-        const userInfo = await apiFetch<UserInfoResponse>('/v1/account/user-info');
+        const userInfo = await apiFetch<UserInfoResponse>('/v1/account/user-info', {
+            headers: {
+                'X-Org-Id': organizationId,
+            },
+        });
 
         return { kind: 'success', userInfo };
     } catch (error) {

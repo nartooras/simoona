@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { UserInfoPage } from './UserInfoPage';
 import '../i18n';
 
@@ -31,8 +31,13 @@ function emptyResponse(status: number): Response {
 }
 
 describe('UserInfoPage', () => {
+    beforeEach(() => {
+        vi.stubEnv('VITE_API_ORGANIZATION_ID', '7');
+    });
+
     afterEach(() => {
         cleanup();
+        vi.unstubAllEnvs();
         vi.restoreAllMocks();
     });
 
@@ -54,13 +59,19 @@ describe('UserInfoPage', () => {
     });
 
     it('renders user info on successful response', async () => {
-        vi.spyOn(globalThis, 'fetch').mockResolvedValue(jsonResponse(200, successPayload));
+        const fetchMock = vi
+            .spyOn(globalThis, 'fetch')
+            .mockResolvedValue(jsonResponse(200, successPayload));
 
         render(<UserInfoPage />);
 
         expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
         expect(screen.getByText('ada@example.com')).toBeInTheDocument();
         expect(screen.getByText('ada.lovelace')).toBeInTheDocument();
+
+        const [requestPath, requestInit] = fetchMock.mock.calls[0] as [string, RequestInit];
+        expect(requestPath).toBe('/api/v1/account/user-info');
+        expect(new Headers(requestInit.headers).get('X-Org-Id')).toBe('7');
     });
 
     it('renders unauthorized state for 401 response', async () => {
@@ -89,5 +100,19 @@ describe('UserInfoPage', () => {
         expect(
             await screen.findByText('Something went wrong while loading user information.'),
         ).toBeInTheDocument();
+    });
+
+    it('renders bad-request state when organization id config is missing', async () => {
+        vi.unstubAllEnvs();
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(jsonResponse(200, successPayload));
+
+        render(<UserInfoPage />);
+
+        expect(
+            await screen.findByText(
+                'User context is incomplete. Check authentication and organization headers.',
+            ),
+        ).toBeInTheDocument();
+        expect(globalThis.fetch).not.toHaveBeenCalled();
     });
 });

@@ -125,6 +125,8 @@ Environment:
 - `VITE_API_BASE_URL` (optional): base URL used by the modern webapp API client.
   - default: `/api`
   - user info endpoint call resolves to `${VITE_API_BASE_URL}/v1/account/user-info` (or `/api/v1/account/user-info` by default).
+- `VITE_API_ORGANIZATION_ID` (required for current user-info integration): numeric organization id sent as `X-Org-Id` header.
+  - example: `VITE_API_ORGANIZATION_ID=7`
 
 ## CI Skeleton
 

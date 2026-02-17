@@ -1,11 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { appRoutes } from './AppRouter';
 import '../../i18n';
 
 describe('AppRouter', () => {
+    beforeEach(() => {
+        vi.stubEnv('VITE_API_ORGANIZATION_ID', '7');
+    });
+
     afterEach(() => {
+        vi.unstubAllEnvs();
         vi.restoreAllMocks();
     });
 
