@@ -29,7 +29,15 @@ Repository instructions for AI agent threads working on modernization.
 - Modern apps go under `modern/apps/*`.
 - Shared modern libraries/packages go under `modern/packages/*`.
 - Modern tests go under `modern/tests/*`.
+- Modern architecture source of truth is `modern/docs/architecture.md`.
+- Architecture decisions live under `modern/docs/adr/*`.
 - Keep modernization changes isolated and incremental.
+- Dependency boundaries:
+  - apps can depend on packages
+  - packages cannot depend on apps
+  - tests can depend on apps/packages
+  - no legacy `src/**` imports/references from `modern/**`
+- Read architecture and ADR docs before implementation and review tasks.
 
 ## 4) Required Validation Before Handoff
 

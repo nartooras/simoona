@@ -85,6 +85,28 @@ A first-pass legacy-to-modern API contract baseline for prioritized migration en
 
 - `modern/docs/api-contracts.md`
 
+## Architecture Baseline and ADRs
+
+Modernization architecture source of truth:
+
+- `modern/docs/architecture.md`
+
+Architecture decisions (ADRs):
+
+- `modern/docs/adr/`
+
+Use these as default references before implementing modernization changes.
+
+## Architecture Guardrail
+
+Boundary check for forbidden modern-to-legacy imports/references:
+
+```bash
+pnpm run arch:check
+```
+
+This check is also included in root `pnpm lint`.
+
 ## New React Webapp App
 
 App path: `modern/apps/webapp`
