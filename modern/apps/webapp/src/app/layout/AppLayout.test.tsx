@@ -15,10 +15,19 @@ describe('AppLayout', () => {
         );
 
         expect(screen.getByText('Simoona')).toBeInTheDocument();
-        expect(screen.getByRole('heading', { name: 'Workspace' })).toBeInTheDocument();
-        expect(screen.getByRole('heading', { name: 'Account' })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Activities' })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Company' })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Externals' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'System' })).toBeInTheDocument();
+        expect(screen.getByText('Prototype IA')).toBeInTheDocument();
+        expect(screen.getByText('Org: Demo')).toBeInTheDocument();
         expect(screen.getByText('Layout content')).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
+        expect(screen.getByRole('link', { name: 'Activity Feed' })).toHaveAttribute(
+            'href',
+            '/activities/feed',
+        );
+        expect(screen.getByRole('link', { name: 'Recognition' })).toHaveAttribute('href', '/recognition');
         expect(screen.getByRole('link', { name: 'User Info' })).toHaveAttribute('href', '/user-info');
         expect(screen.getByRole('link', { name: 'General Settings' })).toHaveAttribute(
             'href',
@@ -26,6 +35,11 @@ describe('AppLayout', () => {
         );
         expect(screen.getByRole('link', { name: 'Employees' })).toHaveAttribute('href', '/employees');
         expect(screen.getByRole('link', { name: 'My Profile' })).toHaveAttribute('href', '/profiles/me');
+        expect(screen.getByRole('link', { name: 'Teams' })).toHaveAttribute('href', '/teams');
+        expect(screen.getByRole('link', { name: 'Integrations' })).toHaveAttribute(
+            'href',
+            '/externals/integrations',
+        );
         expect(screen.getByRole('link', { name: 'Health' })).toHaveAttribute('href', '/health');
     });
 

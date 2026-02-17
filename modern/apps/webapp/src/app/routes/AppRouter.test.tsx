@@ -24,6 +24,7 @@ describe('AppRouter', () => {
 
         expect(await screen.findByRole('heading', { name: 'Health' })).toBeInTheDocument();
         expect(screen.getByText('Status: OK')).toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Real.');
     });
 
     it('renders user-info route', async () => {
@@ -39,6 +40,7 @@ describe('AppRouter', () => {
 
         expect(await screen.findByRole('heading', { name: 'User Info' })).toBeInTheDocument();
         expect(screen.getByText('Loading user information...')).toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Real.');
     });
 
     it('renders general-settings route', async () => {
@@ -82,5 +84,29 @@ describe('AppRouter', () => {
 
         expect(await screen.findByRole('heading', { name: 'My Profile' })).toBeInTheDocument();
         expect(screen.getByText('Loading profile details...')).toBeInTheDocument();
+    });
+
+    it('renders mock prototype route', async () => {
+        const router = createMemoryRouter(appRoutes, {
+            initialEntries: ['/activities/feed'],
+        });
+
+        render(<RouterProvider router={router} />);
+
+        expect(await screen.findByRole('heading', { name: 'Activity Feed' })).toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Mock.');
+        expect(screen.getByText('Today posts')).toBeInTheDocument();
+    });
+
+    it('renders disabled prototype route', async () => {
+        const router = createMemoryRouter(appRoutes, {
+            initialEntries: ['/externals/integrations'],
+        });
+
+        render(<RouterProvider router={router} />);
+
+        expect(await screen.findByRole('heading', { name: 'Integrations' })).toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Disabled.');
+        expect(screen.getByText('Marketplace')).toBeInTheDocument();
     });
 });

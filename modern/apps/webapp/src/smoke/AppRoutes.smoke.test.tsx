@@ -38,6 +38,14 @@ describe('Modern webapp smoke routes', () => {
         );
         expect(screen.getByRole('link', { name: 'Employees' })).toHaveAttribute('href', '/employees');
         expect(screen.getByRole('link', { name: 'My Profile' })).toHaveAttribute('href', '/profiles/me');
+        expect(screen.getByRole('link', { name: 'Activity Feed' })).toHaveAttribute(
+            'href',
+            '/activities/feed',
+        );
+        expect(screen.getByRole('link', { name: 'Integrations' })).toHaveAttribute(
+            'href',
+            '/externals/integrations',
+        );
     });
 
     it('reaches user-info route', async () => {
@@ -58,5 +66,10 @@ describe('Modern webapp smoke routes', () => {
     it('reaches my-profile route', async () => {
         renderRoute('/profiles/me');
         expect(await screen.findByRole('heading', { name: i18next.t('myProfile.title') })).toBeInTheDocument();
+    });
+
+    it('reaches placeholder prototype routes', async () => {
+        renderRoute('/activities/feed');
+        expect(await screen.findByRole('heading', { name: 'Activity Feed' })).toBeInTheDocument();
     });
 });
