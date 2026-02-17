@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
@@ -40,7 +40,9 @@ describe('AppLayout', () => {
             </MemoryRouter>,
         );
 
-        const toggle = screen.getAllByRole('button', { name: 'Toggle navigation' })[0];
+        const toggle = within(screen.getByRole('banner')).getByRole('button', {
+            name: 'Toggle navigation',
+        });
         expect(toggle).toHaveAttribute('aria-expanded', 'false');
 
         await user.click(toggle);
