@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Simoona.Modern.Api.Tests.Contracts.Skeleton;
 using Simoona.Modern.Api.Tests.Infrastructure;
@@ -14,11 +15,36 @@ public sealed class UserInfoContractTests : ContractTestBase
     }
 
     [Fact]
-    public async Task GetUserInfo_WithExistingUserInOrganization_ReturnsUserPayload()
+    public async Task GetUserInfo_WithoutToken_ReturnsUnauthorized()
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
         request.Headers.Add("X-Org-Id", "7");
-        request.Headers.Add(TestAuthHandler.UserIdHeader, "user-1");
+
+        var response = await HttpClient.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetUserInfo_WithInvalidToken_ReturnsUnauthorized()
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
+        request.Headers.Add("X-Org-Id", "7");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", "invalid-token");
+
+        var response = await HttpClient.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetUserInfo_WithValidTokenAndExistingUserInOrganization_ReturnsUserPayload()
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
+        request.Headers.Add("X-Org-Id", "7");
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer",
+            TestJwtTokenFactory.CreateToken(userId: "user-1", orgId: "7"));
 
         var response = await HttpClient.SendAsync(request);
 
@@ -37,7 +63,7 @@ public sealed class UserInfoContractTests : ContractTestBase
     public async Task GetUserInfo_WithoutOrganizationHeader_ReturnsBadRequest()
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
-        request.Headers.Add(TestAuthHandler.UserIdHeader, "user-1");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", TestJwtTokenFactory.CreateToken(userId: "user-1"));
 
         var response = await HttpClient.SendAsync(request);
 
@@ -49,6 +75,7 @@ public sealed class UserInfoContractTests : ContractTestBase
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
         request.Headers.Add("X-Org-Id", "7");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", TestJwtTokenFactory.CreateToken(userId: null));
 
         var response = await HttpClient.SendAsync(request);
 
@@ -60,7 +87,7 @@ public sealed class UserInfoContractTests : ContractTestBase
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
         request.Headers.Add("X-Org-Id", "7");
-        request.Headers.Add(TestAuthHandler.UserIdHeader, "missing-user");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", TestJwtTokenFactory.CreateToken(userId: "missing-user"));
 
         var response = await HttpClient.SendAsync(request);
 
@@ -72,7 +99,7 @@ public sealed class UserInfoContractTests : ContractTestBase
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
         request.Headers.Add("X-Org-Id", "7");
-        request.Headers.Add(TestAuthHandler.UserIdHeader, "user-2");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", TestJwtTokenFactory.CreateToken(userId: "user-2", orgId: "7"));
 
         var response = await HttpClient.SendAsync(request);
 

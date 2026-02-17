@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Simoona.Modern.Api.Auth;
 using Simoona.Modern.Api.ReadDb;
 using Simoona.Modern.Api.TenantContext;
 
@@ -10,7 +11,7 @@ public static class UserInfoEndpoints
     {
         apiV1.MapGet("/account/user-info", GetUserInfoAsync)
             .WithName("GetUserInfo")
-            .RequireAuthorization()
+            .RequireAuthorization(AuthorizationPolicies.AuthenticatedUser)
             .Produces<UserInfoResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized)

@@ -62,15 +62,20 @@ Modern API now includes a read-only EF Core integration against the legacy SQL S
 - Implemented endpoint: `GET /api/v1/account/user-info`.
   - Reads user by `userId` + `organizationId` from DB.
   - Requires authenticated caller.
-  - Requires organization header: `X-Org-Id` (or `Organization`) and user context from auth claims.
+  - Requires organization header: `X-Org-Id` (or `Organization`) and user context from JWT claims.
   - Temporary `X-User-Id` header fallback is enabled for Development/Testing only.
 
 ### Local Run/Config Notes
 
-Set the read-only connection string via appsettings or environment variable:
+Set required API config via environment variables:
 
 ```bash
 export ConnectionStrings__LegacyReadOnly="Server=localhost;Database=Simoona;Integrated Security=true;TrustServerCertificate=true;Application Intent=ReadOnly"
+export Auth__Jwt__Issuer="https://local.simoona.test"
+export Auth__Jwt__Audience="modern-api"
+export Auth__Jwt__SigningKey="dev-local-signing-key-change-me-000001"
+export Auth__Jwt__Authority=""
+export Auth__DevToken__Enabled="true"
 dotnet run --project modern/apps/api/src/Simoona.Modern.Api/Simoona.Modern.Api.csproj
 ```
 
@@ -78,6 +83,34 @@ Behavior notes:
 
 - `Application Intent=ReadOnly` is included by default in modern API appsettings.
 - This milestone does not include write endpoints and blocks writes at EF interception level.
+- JWT bootstrap validates issuer, audience, signature, and lifetime. In non-dev environments, authority mode is required.
+
+### Local Auth Bootstrap Runbook
+
+1. Start modern API with the env vars shown above.
+2. Generate a dev JWT (Development/Testing only, and only when `Auth__DevToken__Enabled=true`):
+
+```bash
+curl -s -X POST http://localhost:5187/api/v1/dev-auth/token \
+  -H "Content-Type: application/json" \
+  -d '{"userId":"user-1","organizationId":"7","tenantId":"tenant-a","expiresMinutes":60}'
+```
+
+3. Use `accessToken` from response when calling user info:
+
+```bash
+curl -i http://localhost:5187/api/v1/account/user-info \
+  -H "X-Org-Id: 7" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+Expected endpoint behavior:
+
+- Missing token: `401 Unauthorized`
+- Invalid token: `401 Unauthorized`
+- Valid token + matching `X-Org-Id` + user exists: `200 OK`
+- Missing/invalid org header: `400 Bad Request`
+- Valid auth but no matching user in org: `404 Not Found`
 
 ## API Contract Baseline
 
@@ -136,6 +169,7 @@ Environment:
   - user info endpoint call resolves to `${VITE_API_BASE_URL}/v1/account/user-info` (or `/api/v1/account/user-info` by default).
 - `VITE_API_ORGANIZATION_ID` (required for current user-info integration): numeric organization id sent as `X-Org-Id` header.
   - example: `VITE_API_ORGANIZATION_ID=7`
+- `VITE_API_BEARER_TOKEN` (optional): token sent as `Authorization: Bearer <token>` for user-info calls.
 
 ## CI Skeleton
 

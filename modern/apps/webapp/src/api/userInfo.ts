@@ -38,17 +38,28 @@ function getOrganizationIdHeaderValue(): string | null {
     return rawValue;
 }
 
+function getBearerToken(): string | null {
+    const token = import.meta.env.VITE_API_BEARER_TOKEN?.trim();
+    return token ? token : null;
+}
+
 export async function fetchUserInfo(): Promise<UserInfoResult> {
     const organizationId = getOrganizationIdHeaderValue();
     if (!organizationId) {
         return { kind: 'badRequest' };
     }
 
+    const token = getBearerToken();
+    const headers: HeadersInit = {
+        'X-Org-Id': organizationId,
+    };
+    if (token) {
+        headers.Authorization = `Bearer ${token}`;
+    }
+
     try {
         const userInfo = await apiFetch<UserInfoResponse>('/v1/account/user-info', {
-            headers: {
-                'X-Org-Id': organizationId,
-            },
+            headers,
         });
 
         return { kind: 'success', userInfo };
