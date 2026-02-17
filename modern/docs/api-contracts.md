@@ -78,6 +78,7 @@ Legacy routing note:
 
 ## 4) `GET /Employees`
 - Migration priority: `P1`
+- Modern status: `missing` (Wave 2 webapp uses temporary adapter fallback while waiting for `GET /api/v1/employees`)
 - Purpose: paged employee directory listing.
 - Request shape:
   - headers: `Authorization: Bearer <token>`
@@ -99,6 +100,7 @@ Legacy routing note:
   - organization is always read from current identity context
 - Notes/risks:
   - response relies on `X.PagedList` serialization for `pagedList` metadata.
+  - Wave 2 frontend route `/employees` is migrated in `modern/apps/webapp` and currently falls back to a temporary adapter when modern endpoint returns `404`.
 
 ## 5) `GET /Wall/AllPosts`
 - Migration priority: `P1`
@@ -212,6 +214,7 @@ Legacy routing note:
 
 ## 10) `GET /ApplicationUser/GetProfile` and `GET /ApplicationUser/GetUserProfile/{id}`
 - Migration priority: `P2`
+- Modern status: `missing` (Wave 2 webapp uses temporary adapter fallback while waiting for `GET /api/v1/profiles/me`)
 - Purpose: read full profile aggregate (self or explicit user).
 - Request shape:
   - headers: `Authorization: Bearer <token>`
@@ -233,6 +236,7 @@ Legacy routing note:
   - some nested/profile-part endpoints allow full access only to self or admin (`AdministrationPermissions.ApplicationUser`)
 - Notes/risks:
   - profile visibility rules vary by sub-endpoint and caller role; modern contract should document privacy masking explicitly.
+  - Wave 2 frontend route `/profiles/me` is migrated in `modern/apps/webapp` and currently falls back to a temporary adapter when modern endpoint returns `404`.
 
 ## Cross-cutting migration notes
 - Many endpoints return either ASP.NET model-state errors or domain validation payload `{ errorCode, errorMessage }`; normalize this early in modern API.

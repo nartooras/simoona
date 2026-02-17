@@ -196,6 +196,21 @@ Current migrated scope vs legacy:
 | General settings (read) | `/:organizationName/Settings/General` + `GET /User/GeneralSettings` | `/settings/general` | Migrated on modern API |
 | General settings (write) | `PUT /User/GeneralSettings` | N/A | Still legacy |
 
+## Frontend Migration Wave 2
+
+Wave 2 migration details:
+
+- `modern/docs/frontend-migration-wave2.md`
+
+Current migrated scope vs legacy:
+
+| Bucket | Items | Endpoint status |
+|---|---|---|
+| Migrated now (Wave 2) | Employee Directory (`/employees`) | Temporary adapter fallback while `GET /api/v1/employees` is missing |
+| Migrated now (Wave 2) | My Profile (`/profiles/me`) | Temporary adapter fallback while `GET /api/v1/profiles/me` is missing |
+| Migrated in Wave 1 | User Info (`/user-info`), General Settings read (`/settings/general`) | Real modern API endpoints |
+| Still legacy | General settings write, profile edit flows, non-migrated settings/profile/wall areas | Not yet migrated |
+
 ## CI Skeleton
 
 Workflow file: `.github/workflows/modernization-ci.yml`

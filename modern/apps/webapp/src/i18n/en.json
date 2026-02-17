@@ -41,5 +41,49 @@
         "fallback": {
             "notAvailable": "Not available"
         }
+    },
+    "employeeDirectory": {
+        "title": "Employee Directory",
+        "fields": {
+            "name": "Name",
+            "jobTitle": "Job title",
+            "email": "Email"
+        },
+        "states": {
+            "loading": "Loading employee directory...",
+            "temporaryAdapter": "Showing temporary fallback data until the modern Employee Directory endpoint is available.",
+            "empty": "No employees matched the current query.",
+            "notFound": "Employee directory data was not found.",
+            "unauthorized": "You are not authorized. Sign in and try again.",
+            "forbidden": "You do not have permission to view employee directory.",
+            "badRequest": "User context is incomplete. Check authentication and organization headers.",
+            "error": "Something went wrong while loading employee directory."
+        },
+        "fallback": {
+            "notAvailable": "Not available"
+        }
+    },
+    "myProfile": {
+        "title": "My Profile",
+        "fields": {
+            "fullName": "Full name",
+            "email": "Email",
+            "jobTitle": "Job title",
+            "department": "Department",
+            "office": "Office",
+            "timeZone": "Time zone"
+        },
+        "states": {
+            "loading": "Loading profile details...",
+            "temporaryAdapter": "Showing temporary fallback data until the modern Profile endpoint is available.",
+            "notFound": "Profile details were not found.",
+            "unauthorized": "You are not authorized. Sign in and try again.",
+            "forbidden": "You do not have permission to view this profile.",
+            "badRequest": "User context is incomplete. Check authentication and organization headers.",
+            "error": "Something went wrong while loading profile details."
+        },
+        "fallback": {
+            "notAvailable": "Not available"
+        }
     }
 }
