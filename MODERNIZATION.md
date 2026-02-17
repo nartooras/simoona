@@ -106,6 +106,7 @@ pnpm run arch:check
 ```
 
 This check is also included in root `pnpm lint`.
+Coverage includes `import/export ... from`, `import("...")`, and `require("...")` forms for `src/**`, `@/src/**`, `../src/**`, and absolute `.../src/**` paths, with tests in `modern/scripts/check-modern-boundaries.test.mjs`.
 
 ## New React Webapp App
 

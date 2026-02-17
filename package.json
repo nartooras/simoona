@@ -6,7 +6,7 @@
     "packageManager": "pnpm@10.12.1",
     "scripts": {
         "build": "pnpm -r --if-present run build",
-        "test": "pnpm -r --if-present run test",
+        "test": "node --test modern/scripts/*.test.mjs && pnpm -r --if-present run test",
         "lint": "pnpm run arch:check && pnpm -r --if-present run lint",
         "typecheck": "pnpm -r --if-present run typecheck",
         "arch:check": "node modern/scripts/check-modern-boundaries.mjs",

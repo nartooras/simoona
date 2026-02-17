@@ -32,23 +32,40 @@ const codeExtensions = new Set([
   ".tsx",
 ]);
 
+const forbiddenImportPathPattern =
+  "(?:@\\/src\\/|src\\/|(?:\\.\\.\\/)+src\\/|\\/(?:Users|home|workspace)\\/[^\"']*\\/src\\/|\\/[^\"']*\\/src\\/)";
+
 const forbiddenPatterns = [
-  /\bfrom\s*["'](?:\.\.\/)+src\//,
-  /\brequire\(\s*["'](?:\.\.\/)+src\//,
-  /["']\/(?:Users|home|workspace)\/[^"']*\/src\//,
+  new RegExp(
+    `(?<!["'])\\b(?:import|export)\\b[^\\n;]*\\bfrom\\s*["']${forbiddenImportPathPattern}`,
+  ),
+  new RegExp(`(?<!["'])\\bimport\\(\\s*["']${forbiddenImportPathPattern}`),
+  new RegExp(`(?<!["'])\\brequire\\(\\s*["']${forbiddenImportPathPattern}`),
   /ProjectReference\s+Include=["'][^"']*[\\/](src)[\\/]/,
 ];
 
-const violations = [];
+export function collectViolationsInContent(relPath, content) {
+  const violations = [];
+  const lines = content.split(/\r?\n/);
 
-function walk(dir) {
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
+    if (forbiddenPatterns.some((pattern) => pattern.test(line))) {
+      violations.push(`${relPath}:${i + 1}: ${line.trim()}`);
+    }
+  }
+
+  return violations;
+}
+
+function walk(dir, violations) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     if (entry.isDirectory()) {
       if (skipDirs.has(entry.name)) {
         continue;
       }
 
-      walk(path.join(dir, entry.name));
+      walk(path.join(dir, entry.name), violations);
       continue;
     }
 
@@ -60,26 +77,29 @@ function walk(dir) {
     const filePath = path.join(dir, entry.name);
     const relPath = path.relative(repoRoot, filePath);
     const content = fs.readFileSync(filePath, "utf8");
-    const lines = content.split(/\r?\n/);
+    violations.push(...collectViolationsInContent(relPath, content));
+  }
+}
 
-    for (let i = 0; i < lines.length; i += 1) {
-      const line = lines[i];
-      if (forbiddenPatterns.some((pattern) => pattern.test(line))) {
-        violations.push(`${relPath}:${i + 1}: ${line.trim()}`);
-      }
+export function runArchitectureBoundaryCheck() {
+  const violations = [];
+  walk(modernRoot, violations);
+  return violations;
+}
+
+if (process.argv[1] === __filename) {
+  const violations = runArchitectureBoundaryCheck();
+
+  if (violations.length > 0) {
+    console.error("Architecture boundary check failed.");
+    console.error("Found forbidden legacy src/** references from modern/**:");
+    for (const violation of violations) {
+      console.error(`- ${violation}`);
     }
+    process.exit(1);
   }
+
+  console.log(
+    "Architecture boundary check passed (no modern/** -> src/** references).",
+  );
 }
-
-walk(modernRoot);
-
-if (violations.length > 0) {
-  console.error("Architecture boundary check failed.");
-  console.error("Found forbidden legacy src/** references from modern/**:");
-  for (const violation of violations) {
-    console.error(`- ${violation}`);
-  }
-  process.exit(1);
-}
-
-console.log("Architecture boundary check passed (no modern/** -> src/** references).");
