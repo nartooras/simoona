@@ -32,7 +32,7 @@ describe('AppLayout', () => {
     it('toggles mobile navigation state', async () => {
         const user = userEvent.setup();
 
-        render(
+        const { container } = render(
             <MemoryRouter>
                 <AppLayout>
                     <div>Layout content</div>
@@ -40,7 +40,7 @@ describe('AppLayout', () => {
             </MemoryRouter>,
         );
 
-        const toggle = within(screen.getByRole('banner')).getByRole('button', {
+        const toggle = within(container).getByRole('button', {
             name: 'Toggle navigation',
         });
         expect(toggle).toHaveAttribute('aria-expanded', 'false');
