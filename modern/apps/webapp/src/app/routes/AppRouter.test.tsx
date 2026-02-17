@@ -54,4 +54,34 @@ describe('AppRouter', () => {
             screen.getByText('General settings were returned without language or time zone options.'),
         ).toBeInTheDocument();
     });
+
+    it('renders employee-directory route', async () => {
+        vi.spyOn(globalThis, 'fetch').mockImplementation(
+            () => new Promise(() => {}) as ReturnType<typeof fetch>,
+        );
+
+        const router = createMemoryRouter(appRoutes, {
+            initialEntries: ['/employees'],
+        });
+
+        render(<RouterProvider router={router} />);
+
+        expect(await screen.findByRole('heading', { name: 'Employee Directory' })).toBeInTheDocument();
+        expect(screen.getByText('Loading employee directory...')).toBeInTheDocument();
+    });
+
+    it('renders my-profile route', async () => {
+        vi.spyOn(globalThis, 'fetch').mockImplementation(
+            () => new Promise(() => {}) as ReturnType<typeof fetch>,
+        );
+
+        const router = createMemoryRouter(appRoutes, {
+            initialEntries: ['/profiles/me'],
+        });
+
+        render(<RouterProvider router={router} />);
+
+        expect(await screen.findByRole('heading', { name: 'My Profile' })).toBeInTheDocument();
+        expect(screen.getByText('Loading profile details...')).toBeInTheDocument();
+    });
 });

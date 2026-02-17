@@ -20,5 +20,7 @@ describe('AppLayout', () => {
             'href',
             '/settings/general',
         );
+        expect(screen.getByRole('link', { name: 'Employees' })).toHaveAttribute('href', '/employees');
+        expect(screen.getByRole('link', { name: 'My Profile' })).toHaveAttribute('href', '/profiles/me');
     });
 });

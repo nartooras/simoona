@@ -12,6 +12,8 @@ export function AppLayout({ children }: PropsWithChildren) {
                         <NavLink to="/health">Health</NavLink>
                         <NavLink to="/user-info">User Info</NavLink>
                         <NavLink to="/settings/general">General Settings</NavLink>
+                        <NavLink to="/employees">Employees</NavLink>
+                        <NavLink to="/profiles/me">My Profile</NavLink>
                     </nav>
                 </div>
             </header>

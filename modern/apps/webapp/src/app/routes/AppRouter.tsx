@@ -4,6 +4,8 @@ import { HealthPage } from '../../pages/HealthPage';
 import { HomePage } from '../../pages/HomePage';
 import { GeneralSettingsPage } from '../../pages/GeneralSettingsPage';
 import { UserInfoPage } from '../../pages/UserInfoPage';
+import { EmployeeDirectoryPage } from '../../pages/EmployeeDirectoryPage';
+import { MyProfilePage } from '../../pages/MyProfilePage';
 
 export const appRoutes: RouteObject[] = [
     {
@@ -35,6 +37,22 @@ export const appRoutes: RouteObject[] = [
         element: (
             <AppLayout>
                 <GeneralSettingsPage />
+            </AppLayout>
+        ),
+    },
+    {
+        path: '/employees',
+        element: (
+            <AppLayout>
+                <EmployeeDirectoryPage />
+            </AppLayout>
+        ),
+    },
+    {
+        path: '/profiles/me',
+        element: (
+            <AppLayout>
+                <MyProfilePage />
             </AppLayout>
         ),
     },
