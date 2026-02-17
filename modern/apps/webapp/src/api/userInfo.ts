@@ -1,4 +1,5 @@
 import { ApiHttpError, apiFetch } from './client';
+import { buildApiAuthHeaders } from './authHeaders';
 
 export type UserInfoResponse = {
     email: string | null;
@@ -24,42 +25,15 @@ export type UserInfoResult =
     | { kind: 'serverError' }
     | { kind: 'unknownError' };
 
-function getOrganizationIdHeaderValue(): string | null {
-    const rawValue = import.meta.env.VITE_API_ORGANIZATION_ID?.trim();
-
-    if (!rawValue) {
-        return null;
-    }
-
-    if (!/^\d+$/.test(rawValue)) {
-        return null;
-    }
-
-    return rawValue;
-}
-
-function getBearerToken(): string | null {
-    const token = import.meta.env.VITE_API_BEARER_TOKEN?.trim();
-    return token ? token : null;
-}
-
 export async function fetchUserInfo(): Promise<UserInfoResult> {
-    const organizationId = getOrganizationIdHeaderValue();
-    if (!organizationId) {
+    const authHeadersResult = buildApiAuthHeaders();
+    if (authHeadersResult.kind === 'missingOrganization') {
         return { kind: 'badRequest' };
-    }
-
-    const token = getBearerToken();
-    const headers: HeadersInit = {
-        'X-Org-Id': organizationId,
-    };
-    if (token) {
-        headers.Authorization = `Bearer ${token}`;
     }
 
     try {
         const userInfo = await apiFetch<UserInfoResponse>('/v1/account/user-info', {
-            headers,
+            headers: authHeadersResult.headers,
         });
 
         return { kind: 'success', userInfo };

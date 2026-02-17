@@ -39,4 +39,19 @@ describe('AppRouter', () => {
         expect(await screen.findByRole('heading', { name: 'User Info' })).toBeInTheDocument();
         expect(screen.getByText('Loading user information...')).toBeInTheDocument();
     });
+
+    it('renders general-settings route', async () => {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(null, { status: 404 }));
+
+        const router = createMemoryRouter(appRoutes, {
+            initialEntries: ['/settings/general'],
+        });
+
+        render(<RouterProvider router={router} />);
+
+        expect(await screen.findByRole('heading', { name: 'General Settings' })).toBeInTheDocument();
+        expect(
+            screen.getByText('This screen is wired, but the modern API endpoint is not available yet.'),
+        ).toBeInTheDocument();
+    });
 });
