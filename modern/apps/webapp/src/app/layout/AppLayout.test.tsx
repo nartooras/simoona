@@ -16,5 +16,9 @@ describe('AppLayout', () => {
         expect(screen.getByText('Simoona Modern Webapp')).toBeInTheDocument();
         expect(screen.getByText('Layout content')).toBeInTheDocument();
         expect(screen.getByRole('link', { name: 'User Info' })).toHaveAttribute('href', '/user-info');
+        expect(screen.getByRole('link', { name: 'General Settings' })).toHaveAttribute(
+            'href',
+            '/settings/general',
+        );
     });
 });

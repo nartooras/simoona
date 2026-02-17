@@ -172,6 +172,20 @@ Environment:
   - example: `VITE_API_ORGANIZATION_ID=7`
 - `VITE_API_BEARER_TOKEN` (optional): token sent as `Authorization: Bearer <token>` for user-info calls.
 
+## Frontend Migration Wave 1
+
+Wave 1 migration details:
+
+- `modern/docs/frontend-migration-wave1.md`
+
+Current migrated scope vs legacy:
+
+| Area | Legacy route/API | React route | Status |
+|---|---|---|---|
+| Current user context | `GET /Account/UserInfo` | `/user-info` | Migrated on modern API |
+| General settings (read) | `/:organizationName/Settings/General` + `GET /User/GeneralSettings` | `/settings/general` | React route migrated with API-gap stub fallback |
+| General settings (write) | `PUT /User/GeneralSettings` | N/A | Still legacy |
+
 ## CI Skeleton
 
 Workflow file: `.github/workflows/modernization-ci.yml`
