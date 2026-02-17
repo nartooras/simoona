@@ -56,3 +56,16 @@
 
 ## Notes
 - Existing tracked change in working tree before review: `pnpm-lock.yaml` (left untouched).
+
+## Re-review update
+- Re-reviewed commit: `acd336802ddcc42bb25ac024721bbfd6f3dc385a`
+- Result: both original findings are closed.
+
+### Closure details
+- P1 closed:
+  - `Program.cs` now configures auth (`AddAuthentication().AddJwtBearer()`, `AddAuthorization()`, `UseAuthentication()`, `UseAuthorization()`).
+  - `UserInfoEndpoints.cs` now enforces route authorization via `.RequireAuthorization()` and documents `401`.
+  - `HttpCurrentUserResolver.cs` now allows `X-User-Id` fallback only in `Development` or `Testing`.
+- P2 closed:
+  - `UserInfoContractTests.cs` now covers missing user context (`400`), user not found (`404`), and cross-org access (`404`).
+  - test auth harness added in `TestAuthHandler.cs` and wired in `ModernApiTestFactory.cs`.
