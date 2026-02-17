@@ -1,14 +1,14 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Simoona.Modern.Api.Tests.Contracts;
+using Simoona.Modern.Api.Tests.Infrastructure;
 
 namespace Simoona.Modern.Api.Tests.Contracts.Skeleton;
 
 public sealed class TenantContextContractTests : ContractTestBase
 {
-    public TenantContextContractTests(WebApplicationFactory<Program> factory)
+    public TenantContextContractTests(ModernApiTestFactory factory)
         : base(factory)
     {
     }

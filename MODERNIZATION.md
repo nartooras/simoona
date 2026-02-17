@@ -51,6 +51,30 @@ Default routes in this modernization skeleton:
 
 OpenAPI/Swagger UI is enabled in Development environment.
 
+## Read-only DB Integration Milestone
+
+Modern API now includes a read-only EF Core integration against the legacy SQL Server schema for the first real migrated endpoint.
+
+- Read DB context: `ModernReadDbContext` (`AspNetUsers` projection only for this milestone).
+- Safety guard: `ReadOnlySaveGuardInterceptor` throws for any `SaveChanges` invocation to enforce no writes.
+- Implemented endpoint: `GET /api/v1/account/user-info`.
+  - Reads user by `userId` + `organizationId` from DB.
+  - Requires organization header: `X-Org-Id` (or `Organization`) and user context from auth claims or temporary `X-User-Id` header.
+
+### Local Run/Config Notes
+
+Set the read-only connection string via appsettings or environment variable:
+
+```bash
+export ConnectionStrings__LegacyReadOnly="Server=localhost;Database=Simoona;Integrated Security=true;TrustServerCertificate=true;Application Intent=ReadOnly"
+dotnet run --project modern/apps/api/src/Simoona.Modern.Api/Simoona.Modern.Api.csproj
+```
+
+Behavior notes:
+
+- `Application Intent=ReadOnly` is included by default in modern API appsettings.
+- This milestone does not include write endpoints and blocks writes at EF interception level.
+
 ## API Contract Baseline
 
 A first-pass legacy-to-modern API contract baseline for prioritized migration endpoints lives at:

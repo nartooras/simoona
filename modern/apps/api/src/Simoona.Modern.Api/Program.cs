@@ -1,3 +1,5 @@
+using Simoona.Modern.Api.Endpoints.UserInfo;
+using Simoona.Modern.Api.ReadDb;
 using Simoona.Modern.Api.TenantContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTenantContext();
+builder.Services.AddReadOnlyDataAccess(builder.Configuration);
+builder.Services.AddScoped<ICurrentUserResolver, HttpCurrentUserResolver>();
 
 var app = builder.Build();
 
@@ -38,6 +42,8 @@ apiV1.MapGet("/tenant-context", (ITenantContextAccessor tenantContextAccessor) =
         });
     })
     .WithName("GetTenantContext");
+
+apiV1.MapUserInfoEndpoints();
 
 app.Run();
 

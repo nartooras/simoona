@@ -1,9 +1,6 @@
-namespace Simoona.Modern.Api.Tests.Contracts.Skeleton;
+namespace Simoona.Modern.Api.Endpoints.UserInfo;
 
-internal sealed record HealthResponse(string Status);
-internal sealed record PingResponse(string Message);
-internal sealed record TenantContextResponse(string? TenantId, string? OrganizationId);
-internal sealed record UserInfoResponse(
+public sealed record UserInfoResponse(
     string? Email,
     bool HasRegistered,
     string LoginProvider,
