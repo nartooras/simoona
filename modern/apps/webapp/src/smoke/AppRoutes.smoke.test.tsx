@@ -1,0 +1,62 @@
+import { render, screen } from '@testing-library/react';
+import i18next from 'i18next';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { appRoutes } from '../app/routes/AppRouter';
+import '../i18n';
+
+function renderRoute(path: string) {
+    const router = createMemoryRouter(appRoutes, {
+        initialEntries: [path],
+    });
+
+    render(<RouterProvider router={router} />);
+}
+
+describe('Modern webapp smoke routes', () => {
+    beforeEach(() => {
+        vi.stubEnv('VITE_API_ORGANIZATION_ID', '7');
+        vi.spyOn(globalThis, 'fetch').mockImplementation(
+            () => new Promise(() => {}) as ReturnType<typeof fetch>,
+        );
+    });
+
+    afterEach(() => {
+        vi.unstubAllEnvs();
+        vi.restoreAllMocks();
+    });
+
+    it('loads app shell on home route', async () => {
+        renderRoute('/');
+
+        expect(await screen.findByRole('heading', { name: i18next.t('home.title') })).toBeInTheDocument();
+        expect(screen.getByText('Simoona')).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: 'User Info' })).toHaveAttribute('href', '/user-info');
+        expect(screen.getByRole('link', { name: 'General Settings' })).toHaveAttribute(
+            'href',
+            '/settings/general',
+        );
+        expect(screen.getByRole('link', { name: 'Employees' })).toHaveAttribute('href', '/employees');
+        expect(screen.getByRole('link', { name: 'My Profile' })).toHaveAttribute('href', '/profiles/me');
+    });
+
+    it('reaches user-info route', async () => {
+        renderRoute('/user-info');
+        expect(await screen.findByRole('heading', { name: i18next.t('userInfo.title') })).toBeInTheDocument();
+    });
+
+    it('reaches general-settings route', async () => {
+        renderRoute('/settings/general');
+        expect(await screen.findByRole('heading', { name: i18next.t('generalSettings.title') })).toBeInTheDocument();
+    });
+
+    it('reaches employee-directory route', async () => {
+        renderRoute('/employees');
+        expect(await screen.findByRole('heading', { name: i18next.t('employeeDirectory.title') })).toBeInTheDocument();
+    });
+
+    it('reaches my-profile route', async () => {
+        renderRoute('/profiles/me');
+        expect(await screen.findByRole('heading', { name: i18next.t('myProfile.title') })).toBeInTheDocument();
+    });
+});
