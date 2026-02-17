@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Simoona.Modern.Api.ReadDb;
 
 namespace Simoona.Modern.Api.Tests.Infrastructure;
@@ -18,11 +20,23 @@ public sealed class ModernApiTestFactory : WebApplicationFactory<Program>
         {
             services.RemoveAll<DbContextOptions<ModernReadDbContext>>();
             services.RemoveAll<ModernReadDbContext>();
+            services.RemoveAll<IConfigureOptions<AuthenticationOptions>>();
+            services.RemoveAll<IConfigureOptions<AuthenticationSchemeOptions>>();
 
             services.AddDbContext<ModernReadDbContext>(options =>
             {
                 options.UseInMemoryDatabase(_databaseName);
             });
+
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = TestAuthHandler.SchemeName;
+                    options.DefaultChallengeScheme = TestAuthHandler.SchemeName;
+                })
+                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
+                    TestAuthHandler.SchemeName,
+                    configureOptions: _ => { });
         });
     }
 

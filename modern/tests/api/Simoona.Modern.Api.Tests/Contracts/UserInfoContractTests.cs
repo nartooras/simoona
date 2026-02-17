@@ -18,7 +18,7 @@ public sealed class UserInfoContractTests : ContractTestBase
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
         request.Headers.Add("X-Org-Id", "7");
-        request.Headers.Add("X-User-Id", "user-1");
+        request.Headers.Add(TestAuthHandler.UserIdHeader, "user-1");
 
         var response = await HttpClient.SendAsync(request);
 
@@ -37,10 +37,45 @@ public sealed class UserInfoContractTests : ContractTestBase
     public async Task GetUserInfo_WithoutOrganizationHeader_ReturnsBadRequest()
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
-        request.Headers.Add("X-User-Id", "user-1");
+        request.Headers.Add(TestAuthHandler.UserIdHeader, "user-1");
 
         var response = await HttpClient.SendAsync(request);
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetUserInfo_WithoutUserContext_ReturnsBadRequest()
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
+        request.Headers.Add("X-Org-Id", "7");
+
+        var response = await HttpClient.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetUserInfo_WhenUserDoesNotExist_ReturnsNotFound()
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
+        request.Headers.Add("X-Org-Id", "7");
+        request.Headers.Add(TestAuthHandler.UserIdHeader, "missing-user");
+
+        var response = await HttpClient.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetUserInfo_WhenUserBelongsToDifferentOrganization_ReturnsNotFound()
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
+        request.Headers.Add("X-Org-Id", "7");
+        request.Headers.Add(TestAuthHandler.UserIdHeader, "user-2");
+
+        var response = await HttpClient.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

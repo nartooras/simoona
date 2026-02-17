@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Simoona.Modern.Api.Endpoints.UserInfo;
 using Simoona.Modern.Api.ReadDb;
 using Simoona.Modern.Api.TenantContext;
@@ -9,6 +10,10 @@ builder.Logging.AddJsonConsole();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
+builder.Services.AddAuthorization();
 
 builder.Services.AddTenantContext();
 builder.Services.AddReadOnlyDataAccess(builder.Configuration);
@@ -22,6 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseTenantContext();
 
 app.MapGet("/health", () => Results.Ok(new { status = "healthy" }))

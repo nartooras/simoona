@@ -29,7 +29,8 @@ Legacy routing note:
 - Notes/risks:
   - response schema is union-shaped and client code often branches on `hasRegistered`.
   - modern milestone assumptions:
-    - user id is resolved from authenticated claims (`nameidentifier`/`sub`) with temporary header fallback `X-User-Id` for local/testing.
+    - endpoint requires authenticated caller.
+    - user id is resolved from authenticated claims (`nameidentifier`/`sub`); temporary `X-User-Id` fallback is accepted only in Development/Testing environments.
     - organization scope is required from `X-Org-Id` (or `Organization`) and must be numeric.
     - currently returns the registered-user shape only; `organizationName` is not returned yet, and `permissions`/`roles` are temporarily empty until authz integration lands.
 

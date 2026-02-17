@@ -10,8 +10,10 @@ public static class UserInfoEndpoints
     {
         apiV1.MapGet("/account/user-info", GetUserInfoAsync)
             .WithName("GetUserInfo")
+            .RequireAuthorization()
             .Produces<UserInfoResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status404NotFound);
 
         return apiV1;

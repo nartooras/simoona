@@ -59,7 +59,9 @@ Modern API now includes a read-only EF Core integration against the legacy SQL S
 - Safety guard: `ReadOnlySaveGuardInterceptor` throws for any `SaveChanges` invocation to enforce no writes.
 - Implemented endpoint: `GET /api/v1/account/user-info`.
   - Reads user by `userId` + `organizationId` from DB.
-  - Requires organization header: `X-Org-Id` (or `Organization`) and user context from auth claims or temporary `X-User-Id` header.
+  - Requires authenticated caller.
+  - Requires organization header: `X-Org-Id` (or `Organization`) and user context from auth claims.
+  - Temporary `X-User-Id` header fallback is enabled for Development/Testing only.
 
 ### Local Run/Config Notes
 
