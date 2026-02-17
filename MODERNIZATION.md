@@ -211,6 +211,24 @@ Current migrated scope vs legacy:
 | Migrated in Wave 1 | User Info (`/user-info`), General Settings read (`/settings/general`) | Real modern API endpoints |
 | Still legacy | General settings write, profile edit flows, non-migrated settings/profile/wall areas | Not yet migrated |
 
+## Frontend Visual Parity Foundation
+
+Visual parity baseline and implementation notes:
+
+- `modern/docs/frontend-visual-parity.md`
+
+Current parity snapshot:
+
+| Area | Status |
+|---|---|
+| Page shell (header/sidebar/content) | matched |
+| Navigation active/hover behavior | matched |
+| Typography baseline | matched |
+| Color system | matched |
+| Spacing rhythm | partially matched |
+| Table/list/card patterns | partially matched |
+| Legacy iconography/module-specific chrome | not matched yet |
+
 ## CI Skeleton
 
 Workflow file: `.github/workflows/modernization-ci.yml`

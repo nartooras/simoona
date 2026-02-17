@@ -26,40 +26,42 @@ export function MyProfilePage() {
 
     if (result === null) {
         return (
-            <section>
-                <h1>{t('myProfile.title')}</h1>
-                <p>{t('myProfile.states.loading')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('myProfile.title')}</h1>
+                <p className="status-message">{t('myProfile.states.loading')}</p>
             </section>
         );
     }
 
     if (result.kind === 'success') {
         return (
-            <section>
-                <h1>{t('myProfile.title')}</h1>
-                {result.source === 'temporary-stub' ? <p>{t('myProfile.states.temporaryAdapter')}</p> : null}
-                <dl className="user-info-list">
-                    <div>
+            <section className="page-section">
+                <h1 className="page-title">{t('myProfile.title')}</h1>
+                {result.source === 'temporary-stub' ? (
+                    <p className="helper-note">{t('myProfile.states.temporaryAdapter')}</p>
+                ) : null}
+                <dl className="info-grid">
+                    <div className="info-card">
                         <dt>{t('myProfile.fields.fullName')}</dt>
                         <dd>{result.profile.fullName || t('myProfile.fallback.notAvailable')}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('myProfile.fields.email')}</dt>
                         <dd>{result.profile.email ?? t('myProfile.fallback.notAvailable')}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('myProfile.fields.jobTitle')}</dt>
                         <dd>{result.profile.jobTitle ?? t('myProfile.fallback.notAvailable')}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('myProfile.fields.department')}</dt>
                         <dd>{result.profile.department ?? t('myProfile.fallback.notAvailable')}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('myProfile.fields.office')}</dt>
                         <dd>{result.profile.office ?? t('myProfile.fallback.notAvailable')}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('myProfile.fields.timeZone')}</dt>
                         <dd>{result.profile.timeZone ?? t('myProfile.fallback.notAvailable')}</dd>
                     </div>
@@ -70,44 +72,44 @@ export function MyProfilePage() {
 
     if (result.kind === 'notFound') {
         return (
-            <section>
-                <h1>{t('myProfile.title')}</h1>
-                <p>{t('myProfile.states.notFound')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('myProfile.title')}</h1>
+                <p className="status-message">{t('myProfile.states.notFound')}</p>
             </section>
         );
     }
 
     if (result.kind === 'unauthorized') {
         return (
-            <section>
-                <h1>{t('myProfile.title')}</h1>
-                <p>{t('myProfile.states.unauthorized')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('myProfile.title')}</h1>
+                <p className="status-message">{t('myProfile.states.unauthorized')}</p>
             </section>
         );
     }
 
     if (result.kind === 'forbidden') {
         return (
-            <section>
-                <h1>{t('myProfile.title')}</h1>
-                <p>{t('myProfile.states.forbidden')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('myProfile.title')}</h1>
+                <p className="status-message">{t('myProfile.states.forbidden')}</p>
             </section>
         );
     }
 
     if (result.kind === 'badRequest') {
         return (
-            <section>
-                <h1>{t('myProfile.title')}</h1>
-                <p>{t('myProfile.states.badRequest')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('myProfile.title')}</h1>
+                <p className="status-message">{t('myProfile.states.badRequest')}</p>
             </section>
         );
     }
 
     return (
-        <section>
-            <h1>{t('myProfile.title')}</h1>
-            <p>{t('myProfile.states.error')}</p>
+        <section className="page-section">
+            <h1 className="page-title">{t('myProfile.title')}</h1>
+            <p className="status-message">{t('myProfile.states.error')}</p>
         </section>
     );
 }

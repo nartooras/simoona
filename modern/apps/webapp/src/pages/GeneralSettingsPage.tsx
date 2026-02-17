@@ -26,9 +26,9 @@ export function GeneralSettingsPage() {
 
     if (result === null) {
         return (
-            <section>
-                <h1>{t('generalSettings.title')}</h1>
-                <p>{t('generalSettings.states.loading')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('generalSettings.title')}</h1>
+                <p className="status-message">{t('generalSettings.states.loading')}</p>
             </section>
         );
     }
@@ -42,14 +42,14 @@ export function GeneralSettingsPage() {
             t('generalSettings.fallback.notAvailable');
 
         return (
-            <section>
-                <h1>{t('generalSettings.title')}</h1>
-                <dl className="user-info-list">
-                    <div>
+            <section className="page-section">
+                <h1 className="page-title">{t('generalSettings.title')}</h1>
+                <dl className="info-grid">
+                    <div className="info-card">
                         <dt>{t('generalSettings.fields.language')}</dt>
                         <dd>{selectedLanguage}</dd>
                     </div>
-                    <div>
+                    <div className="info-card">
                         <dt>{t('generalSettings.fields.timeZone')}</dt>
                         <dd>{selectedTimeZone}</dd>
                     </div>
@@ -60,44 +60,44 @@ export function GeneralSettingsPage() {
 
     if (result.kind === 'empty') {
         return (
-            <section>
-                <h1>{t('generalSettings.title')}</h1>
-                <p>{t('generalSettings.states.empty')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('generalSettings.title')}</h1>
+                <p className="status-message">{t('generalSettings.states.empty')}</p>
             </section>
         );
     }
 
     if (result.kind === 'unauthorized') {
         return (
-            <section>
-                <h1>{t('generalSettings.title')}</h1>
-                <p>{t('generalSettings.states.unauthorized')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('generalSettings.title')}</h1>
+                <p className="status-message">{t('generalSettings.states.unauthorized')}</p>
             </section>
         );
     }
 
     if (result.kind === 'forbidden') {
         return (
-            <section>
-                <h1>{t('generalSettings.title')}</h1>
-                <p>{t('generalSettings.states.forbidden')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('generalSettings.title')}</h1>
+                <p className="status-message">{t('generalSettings.states.forbidden')}</p>
             </section>
         );
     }
 
     if (result.kind === 'badRequest') {
         return (
-            <section>
-                <h1>{t('generalSettings.title')}</h1>
-                <p>{t('generalSettings.states.badRequest')}</p>
+            <section className="page-section">
+                <h1 className="page-title">{t('generalSettings.title')}</h1>
+                <p className="status-message">{t('generalSettings.states.badRequest')}</p>
             </section>
         );
     }
 
     return (
-        <section>
-            <h1>{t('generalSettings.title')}</h1>
-            <p>{t('generalSettings.states.error')}</p>
+        <section className="page-section">
+            <h1 className="page-title">{t('generalSettings.title')}</h1>
+            <p className="status-message">{t('generalSettings.states.error')}</p>
         </section>
     );
 }
