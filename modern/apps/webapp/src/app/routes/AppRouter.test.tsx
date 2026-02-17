@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import i18next from 'i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { appRoutes } from './AppRouter';
@@ -50,9 +51,7 @@ describe('AppRouter', () => {
         render(<RouterProvider router={router} />);
 
         expect(await screen.findByRole('heading', { name: 'General Settings' })).toBeInTheDocument();
-        expect(
-            screen.getByText('General settings were returned without language or time zone options.'),
-        ).toBeInTheDocument();
+        expect(screen.getByText(i18next.t('generalSettings.states.empty'))).toBeInTheDocument();
     });
 
     it('renders employee-directory route', async () => {
