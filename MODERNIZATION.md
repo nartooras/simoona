@@ -108,6 +108,7 @@ Expected endpoint behavior:
 
 - Missing token: `401 Unauthorized`
 - Invalid token: `401 Unauthorized`
+- Token `org_id` claim and `X-Org-Id` mismatch: `403 Forbidden`
 - Valid token + matching `X-Org-Id` + user exists: `200 OK`
 - Missing/invalid org header: `400 Bad Request`
 - Valid auth but no matching user in org: `404 Not Found`

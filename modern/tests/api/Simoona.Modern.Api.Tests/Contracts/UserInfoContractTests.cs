@@ -95,6 +95,20 @@ public sealed class UserInfoContractTests : ContractTestBase
     }
 
     [Fact]
+    public async Task GetUserInfo_WhenTokenOrganizationDoesNotMatchHeader_ReturnsForbidden()
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
+        request.Headers.Add("X-Org-Id", "7");
+        request.Headers.Authorization = new AuthenticationHeaderValue(
+            "Bearer",
+            TestJwtTokenFactory.CreateToken(userId: "user-1", orgId: "9"));
+
+        var response = await HttpClient.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+    }
+
+    [Fact]
     public async Task GetUserInfo_WhenUserBelongsToDifferentOrganization_ReturnsNotFound()
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/account/user-info");
