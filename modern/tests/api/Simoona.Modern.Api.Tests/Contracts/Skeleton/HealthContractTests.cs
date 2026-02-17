@@ -1,12 +1,13 @@
 using System.Net;
 using System.Net.Http.Json;
 using Simoona.Modern.Api.Tests.Contracts;
+using Simoona.Modern.Api.Tests.Infrastructure;
 
 namespace Simoona.Modern.Api.Tests.Contracts.Skeleton;
 
 public sealed class HealthContractTests : ContractTestBase
 {
-    public HealthContractTests(Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactory<Program> factory)
+    public HealthContractTests(ModernApiTestFactory factory)
         : base(factory)
     {
     }

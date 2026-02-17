@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Simoona.Modern.Api.Endpoints.UserInfo;
+using Simoona.Modern.Api.ReadDb;
 using Simoona.Modern.Api.TenantContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,8 +10,14 @@ builder.Logging.AddJsonConsole();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
+builder.Services.AddAuthorization();
 
 builder.Services.AddTenantContext();
+builder.Services.AddReadOnlyDataAccess(builder.Configuration);
+builder.Services.AddScoped<ICurrentUserResolver, HttpCurrentUserResolver>();
 
 var app = builder.Build();
 
@@ -18,6 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseTenantContext();
 
 app.MapGet("/health", () => Results.Ok(new { status = "healthy" }))
@@ -38,6 +49,8 @@ apiV1.MapGet("/tenant-context", (ITenantContextAccessor tenantContextAccessor) =
         });
     })
     .WithName("GetTenantContext");
+
+apiV1.MapUserInfoEndpoints();
 
 app.Run();
 

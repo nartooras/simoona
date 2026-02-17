@@ -13,6 +13,7 @@ Legacy routing note:
 
 ## 1) `GET /Account/UserInfo`
 - Migration priority: `P1`
+- Modern status: `implemented` as `GET /api/v1/account/user-info`
 - Purpose: return the current user context used by shell/bootstrap flows.
 - Request shape:
   - headers: `Authorization: Bearer <token>` (required for registered users)
@@ -27,6 +28,11 @@ Legacy routing note:
   - organization/tenant context is resolved from identity claims + OWIN tenant context
 - Notes/risks:
   - response schema is union-shaped and client code often branches on `hasRegistered`.
+  - modern milestone assumptions:
+    - endpoint requires authenticated caller.
+    - user id is resolved from authenticated claims (`nameidentifier`/`sub`); temporary `X-User-Id` fallback is accepted only in Development/Testing environments.
+    - organization scope is required from `X-Org-Id` (or `Organization`) and must be numeric.
+    - currently returns the registered-user shape only; `organizationName` is not returned yet, and `permissions`/`roles` are temporarily empty until authz integration lands.
 
 ## 2) `GET /User/GeneralSettings`
 - Migration priority: `P1`
