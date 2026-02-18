@@ -214,6 +214,28 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
   - right-rail row title/meta/subtext semantic assertions
   - micro-detail hook assertions for muted metadata class usage
 
+### Wave 3C alignment completed
+
+- wall stream fixtures now read closer to legacy day-to-day usage while staying deterministic:
+  - varied post lengths (brief updates, operational notes, longer context posts)
+  - mixed media/no-media card variants without breaking section rhythm
+  - realistic timestamp cadence across same-day and previous-day activity
+  - varied thread depth with compact nested reply rows (`depth` semantics)
+- feed reading flow was polished for smoother scanning:
+  - card spacing and border/shadow transitions were normalized between stacked posts
+  - separator color/spacing treatment is now consistent across reaction/action/thread/comment rows
+  - typography density balance was refined so major content and minor metadata stay distinct but compact
+- social metadata wording and hierarchy were tuned to legacy-like language:
+  - reaction line now uses explicit social phrasing (`people like this`, `comments`)
+  - action links remain compact, clear, and non-persistent
+- home adapter boundaries were clarified in code:
+  - explicit note constants now document intentional mock-backed home sections in demo mode
+  - feed/widget adapter split remains deterministic with read-first behavior
+- tests were expanded for Wave 3C:
+  - deterministic repeated stream rendering assertions
+  - varied media/thread-depth rendering coverage
+  - stable semantic hooks for key wall-card sections
+
 ### Explicit gaps vs legacy after Wave 3A
 
 - legacy icon sprite assets are still represented by simple text/placeholders
@@ -224,12 +246,12 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 - profile/settings account dropdown parity in topbar remains simplified in prototype shell (trigger chrome is closer, but dropdown workflow remains non-interactive)
 - externals split (`Externals important` vs `Externals basic`) remains condensed into a single modern externals section
 
-### Explicit shortlist of remaining parity gaps after Wave 3B
+### Explicit shortlist of remaining parity gaps after Wave 3C
 
-- right-rail rows still use fixture text and simplified non-interactive items (no deep-link navigation targets)
-- legacy icon spriteography inside widget rows (badges/status glyphs) is still approximated
-- legacy hover affordances for widget row actions/context menus are not yet represented
-- feed media blocks remain simplified placeholders rather than legacy crop/thumbnail assets
+- feed media rows are still fixture placeholders (no legacy thumbnail/crop assets)
+- reaction detail depth remains aggregate-only (no per-user reaction popovers)
+- widget rows remain non-navigable fixture entries (no deep-link routing yet)
+- write interactions are still intentionally local-only (no persistent comment/reply/like writes)
 
 ### Explicit card/comment deltas still remaining after Wave 2C
 
