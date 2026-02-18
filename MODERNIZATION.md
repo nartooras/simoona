@@ -31,6 +31,9 @@ pnpm install
 - `pnpm test`: run workspace tests.
 - `pnpm smoke`: run release-readiness smoke checks (modern webapp route smoke + modern API smoke probes).
 - `pnpm smoke:ci`: run smoke checks in CI-friendly reporter mode.
+- `pnpm demo:check`: run deterministic local demo preflight checks (ports, env validation, API health, dev token mint).
+- `pnpm demo:start`: start modern API + webapp in deterministic demo mode with a minted bearer token.
+- `pnpm demo:stop`: stop local demo API/webapp processes started by `demo:start`.
 - `pnpm build`: run workspace builds.
 - `pnpm modern:api:build`: run `dotnet build` for modern API solution only.
 - `pnpm modern:api:test`: run `dotnet test` for modern API tests only.
@@ -224,12 +227,19 @@ Commands:
 
 Environment:
 
+- `VITE_DEMO_MODE` (required for demo orchestration): when `true`, adapter selection is deterministic by route/slice:
+  - real-backed: `/health`, `/user-info`, `/settings/general`, `/employees`, `/profiles/me`
+  - mock-backed: `/activities/feed`, `/recognition`, `/teams`, `/externals/integrations`
 - `VITE_API_BASE_URL` (optional): base URL used by the modern webapp API client.
   - default: `/api`
   - user info endpoint call resolves to `${VITE_API_BASE_URL}/v1/account/user-info` (or `/api/v1/account/user-info` by default).
 - `VITE_API_ORGANIZATION_ID` (required for current user-info integration): numeric organization id sent as `X-Org-Id` header.
   - example: `VITE_API_ORGANIZATION_ID=7`
 - `VITE_API_BEARER_TOKEN` (optional): token sent as `Authorization: Bearer <token>` for user-info calls.
+
+Deterministic demo orchestration runbook:
+
+- `modern/docs/demo-runbook.md`
 
 ## Frontend Migration Wave 1
 

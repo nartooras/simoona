@@ -10,6 +10,7 @@ import { MyProfilePage } from '../../pages/MyProfilePage';
 import { PrototypeNotice } from '../prototype/PrototypeNotice';
 import { routeAvailabilityMap } from './navigation';
 import { PrototypePlaceholderPage } from '../../pages/PrototypePlaceholderPage';
+import { getPrototypePlaceholder } from '../../api/prototypePlaceholders';
 
 function getRouteAvailability(path: string) {
     return routeAvailabilityMap[path] ?? { mode: 'real' as const };
@@ -53,62 +54,21 @@ export const appRoutes: RouteObject[] = [
     },
     {
         path: '/activities/feed',
-        element: renderRoute(
-            '/activities/feed',
-            <PrototypePlaceholderPage
-                cards={[
-                    { title: 'Today posts', value: '18 sample updates loaded from static prototype data.' },
-                    { title: 'Top topic', value: 'Quarterly planning milestones and team check-ins.' },
-                    { title: 'Realtime status', value: 'Disabled in prototype; refresh is simulated every 30s.' },
-                ]}
-                summary="This feed demonstrates card density and information hierarchy while live event ingestion remains on legacy."
-                title="Activity Feed"
-            />,
-        ),
+        element: renderRoute('/activities/feed', <PrototypePlaceholderPage {...getPrototypePlaceholder('/activities/feed')} />),
     },
     {
         path: '/recognition',
-        element: renderRoute(
-            '/recognition',
-            <PrototypePlaceholderPage
-                cards={[
-                    { title: 'Open recognitions', value: '12 draft shout-outs in this static preview set.' },
-                    { title: 'Most thanked team', value: 'Customer Success (prototype snapshot).' },
-                    { title: 'Nomination flow', value: 'Read-only visual flow for demo use; submit is not wired.' },
-                ]}
-                summary="Recognition cards are visual placeholders that mirror the planned IA location for social modules."
-                title="Recognition"
-            />,
-        ),
+        element: renderRoute('/recognition', <PrototypePlaceholderPage {...getPrototypePlaceholder('/recognition')} />),
     },
     {
         path: '/teams',
-        element: renderRoute(
-            '/teams',
-            <PrototypePlaceholderPage
-                cards={[
-                    { title: 'Team directory', value: '7 example teams with synthetic headcount values.' },
-                    { title: 'Capacity panel', value: 'Static utilization indicators for parity demonstration.' },
-                    { title: 'Manager links', value: 'Profile deep-links are illustrative and not persisted.' },
-                ]}
-                summary="The teams area is included to preserve legacy IA expectations during prototype walkthroughs."
-                title="Teams"
-            />,
-        ),
+        element: renderRoute('/teams', <PrototypePlaceholderPage {...getPrototypePlaceholder('/teams')} />),
     },
     {
         path: '/externals/integrations',
         element: renderRoute(
             '/externals/integrations',
-            <PrototypePlaceholderPage
-                cards={[
-                    { title: 'Marketplace', value: 'Disabled for this pass until partner API contracts are approved.' },
-                    { title: 'Connector health', value: 'No live connector checks are executed in this prototype.' },
-                    { title: 'Setup actions', value: 'Action buttons are intentionally removed to avoid false expectations.' },
-                ]}
-                summary="This area is visible for IA parity only and is intentionally marked unavailable for production use."
-                title="Integrations"
-            />,
+            <PrototypePlaceholderPage {...getPrototypePlaceholder('/externals/integrations')} />,
         ),
     },
     {
