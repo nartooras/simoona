@@ -8,7 +8,7 @@ Run one command to boot:
 
 1. modern API with local development auth bootstrap
 2. minted development bearer token
-3. modern webapp with deterministic `real` + `mock` adapter selection
+3. modern webapp with deterministic `real` + `mock` + `disabled` route adapter selection
 
 ## Commands
 
@@ -58,17 +58,27 @@ Supporting API auth envs are also applied by `demo:start` (`Auth__Jwt__Issuer`, 
 
 ## Demo Mode Route Matrix (Deterministic)
 
-| Route | Data source in demo mode | Notes |
-|---|---|---|
-| `/user-info` | `real` | `GET /api/v1/account/user-info` |
-| `/settings/general` | `real` | `GET /api/v1/user/general-settings` |
-| `/employees` | `real` | `GET /api/v1/employees` |
-| `/profiles/me` | `real` | `GET /api/v1/profiles/me` |
-| `/health` | `real` | `GET /health` |
-| `/activities/feed` | `mock` | deterministic static payload |
-| `/recognition` | `mock` | deterministic static payload |
-| `/teams` | `mock` | deterministic static payload |
-| `/externals/integrations` | `mock` | deterministic static payload |
+| Route | Availability mode | Data source in demo mode | Demo status | Notes |
+|---|---|---|---|---|
+| `/` | `real` | `real` | ready | Prototype home shell summary. |
+| `/user-info` | `real` | `real` | ready | `GET /api/v1/account/user-info` |
+| `/settings/general` | `real` | `real` | ready | `GET /api/v1/user/general-settings` |
+| `/employees` | `real` | `real` | ready | `GET /api/v1/employees` |
+| `/profiles/me` | `real` | `real` | ready | `GET /api/v1/profiles/me` |
+| `/health` | `real` | `real` | ready | `GET /health` |
+| `/activities/feed` | `mock` | `mock` | ready | deterministic static payload |
+| `/recognition` | `mock` | `mock` | ready | deterministic static payload |
+| `/events` | `mock` | `mock` | ready | deterministic static payload |
+| `/vacations` | `mock` | `mock` | ready | deterministic static payload |
+| `/kudos` | `mock` | `mock` | ready | deterministic static payload |
+| `/books` | `mock` | `mock` | ready | deterministic static payload |
+| `/service-requests` | `disabled` | `disabled` | constrained | route visible for parity, workflow actions disabled |
+| `/teams` | `mock` | `mock` | ready | deterministic static payload |
+| `/projects` | `mock` | `mock` | ready | deterministic static payload |
+| `/office-map` | `mock` | `mock` | ready | deterministic static payload |
+| `/organization/structure` | `mock` | `mock` | ready | deterministic static payload |
+| `/committees` | `mock` | `mock` | ready | deterministic static payload |
+| `/externals/integrations` | `disabled` | `disabled` | constrained | visible for IA parity only |
 
 ## Troubleshooting
 

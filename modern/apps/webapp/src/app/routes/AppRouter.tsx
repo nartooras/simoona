@@ -65,6 +65,48 @@ export const appRoutes: RouteObject[] = [
         element: renderRoute('/teams', <PrototypePlaceholderPage {...getPrototypePlaceholder('/teams')} />),
     },
     {
+        path: '/events',
+        element: renderRoute('/events', <PrototypePlaceholderPage {...getPrototypePlaceholder('/events')} />),
+    },
+    {
+        path: '/vacations',
+        element: renderRoute('/vacations', <PrototypePlaceholderPage {...getPrototypePlaceholder('/vacations')} />),
+    },
+    {
+        path: '/kudos',
+        element: renderRoute('/kudos', <PrototypePlaceholderPage {...getPrototypePlaceholder('/kudos')} />),
+    },
+    {
+        path: '/books',
+        element: renderRoute('/books', <PrototypePlaceholderPage {...getPrototypePlaceholder('/books')} />),
+    },
+    {
+        path: '/service-requests',
+        element: renderRoute(
+            '/service-requests',
+            <PrototypePlaceholderPage {...getPrototypePlaceholder('/service-requests')} />,
+        ),
+    },
+    {
+        path: '/projects',
+        element: renderRoute('/projects', <PrototypePlaceholderPage {...getPrototypePlaceholder('/projects')} />),
+    },
+    {
+        path: '/office-map',
+        element: renderRoute('/office-map', <PrototypePlaceholderPage {...getPrototypePlaceholder('/office-map')} />),
+    },
+    {
+        path: '/organization/structure',
+        element: renderRoute(
+            '/organization/structure',
+            <PrototypePlaceholderPage {...getPrototypePlaceholder('/organization/structure')} />,
+        ),
+    },
+    {
+        path: '/committees',
+        element: renderRoute('/committees', <PrototypePlaceholderPage {...getPrototypePlaceholder('/committees')} />),
+    },
+    {
         path: '/externals/integrations',
         element: renderRoute(
             '/externals/integrations',

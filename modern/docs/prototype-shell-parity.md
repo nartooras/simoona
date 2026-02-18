@@ -1,6 +1,6 @@
-# Prototype Shell Parity Pass (Thread P)
+# Prototype Shell Parity Pass (Threads P + R)
 
-This document captures the prototype-focused shell/navigation parity pass for `modern/apps/webapp` and the explicit route availability labeling introduced for demo safety.
+This document captures the prototype-focused shell/navigation parity work for `modern/apps/webapp`, including route availability labeling and broader high-visibility prototype route coverage for demo-safe walkthroughs.
 
 References:
 
@@ -21,18 +21,27 @@ The top header also includes explicit prototype affordances (`Prototype IA`, dem
 
 ## Route availability map
 
-| Route | Nav group | Availability | Notes |
-|---|---|---|---|
-| `/` | Activities | `real` | Home shell and parity summary, real route. |
-| `/activities/feed` | Activities | `mock` | Static feed preview; legacy modules still own live feed behavior. |
-| `/recognition` | Activities | `mock` | Static recognition preview; no live nomination flow wiring. |
-| `/employees` | Company | `real` | Backed by modern API (`GET /api/v1/employees`). |
-| `/profiles/me` | Company | `real` | Backed by modern API (`GET /api/v1/profiles/me`). |
-| `/user-info` | Company | `real` | Backed by modern API (`GET /api/v1/account/user-info`). |
-| `/settings/general` | Company | `real` | Backed by modern API read contract (`GET /api/v1/user/general-settings`). |
-| `/teams` | Company | `mock` | Prototype shell section with static team/capacity placeholders. |
-| `/externals/integrations` | Externals | `disabled` | Visible for IA parity only; intentionally unavailable in prototype. |
-| `/health` | System | `real` | Modern API readiness route baseline. |
+| Route | Nav group | Availability mode | Data source | Demo status | Notes |
+|---|---|---|---|---|---|
+| `/` | Activities | `real` | `real` | ready | Home shell and parity summary route. |
+| `/activities/feed` | Activities | `mock` | `mock` | ready | Static feed preview; live ingestion remains legacy-owned. |
+| `/recognition` | Activities | `mock` | `mock` | ready | Recognition stream represented by deterministic mock cards. |
+| `/events` | Activities | `mock` | `mock` | ready | Event discovery and schedule preview are fixture-backed. |
+| `/vacations` | Activities | `mock` | `mock` | ready | Vacation overview is visible as read-only prototype scaffolding. |
+| `/kudos` | Activities | `mock` | `mock` | ready | Kudos metrics and leaderboard are static demo content. |
+| `/books` | Activities | `mock` | `mock` | ready | Book catalog entry point included for IA coverage. |
+| `/service-requests` | Activities | `disabled` | `disabled` | constrained | Write-heavy workflow remains intentionally disabled in prototype mode. |
+| `/employees` | Company | `real` | `real` | ready | Backed by modern API (`GET /api/v1/employees`). |
+| `/profiles/me` | Company | `real` | `real` | ready | Backed by modern API (`GET /api/v1/profiles/me`). |
+| `/user-info` | Company | `real` | `real` | ready | Backed by modern API (`GET /api/v1/account/user-info`). |
+| `/settings/general` | Company | `real` | `real` | ready | Backed by modern API read contract (`GET /api/v1/user/general-settings`). |
+| `/teams` | Company | `mock` | `mock` | ready | Team structure and capacity views are fixture-backed placeholders. |
+| `/projects` | Company | `mock` | `mock` | ready | Project board route exposed via static milestone summaries. |
+| `/office-map` | Company | `mock` | `mock` | ready | Office occupancy is demo-only and read-only. |
+| `/organization/structure` | Company | `mock` | `mock` | ready | Organization hierarchy route is static and non-editable. |
+| `/committees` | Company | `mock` | `mock` | ready | Committee overviews are represented with deterministic mock data. |
+| `/externals/integrations` | Externals | `disabled` | `disabled` | constrained | Visible for IA parity only; connector setup remains out of scope. |
+| `/health` | System | `real` | `real` | ready | Modern API readiness baseline route. |
 
 ## Prototype availability labeling
 
@@ -46,11 +55,15 @@ For non-real routes, the notice includes an explicit reason to prevent demo ambi
 
 ## Placeholder quality baseline
 
-Prototype (`mock`/`disabled`) routes now include realistic static sections/cards:
+Prototype (`mock`/`disabled`) routes now include consistent semantic content blocks:
 
-- summary context
-- representative card content
-- explicit limitations and non-production behavior markers
+- summary context + deterministic data source marker
+- representative cards/table blocks
+- standardized sections:
+  - available now
+  - unavailable in prototype
+  - planned next wave
+- simulated disabled controls with explicit prototype-mode explanation
 
 No prototype route is left blank.
 

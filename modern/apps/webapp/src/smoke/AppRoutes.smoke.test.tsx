@@ -10,7 +10,7 @@ function renderRoute(path: string) {
         initialEntries: [path],
     });
 
-    render(<RouterProvider router={router} />);
+    return render(<RouterProvider router={router} />);
 }
 
 describe('Modern webapp smoke routes', () => {
@@ -46,6 +46,21 @@ describe('Modern webapp smoke routes', () => {
             'href',
             '/externals/integrations',
         );
+        expect(screen.getByRole('link', { name: 'Events' })).toHaveAttribute('href', '/events');
+        expect(screen.getByRole('link', { name: 'Vacations' })).toHaveAttribute('href', '/vacations');
+        expect(screen.getByRole('link', { name: 'Kudos' })).toHaveAttribute('href', '/kudos');
+        expect(screen.getByRole('link', { name: 'Books' })).toHaveAttribute('href', '/books');
+        expect(screen.getByRole('link', { name: 'Service Requests' })).toHaveAttribute(
+            'href',
+            '/service-requests',
+        );
+        expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '/projects');
+        expect(screen.getByRole('link', { name: 'Office Map' })).toHaveAttribute('href', '/office-map');
+        expect(screen.getByRole('link', { name: 'Organizational Structure' })).toHaveAttribute(
+            'href',
+            '/organization/structure',
+        );
+        expect(screen.getByRole('link', { name: 'Committees' })).toHaveAttribute('href', '/committees');
     });
 
     it('reaches user-info route', async () => {
@@ -69,7 +84,26 @@ describe('Modern webapp smoke routes', () => {
     });
 
     it('reaches placeholder prototype routes', async () => {
-        renderRoute('/activities/feed');
-        expect(await screen.findByRole('heading', { name: 'Activity Feed' })).toBeInTheDocument();
+        const routes = [
+            { path: '/activities/feed', heading: 'Activity Feed' },
+            { path: '/recognition', heading: 'Recognition' },
+            { path: '/events', heading: 'Events' },
+            { path: '/vacations', heading: 'Vacations' },
+            { path: '/kudos', heading: 'Kudos' },
+            { path: '/books', heading: 'Books' },
+            { path: '/service-requests', heading: 'Service Requests' },
+            { path: '/teams', heading: 'Teams' },
+            { path: '/projects', heading: 'Projects' },
+            { path: '/office-map', heading: 'Office Map' },
+            { path: '/organization/structure', heading: 'Organizational Structure' },
+            { path: '/committees', heading: 'Committees' },
+            { path: '/externals/integrations', heading: 'Integrations' },
+        ];
+
+        for (const route of routes) {
+            const view = renderRoute(route.path);
+            expect(await screen.findByRole('heading', { name: route.heading })).toBeInTheDocument();
+            view.unmount();
+        }
     });
 });

@@ -1,4 +1,4 @@
-export type DataSource = 'real' | 'mock';
+export type DataSource = 'real' | 'mock' | 'disabled';
 
 export type ApiSlice =
     | 'health'
@@ -8,11 +8,33 @@ export type ApiSlice =
     | 'myProfile'
     | 'activitiesFeed'
     | 'recognition'
+    | 'events'
+    | 'vacations'
+    | 'kudos'
+    | 'books'
+    | 'serviceRequests'
     | 'teams'
+    | 'projects'
+    | 'officeMap'
+    | 'organizationalStructure'
+    | 'committees'
     | 'integrations';
 
 const demoRealSlices = new Set<ApiSlice>(['health', 'userInfo', 'generalSettings', 'employees', 'myProfile']);
-const demoMockSlices = new Set<ApiSlice>(['activitiesFeed', 'recognition', 'teams', 'integrations']);
+const demoMockSlices = new Set<ApiSlice>([
+    'activitiesFeed',
+    'recognition',
+    'events',
+    'vacations',
+    'kudos',
+    'books',
+    'teams',
+    'projects',
+    'officeMap',
+    'organizationalStructure',
+    'committees',
+]);
+const demoDisabledSlices = new Set<ApiSlice>(['serviceRequests', 'integrations']);
 
 export function isDemoModeEnabled(): boolean {
     return import.meta.env.VITE_DEMO_MODE?.trim().toLowerCase() === 'true';
@@ -25,6 +47,10 @@ export function resolveDataSource(slice: ApiSlice): DataSource {
 
     if (demoMockSlices.has(slice)) {
         return 'mock';
+    }
+
+    if (demoDisabledSlices.has(slice)) {
+        return 'disabled';
     }
 
     if (demoRealSlices.has(slice)) {

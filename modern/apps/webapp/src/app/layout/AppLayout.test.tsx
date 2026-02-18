@@ -28,6 +28,14 @@ describe('AppLayout', () => {
             '/activities/feed',
         );
         expect(screen.getByRole('link', { name: 'Recognition' })).toHaveAttribute('href', '/recognition');
+        expect(screen.getByRole('link', { name: 'Events' })).toHaveAttribute('href', '/events');
+        expect(screen.getByRole('link', { name: 'Vacations' })).toHaveAttribute('href', '/vacations');
+        expect(screen.getByRole('link', { name: 'Kudos' })).toHaveAttribute('href', '/kudos');
+        expect(screen.getByRole('link', { name: 'Books' })).toHaveAttribute('href', '/books');
+        expect(screen.getByRole('link', { name: 'Service Requests' })).toHaveAttribute(
+            'href',
+            '/service-requests',
+        );
         expect(screen.getByRole('link', { name: 'User Info' })).toHaveAttribute('href', '/user-info');
         expect(screen.getByRole('link', { name: 'General Settings' })).toHaveAttribute(
             'href',
@@ -36,6 +44,13 @@ describe('AppLayout', () => {
         expect(screen.getByRole('link', { name: 'Employees' })).toHaveAttribute('href', '/employees');
         expect(screen.getByRole('link', { name: 'My Profile' })).toHaveAttribute('href', '/profiles/me');
         expect(screen.getByRole('link', { name: 'Teams' })).toHaveAttribute('href', '/teams');
+        expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '/projects');
+        expect(screen.getByRole('link', { name: 'Office Map' })).toHaveAttribute('href', '/office-map');
+        expect(screen.getByRole('link', { name: 'Organizational Structure' })).toHaveAttribute(
+            'href',
+            '/organization/structure',
+        );
+        expect(screen.getByRole('link', { name: 'Committees' })).toHaveAttribute('href', '/committees');
         expect(screen.getByRole('link', { name: 'Integrations' })).toHaveAttribute(
             'href',
             '/externals/integrations',

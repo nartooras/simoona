@@ -109,4 +109,38 @@ describe('AppRouter', () => {
         expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Disabled.');
         expect(screen.getByText('Marketplace')).toBeInTheDocument();
     });
+
+    it('reaches all new prototype routes with standard semantics', async () => {
+        const cases = [
+            { path: '/events', heading: 'Events', availability: 'Mock.' },
+            { path: '/vacations', heading: 'Vacations', availability: 'Mock.' },
+            { path: '/kudos', heading: 'Kudos', availability: 'Mock.' },
+            { path: '/books', heading: 'Books', availability: 'Mock.' },
+            { path: '/service-requests', heading: 'Service Requests', availability: 'Disabled.' },
+            { path: '/projects', heading: 'Projects', availability: 'Mock.' },
+            { path: '/office-map', heading: 'Office Map', availability: 'Mock.' },
+            { path: '/organization/structure', heading: 'Organizational Structure', availability: 'Mock.' },
+            { path: '/committees', heading: 'Committees', availability: 'Mock.' },
+        ];
+
+        for (const routeCase of cases) {
+            const router = createMemoryRouter(appRoutes, {
+                initialEntries: [routeCase.path],
+            });
+            const { unmount } = render(<RouterProvider router={router} />);
+
+            expect(await screen.findByRole('heading', { name: routeCase.heading })).toBeInTheDocument();
+            expect(screen.getByRole('status')).toHaveTextContent(`Prototype availability: ${routeCase.availability}`);
+            expect(screen.getByRole('main')).toBeInTheDocument();
+            expect(screen.getByRole('heading', { name: 'Available now' })).toBeInTheDocument();
+            expect(screen.getByRole('heading', { name: 'Unavailable in prototype' })).toBeInTheDocument();
+            expect(screen.getByRole('heading', { name: 'Planned next wave' })).toBeInTheDocument();
+            const actionPanel = screen.getByLabelText('Prototype actions');
+            const actionButton = actionPanel.querySelector('button');
+            expect(actionButton).not.toBeNull();
+            expect(actionButton).toBeDisabled();
+
+            unmount();
+        }
+    });
 });

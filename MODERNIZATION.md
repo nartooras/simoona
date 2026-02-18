@@ -229,7 +229,8 @@ Environment:
 
 - `VITE_DEMO_MODE` (required for demo orchestration): when `true`, adapter selection is deterministic by route/slice:
   - real-backed: `/health`, `/user-info`, `/settings/general`, `/employees`, `/profiles/me`
-  - mock-backed: `/activities/feed`, `/recognition`, `/teams`, `/externals/integrations`
+  - mock-backed: `/activities/feed`, `/recognition`, `/events`, `/vacations`, `/kudos`, `/books`, `/teams`, `/projects`, `/office-map`, `/organization/structure`, `/committees`
+  - disabled-backed: `/service-requests`, `/externals/integrations`
 - `VITE_API_BASE_URL` (optional): base URL used by the modern webapp API client.
   - default: `/api`
   - user info endpoint call resolves to `${VITE_API_BASE_URL}/v1/account/user-info` (or `/api/v1/account/user-info` by default).
@@ -302,6 +303,21 @@ Highlights from this pass:
 - Key placeholder/demo routes are visible in navigation for prototype completeness.
 - Route availability labeling is explicit via `real`, `mock`, and `disabled` notices.
 - Placeholder prototype routes are populated with realistic static content and non-production markers.
+
+## Prototype Route Coverage Pack (Thread R)
+
+Thread R extends prototype route coverage for high-visibility legacy destinations while keeping interactions safe and deterministic.
+
+Highlights from this pass:
+
+- Added nav/router coverage for Events, Vacations, Kudos, Books, Service Requests, Projects, Office Map, Organizational Structure, and Committees.
+- Standardized all placeholder pages with explicit sections for:
+  - available now
+  - unavailable in prototype
+  - planned next wave
+- Added simulated disabled controls with explicit prototype/read-only messaging for write-heavy actions.
+- Synchronized route availability + data-source behavior (`real`/`mock`/`disabled`) with demo mode determinism.
+- Extended webapp route smoke/tests to cover new navigation links and route reachability.
 
 ## CI Skeleton
 
