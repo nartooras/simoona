@@ -304,6 +304,67 @@ export function readProcessOutput(childProcess) {
   return () => output;
 }
 
+export function formatDemoFailure(error, context = "demo") {
+  const rawMessage = error instanceof Error ? error.message : String(error);
+  const hints = [];
+
+  if (rawMessage.includes("port") && rawMessage.includes("already in use")) {
+    hints.push("Port collision: stop the process on that port or set DEMO_API_PORT / DEMO_WEB_PORT.");
+  }
+
+  if (
+    rawMessage.includes("VITE_API_BASE_URL") ||
+    rawMessage.includes("VITE_API_ORGANIZATION_ID") ||
+    rawMessage.includes("VITE_DEMO_MODE") ||
+    rawMessage.includes("Auth__")
+  ) {
+    hints.push(
+      "Environment mismatch: verify required envs (VITE_DEMO_MODE=true, VITE_API_BASE_URL, VITE_API_ORGANIZATION_ID, Auth__Jwt__Issuer/Audience/SigningKey, Auth__DevToken__Enabled=true).",
+    );
+  }
+
+  if (
+    rawMessage.includes("Health endpoint") ||
+    rawMessage.includes("timed out") ||
+    rawMessage.includes("API process exited before health became ready")
+  ) {
+    hints.push("API startup issue: inspect API logs and confirm ASPNETCORE_URLS and JWT settings match demo config.");
+  }
+
+  if (
+    rawMessage.includes("dev-auth/token") ||
+    rawMessage.includes("Failed to mint development token") ||
+    rawMessage.includes("must return 401 without token") ||
+    rawMessage.includes("must return 200 with demo token")
+  ) {
+    hints.push("Auth bootstrap issue: confirm /api/v1/dev-auth/token is enabled and demo org/user claims are valid.");
+  }
+
+  if (
+    rawMessage.includes("SqlException") ||
+    rawMessage.includes("ConnectionStrings__LegacyReadOnly") ||
+    rawMessage.includes("No such host is known") ||
+    rawMessage.includes("login failed")
+  ) {
+    hints.push(
+      "Read DB unavailable: validate ConnectionStrings__LegacyReadOnly and SQL Server reachability for the local demo environment.",
+    );
+  }
+
+  if (hints.length === 0) {
+    hints.push(
+      "Check /tmp/simoona-modern-demo-logs (after demo:start) or rerun with the same env and inspect startup output for the first failing check.",
+    );
+  }
+
+  const lines = [
+    `[${context}] ${rawMessage}`,
+    ...hints.map((hint, index) => `[${context}] hint ${index + 1}: ${hint}`),
+  ];
+
+  return lines.join("\n");
+}
+
 export function writePidFile(payload) {
   fs.writeFileSync(pidFilePath, JSON.stringify(payload, null, 2));
 }

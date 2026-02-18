@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchHomeExperience, type FeedPost } from '../api/homeExperience';
+import { fetchHomeExperience, type FeedPost, type HomeSectionState } from '../api/homeExperience';
 
 const widgetPriority: Record<string, number> = {
     'Kudos Feed': 0,
@@ -41,6 +41,18 @@ function formatRepliesToggleLabel(replyCount: number, repliesVisible: boolean): 
     }
 
     return `Show all replies (${replyCount})`;
+}
+
+function formatSectionSourceLabel(section: HomeSectionState<unknown>): string {
+    if (section.adapter === 'real') {
+        return 'real API';
+    }
+
+    if (section.adapter === 'mock') {
+        return 'mock fixtures';
+    }
+
+    return 'disabled';
 }
 
 export function HomePage() {
@@ -86,6 +98,12 @@ export function HomePage() {
             <header className="wall-page-header">
                 <h1 className="page-title">{t('home.title')}</h1>
                 <p className="wall-page-subtitle">Legacy-like wall shell parity with compact feed and widgets.</p>
+                {result && (
+                    <p className="wall-data-source-summary" data-testid="wall-data-source-summary">
+                        Feed source: {formatSectionSourceLabel(result.feed)} · Widgets source:{' '}
+                        {formatSectionSourceLabel(result.widgets)}
+                    </p>
+                )}
             </header>
             <div className="wall-content-grid" data-testid="wall-content-grid">
                 <section aria-label="Feed stream" className="wall-feed-column" data-testid="wall-feed-column">

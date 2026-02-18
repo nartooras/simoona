@@ -117,14 +117,20 @@ export function GeneralSettingsPage() {
         );
     }
 
+    const message =
+        result.kind === 'serverError' || result.kind === 'unknownError'
+            ? t('generalSettings.states.apiUnavailable')
+            : t('generalSettings.states.error');
+
     return (
         <section aria-labelledby="general-settings-title" className="page-section">
             <h1 className="page-title" id="general-settings-title">
                 {t('generalSettings.title')}
             </h1>
             <p className="status-message status-message--error" role="alert">
-                {t('generalSettings.states.error')}
+                {message}
             </p>
+            <p className="helper-note">{t('generalSettings.meta.fallbackHint')}</p>
         </section>
     );
 }

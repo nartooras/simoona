@@ -89,13 +89,16 @@ describe('MyProfilePage', () => {
         ).toBeInTheDocument();
     });
 
-    it('renders generic error state for server errors', async () => {
+    it('renders api-unavailable fallback state for server errors', async () => {
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(emptyResponse(500));
 
         render(<MyProfilePage />);
 
         expect(
-            await screen.findByText('Something went wrong while loading profile details.'),
+            await screen.findByText('Profile details are temporarily unavailable because the API is not reachable.'),
+        ).toBeInTheDocument();
+        expect(
+            screen.getByText('For demos, run pnpm demo:start and verify VITE_API_BASE_URL points to the local modern API.'),
         ).toBeInTheDocument();
     });
 });

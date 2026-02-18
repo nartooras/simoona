@@ -134,14 +134,20 @@ export function EmployeeDirectoryPage() {
         );
     }
 
+    const message =
+        result.kind === 'serverError' || result.kind === 'unknownError'
+            ? t('employeeDirectory.states.apiUnavailable')
+            : t('employeeDirectory.states.error');
+
     return (
         <section aria-labelledby="employee-directory-title" className="page-section">
             <h1 className="page-title" id="employee-directory-title">
                 {t('employeeDirectory.title')}
             </h1>
             <p className="status-message status-message--error" role="alert">
-                {t('employeeDirectory.states.error')}
+                {message}
             </p>
+            <p className="helper-note">{t('employeeDirectory.meta.fallbackHint')}</p>
         </section>
     );
 }

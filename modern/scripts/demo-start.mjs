@@ -5,6 +5,7 @@ import {
   assertDemoRouteDefinitions,
   ensureLogDir,
   ensurePortAvailable,
+  formatDemoFailure,
   killProcessTree,
   mintDevToken,
   openLogFile,
@@ -100,10 +101,6 @@ try {
 } catch (error) {
   removePidFile();
   console.error("[demo:start] FAIL");
-  if (error instanceof Error) {
-    console.error(`[demo:start] ${error.message}`);
-  } else {
-    console.error(`[demo:start] ${String(error)}`);
-  }
+  console.error(formatDemoFailure(error, "demo:start"));
   process.exit(1);
 }

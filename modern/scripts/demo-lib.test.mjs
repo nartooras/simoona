@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { assertApiHealthAndAuthBaseline, assertDemoEnvironmentConsistency } from "./demo-lib.mjs";
+import { assertApiHealthAndAuthBaseline, assertDemoEnvironmentConsistency, formatDemoFailure } from "./demo-lib.mjs";
 
 const baseConfig = {
   apiOrigin: "http://127.0.0.1:5187",
@@ -91,6 +91,25 @@ test("fails baseline when protected endpoint does not return unauthorized withou
     () => assertApiHealthAndAuthBaseline(baseConfig, "token-value", fetchImpl),
     /must return 401 without token/,
   );
+});
+
+test("formats actionable failure hints for common demo command issues", () => {
+  const message = formatDemoFailure(
+    new Error("API port 5187 is already in use on 127.0.0.1. VITE_API_BASE_URL must target http://127.0.0.1:5187."),
+    "demo:check",
+  );
+
+  assert.match(message, /\[demo:check\] hint 1: Port collision:/);
+  assert.match(message, /\[demo:check\] hint 2: Environment mismatch:/);
+});
+
+test("formats db availability hints for startup failures", () => {
+  const message = formatDemoFailure(
+    new Error("SqlException: Login failed for user. ConnectionStrings__LegacyReadOnly was not accepted."),
+    "demo:start",
+  );
+
+  assert.match(message, /Read DB unavailable:/);
 });
 
 function jsonResponse(status, payload) {

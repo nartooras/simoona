@@ -115,14 +115,20 @@ export function UserInfoPage() {
         );
     }
 
+    const message =
+        result.kind === 'serverError' || result.kind === 'unknownError'
+            ? t('userInfo.states.apiUnavailable')
+            : t('userInfo.states.error');
+
     return (
         <section aria-labelledby="user-info-title" className="page-section">
             <h1 className="page-title" id="user-info-title">
                 {t('userInfo.title')}
             </h1>
             <p className="status-message status-message--error" role="alert">
-                {t('userInfo.states.error')}
+                {message}
             </p>
+            <p className="helper-note">{t('userInfo.meta.fallbackHint')}</p>
         </section>
     );
 }
