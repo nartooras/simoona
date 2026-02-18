@@ -2,6 +2,26 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchHomeExperience, type FeedPost } from '../api/homeExperience';
 
+const widgetPriority: Record<string, number> = {
+    'Kudos Feed': 0,
+    'Upcoming Events': 1,
+    Rankings: 2,
+    Birthdays: 3,
+};
+
+function sortWidgetCards<T extends { id: string; title: string }>(cards: T[]): T[] {
+    return [...cards].sort((left, right) => {
+        const leftPriority = widgetPriority[left.title] ?? Number.MAX_SAFE_INTEGER;
+        const rightPriority = widgetPriority[right.title] ?? Number.MAX_SAFE_INTEGER;
+
+        if (leftPriority !== rightPriority) {
+            return leftPriority - rightPriority;
+        }
+
+        return left.id.localeCompare(right.id);
+    });
+}
+
 function formatReactionSummary(post: FeedPost, isLiked: boolean): string {
     const baseLikes = post.likeCount - (post.likedByCurrentUser ? 1 : 0);
     const likeCount = baseLikes + (isLiked ? 1 : 0);
@@ -114,7 +134,7 @@ export function HomePage() {
                                         </span>
                                         <div className="wall-post-meta-copy">
                                             <p className="wall-post-author">{post.author}</p>
-                                            <p className="wall-post-timestamp">{post.timestamp}</p>
+                                            <p className="wall-post-timestamp wall-meta-muted">{post.timestamp}</p>
                                         </div>
                                     </header>
                                     <p className="wall-post-body" data-section="body">
@@ -123,7 +143,7 @@ export function HomePage() {
                                     <div aria-label={post.mediaLabel} className="wall-post-media" data-section="media" />
                                     <p
                                         aria-label="Post reactions"
-                                        className="wall-post-reaction-line wall-post-separator-row"
+                                        className="wall-post-reaction-line wall-post-separator-row wall-meta-muted"
                                         data-section="reactions"
                                         data-testid="wall-post-reaction-line"
                                     >
@@ -254,16 +274,30 @@ export function HomePage() {
                         </section>
                     )}
                     {result?.widgets.kind === 'success' &&
-                        result.widgets.items.map((card) => (
+                        sortWidgetCards(result.widgets.items).map((card) => (
                             <section className="wall-widget-card" data-testid="wall-widget-card" key={card.id}>
                                 <header className="wall-widget-header">
-                                    <h2 data-testid="wall-widget-heading">{card.title}</h2>
+                                    <h2 className="wall-widget-heading" data-testid="wall-widget-heading">
+                                        {card.title}
+                                    </h2>
                                 </header>
                                 <ul aria-label={`${card.title} items`} data-testid="wall-widget-list">
                                     {card.rows.map((row) => (
                                         <li className="wall-widget-row" data-testid="wall-widget-row" key={row.id}>
-                                            <p className="wall-widget-row-primary">{row.primary}</p>
-                                            <p className="wall-widget-row-secondary">{row.secondary}</p>
+                                            <p className="wall-widget-row-primary wall-widget-row-title" data-testid="wall-widget-row-title">
+                                                {row.primary}
+                                            </p>
+                                            <p
+                                                className="wall-widget-row-secondary wall-widget-row-meta wall-meta-muted"
+                                                data-testid="wall-widget-row-meta"
+                                            >
+                                                {row.secondary}
+                                            </p>
+                                            {row.subtext && (
+                                                <p className="wall-widget-row-subtext wall-meta-muted" data-testid="wall-widget-row-subtext">
+                                                    {row.subtext}
+                                                </p>
+                                            )}
                                         </li>
                                     ))}
                                 </ul>

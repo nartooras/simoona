@@ -20,6 +20,12 @@ describe('HomePage', () => {
         expect(screen.getByRole('heading', { name: 'Birthdays' })).toBeInTheDocument();
         expect(screen.getAllByTestId('wall-widget-card')).toHaveLength(4);
         expect(screen.getAllByTestId('wall-widget-row')).toHaveLength(11);
+        expect(screen.getAllByTestId('wall-widget-heading').map((heading) => heading.textContent?.trim())).toEqual([
+            'Kudos Feed',
+            'Upcoming Events',
+            'Rankings',
+            'Birthdays',
+        ]);
     });
 
     it('simulates like and unlike toggles without persistence', async () => {
@@ -104,11 +110,34 @@ describe('HomePage', () => {
 
         const widgetHeadings = screen.getAllByTestId('wall-widget-heading');
         const widgetLists = screen.getAllByTestId('wall-widget-list');
+        const widgetRows = screen.getAllByTestId('wall-widget-row');
 
         expect(widgetHeadings).toHaveLength(4);
         expect(widgetLists).toHaveLength(4);
+        expect(widgetRows).toHaveLength(11);
         expect(widgetHeadings.map((heading) => heading.tagName)).toEqual(['H2', 'H2', 'H2', 'H2']);
         expect(widgetLists.map((list) => list.tagName)).toEqual(['UL', 'UL', 'UL', 'UL']);
+
+        const firstWidgetRow = widgetRows[0]!;
+        expect(within(firstWidgetRow).getByTestId('wall-widget-row-title')).toHaveTextContent('Egle thanked QA Team');
+        expect(within(firstWidgetRow).getByTestId('wall-widget-row-meta')).toHaveTextContent(
+            'Regression coverage for release candidate',
+        );
+        expect(within(firstWidgetRow).getByTestId('wall-widget-row-subtext')).toHaveTextContent('2 hours ago');
+    });
+
+    it('preserves compact micro-detail hooks for muted metadata and dividers', async () => {
+        render(<HomePage />);
+
+        expect(await screen.findByText('Milda Vaitke')).toBeInTheDocument();
+
+        const firstPost = screen.getAllByTestId('wall-post-card')[0]!;
+        expect(firstPost.querySelector('.wall-post-timestamp.wall-meta-muted')).toBeInTheDocument();
+        expect(firstPost.querySelector('.wall-post-reaction-line.wall-meta-muted')).toBeInTheDocument();
+
+        const firstWidgetRow = screen.getAllByTestId('wall-widget-row')[0]!;
+        expect(firstWidgetRow.querySelector('.wall-widget-row-meta.wall-meta-muted')).toBeInTheDocument();
+        expect(firstWidgetRow.querySelector('.wall-widget-row-subtext.wall-meta-muted')).toBeInTheDocument();
     });
 
     it('keeps post card sections in legacy-like top-to-bottom order', async () => {

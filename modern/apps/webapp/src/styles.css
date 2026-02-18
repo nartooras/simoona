@@ -656,15 +656,17 @@ body {
 .wall-content-grid {
     display: grid;
     grid-template-columns: minmax(0, var(--shell-center-column-max-width)) var(--shell-right-rail-width);
-    gap: var(--shell-main-grid-gap);
+    column-gap: 14px;
+    row-gap: var(--space-2);
     align-items: start;
     justify-content: flex-start;
 }
 
 .wall-feed-column {
     display: grid;
-    gap: 7px;
+    gap: 6px;
     min-width: 0;
+    align-self: start;
 }
 
 .wall-section-state {
@@ -773,6 +775,10 @@ body {
     font-size: 11px;
     margin-top: 1px;
     line-height: 1.25;
+}
+
+.wall-meta-muted {
+    color: #757575;
 }
 
 .wall-post-body {
@@ -952,24 +958,25 @@ body {
 
 .wall-widgets-column {
     display: grid;
-    gap: 6px;
+    gap: 5px;
+    align-self: start;
 }
 
 .wall-widget-card {
-    border: 1px solid var(--color-border-soft);
+    border: 1px solid #d6dce3;
     background: #ffffff;
     border-radius: var(--radius-sm);
-    box-shadow: var(--color-shadow-soft);
-    padding: 7px 9px;
+    box-shadow: 0 1px 1px rgb(9 30 66 / 0.08);
+    padding: 6px 8px 7px;
 }
 
 .wall-widget-header {
     margin: 0;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #e6e6e6;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ececec;
 }
 
-.wall-widget-card h2 {
+.wall-widget-heading {
     margin: 0;
     color: #2e6d9f;
     font-size: 11px;
@@ -988,11 +995,12 @@ body {
 
 .wall-widget-row {
     margin: 0;
-    padding: 5px 0;
+    padding: 4px 0;
+    min-height: 34px;
 }
 
 .wall-widget-row + .wall-widget-row {
-    border-top: 1px solid #ededed;
+    border-top: 1px solid #efefef;
 }
 
 .wall-widget-row-primary,
@@ -1002,15 +1010,28 @@ body {
 
 .wall-widget-row-primary {
     font-size: 11px;
-    color: #2d2d2d;
-    line-height: 1.3;
+    color: #215f8f;
+    line-height: 1.24;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .wall-widget-row-secondary {
-    font-size: 11px;
-    color: var(--color-text-muted);
+    font-size: 10px;
     margin-top: 1px;
-    line-height: 1.24;
+    line-height: 1.28;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wall-widget-row-subtext {
+    margin: 1px 0 0;
+    font-size: 10px;
+    line-height: 1.28;
+    overflow-wrap: anywhere;
 }
 
 .prototype-notice {

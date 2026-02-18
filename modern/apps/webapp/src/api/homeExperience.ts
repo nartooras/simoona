@@ -23,6 +23,7 @@ export interface WidgetRow {
     id: string;
     primary: string;
     secondary: string;
+    subtext?: string;
 }
 
 export interface WidgetCardData {
@@ -149,16 +150,19 @@ const realWidgetFixtures: WidgetCardData[] = [
                 id: 'kudos-qa',
                 primary: 'Egle thanked QA Team',
                 secondary: 'Regression coverage for release candidate',
+                subtext: '2 hours ago',
             },
             {
                 id: 'kudos-api',
                 primary: 'Jonas praised API Team',
                 secondary: 'Auth hardening and endpoint cleanup',
+                subtext: 'Yesterday',
             },
             {
                 id: 'kudos-web',
                 primary: 'Milda recognized Webapp Team',
                 secondary: 'Wave 2A interaction parity delivery',
+                subtext: 'This week',
             },
         ],
     },
@@ -170,16 +174,19 @@ const realWidgetFixtures: WidgetCardData[] = [
                 id: 'event-demo',
                 primary: 'Feb 20 · Product demo rehearsal',
                 secondary: 'Main hall · 14:00',
+                subtext: 'Agenda published',
             },
             {
                 id: 'event-sync',
                 primary: 'Feb 22 · Frontend migration sync',
                 secondary: 'Room B4 · 10:00',
+                subtext: 'Hybrid attendance',
             },
             {
                 id: 'event-allhands',
                 primary: 'Feb 25 · Engineering all-hands',
                 secondary: 'Townhall stream · 16:00',
+                subtext: 'Q&A enabled',
             },
         ],
     },
@@ -191,16 +198,19 @@ const realWidgetFixtures: WidgetCardData[] = [
                 id: 'rank-platform',
                 primary: '1. Platform Team',
                 secondary: '91 points this week',
+                subtext: 'Maintained first place',
             },
             {
                 id: 'rank-frontend',
                 primary: '2. Frontend Team',
                 secondary: '84 points this week',
+                subtext: '7 points behind',
             },
             {
                 id: 'rank-data',
                 primary: '3. Data Team',
                 secondary: '79 points this week',
+                subtext: 'Close sprint finish',
             },
         ],
     },
@@ -212,11 +222,13 @@ const realWidgetFixtures: WidgetCardData[] = [
                 id: 'birthday-monika',
                 primary: 'Monika L.',
                 secondary: 'Today',
+                subtext: 'Design Systems',
             },
             {
                 id: 'birthday-paulius',
                 primary: 'Paulius K.',
                 secondary: 'Tomorrow',
+                subtext: 'Platform Engineering',
             },
         ],
     },
@@ -231,11 +243,13 @@ const mockWidgetFixtures: WidgetCardData[] = [
                 id: 'mock-kudos-1',
                 primary: 'Egle thanked QA Team',
                 secondary: 'Smoke pass completed',
+                subtext: '2 hours ago',
             },
             {
                 id: 'mock-kudos-2',
                 primary: 'Rugile thanked Product Team',
                 secondary: 'Demo narrative alignment',
+                subtext: 'Yesterday',
             },
         ],
     },
@@ -247,11 +261,13 @@ const mockWidgetFixtures: WidgetCardData[] = [
                 id: 'mock-event-1',
                 primary: 'Feb 20 · Demo rehearsal',
                 secondary: 'Main hall · 14:00',
+                subtext: 'Agenda published',
             },
             {
                 id: 'mock-event-2',
                 primary: 'Feb 21 · QA sync',
                 secondary: 'Room B4 · 11:30',
+                subtext: 'Hybrid attendance',
             },
         ],
     },
@@ -263,11 +279,13 @@ const mockWidgetFixtures: WidgetCardData[] = [
                 id: 'mock-rank-1',
                 primary: '1. Platform Team',
                 secondary: '87 points',
+                subtext: 'Maintained first place',
             },
             {
                 id: 'mock-rank-2',
                 primary: '2. Frontend Team',
                 secondary: '82 points',
+                subtext: '5 points behind',
             },
         ],
     },
@@ -279,6 +297,7 @@ const mockWidgetFixtures: WidgetCardData[] = [
                 id: 'mock-birthday-1',
                 primary: 'Monika L.',
                 secondary: 'Today',
+                subtext: 'Design Systems',
             },
         ],
     },
