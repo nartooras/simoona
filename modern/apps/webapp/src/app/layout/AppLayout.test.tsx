@@ -17,8 +17,8 @@ describe('AppLayout', () => {
 
         expect(screen.getByText('Simoona')).toBeInTheDocument();
         expect(screen.getByRole('searchbox', { name: 'Global search' })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Create shortcut' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Quick Links' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Messages' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Notifications' })).toBeInTheDocument();
         expect(screen.getByText('Demo User')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Walls' })).toBeInTheDocument();
@@ -156,7 +156,7 @@ describe('AppLayout', () => {
         expect(container.querySelector('[data-shell-taxonomy="wave2b-left-rail-taxonomy"]')).not.toBeNull();
         expect(container.querySelector('.topbar-height-legacy-44')).not.toBeNull();
         expect(container.querySelector('.topbar-geometry-wave2b')).not.toBeNull();
-        expect(container.querySelector('[data-topbar-controls="legacy-hierarchy-v2b"]')).not.toBeNull();
+        expect(container.querySelector('[data-topbar-controls="legacy-hierarchy-v3a"]')).not.toBeNull();
         expect(screen.getByTestId('app-sidebar')).toHaveAttribute('data-left-rail-width', 'legacy-232');
         expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toHaveAttribute(
             'data-left-rail-density',
@@ -164,8 +164,64 @@ describe('AppLayout', () => {
         );
         expect(screen.getByRole('searchbox', { name: 'Global search' })).toHaveClass('topbar-search-input');
         expect(screen.getByRole('button', { name: 'Quick Links' })).toHaveClass('topbar-action');
-        expect(screen.getByRole('button', { name: 'Notifications' })).toHaveClass('topbar-action--with-icon');
+        expect(screen.getByRole('button', { name: 'Notifications' })).toHaveClass('topbar-action--icon-only');
+        expect(screen.getByRole('button', { name: 'Messages' })).toHaveClass('topbar-action--icon-only');
         expect(screen.getByRole('button', { name: 'Demo User' })).toHaveClass('topbar-action--user');
+    });
+
+    it('keeps stable header control ordering semantics', () => {
+        render(
+            <MemoryRouter>
+                <AppLayout>
+                    <div>Layout content</div>
+                </AppLayout>
+            </MemoryRouter>,
+        );
+
+        const controls = Array.from(screen.getByTestId('topbar-controls').querySelectorAll('[data-header-control]')).map((element) =>
+            element.getAttribute('data-header-control'),
+        );
+        expect(controls).toEqual(['quick-links', 'messages', 'notifications', 'user-panel']);
+    });
+
+    it('tracks search focus state and keeps semantic search affordances', async () => {
+        const user = userEvent.setup();
+
+        render(
+            <MemoryRouter>
+                <AppLayout>
+                    <div>Layout content</div>
+                </AppLayout>
+            </MemoryRouter>,
+        );
+
+        const search = screen.getByRole('searchbox', { name: 'Global search' });
+        const searchContainer = search.closest('.app-header-search');
+        expect(searchContainer).not.toBeNull();
+        expect(searchContainer).toHaveAttribute('data-search-focus', 'false');
+        expect(search).toHaveAttribute('placeholder', 'Search');
+        expect(searchContainer?.querySelector('.topbar-search-icon')).not.toBeNull();
+
+        await user.click(search);
+        expect(searchContainer).toHaveAttribute('data-search-focus', 'true');
+
+        await user.tab();
+        expect(searchContainer).toHaveAttribute('data-search-focus', 'false');
+    });
+
+    it('renders user panel semantics with avatar and caret affordance', () => {
+        render(
+            <MemoryRouter>
+                <AppLayout>
+                    <div>Layout content</div>
+                </AppLayout>
+            </MemoryRouter>,
+        );
+
+        const userPanel = screen.getByRole('button', { name: 'Demo User' });
+        expect(userPanel.querySelector('.header-user-avatar')).not.toBeNull();
+        expect(userPanel.querySelector('.header-user-name')).not.toBeNull();
+        expect(userPanel.querySelector('.header-user-chevron')).not.toBeNull();
     });
 
     it('toggles mobile navigation state', async () => {

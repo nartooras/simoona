@@ -5,6 +5,7 @@ import { navigationGroups } from '../routes/navigation';
 
 export function AppLayout({ children }: PropsWithChildren) {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>(() =>
         Object.fromEntries(navigationGroups.map((group) => [group.key, false])),
     );
@@ -50,37 +51,52 @@ export function AppLayout({ children }: PropsWithChildren) {
                             <span className="app-brand-context">Core wall</span>
                         </div>
                     </div>
-                    <label className="app-header-search topbar-search" htmlFor="global-header-search">
+                    <label
+                        className="app-header-search topbar-search"
+                        data-search-focus={isSearchFocused ? 'true' : 'false'}
+                        htmlFor="global-header-search"
+                    >
                         <span className="visually-hidden">Search</span>
+                        <span aria-hidden="true" className="topbar-search-icon" />
                         <input
                             aria-label="Global search"
                             className="topbar-search-input"
                             id="global-header-search"
-                            placeholder="Search people, walls, posts..."
+                            placeholder="Search"
                             type="search"
+                            onBlur={() => setIsSearchFocused(false)}
+                            onFocus={() => setIsSearchFocused(true)}
                         />
                     </label>
-                    <div className="app-header-affordances topbar-actions" data-topbar-controls="legacy-hierarchy-v2b">
+                    <div className="app-header-affordances topbar-actions" data-testid="topbar-controls" data-topbar-controls="legacy-hierarchy-v3a">
                         <button
-                            aria-label="Create shortcut"
-                            className="header-action header-action--icon topbar-action topbar-action--icon"
+                            aria-label="Quick Links"
+                            className="header-action header-action--icon topbar-action topbar-action--icon topbar-action--icon-only"
+                            data-header-control="quick-links"
                             type="button"
                         >
-                            <span aria-hidden="true" className="topbar-icon topbar-icon--create" />
-                            <span className="visually-hidden">Create shortcut</span>
-                        </button>
-                        <button className="header-action topbar-action topbar-action--with-icon" type="button">
                             <span aria-hidden="true" className="topbar-icon topbar-icon--links" />
-                            Quick Links
                         </button>
-                        <button className="header-action topbar-action topbar-action--with-icon" type="button">
+                        <button
+                            aria-label="Messages"
+                            className="header-action header-action--icon topbar-action topbar-action--icon topbar-action--icon-only"
+                            data-header-control="messages"
+                            type="button"
+                        >
+                            <span aria-hidden="true" className="topbar-icon topbar-icon--messages" />
+                        </button>
+                        <button
+                            aria-label="Notifications"
+                            className="header-action header-action--icon topbar-action topbar-action--icon topbar-action--icon-only"
+                            data-header-control="notifications"
+                            type="button"
+                        >
                             <span aria-hidden="true" className="topbar-icon topbar-icon--notifications" />
-                            Notifications
-                            <span aria-hidden="true" className="topbar-count-badge">
+                            <span aria-label="3 unread notifications" className="topbar-count-badge">
                                 3
                             </span>
                         </button>
-                        <button className="header-user topbar-action topbar-action--user" type="button">
+                        <button className="header-user topbar-action topbar-action--user" data-header-control="user-panel" type="button">
                             <span aria-hidden="true" className="header-user-avatar">
                                 DU
                             </span>

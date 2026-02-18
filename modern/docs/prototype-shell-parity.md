@@ -178,14 +178,31 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
   - loading, empty, and unavailable card treatment stays uniform between feed and right rail
   - posts with no replies now render an explicit compact empty-thread line (`No replies yet`) to avoid blank comment areas
 
-### Explicit gaps vs legacy after Wave 2B
+### Wave 3A alignment completed
+
+- top header iconography now tracks legacy hierarchy more closely:
+  - quick links, messages, and notifications are icon-first controls with legacy-like hit-area sizing and hover/active states
+  - notifications include a compact badge treatment aligned to top-right icon placement
+  - header control ordering semantics are now test-covered (`quick-links -> messages -> notifications -> user-panel`)
+- topbar search now mirrors legacy behavior and geometry more closely:
+  - rounded search field, icon-in-input placement, and placeholder styling were aligned with legacy primary-navbar search treatment
+  - focus state now transitions to white input chrome with explicit semantic hook (`data-search-focus`) for robust tests
+  - keyboard focus/blur accessibility is preserved without introducing new backend or write behavior
+- user panel fidelity was improved while preserving current auth/session behavior:
+  - avatar + display name + caret trigger area spacing and typography were tightened toward legacy
+  - user-panel render semantics are now covered in layout tests
+- topbar responsiveness at desktop demo widths was tightened:
+  - search and right-side controls now scale down with dedicated breakpoints to reduce overlap/clipping risk
+  - mobile behavior remains unchanged (existing collapsed topbar controls path)
+
+### Explicit gaps vs legacy after Wave 3A
 
 - legacy icon sprite assets are still represented by simple text/placeholders
 - write interactions remain intentionally non-persistent (no backend like/reply/comment mutations)
 - advanced legacy controls (context menus, inline dropdown workflows, live counters) are still static
 - fine-grain font rendering parity (glyph metrics/kerning) remains approximate
 - screenshot pixel-diff automation is still not wired; baseline scaffold exists at `modern/apps/webapp/src/smoke/ShellVisualBaseline.scaffold.ts`
-- profile/settings account dropdown parity in topbar remains simplified in prototype shell (single non-interactive trigger only)
+- profile/settings account dropdown parity in topbar remains simplified in prototype shell (trigger chrome is closer, but dropdown workflow remains non-interactive)
 - externals split (`Externals important` vs `Externals basic`) remains condensed into a single modern externals section
 
 ### Explicit card/comment deltas still remaining after Wave 2C
