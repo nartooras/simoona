@@ -107,13 +107,23 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 - read-only sample comment thread blocks were added under feed content to mirror legacy nested reply rhythm
 - right-rail widgets (kudos, events, rankings, birthdays) now use tighter heading chrome, row separators, and compact two-line text hierarchy
 
-### Explicit gaps vs legacy after Wave 1B
+### Wave 1C alignment completed
+
+- left rail taxonomy was reordered to match legacy grouping and item rhythm for shared modules (notably Activities and Company ordering)
+- group headers now support expand/collapse state with explicit chevron indicators and compact icon affordances
+- left rail row density, hover/active/focus treatments, and long-list scroll behavior were tuned toward legacy sidebar interaction patterns
+- item-level affordances now include subtle bullet markers and toned-down prototype availability labels to preserve legacy visual hierarchy
+- topbar geometry pass aligned search + action control spacing/sizing while preserving existing prototype behavior
+
+### Explicit gaps vs legacy after Wave 1C
 
 - legacy icon sprite assets are still represented by simple text/placeholders
 - write interactions remain intentionally non-persistent (no real like/reply/comment mutations)
 - advanced legacy controls (context menus, inline dropdown workflows, live counters) are still static
 - fine-grain font rendering parity (glyph metrics/kerning) remains approximate
 - screenshot pixel-diff automation is still not wired; baseline scaffold exists at `modern/apps/webapp/src/smoke/ShellVisualBaseline.scaffold.ts`
+- profile/settings account dropdown interaction parity in topbar remains simplified in prototype shell
+- external links split (`Externals important` vs `Externals basic`) remains condensed into a single modern externals section
 
 ### Still pending
 
