@@ -218,6 +218,7 @@ src/api/Shrooms.Presentation.Api/storage/*
 src/api/Shrooms.Tests/Shrooms.Tests.csproj.VisualState.xml
 src/.nuget/nuget.config
 src/Shrooms.Premium.Tests/Shrooms.Premium.Tests.props
+.codex/environments/environment.toml
 src/Shrooms.Premium/Shrooms.Premium.props
 src/Premium.WithForkedOss.sln
 

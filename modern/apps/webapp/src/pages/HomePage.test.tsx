@@ -16,15 +16,33 @@ describe('HomePage', () => {
         expect(screen.getByRole('heading', { name: 'Upcoming Events' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Rankings' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Birthdays' })).toBeInTheDocument();
+        expect(screen.getAllByTestId('wall-widget-card')).toHaveLength(4);
+        expect(screen.getAllByTestId('wall-widget-row')).toHaveLength(10);
     });
 
-    it('keeps key feed content visible for mobile fallback stacking', () => {
+    it('renders feed card anatomy sections with read-only interaction affordances', () => {
         render(<HomePage />);
 
         expect(screen.getByTestId('wall-content-grid')).toBeInTheDocument();
         expect(screen.getByText('Milda Vaitke')).toBeInTheDocument();
         expect(screen.getByText('Tomas Petrauskas')).toBeInTheDocument();
-        expect(screen.getAllByText('Like')).toHaveLength(2);
-        expect(screen.getAllByPlaceholderText('Commenting is disabled in prototype mode')).toHaveLength(2);
+        expect(screen.getAllByTestId('wall-post-reaction-line')).toHaveLength(2);
+        expect(screen.getAllByTestId('wall-post-action-row')).toHaveLength(2);
+        expect(screen.getAllByRole('button', { name: 'Reply' })).toHaveLength(2);
+        expect(screen.getByRole('button', { name: 'Unlike' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Like' })).toBeInTheDocument();
+        expect(screen.getAllByTestId('wall-post-comment-row')).toHaveLength(2);
+        expect(screen.getAllByLabelText('Prototype comment input')).toHaveLength(2);
+    });
+
+    it('shows a realistic read-only thread under at least one feed card', () => {
+        render(<HomePage />);
+
+        expect(screen.getAllByTestId('wall-post-thread')).toHaveLength(1);
+        expect(screen.getByText('Greta Simonyte')).toBeInTheDocument();
+        expect(screen.getByText('Paulius Dainys')).toBeInTheDocument();
+        expect(
+            screen.getByText('Reviewed. Auth migration and directory pagination should stay in this sprint scope.'),
+        ).toBeInTheDocument();
     });
 });

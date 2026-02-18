@@ -242,6 +242,32 @@ Deterministic demo orchestration runbook:
 
 - `modern/docs/demo-runbook.md`
 
+### Wave 1A Shell Geometry + Header/Nav Parity
+
+Wave 1A locks deterministic desktop shell geometry for core wall parity in `modern/apps/webapp` using CSS geometry tokens.
+
+| Geometry target | Value |
+|---|---|
+| Header height | `44px` |
+| Sidebar width | `236px` |
+| Content max width (center stream) | `748px` |
+| Right rail width | `272px` |
+| Core spacing (main gutter) | `18px` |
+| Sidebar nav row height | `31px` |
+
+Scope covered:
+
+- top header parity pass (brand alignment, search placement, quick actions/user affordance rhythm)
+- sidebar/nav parity pass (group headings, active-row treatment, denser grouped navigation spacing)
+- deterministic structure baseline tests for home shell and app layout
+- Wave 1B visual baseline scaffold at `modern/apps/webapp/src/smoke/ShellVisualBaseline.scaffold.ts`
+
+Deferred to Wave 1B:
+
+- automated screenshot pixel-diff assertions using the scaffold spec
+- feed/widget card micro-geometry parity (inner paddings, offsets, and exact iconography)
+- legacy icon sprite parity and advanced interaction chrome details
+
 ## Frontend Migration Wave 1
 
 Wave 1 migration details:

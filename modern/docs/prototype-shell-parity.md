@@ -87,18 +87,33 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 - right rail includes compact cards for kudos feed, upcoming events, rankings, and birthdays with subtle row separators
 - top blue header keeps global chrome and now includes search + quick user actions for legacy-like scanning behavior
 
-### Wall Layout Parity: Matches
+### Wave 1A geometry baseline (desktop parity target)
 
-- compact spacing, thin borders/dividers, and light-gray canvas with white/near-white cards
-- blue accent hierarchy on links, section titles, and navigational emphasis
-- responsive behavior where side columns collapse/stack while preserving key feed and widget content
-- prototype safety maintained: interaction controls shown but non-destructive and no backend write behavior added
+| Geometry target | Value | Notes |
+|---|---|---|
+| Header height | `44px` | Sticky top chrome baseline. |
+| Header content max width | `1360px` | Aligns with shell frame. |
+| Sidebar width | `236px` | Fixed desktop nav rail width. |
+| Content max width (center wall stream) | `748px` | Main wall feed parity target. |
+| Right rail width | `272px` | Widget column parity target. |
+| Core spacing (main grid gap + content gutter) | `18px` | Shared shell rhythm token. |
+| Sidebar nav row height | `31px` | Legacy-like nav density baseline. |
 
-### Wall Layout Parity: Remaining differences
+### Wave 1B alignment completed
 
-- legacy-specific icon set and sprite assets are approximated with text/shape placeholders
-- some exact pixel values (line heights, card paddings, and vertical offsets) remain slightly modernized
-- advanced legacy controls (inline dropdown workflows, context menus, and live counters) are still static demo representations
+- wall post card anatomy now follows legacy rhythm more closely: wall label line, avatar/author/timestamp line, body spacing, media block proportion, reaction/meta line, and action row
+- action affordances were aligned to legacy naming (`Like`/`Unlike`, `Reply`) while remaining read-only and non-persistent in prototype mode
+- comment composer row now matches legacy visual treatment more closely (avatar + muted input field) and stays disabled
+- read-only sample comment thread blocks were added under feed content to mirror legacy nested reply rhythm
+- right-rail widgets (kudos, events, rankings, birthdays) now use tighter heading chrome, row separators, and compact two-line text hierarchy
+
+### Explicit gaps vs legacy after Wave 1B
+
+- legacy icon sprite assets are still represented by simple text/placeholders
+- write interactions remain intentionally non-persistent (no real like/reply/comment mutations)
+- advanced legacy controls (context menus, inline dropdown workflows, live counters) are still static
+- fine-grain font rendering parity (glyph metrics/kerning) remains approximate
+- screenshot pixel-diff automation is still not wired; baseline scaffold exists at `modern/apps/webapp/src/smoke/ShellVisualBaseline.scaffold.ts`
 
 ### Still pending
 

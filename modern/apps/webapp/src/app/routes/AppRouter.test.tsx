@@ -38,6 +38,9 @@ describe('AppRouter', () => {
         expect(await screen.findByRole('heading', { name: 'Home' })).toBeInTheDocument();
         expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
         expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-content-grid')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-feed-column')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-widgets-column')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Kudos Feed' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Upcoming Events' })).toBeInTheDocument();
     });

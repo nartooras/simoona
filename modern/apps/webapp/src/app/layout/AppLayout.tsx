@@ -11,8 +11,8 @@ export function AppLayout({ children }: PropsWithChildren) {
     }
 
     return (
-        <div className="app-shell">
-            <header className="app-header">
+        <div className="app-shell" data-shell-geometry="wave1a">
+            <header className="app-header" data-testid="app-header">
                 <div className="app-header-content">
                     <button
                         aria-controls="app-sidebar-nav"
@@ -26,7 +26,15 @@ export function AppLayout({ children }: PropsWithChildren) {
                         <span />
                         <span />
                     </button>
-                    <strong className="app-brand">Simoona</strong>
+                    <div className="app-brand-cluster">
+                        <span aria-hidden="true" className="app-brand-mark">
+                            S
+                        </span>
+                        <div className="app-brand-copy">
+                            <strong className="app-brand">Simoona</strong>
+                            <span className="app-brand-context">Core wall</span>
+                        </div>
+                    </div>
                     <label className="app-header-search" htmlFor="global-header-search">
                         <span className="visually-hidden">Search</span>
                         <input
@@ -37,18 +45,29 @@ export function AppLayout({ children }: PropsWithChildren) {
                         />
                     </label>
                     <div className="app-header-affordances">
+                        <button aria-label="Add shortcut" className="header-action header-action--icon" type="button">
+                            +
+                        </button>
+                        <button aria-label="Inbox" className="header-action header-action--icon" type="button">
+                            3
+                        </button>
                         <button className="header-action" type="button">
                             Quick Links
                         </button>
                         <button className="header-action" type="button">
-                            Notifications
+                            Alerts
                         </button>
-                        <span className="header-chip">Demo User</span>
+                        <button className="header-user" type="button">
+                            <span aria-hidden="true" className="header-user-avatar">
+                                DU
+                            </span>
+                            <span className="header-user-name">Demo User</span>
+                        </button>
                     </div>
                 </div>
             </header>
-            <div className="app-layout">
-                <aside className={`app-sidebar${isMobileNavOpen ? ' open' : ''}`} id="app-sidebar-nav">
+            <div className="app-layout" data-testid="app-layout">
+                <aside className={`app-sidebar${isMobileNavOpen ? ' open' : ''}`} data-testid="app-sidebar" id="app-sidebar-nav">
                     <nav aria-label="Primary navigation" className="app-nav">
                         {navigationGroups.map((group) => (
                             <section className="app-nav-group" key={group.title}>
@@ -62,7 +81,7 @@ export function AppLayout({ children }: PropsWithChildren) {
                                     {group.items.map((item) => (
                                         <li key={item.to}>
                                             <NavLink end={item.end} onClick={closeMobileNav} to={item.to}>
-                                                {item.label}
+                                                <span className="nav-item-label">{item.label}</span>
                                                 <span
                                                     aria-hidden="true"
                                                     className={`nav-availability nav-availability--${item.availability}`}
@@ -77,7 +96,9 @@ export function AppLayout({ children }: PropsWithChildren) {
                         ))}
                     </nav>
                 </aside>
-                <main className="app-content">{children}</main>
+                <main className="app-content" data-testid="app-content">
+                    {children}
+                </main>
                 <button
                     aria-hidden={!isMobileNavOpen}
                     className={`app-overlay${isMobileNavOpen ? ' visible' : ''}`}
