@@ -195,6 +195,25 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
   - search and right-side controls now scale down with dedicated breakpoints to reduce overlap/clipping risk
   - mobile behavior remains unchanged (existing collapsed topbar controls path)
 
+### Wave 3B alignment completed
+
+- home right rail now follows a tighter legacy-like card rhythm and typography hierarchy:
+  - widget chrome is normalized with feed-card-like border/background/shadow/radius/padding treatment
+  - widget heading style remains compact uppercase blue with tighter divider spacing
+  - row rendering now uses explicit `title -> meta -> subtext` semantics with compact separators
+- right-rail ordering and density now stay deterministic for legacy-style scan order:
+  - explicit priority ordering is enforced (`Kudos Feed`, `Upcoming Events`, `Rankings`, `Birthdays`)
+  - row height and inter-widget spacing were reduced to avoid oversized modern whitespace
+  - long row title/meta values now clip predictably while subtext can wrap
+- Home micro-details were polished across feed and right rail:
+  - muted metadata hooks are now shared for timestamps/reaction meta/right-rail meta lines
+  - separator and divider spacing was tightened for compact legacy-like vertical rhythm
+  - feed/right-rail columns now use explicit top/start alignment and tighter desktop gutter
+- tests were expanded to lock Wave 3B parity behavior:
+  - right-rail heading order assertions
+  - right-rail row title/meta/subtext semantic assertions
+  - micro-detail hook assertions for muted metadata class usage
+
 ### Explicit gaps vs legacy after Wave 3A
 
 - legacy icon sprite assets are still represented by simple text/placeholders
@@ -204,6 +223,13 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 - screenshot pixel-diff automation is still not wired; baseline scaffold exists at `modern/apps/webapp/src/smoke/ShellVisualBaseline.scaffold.ts`
 - profile/settings account dropdown parity in topbar remains simplified in prototype shell (trigger chrome is closer, but dropdown workflow remains non-interactive)
 - externals split (`Externals important` vs `Externals basic`) remains condensed into a single modern externals section
+
+### Explicit shortlist of remaining parity gaps after Wave 3B
+
+- right-rail rows still use fixture text and simplified non-interactive items (no deep-link navigation targets)
+- legacy icon spriteography inside widget rows (badges/status glyphs) is still approximated
+- legacy hover affordances for widget row actions/context menus are not yet represented
+- feed media blocks remain simplified placeholders rather than legacy crop/thumbnail assets
 
 ### Explicit card/comment deltas still remaining after Wave 2C
 
