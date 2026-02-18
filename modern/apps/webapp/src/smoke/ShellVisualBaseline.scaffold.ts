@@ -5,12 +5,12 @@ export interface ShellVisualBaselineSpec {
         readonly height: number;
     };
     readonly selectors: readonly string[];
-    readonly geometry: {
-        readonly headerHeightPx: number;
-        readonly sidebarWidthPx: number;
-        readonly centerContentMaxWidthPx: number;
-        readonly rightRailWidthPx: number;
-        readonly coreSpacingPx: number;
+    readonly semantics: {
+        readonly shellGeometryTag: string;
+        readonly topbarHeightTag: string;
+        readonly topbarGeometryClass: string;
+        readonly leftRailWidthTag: string;
+        readonly leftRailDensityTag: string;
     };
 }
 
@@ -21,7 +21,7 @@ export const shellVisualBaselineSpec: ShellVisualBaselineSpec = {
         height: 900,
     },
     selectors: [
-        '[data-shell-geometry="wave1a"]',
+        '[data-shell-geometry="wave2b"]',
         '[data-testid="app-header"]',
         '[data-testid="app-sidebar"]',
         '[data-testid="app-content"]',
@@ -29,11 +29,11 @@ export const shellVisualBaselineSpec: ShellVisualBaselineSpec = {
         '[data-testid="wall-feed-column"]',
         '[data-testid="wall-widgets-column"]',
     ],
-    geometry: {
-        headerHeightPx: 44,
-        sidebarWidthPx: 236,
-        centerContentMaxWidthPx: 748,
-        rightRailWidthPx: 272,
-        coreSpacingPx: 18,
+    semantics: {
+        shellGeometryTag: 'wave2b',
+        topbarHeightTag: 'legacy-44',
+        topbarGeometryClass: 'topbar-geometry-wave2b',
+        leftRailWidthTag: 'legacy-232',
+        leftRailDensityTag: 'legacy-compact-wave2b',
     },
 };

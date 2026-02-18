@@ -146,14 +146,29 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
   - denser action-row spacing and clearer hierarchy between actions, replies, and composer
   - reply blocks now read as compact nested conversation units with clearer separation
 
-### Explicit gaps vs legacy after Wave 2A
+### Wave 2B alignment completed
+
+- shell frame geometry was tuned toward legacy desktop proportions:
+  - left rail width, center gutter rhythm, and right-rail offset were re-balanced (`232 / 16 / 268` shell tokens)
+  - content and rail spacing now use a tighter compact baseline at desktop breakpoints
+- topbar fidelity moved closer to legacy chrome hierarchy:
+  - topbar control/search geometry was tightened with explicit Wave 2B semantic hooks
+  - right-side controls now include icon-first affordances for create, quick links, notifications, and profile chevron hierarchy
+  - brand/search/action typography scale and spacing were compacted for legacy-like scanning rhythm
+- left rail fidelity was refined for dense legacy-like navigation:
+  - group toggle headers and row spacing were tightened for compactness
+  - hover/active/focus states now include stronger left-edge contrast cues and consistent focus outlines
+  - long navigation labels now truncate with ellipsis instead of overflow wrapping
+- shell geometry regression guardrails now assert semantic hooks (topbar + left rail) rather than brittle pixel-only expectations.
+
+### Explicit gaps vs legacy after Wave 2B
 
 - legacy icon sprite assets are still represented by simple text/placeholders
 - write interactions remain intentionally non-persistent (no backend like/reply/comment mutations)
 - advanced legacy controls (context menus, inline dropdown workflows, live counters) are still static
 - fine-grain font rendering parity (glyph metrics/kerning) remains approximate
 - screenshot pixel-diff automation is still not wired; baseline scaffold exists at `modern/apps/webapp/src/smoke/ShellVisualBaseline.scaffold.ts`
-- profile/settings account dropdown parity in topbar remains simplified in prototype shell
+- profile/settings account dropdown parity in topbar remains simplified in prototype shell (single non-interactive trigger only)
 - externals split (`Externals important` vs `Externals basic`) remains condensed into a single modern externals section
 
 ### Still pending

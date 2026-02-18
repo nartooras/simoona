@@ -17,8 +17,8 @@ describe('AppLayout', () => {
 
         expect(screen.getByText('Simoona')).toBeInTheDocument();
         expect(screen.getByRole('searchbox', { name: 'Global search' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Create shortcut' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Quick Links' })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Alerts' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Notifications' })).toBeInTheDocument();
         expect(screen.getByText('Demo User')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Walls' })).toBeInTheDocument();
@@ -89,7 +89,8 @@ describe('AppLayout', () => {
             </MemoryRouter>,
         );
 
-        expect(container.querySelector('[data-shell-geometry="wave1a"]')).not.toBeNull();
+        expect(container.querySelector('[data-shell-geometry="wave2b"]')).not.toBeNull();
+        expect(container.querySelector('[data-shell-fidelity="wave2b-topbar-leftnav"]')).not.toBeNull();
         expect(screen.getByTestId('app-header')).toBeInTheDocument();
         expect(screen.getByTestId('app-layout')).toBeInTheDocument();
         expect(screen.getByTestId('app-sidebar')).toBeInTheDocument();
@@ -143,7 +144,7 @@ describe('AppLayout', () => {
         expect(screen.getByRole('link', { name: 'Vacations' })).not.toHaveClass('active');
     });
 
-    it('keeps topbar geometry semantics for wave 1c parity', () => {
+    it('keeps topbar and left rail geometry semantics for wave 2b parity', () => {
         const { container } = render(
             <MemoryRouter>
                 <AppLayout>
@@ -152,11 +153,18 @@ describe('AppLayout', () => {
             </MemoryRouter>,
         );
 
-        expect(container.querySelector('[data-shell-taxonomy="wave1c-left-rail-taxonomy"]')).not.toBeNull();
-        expect(container.querySelector('.topbar-geometry-wave1c')).not.toBeNull();
+        expect(container.querySelector('[data-shell-taxonomy="wave2b-left-rail-taxonomy"]')).not.toBeNull();
+        expect(container.querySelector('.topbar-height-legacy-44')).not.toBeNull();
+        expect(container.querySelector('.topbar-geometry-wave2b')).not.toBeNull();
+        expect(container.querySelector('[data-topbar-controls="legacy-hierarchy-v2b"]')).not.toBeNull();
+        expect(screen.getByTestId('app-sidebar')).toHaveAttribute('data-left-rail-width', 'legacy-232');
+        expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toHaveAttribute(
+            'data-left-rail-density',
+            'legacy-compact-wave2b',
+        );
         expect(screen.getByRole('searchbox', { name: 'Global search' })).toHaveClass('topbar-search-input');
         expect(screen.getByRole('button', { name: 'Quick Links' })).toHaveClass('topbar-action');
-        expect(screen.getByRole('button', { name: 'Notifications' })).toHaveClass('topbar-action--icon');
+        expect(screen.getByRole('button', { name: 'Notifications' })).toHaveClass('topbar-action--with-icon');
         expect(screen.getByRole('button', { name: 'Demo User' })).toHaveClass('topbar-action--user');
     });
 
