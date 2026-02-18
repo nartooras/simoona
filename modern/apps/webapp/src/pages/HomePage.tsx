@@ -158,9 +158,16 @@ export function HomePage() {
             <div className="wall-content-grid" data-testid="wall-content-grid">
                 <section aria-label="Feed stream" className="wall-feed-column" data-testid="wall-feed-column">
                     {samplePosts.map((post) => (
-                        <article aria-label={`Wall post by ${post.author}`} className="wall-post-card" key={post.id}>
-                            <p className="wall-post-label-line">{post.wallLabel}</p>
-                            <div className="wall-post-meta-line">
+                        <article
+                            aria-label={`Wall post by ${post.author}`}
+                            className="wall-post-card"
+                            data-testid="wall-post-card"
+                            key={post.id}
+                        >
+                            <p className="wall-post-label-line" data-section="wall-label">
+                                {post.wallLabel}
+                            </p>
+                            <header className="wall-post-meta-line" data-section="meta">
                                 <span aria-hidden="true" className="wall-avatar">
                                     {post.author
                                         .split(' ')
@@ -171,21 +178,29 @@ export function HomePage() {
                                     <p className="wall-post-author">{post.author}</p>
                                     <p className="wall-post-timestamp">{post.timestamp}</p>
                                 </div>
-                            </div>
-                            <p className="wall-post-body">{post.text}</p>
-                            <div aria-label={post.mediaLabel} className="wall-post-media" />
-                            <p aria-label="Post reactions" className="wall-post-reaction-line" data-testid="wall-post-reaction-line">
+                            </header>
+                            <p className="wall-post-body" data-section="body">
+                                {post.text}
+                            </p>
+                            <div aria-label={post.mediaLabel} className="wall-post-media" data-section="media" />
+                            <p
+                                aria-label="Post reactions"
+                                className="wall-post-reaction-line wall-post-separator-row"
+                                data-section="reactions"
+                                data-testid="wall-post-reaction-line"
+                            >
                                 {post.reactions}
                             </p>
                             <div
                                 aria-label="Wall post actions"
-                                className="wall-post-action-row"
+                                className="wall-post-action-row wall-post-separator-row"
+                                data-section="actions"
                                 data-testid="wall-post-action-row"
                             >
-                                <button aria-disabled="true" className="wall-post-action-button" type="button">
+                                <button aria-disabled="true" className="wall-post-action-button" disabled type="button">
                                     {post.likedByCurrentUser ? 'Unlike' : 'Like'}
                                 </button>
-                                <button aria-disabled="true" className="wall-post-action-button" type="button">
+                                <button aria-disabled="true" className="wall-post-action-button" disabled type="button">
                                     Reply
                                 </button>
                             </div>
@@ -193,6 +208,7 @@ export function HomePage() {
                                 <section
                                     aria-label="Comment thread"
                                     className="wall-post-thread"
+                                    data-section="thread"
                                     data-testid="wall-post-thread"
                                 >
                                     {post.replies.map((reply) => (
@@ -206,7 +222,7 @@ export function HomePage() {
                                     ))}
                                 </section>
                             )}
-                            <div className="wall-post-comment-row" data-testid="wall-post-comment-row">
+                            <div className="wall-post-comment-row wall-post-separator-row" data-section="comment" data-testid="wall-post-comment-row">
                                 <span aria-hidden="true" className="wall-avatar wall-avatar--comment">
                                     ME
                                 </span>
@@ -223,8 +239,10 @@ export function HomePage() {
                 <aside aria-label="Wall widgets" className="wall-widgets-column" data-testid="wall-widgets-column">
                     {widgetCards.map((card) => (
                         <section className="wall-widget-card" data-testid="wall-widget-card" key={card.id}>
-                            <h2>{card.title}</h2>
-                            <ul>
+                            <header className="wall-widget-header">
+                                <h2 data-testid="wall-widget-heading">{card.title}</h2>
+                            </header>
+                            <ul aria-label={`${card.title} items`} data-testid="wall-widget-list">
                                 {card.rows.map((row) => (
                                     <li className="wall-widget-row" data-testid="wall-widget-row" key={row.id}>
                                         <p className="wall-widget-row-primary">{row.primary}</p>

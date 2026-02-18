@@ -115,15 +115,28 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 - item-level affordances now include subtle bullet markers and toned-down prototype availability labels to preserve legacy visual hierarchy
 - topbar geometry pass aligned search + action control spacing/sizing while preserving existing prototype behavior
 
-### Explicit gaps vs legacy after Wave 1C
+### Wave 1D alignment completed
+
+- home feed card density now matches legacy compact rhythm more closely:
+  - tighter card spacing and reduced intra-card whitespace
+  - adjusted text scale/line-height/weight for wall label, author line, timestamp/meta, and body copy
+  - reduced media block and avatar proportions to closer legacy anatomy
+- post section separators were normalized so meta, reactions, actions, thread, and comment composer rows read as consistent compact blocks
+- right rail widgets were refined to legacy-like block anatomy:
+  - tighter header treatment (uppercase, compact blue heading chrome)
+  - denser row spacing with cleaner separators
+  - compact two-level typography hierarchy for row primary/secondary text
+- feed and widget structure tests were expanded to lock section ordering, separator-row presence, and right-rail heading/list semantics
+
+### Explicit gaps vs legacy after Wave 1D
 
 - legacy icon sprite assets are still represented by simple text/placeholders
 - write interactions remain intentionally non-persistent (no real like/reply/comment mutations)
 - advanced legacy controls (context menus, inline dropdown workflows, live counters) are still static
 - fine-grain font rendering parity (glyph metrics/kerning) remains approximate
 - screenshot pixel-diff automation is still not wired; baseline scaffold exists at `modern/apps/webapp/src/smoke/ShellVisualBaseline.scaffold.ts`
-- profile/settings account dropdown interaction parity in topbar remains simplified in prototype shell
-- external links split (`Externals important` vs `Externals basic`) remains condensed into a single modern externals section
+- profile/settings account dropdown parity in topbar remains simplified in prototype shell
+- externals split (`Externals important` vs `Externals basic`) remains condensed into a single modern externals section
 
 ### Still pending
 
