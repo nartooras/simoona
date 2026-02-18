@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import { AppLayout } from './AppLayout';
+import { navigationGroups } from '../routes/navigation';
 
 describe('AppLayout', () => {
     it('renders header and grouped navigation content', () => {
@@ -18,6 +19,7 @@ describe('AppLayout', () => {
         expect(screen.getByRole('searchbox', { name: 'Global search' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Quick Links' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Alerts' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Notifications' })).toBeInTheDocument();
         expect(screen.getByText('Demo User')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Walls' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Activities' })).toBeInTheDocument();
@@ -26,40 +28,56 @@ describe('AppLayout', () => {
         expect(screen.getByRole('heading', { name: 'System' })).toBeInTheDocument();
         expect(screen.getByText('Layout content')).toBeInTheDocument();
         expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toBeInTheDocument();
-        expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
-        expect(screen.getByRole('link', { name: 'Activity Feed' })).toHaveAttribute(
-            'href',
-            '/activities/feed',
+    });
+
+    it('renders full left rail taxonomy in legacy order', () => {
+        const { container } = render(
+            <MemoryRouter>
+                <AppLayout>
+                    <div>Layout content</div>
+                </AppLayout>
+            </MemoryRouter>,
         );
-        expect(screen.getByRole('link', { name: 'Recognition' })).toHaveAttribute('href', '/recognition');
-        expect(screen.getByRole('link', { name: 'Events' })).toHaveAttribute('href', '/events');
-        expect(screen.getByRole('link', { name: 'Vacations' })).toHaveAttribute('href', '/vacations');
-        expect(screen.getByRole('link', { name: 'Kudos' })).toHaveAttribute('href', '/kudos');
-        expect(screen.getByRole('link', { name: 'Books' })).toHaveAttribute('href', '/books');
-        expect(screen.getByRole('link', { name: 'Service Requests' })).toHaveAttribute(
-            'href',
-            '/service-requests',
+
+        const nav = screen.getByRole('navigation', { name: 'Primary navigation' });
+        const sections = Array.from(nav.querySelectorAll('.app-nav-group'));
+        expect(sections.map((section) => section.getAttribute('data-group'))).toEqual([
+            'walls',
+            'activities',
+            'company',
+            'externals',
+            'system',
+        ]);
+
+        const expectedOrder = {
+            walls: ['Home', 'Activity Feed', 'Recognition'],
+            activities: ['Events', 'Kudos', 'Service Requests', 'Books', 'Vacations'],
+            company: [
+                'Office Map',
+                'Organizational Structure',
+                'Employees',
+                'Projects',
+                'Committees',
+                'Teams',
+                'User Info',
+                'General Settings',
+                'My Profile',
+            ],
+            externals: ['Integrations'],
+            system: ['Health'],
+        };
+
+        for (const section of sections) {
+            const groupKey = section.getAttribute('data-group') as keyof typeof expectedOrder;
+            const linkLabels = Array.from(section.querySelectorAll('.nav-item-label')).map((label) => label.textContent?.trim());
+            expect(linkLabels).toEqual(expectedOrder[groupKey]);
+        }
+
+        const navRoutes = navigationGroups.flatMap((group) => group.items.map((item) => item.to));
+        const renderedRoutes = Array.from(container.querySelectorAll('.app-nav-group a')).map((anchor) =>
+            anchor.getAttribute('href'),
         );
-        expect(screen.getByRole('link', { name: 'User Info' })).toHaveAttribute('href', '/user-info');
-        expect(screen.getByRole('link', { name: 'General Settings' })).toHaveAttribute(
-            'href',
-            '/settings/general',
-        );
-        expect(screen.getByRole('link', { name: 'Employees' })).toHaveAttribute('href', '/employees');
-        expect(screen.getByRole('link', { name: 'My Profile' })).toHaveAttribute('href', '/profiles/me');
-        expect(screen.getByRole('link', { name: 'Teams' })).toHaveAttribute('href', '/teams');
-        expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '/projects');
-        expect(screen.getByRole('link', { name: 'Office Map' })).toHaveAttribute('href', '/office-map');
-        expect(screen.getByRole('link', { name: 'Organizational Structure' })).toHaveAttribute(
-            'href',
-            '/organization/structure',
-        );
-        expect(screen.getByRole('link', { name: 'Committees' })).toHaveAttribute('href', '/committees');
-        expect(screen.getByRole('link', { name: 'Integrations' })).toHaveAttribute(
-            'href',
-            '/externals/integrations',
-        );
-        expect(screen.getByRole('link', { name: 'Health' })).toHaveAttribute('href', '/health');
+        expect(renderedRoutes).toEqual(navRoutes);
     });
 
     it('keeps deterministic shell regions and grouped navigation density', () => {
@@ -86,6 +104,60 @@ describe('AppLayout', () => {
 
         const availabilityBadges = nav.querySelectorAll('.nav-availability');
         expect(availabilityBadges).toHaveLength(19);
+    });
+
+    it('supports group expand and collapse', async () => {
+        const user = userEvent.setup();
+
+        render(
+            <MemoryRouter>
+                <AppLayout>
+                    <div>Layout content</div>
+                </AppLayout>
+            </MemoryRouter>,
+        );
+
+        const activitiesToggle = screen.getByTestId('nav-group-toggle-activities');
+        expect(activitiesToggle).toHaveAttribute('aria-expanded', 'true');
+        expect(screen.getByRole('link', { name: 'Events' })).toBeInTheDocument();
+
+        await user.click(activitiesToggle);
+        expect(activitiesToggle).toHaveAttribute('aria-expanded', 'false');
+        expect(screen.queryByRole('link', { name: 'Events' })).not.toBeInTheDocument();
+
+        await user.click(activitiesToggle);
+        expect(activitiesToggle).toHaveAttribute('aria-expanded', 'true');
+        expect(screen.getByRole('link', { name: 'Events' })).toBeInTheDocument();
+    });
+
+    it('highlights active route link', () => {
+        render(
+            <MemoryRouter initialEntries={['/events']}>
+                <AppLayout>
+                    <div>Layout content</div>
+                </AppLayout>
+            </MemoryRouter>,
+        );
+
+        expect(screen.getByRole('link', { name: 'Events' })).toHaveClass('active');
+        expect(screen.getByRole('link', { name: 'Vacations' })).not.toHaveClass('active');
+    });
+
+    it('keeps topbar geometry semantics for wave 1c parity', () => {
+        const { container } = render(
+            <MemoryRouter>
+                <AppLayout>
+                    <div>Layout content</div>
+                </AppLayout>
+            </MemoryRouter>,
+        );
+
+        expect(container.querySelector('[data-shell-taxonomy="wave1c-left-rail-taxonomy"]')).not.toBeNull();
+        expect(container.querySelector('.topbar-geometry-wave1c')).not.toBeNull();
+        expect(screen.getByRole('searchbox', { name: 'Global search' })).toHaveClass('topbar-search-input');
+        expect(screen.getByRole('button', { name: 'Quick Links' })).toHaveClass('topbar-action');
+        expect(screen.getByRole('button', { name: 'Notifications' })).toHaveClass('topbar-action--icon');
+        expect(screen.getByRole('button', { name: 'Demo User' })).toHaveClass('topbar-action--user');
     });
 
     it('toggles mobile navigation state', async () => {

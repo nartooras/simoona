@@ -5,15 +5,25 @@ import { navigationGroups } from '../routes/navigation';
 
 export function AppLayout({ children }: PropsWithChildren) {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+    const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>(() =>
+        Object.fromEntries(navigationGroups.map((group) => [group.key, false])),
+    );
 
     function closeMobileNav() {
         setIsMobileNavOpen(false);
     }
 
+    function toggleGroup(groupKey: string) {
+        setCollapsedGroups((current) => ({
+            ...current,
+            [groupKey]: !current[groupKey],
+        }));
+    }
+
     return (
-        <div className="app-shell" data-shell-geometry="wave1a">
+        <div className="app-shell" data-shell-geometry="wave1a" data-shell-taxonomy="wave1c-left-rail-taxonomy">
             <header className="app-header" data-testid="app-header">
-                <div className="app-header-content">
+                <div className="app-header-content topbar-geometry-wave1c">
                     <button
                         aria-controls="app-sidebar-nav"
                         aria-expanded={isMobileNavOpen}
@@ -35,29 +45,38 @@ export function AppLayout({ children }: PropsWithChildren) {
                             <span className="app-brand-context">Core wall</span>
                         </div>
                     </div>
-                    <label className="app-header-search" htmlFor="global-header-search">
+                    <label className="app-header-search topbar-search" htmlFor="global-header-search">
                         <span className="visually-hidden">Search</span>
                         <input
                             aria-label="Global search"
+                            className="topbar-search-input"
                             id="global-header-search"
                             placeholder="Search people, walls, posts..."
                             type="search"
                         />
                     </label>
-                    <div className="app-header-affordances">
-                        <button aria-label="Add shortcut" className="header-action header-action--icon" type="button">
+                    <div className="app-header-affordances topbar-actions">
+                        <button
+                            aria-label="Add shortcut"
+                            className="header-action header-action--icon topbar-action topbar-action--icon"
+                            type="button"
+                        >
                             +
                         </button>
-                        <button aria-label="Inbox" className="header-action header-action--icon" type="button">
+                        <button
+                            aria-label="Notifications"
+                            className="header-action header-action--icon topbar-action topbar-action--icon"
+                            type="button"
+                        >
                             3
                         </button>
-                        <button className="header-action" type="button">
+                        <button className="header-action topbar-action" type="button">
                             Quick Links
                         </button>
-                        <button className="header-action" type="button">
+                        <button className="header-action topbar-action" type="button">
                             Alerts
                         </button>
-                        <button className="header-user" type="button">
+                        <button className="header-user topbar-action topbar-action--user" type="button">
                             <span aria-hidden="true" className="header-user-avatar">
                                 DU
                             </span>
@@ -70,17 +89,35 @@ export function AppLayout({ children }: PropsWithChildren) {
                 <aside className={`app-sidebar${isMobileNavOpen ? ' open' : ''}`} data-testid="app-sidebar" id="app-sidebar-nav">
                     <nav aria-label="Primary navigation" className="app-nav">
                         {navigationGroups.map((group) => (
-                            <section className="app-nav-group" key={group.title}>
+                            <section className="app-nav-group" data-group={group.key} key={group.title}>
                                 <h2 className="app-nav-group-title" id={`nav-group-${group.key}`}>
-                                    <span aria-hidden="true" className="app-nav-group-indicator">
-                                        ▾
-                                    </span>
-                                    {group.title}
+                                    <button
+                                        aria-controls={`nav-group-list-${group.key}`}
+                                        aria-expanded={!collapsedGroups[group.key]}
+                                        className="app-nav-group-toggle"
+                                        data-testid={`nav-group-toggle-${group.key}`}
+                                        type="button"
+                                        onClick={() => toggleGroup(group.key)}
+                                    >
+                                        <span
+                                            aria-hidden="true"
+                                            className={`app-nav-group-chevron${collapsedGroups[group.key] ? ' collapsed' : ''}`}
+                                        >
+                                            ▾
+                                        </span>
+                                        <span aria-hidden="true" className={`app-nav-group-icon app-nav-group-icon--${group.key}`} />
+                                        <span className="app-nav-group-label">{group.title}</span>
+                                    </button>
                                 </h2>
-                                <ul aria-labelledby={`nav-group-${group.key}`}>
+                                <ul
+                                    aria-labelledby={`nav-group-${group.key}`}
+                                    hidden={collapsedGroups[group.key]}
+                                    id={`nav-group-list-${group.key}`}
+                                >
                                     {group.items.map((item) => (
                                         <li key={item.to}>
                                             <NavLink end={item.end} onClick={closeMobileNav} to={item.to}>
+                                                <span aria-hidden="true" className="app-nav-item-bullet" />
                                                 <span className="nav-item-label">{item.label}</span>
                                                 <span
                                                     aria-hidden="true"
