@@ -26,9 +26,13 @@ export function UserInfoPage() {
 
     if (result === null) {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('userInfo.title')}</h1>
-                <p className="status-message">{t('userInfo.states.loading')}</p>
+            <section aria-labelledby="user-info-title" className="page-section">
+                <h1 className="page-title" id="user-info-title">
+                    {t('userInfo.title')}
+                </h1>
+                <p className="status-message" role="status">
+                    {t('userInfo.states.loading')}
+                </p>
             </section>
         );
     }
@@ -37,8 +41,11 @@ export function UserInfoPage() {
         const { userInfo } = result;
 
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('userInfo.title')}</h1>
+            <section aria-labelledby="user-info-title" className="page-section">
+                <h1 className="page-title" id="user-info-title">
+                    {t('userInfo.title')}
+                </h1>
+                <p className="helper-note">{t('userInfo.meta.readOnly')}</p>
                 <dl className="info-grid">
                     <div className="info-card">
                         <dt>{t('userInfo.fields.fullName')}</dt>
@@ -71,35 +78,51 @@ export function UserInfoPage() {
 
     if (result.kind === 'unauthorized') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('userInfo.title')}</h1>
-                <p className="status-message">{t('userInfo.states.unauthorized')}</p>
+            <section aria-labelledby="user-info-title" className="page-section">
+                <h1 className="page-title" id="user-info-title">
+                    {t('userInfo.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('userInfo.states.unauthorized')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'notFound') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('userInfo.title')}</h1>
-                <p className="status-message">{t('userInfo.states.notFound')}</p>
+            <section aria-labelledby="user-info-title" className="page-section">
+                <h1 className="page-title" id="user-info-title">
+                    {t('userInfo.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('userInfo.states.notFound')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'badRequest') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('userInfo.title')}</h1>
-                <p className="status-message">{t('userInfo.states.badRequest')}</p>
+            <section aria-labelledby="user-info-title" className="page-section">
+                <h1 className="page-title" id="user-info-title">
+                    {t('userInfo.title')}
+                </h1>
+                <p className="status-message status-message--error" role="alert">
+                    {t('userInfo.states.badRequest')}
+                </p>
             </section>
         );
     }
 
     return (
-        <section className="page-section">
-            <h1 className="page-title">{t('userInfo.title')}</h1>
-            <p className="status-message">{t('userInfo.states.error')}</p>
+        <section aria-labelledby="user-info-title" className="page-section">
+            <h1 className="page-title" id="user-info-title">
+                {t('userInfo.title')}
+            </h1>
+            <p className="status-message status-message--error" role="alert">
+                {t('userInfo.states.error')}
+            </p>
         </section>
     );
 }

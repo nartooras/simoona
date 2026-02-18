@@ -319,6 +319,37 @@ Highlights from this pass:
 - Synchronized route availability + data-source behavior (`real`/`mock`/`disabled`) with demo mode determinism.
 - Extended webapp route smoke/tests to cover new navigation links and route reachability.
 
+## Prototype Polish Pack (Thread T)
+
+Thread T finalizes prototype presentation quality for stakeholder demos while keeping behavior and architecture boundaries unchanged.
+
+Highlights from this pass:
+
+- Harmonized shell and route-level visual rhythm:
+  - tightened notice/header/card/table spacing and heading hierarchy
+  - unified navigation badge and active-state styling
+- Standardized route state UX:
+  - `PrototypeNotice` now has consistent severity framing for `real`, `mock`, and `disabled`
+  - placeholder pages consistently declare data source and read-only expectations
+- Applied pragmatic accessibility quick wins:
+  - explicit navigation landmark labeling
+  - improved section heading linkage via `aria-labelledby`
+  - status/alert semantics for loading, warning, and error surfaces
+  - disabled control descriptions tied with `aria-describedby`
+- Added guard assertion to ensure navigation links and `AppRouter` route definitions stay in sync (no dead/hidden prototype routes).
+
+### Demo-ready quality checklist
+
+| Area | Status | Notes |
+|---|---|---|
+| Visual consistency | ready | Typography, spacing, notice styling, and card/table rhythm aligned across migrated and placeholder routes. |
+| Route coverage | ready | Navigation and route definitions are asserted as equivalent in tests. |
+| Known limitations | constrained | `mock` routes remain fixture-backed; `disabled` routes remain intentionally non-interactive. |
+| Presentability: Activities | ready with constraints | `/activities/feed`, `/recognition`, `/events`, `/vacations`, `/kudos`, `/books` are demo-presentable; `/service-requests` remains intentionally disabled. |
+| Presentability: Company | ready | `/user-info`, `/settings/general`, `/employees`, `/profiles/me` are API-backed; `/teams`, `/projects`, `/office-map`, `/organization/structure`, `/committees` are stable mock previews. |
+| Presentability: Externals | constrained | `/externals/integrations` is shown for IA parity only and clearly marked unavailable. |
+| Presentability: System | ready | `/health` shows healthy baseline for demo orchestration checks. |
+
 ## CI Skeleton
 
 Workflow file: `.github/workflows/modernization-ci.yml`

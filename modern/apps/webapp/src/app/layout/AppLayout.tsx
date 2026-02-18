@@ -28,18 +28,18 @@ export function AppLayout({ children }: PropsWithChildren) {
                     </button>
                     <strong className="app-brand">Simoona</strong>
                     <div className="app-header-affordances">
-                        <span className="header-chip">Prototype IA</span>
-                        <span className="header-chip">Org: Demo</span>
+                        <span className="header-chip">Prototype Shell</span>
+                        <span className="header-chip">Demo Org</span>
                     </div>
                 </div>
             </header>
             <div className="app-layout">
                 <aside className={`app-sidebar${isMobileNavOpen ? ' open' : ''}`} id="app-sidebar-nav">
-                    <nav aria-label="Main" className="app-nav">
+                    <nav aria-label="Primary navigation" className="app-nav">
                         {navigationGroups.map((group) => (
                             <section className="app-nav-group" key={group.title}>
-                                <h2>{group.title}</h2>
-                                <ul>
+                                <h2 id={`nav-group-${group.key}`}>{group.title}</h2>
+                                <ul aria-labelledby={`nav-group-${group.key}`}>
                                     {group.items.map((item) => (
                                         <li key={item.to}>
                                             <NavLink end={item.end} onClick={closeMobileNav} to={item.to}>

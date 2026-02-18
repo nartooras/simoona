@@ -115,6 +115,20 @@ Route mode expectations:
 - `mock` routes: deterministic static content, explicit prototype explanation, simulated read-only controls.
 - `disabled` routes: navigation parity only, actions intentionally unavailable.
 
+## Demo-ready quality checklist
+
+Use this matrix before stakeholder walkthroughs:
+
+| Area | Status | Operator expectation |
+|---|---|---|
+| Visual consistency | ready | Header, nav, notices, cards, and tables follow one parity-safe style system across migrated + placeholder pages. |
+| Route coverage | ready | All visible nav links resolve to routable pages; no hidden or dead prototype entries. |
+| Known limitations | constrained | Mock/disabled routes are intentionally non-production and must be presented as such. |
+| Presentability: Activities | ready with constraints | Demo `feed/recognition/events/vacations/kudos/books`; call out Service Requests as intentionally unavailable. |
+| Presentability: Company | ready | Show `user-info`, `settings/general`, `employees`, `profiles/me` as API-backed and company placeholders as demo-safe mock previews. |
+| Presentability: Externals | constrained | Integrations is IA-only in this wave and remains disabled. |
+| Presentability: System | ready | `/health` should report healthy before and during demo. |
+
 ## Known-Gap Registry (Prototype Limits)
 
 | Route | Availability mode | Data source | Write behavior | Owner / next-wave note |

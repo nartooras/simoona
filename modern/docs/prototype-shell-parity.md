@@ -18,7 +18,7 @@ The modern shell now mirrors legacy IA grouping more closely:
 - Externals
 - System
 
-The top header also includes explicit prototype affordances (`Prototype IA`, demo org context) so walkthroughs clearly signal non-production context.
+The top header also includes explicit prototype affordances (`Prototype Shell`, demo org context) so walkthroughs clearly signal non-production context.
 
 ## Route availability map
 
@@ -83,3 +83,15 @@ No prototype route is left blank.
 - Legacy module-specific icons and specialized chrome details.
 - Full interaction parity for advanced module flows (actions, dropdown workflows, inline editing).
 - Migrating mocked/disabled routes to real API-backed functionality.
+
+## Demo-ready quality checklist
+
+| Focus area | Status | Detail |
+|---|---|---|
+| Visual consistency | ready | Shared spacing, typography hierarchy, notice styling, and card/table rhythm are aligned across migrated and placeholder routes. |
+| Route coverage | ready | All nav entries are wired to concrete routes; route definitions and navigation links are test-validated for parity. |
+| Known limitations | constrained | `mock` routes are fixture-backed; `disabled` routes are intentionally unavailable for write-heavy workflows. |
+| Activities group | ready with constraints | Activity placeholders are demo-stable; Service Requests remains intentionally disabled and clearly labeled. |
+| Company group | ready | Core migrated read routes are real-backed; remaining company routes are coherent mock previews. |
+| Externals group | constrained | Integrations remains visible for IA parity and explicitly disabled. |
+| System group | ready | Health route remains real-backed and stable for demo checks. |

@@ -26,9 +26,13 @@ export function GeneralSettingsPage() {
 
     if (result === null) {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('generalSettings.title')}</h1>
-                <p className="status-message">{t('generalSettings.states.loading')}</p>
+            <section aria-labelledby="general-settings-title" className="page-section">
+                <h1 className="page-title" id="general-settings-title">
+                    {t('generalSettings.title')}
+                </h1>
+                <p className="status-message" role="status">
+                    {t('generalSettings.states.loading')}
+                </p>
             </section>
         );
     }
@@ -42,8 +46,11 @@ export function GeneralSettingsPage() {
             t('generalSettings.fallback.notAvailable');
 
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('generalSettings.title')}</h1>
+            <section aria-labelledby="general-settings-title" className="page-section">
+                <h1 className="page-title" id="general-settings-title">
+                    {t('generalSettings.title')}
+                </h1>
+                <p className="helper-note">{t('generalSettings.meta.readOnly')}</p>
                 <dl className="info-grid">
                     <div className="info-card">
                         <dt>{t('generalSettings.fields.language')}</dt>
@@ -60,44 +67,64 @@ export function GeneralSettingsPage() {
 
     if (result.kind === 'empty') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('generalSettings.title')}</h1>
-                <p className="status-message">{t('generalSettings.states.empty')}</p>
+            <section aria-labelledby="general-settings-title" className="page-section">
+                <h1 className="page-title" id="general-settings-title">
+                    {t('generalSettings.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('generalSettings.states.empty')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'unauthorized') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('generalSettings.title')}</h1>
-                <p className="status-message">{t('generalSettings.states.unauthorized')}</p>
+            <section aria-labelledby="general-settings-title" className="page-section">
+                <h1 className="page-title" id="general-settings-title">
+                    {t('generalSettings.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('generalSettings.states.unauthorized')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'forbidden') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('generalSettings.title')}</h1>
-                <p className="status-message">{t('generalSettings.states.forbidden')}</p>
+            <section aria-labelledby="general-settings-title" className="page-section">
+                <h1 className="page-title" id="general-settings-title">
+                    {t('generalSettings.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('generalSettings.states.forbidden')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'badRequest') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('generalSettings.title')}</h1>
-                <p className="status-message">{t('generalSettings.states.badRequest')}</p>
+            <section aria-labelledby="general-settings-title" className="page-section">
+                <h1 className="page-title" id="general-settings-title">
+                    {t('generalSettings.title')}
+                </h1>
+                <p className="status-message status-message--error" role="alert">
+                    {t('generalSettings.states.badRequest')}
+                </p>
             </section>
         );
     }
 
     return (
-        <section className="page-section">
-            <h1 className="page-title">{t('generalSettings.title')}</h1>
-            <p className="status-message">{t('generalSettings.states.error')}</p>
+        <section aria-labelledby="general-settings-title" className="page-section">
+            <h1 className="page-title" id="general-settings-title">
+                {t('generalSettings.title')}
+            </h1>
+            <p className="status-message status-message--error" role="alert">
+                {t('generalSettings.states.error')}
+            </p>
         </section>
     );
 }

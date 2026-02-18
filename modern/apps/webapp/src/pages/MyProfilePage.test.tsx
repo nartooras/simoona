@@ -47,7 +47,7 @@ describe('MyProfilePage', () => {
         render(<MyProfilePage />);
 
         expect(await screen.findByRole('heading', { name: 'My Profile' })).toBeInTheDocument();
-        expect(screen.getByText('Loading profile details...')).toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('Loading profile details...');
 
         resolveResponse?.(jsonResponse(200, successPayload));
         expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
@@ -62,6 +62,7 @@ describe('MyProfilePage', () => {
 
         expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
         expect(screen.getByText('Platform')).toBeInTheDocument();
+        expect(screen.getByText('Read-only profile snapshot from the modern API contract.')).toBeInTheDocument();
 
         const [requestPath, requestInit] = fetchMock.mock.calls[0] as [string, RequestInit];
         expect(requestPath).toBe('/api/v1/profiles/me');

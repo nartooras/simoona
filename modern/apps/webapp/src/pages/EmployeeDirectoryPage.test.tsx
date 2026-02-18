@@ -52,7 +52,7 @@ describe('EmployeeDirectoryPage', () => {
         render(<EmployeeDirectoryPage />);
 
         expect(await screen.findByRole('heading', { name: 'Employee Directory' })).toBeInTheDocument();
-        expect(screen.getByText('Loading employee directory...')).toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('Loading employee directory...');
 
         resolveResponse?.(jsonResponse(200, successPayload));
         expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
@@ -67,6 +67,9 @@ describe('EmployeeDirectoryPage', () => {
 
         expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
         expect(screen.getByText('Engineering Manager')).toBeInTheDocument();
+        expect(screen.getByText('Read-only employee listing from the modern API contract.')).toBeInTheDocument();
+        expect(screen.getByText('Employee directory snapshot')).toBeInTheDocument();
+        expect(screen.getByRole('columnheader', { name: 'Name' })).toBeInTheDocument();
 
         const [requestPath, requestInit] = fetchMock.mock.calls[0] as [string, RequestInit];
         expect(requestPath).toBe('/api/v1/employees');

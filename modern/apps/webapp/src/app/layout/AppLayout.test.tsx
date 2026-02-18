@@ -19,9 +19,10 @@ describe('AppLayout', () => {
         expect(screen.getByRole('heading', { name: 'Company' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Externals' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'System' })).toBeInTheDocument();
-        expect(screen.getByText('Prototype IA')).toBeInTheDocument();
-        expect(screen.getByText('Org: Demo')).toBeInTheDocument();
+        expect(screen.getByText('Prototype Shell')).toBeInTheDocument();
+        expect(screen.getByText('Demo Org')).toBeInTheDocument();
         expect(screen.getByText('Layout content')).toBeInTheDocument();
+        expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
         expect(screen.getByRole('link', { name: 'Activity Feed' })).toHaveAttribute(
             'href',

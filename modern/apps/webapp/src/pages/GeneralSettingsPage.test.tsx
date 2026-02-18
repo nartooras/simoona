@@ -54,7 +54,7 @@ describe('GeneralSettingsPage', () => {
         render(<GeneralSettingsPage />);
 
         expect(await screen.findByRole('heading', { name: 'General Settings' })).toBeInTheDocument();
-        expect(screen.getByText('Loading general settings...')).toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('Loading general settings...');
 
         resolveResponse?.(jsonResponse(200, successPayload));
         expect(await screen.findByText('English (United States)')).toBeInTheDocument();
@@ -69,6 +69,7 @@ describe('GeneralSettingsPage', () => {
 
         expect(await screen.findByText('English (United States)')).toBeInTheDocument();
         expect(screen.getByText('UTC')).toBeInTheDocument();
+        expect(screen.getByText('Read-only settings snapshot from the modern API contract.')).toBeInTheDocument();
 
         const [requestPath, requestInit] = fetchMock.mock.calls[0] as [string, RequestInit];
         expect(requestPath).toBe('/api/v1/user/general-settings');
