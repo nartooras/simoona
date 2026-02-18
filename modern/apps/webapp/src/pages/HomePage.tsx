@@ -7,6 +7,7 @@ export function HomePage() {
         <section className="page-section">
             <h1 className="page-title">{t('home.title')}</h1>
             <p className="status-message">{t('home.welcomeMessage')}</p>
+            <p className="helper-note">Demo-ready shell baseline: consistent real, mock, and disabled route framing.</p>
             <dl className="info-grid">
                 <div className="info-card">
                     <dt>Migration scope</dt>

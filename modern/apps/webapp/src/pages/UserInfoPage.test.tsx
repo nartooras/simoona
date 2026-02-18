@@ -53,7 +53,7 @@ describe('UserInfoPage', () => {
         render(<UserInfoPage />);
 
         expect(await screen.findByRole('heading', { name: 'User Info' })).toBeInTheDocument();
-        expect(screen.getByText('Loading user information...')).toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('Loading user information...');
 
         resolveResponse?.(jsonResponse(200, successPayload));
         expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
@@ -69,6 +69,7 @@ describe('UserInfoPage', () => {
         expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
         expect(screen.getByText('ada@example.com')).toBeInTheDocument();
         expect(screen.getByText('ada.lovelace')).toBeInTheDocument();
+        expect(screen.getByText('Read-only modern API snapshot for demo walkthroughs.')).toBeInTheDocument();
 
         const [requestPath, requestInit] = fetchMock.mock.calls[0] as [string, RequestInit];
         expect(requestPath).toBe('/api/v1/account/user-info');

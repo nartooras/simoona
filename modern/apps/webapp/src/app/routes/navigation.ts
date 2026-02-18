@@ -70,10 +70,10 @@ export const navigationGroups: NavigationGroup[] = [
         key: 'company',
         title: 'Company',
         items: [
-            { to: '/employees', label: 'Employees', availability: 'real' },
-            { to: '/profiles/me', label: 'My Profile', availability: 'real' },
             { to: '/user-info', label: 'User Info', availability: 'real' },
             { to: '/settings/general', label: 'General Settings', availability: 'real' },
+            { to: '/employees', label: 'Employees', availability: 'real' },
+            { to: '/profiles/me', label: 'My Profile', availability: 'real' },
             {
                 to: '/teams',
                 label: 'Teams',

@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 interface PrototypePlaceholderPageProps {
     title: string;
     summary: string;
@@ -33,6 +35,12 @@ function renderChecklist(title: string, entries: ReadonlyArray<string>) {
     );
 }
 
+const dataSourceLabels = {
+    real: 'Real API',
+    mock: 'Mock fixtures',
+    disabled: 'Disabled',
+} as const;
+
 export function PrototypePlaceholderPage({
     title,
     summary,
@@ -44,12 +52,17 @@ export function PrototypePlaceholderPage({
     actions,
     table,
 }: PrototypePlaceholderPageProps) {
+    const sectionTitleId = useId();
+
     return (
-        <section className="page-section">
-            <h1 className="page-title">{title}</h1>
+        <section aria-labelledby={sectionTitleId} className="page-section">
+            <h1 className="page-title" id={sectionTitleId}>
+                {title}
+            </h1>
             <p className="status-message">
-                {summary} <strong>Data source: {dataSource}.</strong>
+                {summary} <strong>Data source: {dataSourceLabels[dataSource]}.</strong>
             </p>
+            <p className="helper-note">Actions shown below are intentionally read-only in prototype mode.</p>
             <dl className="info-grid">
                 {cards.map((card) => (
                     <div className="info-card" key={card.title}>
@@ -67,14 +80,18 @@ export function PrototypePlaceholderPage({
                 <section className="placeholder-action-panel" aria-label="Prototype actions">
                     <h2>Simulated controls</h2>
                     <ul>
-                        {actions.map((action) => (
-                            <li key={action.label}>
-                                <button disabled type="button">
-                                    {action.label}
-                                </button>
-                                <span>{action.explanation}</span>
-                            </li>
-                        ))}
+                        {actions.map((action, index) => {
+                            const explanationId = `prototype-action-${index}`;
+
+                            return (
+                                <li key={action.label}>
+                                    <button aria-describedby={explanationId} disabled type="button">
+                                        {action.label}
+                                    </button>
+                                    <span id={explanationId}>{action.explanation}</span>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </section>
             ) : null}

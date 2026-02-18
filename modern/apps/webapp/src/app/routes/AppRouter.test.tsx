@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { appRoutes } from './AppRouter';
+import { navigationGroups } from './navigation';
 import '../../i18n';
 
 describe('AppRouter', () => {
@@ -23,8 +24,8 @@ describe('AppRouter', () => {
         render(<RouterProvider router={router} />);
 
         expect(await screen.findByRole('heading', { name: 'Health' })).toBeInTheDocument();
-        expect(screen.getByText('Status: OK')).toBeInTheDocument();
-        expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Real.');
+        expect(screen.getByText('Status: OK. Modern API baseline is healthy for demo start.')).toBeInTheDocument();
+        expect(screen.getByText('Prototype availability: Real.')).toBeInTheDocument();
     });
 
     it('renders user-info route', async () => {
@@ -40,7 +41,7 @@ describe('AppRouter', () => {
 
         expect(await screen.findByRole('heading', { name: 'User Info' })).toBeInTheDocument();
         expect(screen.getByText('Loading user information...')).toBeInTheDocument();
-        expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Real.');
+        expect(screen.getByText('Prototype availability: Real.')).toBeInTheDocument();
     });
 
     it('renders general-settings route', async () => {
@@ -94,7 +95,7 @@ describe('AppRouter', () => {
         render(<RouterProvider router={router} />);
 
         expect(await screen.findByRole('heading', { name: 'Activity Feed' })).toBeInTheDocument();
-        expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Mock.');
+        expect(screen.getByText('Prototype availability: Mock.')).toBeInTheDocument();
         expect(screen.getByText('Today posts')).toBeInTheDocument();
     });
 
@@ -106,7 +107,7 @@ describe('AppRouter', () => {
         render(<RouterProvider router={router} />);
 
         expect(await screen.findByRole('heading', { name: 'Integrations' })).toBeInTheDocument();
-        expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Disabled.');
+        expect(screen.getByRole('alert')).toHaveTextContent('Prototype availability: Disabled.');
         expect(screen.getByText('Marketplace')).toBeInTheDocument();
     });
 
@@ -130,7 +131,8 @@ describe('AppRouter', () => {
             const { unmount } = render(<RouterProvider router={router} />);
 
             expect(await screen.findByRole('heading', { name: routeCase.heading })).toBeInTheDocument();
-            expect(screen.getByRole('status')).toHaveTextContent(`Prototype availability: ${routeCase.availability}`);
+            const noticeRole = routeCase.availability === 'Disabled.' ? 'alert' : 'status';
+            expect(screen.getByRole(noticeRole)).toHaveTextContent(`Prototype availability: ${routeCase.availability}`);
             expect(screen.getByRole('main')).toBeInTheDocument();
             expect(screen.getByRole('heading', { name: 'Available now' })).toBeInTheDocument();
             expect(screen.getByRole('heading', { name: 'Unavailable in prototype' })).toBeInTheDocument();
@@ -142,5 +144,15 @@ describe('AppRouter', () => {
 
             unmount();
         }
+    });
+
+    it('keeps navigation and route definitions aligned for all prototype entries', () => {
+        const navRoutes = navigationGroups.flatMap((group) => group.items.map((item) => item.to)).sort();
+        const appRoutePaths = appRoutes
+            .map((route) => route.path)
+            .filter((path): path is string => typeof path === 'string' && path !== '*')
+            .sort();
+
+        expect(appRoutePaths).toEqual(navRoutes);
     });
 });

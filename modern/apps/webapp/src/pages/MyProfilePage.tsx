@@ -26,17 +26,24 @@ export function MyProfilePage() {
 
     if (result === null) {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('myProfile.title')}</h1>
-                <p className="status-message">{t('myProfile.states.loading')}</p>
+            <section aria-labelledby="my-profile-title" className="page-section">
+                <h1 className="page-title" id="my-profile-title">
+                    {t('myProfile.title')}
+                </h1>
+                <p className="status-message" role="status">
+                    {t('myProfile.states.loading')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'success') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('myProfile.title')}</h1>
+            <section aria-labelledby="my-profile-title" className="page-section">
+                <h1 className="page-title" id="my-profile-title">
+                    {t('myProfile.title')}
+                </h1>
+                <p className="helper-note">{t('myProfile.meta.readOnly')}</p>
                 <dl className="info-grid">
                     <div className="info-card">
                         <dt>{t('myProfile.fields.fullName')}</dt>
@@ -69,44 +76,64 @@ export function MyProfilePage() {
 
     if (result.kind === 'notFound') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('myProfile.title')}</h1>
-                <p className="status-message">{t('myProfile.states.notFound')}</p>
+            <section aria-labelledby="my-profile-title" className="page-section">
+                <h1 className="page-title" id="my-profile-title">
+                    {t('myProfile.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('myProfile.states.notFound')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'unauthorized') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('myProfile.title')}</h1>
-                <p className="status-message">{t('myProfile.states.unauthorized')}</p>
+            <section aria-labelledby="my-profile-title" className="page-section">
+                <h1 className="page-title" id="my-profile-title">
+                    {t('myProfile.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('myProfile.states.unauthorized')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'forbidden') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('myProfile.title')}</h1>
-                <p className="status-message">{t('myProfile.states.forbidden')}</p>
+            <section aria-labelledby="my-profile-title" className="page-section">
+                <h1 className="page-title" id="my-profile-title">
+                    {t('myProfile.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('myProfile.states.forbidden')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'badRequest') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('myProfile.title')}</h1>
-                <p className="status-message">{t('myProfile.states.badRequest')}</p>
+            <section aria-labelledby="my-profile-title" className="page-section">
+                <h1 className="page-title" id="my-profile-title">
+                    {t('myProfile.title')}
+                </h1>
+                <p className="status-message status-message--error" role="alert">
+                    {t('myProfile.states.badRequest')}
+                </p>
             </section>
         );
     }
 
     return (
-        <section className="page-section">
-            <h1 className="page-title">{t('myProfile.title')}</h1>
-            <p className="status-message">{t('myProfile.states.error')}</p>
+        <section aria-labelledby="my-profile-title" className="page-section">
+            <h1 className="page-title" id="my-profile-title">
+                {t('myProfile.title')}
+            </h1>
+            <p className="status-message status-message--error" role="alert">
+                {t('myProfile.states.error')}
+            </p>
         </section>
     );
 }

@@ -26,24 +26,32 @@ export function EmployeeDirectoryPage() {
 
     if (result === null) {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('employeeDirectory.title')}</h1>
-                <p className="status-message">{t('employeeDirectory.states.loading')}</p>
+            <section aria-labelledby="employee-directory-title" className="page-section">
+                <h1 className="page-title" id="employee-directory-title">
+                    {t('employeeDirectory.title')}
+                </h1>
+                <p className="status-message" role="status">
+                    {t('employeeDirectory.states.loading')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'success') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('employeeDirectory.title')}</h1>
+            <section aria-labelledby="employee-directory-title" className="page-section">
+                <h1 className="page-title" id="employee-directory-title">
+                    {t('employeeDirectory.title')}
+                </h1>
+                <p className="helper-note">{t('employeeDirectory.meta.readOnly')}</p>
                 <div className="data-table-shell">
                     <table className="data-table">
+                        <caption>{t('employeeDirectory.meta.caption')}</caption>
                         <thead>
                             <tr>
-                                <th>{t('employeeDirectory.fields.name')}</th>
-                                <th>{t('employeeDirectory.fields.jobTitle')}</th>
-                                <th>{t('employeeDirectory.fields.email')}</th>
+                                <th scope="col">{t('employeeDirectory.fields.name')}</th>
+                                <th scope="col">{t('employeeDirectory.fields.jobTitle')}</th>
+                                <th scope="col">{t('employeeDirectory.fields.email')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,53 +71,77 @@ export function EmployeeDirectoryPage() {
 
     if (result.kind === 'empty') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('employeeDirectory.title')}</h1>
-                <p className="status-message">{t('employeeDirectory.states.empty')}</p>
+            <section aria-labelledby="employee-directory-title" className="page-section">
+                <h1 className="page-title" id="employee-directory-title">
+                    {t('employeeDirectory.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('employeeDirectory.states.empty')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'notFound') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('employeeDirectory.title')}</h1>
-                <p className="status-message">{t('employeeDirectory.states.notFound')}</p>
+            <section aria-labelledby="employee-directory-title" className="page-section">
+                <h1 className="page-title" id="employee-directory-title">
+                    {t('employeeDirectory.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('employeeDirectory.states.notFound')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'unauthorized') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('employeeDirectory.title')}</h1>
-                <p className="status-message">{t('employeeDirectory.states.unauthorized')}</p>
+            <section aria-labelledby="employee-directory-title" className="page-section">
+                <h1 className="page-title" id="employee-directory-title">
+                    {t('employeeDirectory.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('employeeDirectory.states.unauthorized')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'forbidden') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('employeeDirectory.title')}</h1>
-                <p className="status-message">{t('employeeDirectory.states.forbidden')}</p>
+            <section aria-labelledby="employee-directory-title" className="page-section">
+                <h1 className="page-title" id="employee-directory-title">
+                    {t('employeeDirectory.title')}
+                </h1>
+                <p className="status-message status-message--warning" role="alert">
+                    {t('employeeDirectory.states.forbidden')}
+                </p>
             </section>
         );
     }
 
     if (result.kind === 'badRequest') {
         return (
-            <section className="page-section">
-                <h1 className="page-title">{t('employeeDirectory.title')}</h1>
-                <p className="status-message">{t('employeeDirectory.states.badRequest')}</p>
+            <section aria-labelledby="employee-directory-title" className="page-section">
+                <h1 className="page-title" id="employee-directory-title">
+                    {t('employeeDirectory.title')}
+                </h1>
+                <p className="status-message status-message--error" role="alert">
+                    {t('employeeDirectory.states.badRequest')}
+                </p>
             </section>
         );
     }
 
     return (
-        <section className="page-section">
-            <h1 className="page-title">{t('employeeDirectory.title')}</h1>
-            <p className="status-message">{t('employeeDirectory.states.error')}</p>
+        <section aria-labelledby="employee-directory-title" className="page-section">
+            <h1 className="page-title" id="employee-directory-title">
+                {t('employeeDirectory.title')}
+            </h1>
+            <p className="status-message status-message--error" role="alert">
+                {t('employeeDirectory.states.error')}
+            </p>
         </section>
     );
 }

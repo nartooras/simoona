@@ -20,6 +20,9 @@
             "badRequest": "User context is incomplete. Check authentication and organization headers.",
             "error": "Something went wrong while loading user information."
         },
+        "meta": {
+            "readOnly": "Read-only modern API snapshot for demo walkthroughs."
+        },
         "fallback": {
             "notAvailable": "Not available"
         }
@@ -38,6 +41,9 @@
             "badRequest": "User context is incomplete. Check authentication and organization headers.",
             "error": "Something went wrong while loading general settings."
         },
+        "meta": {
+            "readOnly": "Read-only settings snapshot from the modern API contract."
+        },
         "fallback": {
             "notAvailable": "Not available"
         }
@@ -48,6 +54,10 @@
             "name": "Name",
             "jobTitle": "Job title",
             "email": "Email"
+        },
+        "meta": {
+            "readOnly": "Read-only employee listing from the modern API contract.",
+            "caption": "Employee directory snapshot"
         },
         "states": {
             "loading": "Loading employee directory...",
@@ -71,6 +81,9 @@
             "department": "Department",
             "office": "Office",
             "timeZone": "Time zone"
+        },
+        "meta": {
+            "readOnly": "Read-only profile snapshot from the modern API contract."
         },
         "states": {
             "loading": "Loading profile details...",
