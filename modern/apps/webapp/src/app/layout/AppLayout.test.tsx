@@ -15,12 +15,15 @@ describe('AppLayout', () => {
         );
 
         expect(screen.getByText('Simoona')).toBeInTheDocument();
+        expect(screen.getByRole('searchbox', { name: 'Global search' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Quick Links' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Notifications' })).toBeInTheDocument();
+        expect(screen.getByText('Demo User')).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Walls' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Activities' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Company' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Externals' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'System' })).toBeInTheDocument();
-        expect(screen.getByText('Prototype Shell')).toBeInTheDocument();
-        expect(screen.getByText('Demo Org')).toBeInTheDocument();
         expect(screen.getByText('Layout content')).toBeInTheDocument();
         expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');

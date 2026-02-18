@@ -28,6 +28,20 @@ describe('AppRouter', () => {
         expect(screen.getByText('Prototype availability: Real.')).toBeInTheDocument();
     });
 
+    it('renders home wall layout shell', async () => {
+        const router = createMemoryRouter(appRoutes, {
+            initialEntries: ['/'],
+        });
+
+        render(<RouterProvider router={router} />);
+
+        expect(await screen.findByRole('heading', { name: 'Home' })).toBeInTheDocument();
+        expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
+        expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Kudos Feed' })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Upcoming Events' })).toBeInTheDocument();
+    });
+
     it('renders user-info route', async () => {
         vi.spyOn(globalThis, 'fetch').mockImplementation(
             () => new Promise(() => {}) as ReturnType<typeof fetch>,

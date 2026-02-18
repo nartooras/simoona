@@ -1,6 +1,6 @@
 export type RouteAvailability = 'real' | 'mock' | 'disabled';
 
-export type NavigationGroupKey = 'activities' | 'company' | 'externals' | 'system';
+export type NavigationGroupKey = 'walls' | 'activities' | 'company' | 'externals' | 'system';
 
 export interface NavigationItem {
     to: string;
@@ -18,8 +18,8 @@ export interface NavigationGroup {
 
 export const navigationGroups: NavigationGroup[] = [
     {
-        key: 'activities',
-        title: 'Activities',
+        key: 'walls',
+        title: 'Walls',
         items: [
             { to: '/', label: 'Home', end: true, availability: 'real' },
             {
@@ -34,6 +34,12 @@ export const navigationGroups: NavigationGroup[] = [
                 availability: 'mock',
                 reason: 'Recognition stream and nomination flows are represented with demo-only static data.',
             },
+        ],
+    },
+    {
+        key: 'activities',
+        title: 'Activities',
+        items: [
             {
                 to: '/events',
                 label: 'Events',

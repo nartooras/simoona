@@ -27,9 +27,23 @@ export function AppLayout({ children }: PropsWithChildren) {
                         <span />
                     </button>
                     <strong className="app-brand">Simoona</strong>
+                    <label className="app-header-search" htmlFor="global-header-search">
+                        <span className="visually-hidden">Search</span>
+                        <input
+                            aria-label="Global search"
+                            id="global-header-search"
+                            placeholder="Search people, walls, posts..."
+                            type="search"
+                        />
+                    </label>
                     <div className="app-header-affordances">
-                        <span className="header-chip">Prototype Shell</span>
-                        <span className="header-chip">Demo Org</span>
+                        <button className="header-action" type="button">
+                            Quick Links
+                        </button>
+                        <button className="header-action" type="button">
+                            Notifications
+                        </button>
+                        <span className="header-chip">Demo User</span>
                     </div>
                 </div>
             </header>
@@ -38,7 +52,12 @@ export function AppLayout({ children }: PropsWithChildren) {
                     <nav aria-label="Primary navigation" className="app-nav">
                         {navigationGroups.map((group) => (
                             <section className="app-nav-group" key={group.title}>
-                                <h2 id={`nav-group-${group.key}`}>{group.title}</h2>
+                                <h2 className="app-nav-group-title" id={`nav-group-${group.key}`}>
+                                    <span aria-hidden="true" className="app-nav-group-indicator">
+                                        ▾
+                                    </span>
+                                    {group.title}
+                                </h2>
                                 <ul aria-labelledby={`nav-group-${group.key}`}>
                                     {group.items.map((item) => (
                                         <li key={item.to}>

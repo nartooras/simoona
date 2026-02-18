@@ -78,6 +78,28 @@ No prototype route is left blank.
 - Route-level prototype availability is explicit across the app shell.
 - Thread S hard gate now validates critical route definitions and availability labels before demo start/check pass.
 
+## Wall Layout Parity
+
+The `/` home route now mirrors legacy wall layout rhythm more closely with a dense three-column shell:
+
+- left navigation column keeps grouped sections with visual expand/collapse indicators (`Walls`, `Activities`, `Company`, `Externals`, `System`) and active-item emphasis
+- center stream includes stacked wall cards with source label, avatar/author/timestamp line, body text, media placeholder, reaction row, and disabled comment input row
+- right rail includes compact cards for kudos feed, upcoming events, rankings, and birthdays with subtle row separators
+- top blue header keeps global chrome and now includes search + quick user actions for legacy-like scanning behavior
+
+### Wall Layout Parity: Matches
+
+- compact spacing, thin borders/dividers, and light-gray canvas with white/near-white cards
+- blue accent hierarchy on links, section titles, and navigational emphasis
+- responsive behavior where side columns collapse/stack while preserving key feed and widget content
+- prototype safety maintained: interaction controls shown but non-destructive and no backend write behavior added
+
+### Wall Layout Parity: Remaining differences
+
+- legacy-specific icon set and sprite assets are approximated with text/shape placeholders
+- some exact pixel values (line heights, card paddings, and vertical offsets) remain slightly modernized
+- advanced legacy controls (inline dropdown workflows, context menus, and live counters) are still static demo representations
+
 ### Still pending
 
 - Legacy module-specific icons and specialized chrome details.
