@@ -1,5 +1,6 @@
 import { buildApiAuthHeaders } from './authHeaders';
 import { ApiHttpError, apiFetch } from './client';
+import { resolveDataSource, withDataSource, type DataSourceResult } from './dataSource';
 
 export type MyProfileResponse = {
     id: string;
@@ -11,19 +12,21 @@ export type MyProfileResponse = {
     timeZone: string | null;
 };
 
-export type MyProfileResult =
+export type MyProfileResult = DataSourceResult<
     | { kind: 'success'; profile: MyProfileResponse }
     | { kind: 'unauthorized' }
     | { kind: 'forbidden' }
     | { kind: 'notFound' }
     | { kind: 'badRequest' }
     | { kind: 'serverError' }
-    | { kind: 'unknownError' };
+    | { kind: 'unknownError' }
+>;
 
 export async function fetchMyProfile(): Promise<MyProfileResult> {
+    const dataSource = resolveDataSource('myProfile');
     const authHeadersResult = buildApiAuthHeaders();
     if (authHeadersResult.kind === 'missingOrganization') {
-        return { kind: 'badRequest' };
+        return withDataSource({ kind: 'badRequest' }, dataSource);
     }
 
     try {
@@ -31,25 +34,25 @@ export async function fetchMyProfile(): Promise<MyProfileResult> {
             headers: authHeadersResult.headers,
         });
 
-        return { kind: 'success', profile };
+        return withDataSource({ kind: 'success', profile }, dataSource);
     } catch (error) {
         if (error instanceof ApiHttpError) {
             switch (error.status) {
                 case 400:
-                    return { kind: 'badRequest' };
+                    return withDataSource({ kind: 'badRequest' }, dataSource);
                 case 401:
-                    return { kind: 'unauthorized' };
+                    return withDataSource({ kind: 'unauthorized' }, dataSource);
                 case 403:
-                    return { kind: 'forbidden' };
+                    return withDataSource({ kind: 'forbidden' }, dataSource);
                 case 404:
-                    return { kind: 'notFound' };
+                    return withDataSource({ kind: 'notFound' }, dataSource);
                 default:
                     if (error.status >= 500) {
-                        return { kind: 'serverError' };
+                        return withDataSource({ kind: 'serverError' }, dataSource);
                     }
             }
         }
 
-        return { kind: 'unknownError' };
+        return withDataSource({ kind: 'unknownError' }, dataSource);
     }
 }

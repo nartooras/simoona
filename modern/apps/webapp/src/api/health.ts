@@ -1,9 +1,19 @@
 import { apiFetch } from './client';
+import { resolveDataSource, type DataSource } from './dataSource';
 
-type HealthResponse = {
+export type HealthResponse = {
     status: string;
 };
 
-export function fetchHealthStatus(): Promise<HealthResponse> {
-    return apiFetch<HealthResponse>('/health');
+export type HealthResult = {
+    dataSource: DataSource;
+    health: HealthResponse;
+};
+
+export async function fetchHealthStatus(): Promise<HealthResult> {
+    const health = await apiFetch<HealthResponse>('/health');
+    return {
+        dataSource: resolveDataSource('health'),
+        health,
+    };
 }

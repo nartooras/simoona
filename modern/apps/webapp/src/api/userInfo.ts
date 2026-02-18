@@ -1,5 +1,6 @@
 import { ApiHttpError, apiFetch } from './client';
 import { buildApiAuthHeaders } from './authHeaders';
+import { resolveDataSource, withDataSource, type DataSourceResult } from './dataSource';
 
 export type UserInfoResponse = {
     email: string | null;
@@ -17,18 +18,20 @@ export type UserInfoResponse = {
     roles: string[];
 };
 
-export type UserInfoResult =
+export type UserInfoResult = DataSourceResult<
     | { kind: 'success'; userInfo: UserInfoResponse }
     | { kind: 'unauthorized' }
     | { kind: 'notFound' }
     | { kind: 'badRequest' }
     | { kind: 'serverError' }
-    | { kind: 'unknownError' };
+    | { kind: 'unknownError' }
+>;
 
 export async function fetchUserInfo(): Promise<UserInfoResult> {
+    const dataSource = resolveDataSource('userInfo');
     const authHeadersResult = buildApiAuthHeaders();
     if (authHeadersResult.kind === 'missingOrganization') {
-        return { kind: 'badRequest' };
+        return withDataSource({ kind: 'badRequest' }, dataSource);
     }
 
     try {
@@ -36,23 +39,23 @@ export async function fetchUserInfo(): Promise<UserInfoResult> {
             headers: authHeadersResult.headers,
         });
 
-        return { kind: 'success', userInfo };
+        return withDataSource({ kind: 'success', userInfo }, dataSource);
     } catch (error) {
         if (error instanceof ApiHttpError) {
             switch (error.status) {
                 case 400:
-                    return { kind: 'badRequest' };
+                    return withDataSource({ kind: 'badRequest' }, dataSource);
                 case 401:
-                    return { kind: 'unauthorized' };
+                    return withDataSource({ kind: 'unauthorized' }, dataSource);
                 case 404:
-                    return { kind: 'notFound' };
+                    return withDataSource({ kind: 'notFound' }, dataSource);
                 default:
                     if (error.status >= 500) {
-                        return { kind: 'serverError' };
+                        return withDataSource({ kind: 'serverError' }, dataSource);
                     }
             }
         }
 
-        return { kind: 'unknownError' };
+        return withDataSource({ kind: 'unknownError' }, dataSource);
     }
 }

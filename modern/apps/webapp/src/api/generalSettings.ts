@@ -1,5 +1,6 @@
 import { buildApiAuthHeaders } from './authHeaders';
 import { ApiHttpError, apiFetch } from './client';
+import { resolveDataSource, withDataSource, type DataSourceResult } from './dataSource';
 
 export type GeneralSettingsOption = {
     displayName: string;
@@ -18,19 +19,21 @@ export type GeneralSettingsResponse = {
     timeZones: GeneralSettingsTimeZone[];
 };
 
-export type GeneralSettingsResult =
+export type GeneralSettingsResult = DataSourceResult<
     | { kind: 'success'; settings: GeneralSettingsResponse }
     | { kind: 'empty' }
     | { kind: 'unauthorized' }
     | { kind: 'forbidden' }
     | { kind: 'badRequest' }
     | { kind: 'serverError' }
-    | { kind: 'unknownError' };
+    | { kind: 'unknownError' }
+>;
 
 export async function fetchGeneralSettings(): Promise<GeneralSettingsResult> {
+    const dataSource = resolveDataSource('generalSettings');
     const authHeadersResult = buildApiAuthHeaders();
     if (authHeadersResult.kind === 'missingOrganization') {
-        return { kind: 'badRequest' };
+        return withDataSource({ kind: 'badRequest' }, dataSource);
     }
 
     try {
@@ -39,28 +42,28 @@ export async function fetchGeneralSettings(): Promise<GeneralSettingsResult> {
         });
 
         if (settings.languages.length === 0 && settings.timeZones.length === 0) {
-            return { kind: 'empty' };
+            return withDataSource({ kind: 'empty' }, dataSource);
         }
 
-        return { kind: 'success', settings };
+        return withDataSource({ kind: 'success', settings }, dataSource);
     } catch (error) {
         if (error instanceof ApiHttpError) {
             switch (error.status) {
                 case 400:
-                    return { kind: 'badRequest' };
+                    return withDataSource({ kind: 'badRequest' }, dataSource);
                 case 401:
-                    return { kind: 'unauthorized' };
+                    return withDataSource({ kind: 'unauthorized' }, dataSource);
                 case 403:
-                    return { kind: 'forbidden' };
+                    return withDataSource({ kind: 'forbidden' }, dataSource);
                 case 404:
-                    return { kind: 'empty' };
+                    return withDataSource({ kind: 'empty' }, dataSource);
                 default:
                     if (error.status >= 500) {
-                        return { kind: 'serverError' };
+                        return withDataSource({ kind: 'serverError' }, dataSource);
                     }
             }
         }
 
-        return { kind: 'unknownError' };
+        return withDataSource({ kind: 'unknownError' }, dataSource);
     }
 }

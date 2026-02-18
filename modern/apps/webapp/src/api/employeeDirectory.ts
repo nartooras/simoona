@@ -1,5 +1,6 @@
 import { buildApiAuthHeaders } from './authHeaders';
 import { ApiHttpError, apiFetch } from './client';
+import { resolveDataSource, withDataSource, type DataSourceResult } from './dataSource';
 
 export type EmployeeDirectoryItem = {
     id: string;
@@ -16,7 +17,7 @@ export type EmployeeDirectoryResponse = {
     pageSize: number;
 };
 
-export type EmployeeDirectoryResult =
+export type EmployeeDirectoryResult = DataSourceResult<
     | { kind: 'success'; directory: EmployeeDirectoryResponse }
     | { kind: 'empty' }
     | { kind: 'unauthorized' }
@@ -24,12 +25,14 @@ export type EmployeeDirectoryResult =
     | { kind: 'notFound' }
     | { kind: 'badRequest' }
     | { kind: 'serverError' }
-    | { kind: 'unknownError' };
+    | { kind: 'unknownError' }
+>;
 
 export async function fetchEmployeeDirectory(): Promise<EmployeeDirectoryResult> {
+    const dataSource = resolveDataSource('employees');
     const authHeadersResult = buildApiAuthHeaders();
     if (authHeadersResult.kind === 'missingOrganization') {
-        return { kind: 'badRequest' };
+        return withDataSource({ kind: 'badRequest' }, dataSource);
     }
 
     try {
@@ -38,28 +41,28 @@ export async function fetchEmployeeDirectory(): Promise<EmployeeDirectoryResult>
         });
 
         if (directory.pagedList.length === 0) {
-            return { kind: 'empty' };
+            return withDataSource({ kind: 'empty' }, dataSource);
         }
 
-        return { kind: 'success', directory };
+        return withDataSource({ kind: 'success', directory }, dataSource);
     } catch (error) {
         if (error instanceof ApiHttpError) {
             switch (error.status) {
                 case 400:
-                    return { kind: 'badRequest' };
+                    return withDataSource({ kind: 'badRequest' }, dataSource);
                 case 401:
-                    return { kind: 'unauthorized' };
+                    return withDataSource({ kind: 'unauthorized' }, dataSource);
                 case 403:
-                    return { kind: 'forbidden' };
+                    return withDataSource({ kind: 'forbidden' }, dataSource);
                 case 404:
-                    return { kind: 'notFound' };
+                    return withDataSource({ kind: 'notFound' }, dataSource);
                 default:
                     if (error.status >= 500) {
-                        return { kind: 'serverError' };
+                        return withDataSource({ kind: 'serverError' }, dataSource);
                     }
             }
         }
 
-        return { kind: 'unknownError' };
+        return withDataSource({ kind: 'unknownError' }, dataSource);
     }
 }
