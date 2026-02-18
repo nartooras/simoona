@@ -34,4 +34,4 @@
 - No auth endpoint behavior change was introduced; auth migration docs (strategy + ADR-0003) remain unaffected by this thread scope.
 
 ## 7. Final commit hash
-- `4f594e5a`
+- `806d54d7`
