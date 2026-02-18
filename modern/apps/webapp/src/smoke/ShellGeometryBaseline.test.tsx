@@ -14,7 +14,7 @@ describe('Shell geometry baseline scaffold', () => {
         vi.unstubAllEnvs();
     });
 
-    it('keeps deterministic shell structure for Wave 1A parity', async () => {
+    it('keeps deterministic shell structure for Wave 2B parity semantics', async () => {
         const router = createMemoryRouter(appRoutes, {
             initialEntries: [shellVisualBaselineSpec.route],
         });
@@ -28,12 +28,21 @@ describe('Shell geometry baseline scaffold', () => {
         expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
         expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
 
-        expect(shellVisualBaselineSpec.geometry).toEqual({
-            headerHeightPx: 44,
-            sidebarWidthPx: 236,
-            centerContentMaxWidthPx: 748,
-            rightRailWidthPx: 272,
-            coreSpacingPx: 18,
+        const header = screen.getByTestId('app-header');
+        const sidebar = screen.getByTestId('app-sidebar');
+        const nav = screen.getByRole('navigation', { name: 'Primary navigation' });
+
+        expect(document.querySelector(`[data-shell-geometry="${shellVisualBaselineSpec.semantics.shellGeometryTag}"]`)).not.toBeNull();
+        expect(header.classList.contains(`topbar-height-${shellVisualBaselineSpec.semantics.topbarHeightTag}`)).toBe(true);
+        expect(document.querySelector(`.${shellVisualBaselineSpec.semantics.topbarGeometryClass}`)).not.toBeNull();
+        expect(sidebar.getAttribute('data-left-rail-width')).toBe(shellVisualBaselineSpec.semantics.leftRailWidthTag);
+        expect(nav.getAttribute('data-left-rail-density')).toBe(shellVisualBaselineSpec.semantics.leftRailDensityTag);
+        expect(shellVisualBaselineSpec.semantics).toEqual({
+            shellGeometryTag: 'wave2b',
+            topbarHeightTag: 'legacy-44',
+            topbarGeometryClass: 'topbar-geometry-wave2b',
+            leftRailWidthTag: 'legacy-232',
+            leftRailDensityTag: 'legacy-compact-wave2b',
         });
     });
 

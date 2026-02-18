@@ -21,9 +21,14 @@ export function AppLayout({ children }: PropsWithChildren) {
     }
 
     return (
-        <div className="app-shell" data-shell-geometry="wave1a" data-shell-taxonomy="wave1c-left-rail-taxonomy">
-            <header className="app-header" data-testid="app-header">
-                <div className="app-header-content topbar-geometry-wave1c">
+        <div
+            className="app-shell shell-wave2b"
+            data-shell-fidelity="wave2b-topbar-leftnav"
+            data-shell-geometry="wave2b"
+            data-shell-taxonomy="wave2b-left-rail-taxonomy"
+        >
+            <header className="app-header topbar-height-legacy-44" data-testid="app-header">
+                <div className="app-header-content topbar-geometry-wave2b" data-topbar-geometry="legacy-v2b">
                     <button
                         aria-controls="app-sidebar-nav"
                         aria-expanded={isMobileNavOpen}
@@ -55,39 +60,50 @@ export function AppLayout({ children }: PropsWithChildren) {
                             type="search"
                         />
                     </label>
-                    <div className="app-header-affordances topbar-actions">
+                    <div className="app-header-affordances topbar-actions" data-topbar-controls="legacy-hierarchy-v2b">
                         <button
-                            aria-label="Add shortcut"
+                            aria-label="Create shortcut"
                             className="header-action header-action--icon topbar-action topbar-action--icon"
                             type="button"
                         >
-                            +
+                            <span aria-hidden="true" className="topbar-icon topbar-icon--create" />
+                            <span className="visually-hidden">Create shortcut</span>
                         </button>
-                        <button
-                            aria-label="Notifications"
-                            className="header-action header-action--icon topbar-action topbar-action--icon"
-                            type="button"
-                        >
-                            3
-                        </button>
-                        <button className="header-action topbar-action" type="button">
+                        <button className="header-action topbar-action topbar-action--with-icon" type="button">
+                            <span aria-hidden="true" className="topbar-icon topbar-icon--links" />
                             Quick Links
                         </button>
-                        <button className="header-action topbar-action" type="button">
-                            Alerts
+                        <button className="header-action topbar-action topbar-action--with-icon" type="button">
+                            <span aria-hidden="true" className="topbar-icon topbar-icon--notifications" />
+                            Notifications
+                            <span aria-hidden="true" className="topbar-count-badge">
+                                3
+                            </span>
                         </button>
                         <button className="header-user topbar-action topbar-action--user" type="button">
                             <span aria-hidden="true" className="header-user-avatar">
                                 DU
                             </span>
                             <span className="header-user-name">Demo User</span>
+                            <span aria-hidden="true" className="header-user-chevron">
+                                ▾
+                            </span>
                         </button>
                     </div>
                 </div>
             </header>
             <div className="app-layout" data-testid="app-layout">
-                <aside className={`app-sidebar${isMobileNavOpen ? ' open' : ''}`} data-testid="app-sidebar" id="app-sidebar-nav">
-                    <nav aria-label="Primary navigation" className="app-nav">
+                <aside
+                    className={`app-sidebar left-rail-width-legacy-232${isMobileNavOpen ? ' open' : ''}`}
+                    data-left-rail-width="legacy-232"
+                    data-testid="app-sidebar"
+                    id="app-sidebar-nav"
+                >
+                    <nav
+                        aria-label="Primary navigation"
+                        className="app-nav left-rail-density-wave2b"
+                        data-left-rail-density="legacy-compact-wave2b"
+                    >
                         {navigationGroups.map((group) => (
                             <section className="app-nav-group" data-group={group.key} key={group.title}>
                                 <h2 className="app-nav-group-title" id={`nav-group-${group.key}`}>
