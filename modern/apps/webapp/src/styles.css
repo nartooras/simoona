@@ -471,6 +471,33 @@ body {
     min-width: 0;
 }
 
+.wall-section-state {
+    border: 1px solid var(--color-border-soft);
+    background: var(--color-bg-panel);
+    box-shadow: var(--color-shadow-soft);
+    border-radius: var(--radius-sm);
+    padding: 9px 11px;
+}
+
+.wall-section-state--warning {
+    border-color: #e2c37a;
+    background: #fffaf0;
+}
+
+.wall-section-state-title {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2d2d2d;
+}
+
+.wall-section-state p {
+    margin: 4px 0 0;
+    color: var(--color-text-muted);
+    font-size: 11px;
+    line-height: 1.35;
+}
+
 .wall-post-card {
     border: 1px solid var(--color-border-soft);
     background: var(--color-bg-panel);
@@ -575,7 +602,8 @@ body {
 .wall-post-action-row {
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
+    flex-wrap: wrap;
     padding-bottom: 6px;
 }
 
@@ -586,8 +614,22 @@ body {
     font-size: 11px;
     font-weight: 600;
     padding: 0;
-    cursor: default;
+    cursor: pointer;
     line-height: 1.2;
+}
+
+.wall-post-action-button:hover {
+    color: #1c3f59;
+}
+
+.wall-post-action-button:focus-visible {
+    outline: 1px solid #275778;
+    outline-offset: 2px;
+}
+
+.wall-post-action-button--link {
+    color: #2f5f87;
+    font-weight: 500;
 }
 
 .wall-post-comment-row {
@@ -595,7 +637,7 @@ body {
     align-items: center;
     gap: 7px;
     margin-top: 0;
-    padding-bottom: 0;
+    padding-bottom: 2px;
 }
 
 .wall-post-comment-row input {
@@ -616,11 +658,11 @@ body {
 .wall-post-thread {
     margin-top: 0;
     border-top: 1px solid #ececec;
-    padding-top: 2px;
+    padding-top: 4px;
 }
 
 .wall-post-reply {
-    padding: 6px 0;
+    padding: 5px 0 6px;
 }
 
 .wall-post-reply + .wall-post-reply {
@@ -652,9 +694,9 @@ body {
 }
 
 .wall-post-reply-text {
-    margin-top: 2px;
+    margin-top: 3px;
     font-size: 11px;
-    line-height: 1.32;
+    line-height: 1.36;
 }
 
 .wall-widgets-column {

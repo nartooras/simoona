@@ -128,10 +128,28 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
   - compact two-level typography hierarchy for row primary/secondary text
 - feed and widget structure tests were expanded to lock section ordering, separator-row presence, and right-rail heading/list semantics
 
-### Explicit gaps vs legacy after Wave 1D
+### Wave 2A alignment completed
+
+- home feed interactions now behave closer to legacy while staying prototype-safe:
+  - like/unlike toggles are interactive and local-only (simulated, non-persistent)
+  - reply composer expands/collapses per post via a dedicated action toggle
+  - comment thread visibility uses explicit show/hide replies controls
+- home route data shaping now uses explicit adapter split (`real` vs `mock`) with deterministic fixture sets:
+  - feed and right-rail adapters are selected through the hybrid data-source matrix
+  - fixture content now mirrors legacy-like author/timestamp/wall label/comment/reply anatomy
+  - right-rail order and density align to legacy scanning rhythm (`Kudos Feed`, `Upcoming Events`, `Rankings`, `Birthdays`)
+- home sections now have resilient state handling for demo safety:
+  - loading states for feed and right rail during adapter resolution
+  - empty states when an adapter yields zero items
+  - unavailable states with explicit reason text if a section source is disabled
+- interactive section styling was tightened for parity:
+  - denser action-row spacing and clearer hierarchy between actions, replies, and composer
+  - reply blocks now read as compact nested conversation units with clearer separation
+
+### Explicit gaps vs legacy after Wave 2A
 
 - legacy icon sprite assets are still represented by simple text/placeholders
-- write interactions remain intentionally non-persistent (no real like/reply/comment mutations)
+- write interactions remain intentionally non-persistent (no backend like/reply/comment mutations)
 - advanced legacy controls (context menus, inline dropdown workflows, live counters) are still static
 - fine-grain font rendering parity (glyph metrics/kerning) remains approximate
 - screenshot pixel-diff automation is still not wired; baseline scaffold exists at `modern/apps/webapp/src/smoke/ShellVisualBaseline.scaffold.ts`
