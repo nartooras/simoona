@@ -1,4 +1,4 @@
-import { killProcessTree, readPidFile, removePidFile } from "./demo-lib.mjs";
+import { readPidFile, removePidFile, stopProcessTree } from "./demo-lib.mjs";
 
 const state = readPidFile();
 if (!state) {
@@ -6,11 +6,15 @@ if (!state) {
   process.exit(0);
 }
 
-const apiStopped = killProcessTree(state.apiPid);
-const webappStopped = killProcessTree(state.webappPid);
+const apiResult = await stopProcessTree(state.apiPid);
+const webappResult = await stopProcessTree(state.webappPid);
 
 removePidFile();
 
 console.log("[demo:stop] Completed.");
-console.log(`[demo:stop] API process ${state.apiPid ?? "<none>"}: ${apiStopped ? "stopped" : "not running"}`);
-console.log(`[demo:stop] Webapp process ${state.webappPid ?? "<none>"}: ${webappStopped ? "stopped" : "not running"}`);
+console.log(`[demo:stop] API process ${state.apiPid ?? "<none>"}: ${apiResult}`);
+console.log(`[demo:stop] Webapp process ${state.webappPid ?? "<none>"}: ${webappResult}`);
+
+if (apiResult === "timeout" || webappResult === "timeout") {
+  process.exitCode = 1;
+}

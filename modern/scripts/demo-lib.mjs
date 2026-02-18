@@ -10,6 +10,28 @@ const repoRoot = path.resolve(__dirname, "..", "..");
 
 const apiProjectPath = "modern/apps/api/src/Simoona.Modern.Api/Simoona.Modern.Api.csproj";
 const webappFilter = "@simoona/webapp";
+const appRouterPath = "modern/apps/webapp/src/app/routes/AppRouter.tsx";
+const navigationPath = "modern/apps/webapp/src/app/routes/navigation.ts";
+
+const criticalProtectedApiChecks = [
+  { route: "/user-info", apiPath: "/api/v1/account/user-info", expectedProperty: "userId" },
+  { route: "/settings/general", apiPath: "/api/v1/user/general-settings", expectedProperty: "languages" },
+  { route: "/employees", apiPath: "/api/v1/employees?page=1&pageSize=10", expectedProperty: "pagedList" },
+  { route: "/profiles/me", apiPath: "/api/v1/profiles/me", expectedProperty: "id" },
+];
+
+export const requiredDemoRouteDefinitions = [
+  { path: "/", mode: "real" },
+  { path: "/health", mode: "real" },
+  { path: "/user-info", mode: "real" },
+  { path: "/settings/general", mode: "real" },
+  { path: "/employees", mode: "real" },
+  { path: "/profiles/me", mode: "real" },
+  { path: "/activities/feed", mode: "mock" },
+  { path: "/recognition", mode: "mock" },
+  { path: "/service-requests", mode: "disabled" },
+  { path: "/externals/integrations", mode: "disabled" },
+];
 
 const defaultConfig = {
   apiHost: "127.0.0.1",
@@ -89,6 +111,42 @@ export function readDemoConfig() {
   };
 }
 
+export function assertDemoEnvironmentConsistency(config) {
+  const apiBaseUrl = parseUrl(config.apiBaseUrl, "VITE_API_BASE_URL");
+  if (apiBaseUrl.origin !== config.apiOrigin) {
+    throw new Error(
+      `VITE_API_BASE_URL must target ${config.apiOrigin} for deterministic demo mode, got ${apiBaseUrl.origin}.`,
+    );
+  }
+
+  if (!apiBaseUrl.pathname.startsWith("/api")) {
+    throw new Error(`VITE_API_BASE_URL must use '/api' path prefix, got '${apiBaseUrl.pathname}'.`);
+  }
+
+  if (config.devTokenEnabled.trim().toLowerCase() !== "true") {
+    throw new Error("Auth__DevToken__Enabled must be 'true' for demo orchestration.");
+  }
+}
+
+export function assertDemoRouteDefinitions() {
+  const routerSource = fs.readFileSync(path.join(repoRoot, appRouterPath), "utf8");
+  const navigationSource = fs.readFileSync(path.join(repoRoot, navigationPath), "utf8");
+
+  for (const route of requiredDemoRouteDefinitions) {
+    if (!routerSource.includes(`path: '${route.path}'`)) {
+      throw new Error(`Missing '${route.path}' route definition in ${appRouterPath}.`);
+    }
+
+    const escapedPath = escapeRegExp(route.path);
+    const modePattern = new RegExp(`to:\\s*'${escapedPath}'[\\s\\S]{0,300}?availability:\\s*'${route.mode}'`);
+    if (!modePattern.test(navigationSource)) {
+      throw new Error(
+        `Route '${route.path}' must be marked availability '${route.mode}' in ${navigationPath}.`,
+      );
+    }
+  }
+}
+
 export async function ensurePortAvailable(host, port, name) {
   const available = await isPortAvailable(host, port);
   if (!available) {
@@ -166,6 +224,28 @@ export async function waitForApiHealthy(apiOrigin, timeoutMs, pollIntervalMs) {
   throw new Error(`API health check timed out after ${timeoutMs}ms.${formatCause(lastError)}`);
 }
 
+export async function waitForWebappReady(webOrigin, timeoutMs, pollIntervalMs, fetchImpl = fetch) {
+  const startedAt = Date.now();
+  let lastError = null;
+
+  while (Date.now() - startedAt < timeoutMs) {
+    try {
+      const response = await fetchImpl(webOrigin, { redirect: "manual" });
+      if (response.status >= 200 && response.status < 400) {
+        return;
+      }
+
+      lastError = new Error(`Webapp responded with ${response.status}.`);
+    } catch (error) {
+      lastError = error;
+    }
+
+    await sleep(pollIntervalMs);
+  }
+
+  throw new Error(`Webapp readiness check timed out after ${timeoutMs}ms.${formatCause(lastError)}`);
+}
+
 export async function mintDevToken(config) {
   const response = await fetch(`${config.apiOrigin}/api/v1/dev-auth/token`, {
     method: "POST",
@@ -193,6 +273,13 @@ export async function mintDevToken(config) {
   }
 
   return token;
+}
+
+export async function assertApiHealthAndAuthBaseline(config, token, fetchImpl = fetch) {
+  await assertHealthResponse(config.apiOrigin, fetchImpl);
+  await assertUnauthorizedBaselines(config.organizationId, fetchImpl, config.apiOrigin);
+  await assertAuthorizedBaselines(config.organizationId, token, fetchImpl, config.apiOrigin);
+  await assertInvalidOrganizationBaseline(token, fetchImpl, config.apiOrigin);
 }
 
 export function readProcessOutput(childProcess) {
@@ -264,6 +351,31 @@ export function killProcessTree(pid) {
   }
 }
 
+export async function stopProcessTree(pid, options = {}) {
+  const shutdownTimeoutMs = options.shutdownTimeoutMs ?? 5000;
+  const forceTimeoutMs = options.forceTimeoutMs ?? 1500;
+
+  if (!pid || typeof pid !== "number") {
+    return "not-configured";
+  }
+
+  if (!isPidRunning(pid)) {
+    return "not-running";
+  }
+
+  signalProcessTree(pid, "SIGTERM");
+  if (await waitForProcessExit(pid, shutdownTimeoutMs)) {
+    return "stopped";
+  }
+
+  signalProcessTree(pid, "SIGKILL");
+  if (await waitForProcessExit(pid, forceTimeoutMs)) {
+    return "killed";
+  }
+
+  return "timeout";
+}
+
 function readPort(rawValue, fallback, envName) {
   if (!rawValue) {
     return fallback;
@@ -275,6 +387,14 @@ function readPort(rawValue, fallback, envName) {
   }
 
   return parsed;
+}
+
+function parseUrl(rawValue, envName) {
+  try {
+    return new URL(rawValue);
+  } catch {
+    throw new Error(`${envName} must be an absolute URL.`);
+  }
 }
 
 function isPortAvailable(host, port) {
@@ -302,6 +422,132 @@ function formatCause(error) {
   }
 
   return ` Last error: ${String(error)}`;
+}
+
+async function assertHealthResponse(apiOrigin, fetchImpl) {
+  const response = await fetchImpl(`${apiOrigin}/health`);
+  if (!response.ok) {
+    throw new Error(`Health endpoint failed with ${response.status}. ${await formatResponseBody(response)}`.trim());
+  }
+
+  let payload = null;
+  try {
+    payload = await response.json();
+  } catch {
+    throw new Error("Health endpoint response must be valid JSON.");
+  }
+
+  if (payload?.status !== "healthy") {
+    throw new Error(`Health endpoint status must be 'healthy', got '${payload?.status ?? "<missing>"}'.`);
+  }
+}
+
+async function assertUnauthorizedBaselines(organizationId, fetchImpl, apiOrigin) {
+  for (const check of criticalProtectedApiChecks) {
+    const response = await fetchImpl(`${apiOrigin}${check.apiPath}`, {
+      headers: {
+        "X-Org-Id": organizationId,
+      },
+    });
+
+    if (response.status !== 401) {
+      throw new Error(
+        `${check.apiPath} must return 401 without token, got ${response.status}. ${await formatResponseBody(response)}`.trim(),
+      );
+    }
+  }
+}
+
+async function assertAuthorizedBaselines(organizationId, token, fetchImpl, apiOrigin) {
+  for (const check of criticalProtectedApiChecks) {
+    const response = await fetchImpl(`${apiOrigin}${check.apiPath}`, {
+      headers: {
+        "X-Org-Id": organizationId,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error(
+        `${check.apiPath} must return 200 with demo token, got ${response.status}. ${await formatResponseBody(response)}`.trim(),
+      );
+    }
+
+    let payload = null;
+    try {
+      payload = await response.json();
+    } catch {
+      throw new Error(`${check.apiPath} returned invalid JSON payload.`);
+    }
+
+    if (!(check.expectedProperty in payload)) {
+      throw new Error(`${check.apiPath} payload missing expected '${check.expectedProperty}' property.`);
+    }
+  }
+}
+
+async function assertInvalidOrganizationBaseline(token, fetchImpl, apiOrigin) {
+  const response = await fetchImpl(`${apiOrigin}/api/v1/account/user-info`, {
+    headers: {
+      "X-Org-Id": "invalid-org",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.status !== 400) {
+    throw new Error(
+      `/api/v1/account/user-info must return 400 for invalid X-Org-Id, got ${response.status}. ${await formatResponseBody(response)}`.trim(),
+    );
+  }
+}
+
+async function formatResponseBody(response) {
+  const body = await safeReadBody(response);
+  if (!body) {
+    return "";
+  }
+
+  return `Response body: ${body.slice(0, 240)}`;
+}
+
+function signalProcessTree(pid, signal) {
+  try {
+    process.kill(-pid, signal);
+    return true;
+  } catch {
+    try {
+      process.kill(pid, signal);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
+
+function isPidRunning(pid) {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function waitForProcessExit(pid, timeoutMs) {
+  const startedAt = Date.now();
+  while (Date.now() - startedAt < timeoutMs) {
+    if (!isPidRunning(pid)) {
+      return true;
+    }
+
+    await sleep(100);
+  }
+
+  return !isPidRunning(pid);
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function sleep(ms) {

@@ -29,10 +29,17 @@ Run from repository root:
 ```bash
 pnpm install
 pnpm run arch:check
+pnpm demo:check -- --ci
 pnpm smoke
 ```
 
-`pnpm smoke` runs:
+`pnpm demo:check -- --ci` is the CI-safe hard gate and verifies:
+
+1. demo env consistency rules
+2. critical route definition/availability wiring
+3. `pnpm smoke:ci` execution path
+
+`pnpm smoke` runs local smoke probes:
 
 1. Modern webapp smoke route checks (app shell + migrated routes).
 2. Modern API smoke probes:
@@ -43,6 +50,7 @@ pnpm smoke
 For CI/manual workflow runs:
 
 ```bash
+pnpm demo:check -- --ci
 pnpm smoke:ci
 ```
 
@@ -51,6 +59,7 @@ pnpm smoke:ci
 Promote only if all criteria below are true:
 
 - `pnpm smoke` exits with code `0`.
+- `pnpm demo:check` exits with code `0` in the selected mode (`local` or `--ci`).
 - No smoke assertion failures on route reachability or API status expectations.
 - No auth bootstrap failures while minting test token in Testing/Development environments.
 - Required baseline pipeline checks are green (`lint`, `typecheck`, `test`, `build`, and modern API build/test).
