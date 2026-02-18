@@ -338,6 +338,31 @@ Highlights from this pass:
   - disabled control descriptions tied with `aria-describedby`
 - Added guard assertion to ensure navigation links and `AppRouter` route definitions stay in sync (no dead/hidden prototype routes).
 
+## Wall Layout Parity (Thread U)
+
+Thread U upgrades the home wall route to high-fidelity shell parity against the legacy wall screenshot while keeping prototype safety intact.
+
+What now matches:
+
+- Three-column composition in practice:
+  - global left navigation rail with grouped sections and active-item highlight
+  - center wall feed with stacked post cards
+  - right compact widgets rail
+- Legacy-like visual rhythm:
+  - light-gray app canvas, white/near-white cards, thin subtle borders
+  - compact spacing and typography hierarchy tuned for dense wall scanning
+  - blue accent usage for section labels, links, and key emphasis
+- Header chrome parity improvements:
+  - blue global top bar with search affordance and quick user actions
+- Responsive fallback:
+  - side columns collapse/stack on smaller widths while preserving key feed content
+
+Remaining differences:
+
+- Exact legacy icon spriteography is still represented by local placeholders.
+- Some micro-spacing/line-height values remain approximations rather than exact pixel parity.
+- Interactive legacy wall behaviors (real reactions/comments/live counters) remain simulated or disabled in prototype mode.
+
 ### Demo-ready quality checklist
 
 | Area | Status | Notes |

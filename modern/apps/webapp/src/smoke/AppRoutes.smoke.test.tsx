@@ -31,6 +31,10 @@ describe('Modern webapp smoke routes', () => {
 
         expect(await screen.findByRole('heading', { name: i18next.t('home.title') })).toBeInTheDocument();
         expect(screen.getByText('Simoona')).toBeInTheDocument();
+        expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
+        expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Kudos Feed' })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Upcoming Events' })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: 'User Info' })).toHaveAttribute('href', '/user-info');
         expect(screen.getByRole('link', { name: 'General Settings' })).toHaveAttribute(
             'href',
