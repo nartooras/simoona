@@ -31,9 +31,9 @@ pnpm install
 - `pnpm test`: run workspace tests.
 - `pnpm smoke`: run release-readiness smoke checks (modern webapp route smoke + modern API smoke probes).
 - `pnpm smoke:ci`: run smoke checks in CI-friendly reporter mode.
-- `pnpm demo:check`: run deterministic local demo preflight checks (ports, env validation, API health, dev token mint).
-- `pnpm demo:start`: start modern API + webapp in deterministic demo mode with a minted bearer token.
-- `pnpm demo:stop`: stop local demo API/webapp processes started by `demo:start`.
+- `pnpm demo:check`: run hard-gate demo readiness checks (env consistency, critical route wiring, API health/auth baselines). Use `pnpm demo:check -- --ci` for CI-safe gate path.
+- `pnpm demo:start`: start modern API + webapp in deterministic demo mode after preflight and API auth baseline validation.
+- `pnpm demo:stop`: deterministically stop local demo API/webapp processes started by `demo:start`.
 - `pnpm build`: run workspace builds.
 - `pnpm modern:api:build`: run `dotnet build` for modern API solution only.
 - `pnpm modern:api:test`: run `dotnet test` for modern API tests only.

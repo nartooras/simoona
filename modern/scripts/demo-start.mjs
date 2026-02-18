@@ -1,5 +1,8 @@
 import path from "node:path";
 import {
+  assertApiHealthAndAuthBaseline,
+  assertDemoEnvironmentConsistency,
+  assertDemoRouteDefinitions,
   ensureLogDir,
   ensurePortAvailable,
   killProcessTree,
@@ -11,6 +14,7 @@ import {
   spawnApi,
   spawnWebapp,
   waitForApiHealthy,
+  waitForWebappReady,
   writePidFile,
 } from "./demo-lib.mjs";
 
@@ -22,6 +26,8 @@ try {
 
   const config = readDemoConfig();
   console.log("[demo:start] Running preflight checks...");
+  assertDemoEnvironmentConsistency(config);
+  assertDemoRouteDefinitions();
 
   await ensurePortAvailable(config.apiHost, config.apiPort, "API");
   await ensurePortAvailable(config.webHost, config.webPort, "Webapp");
@@ -47,6 +53,7 @@ try {
   }
 
   const mintedToken = await mintDevToken(config);
+  await assertApiHealthAndAuthBaseline(config, mintedToken);
 
   const webappStdoutFd = openLogFile(webappLogPath);
   const webappStderrFd = openLogFile(webappLogPath);
@@ -55,6 +62,13 @@ try {
     stdio: ["ignore", webappStdoutFd, webappStderrFd],
   });
   webappProcess.unref();
+  try {
+    await waitForWebappReady(config.webOrigin, config.healthTimeoutMs, config.healthPollIntervalMs);
+  } catch (error) {
+    killProcessTree(apiProcess.pid);
+    killProcessTree(webappProcess.pid);
+    throw error;
+  }
 
   writePidFile({
     startedAt: new Date().toISOString(),
@@ -81,6 +95,7 @@ try {
   console.log(`[demo:start] VITE_API_BASE_URL=${config.apiBaseUrl}`);
   console.log(`[demo:start] VITE_API_ORGANIZATION_ID=${config.organizationId}`);
   console.log("[demo:start] VITE_API_BEARER_TOKEN=<minted at startup>");
+  console.log(`[demo:start] Logs: api=${apiLogPath} webapp=${webappLogPath}`);
   console.log("[demo:start] Stop with: pnpm demo:stop");
 } catch (error) {
   removePidFile();

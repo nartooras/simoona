@@ -6,6 +6,7 @@ References:
 
 - `modern/docs/architecture.md`
 - `modern/docs/frontend-visual-parity.md`
+- `modern/docs/demo-runbook.md`
 - `modern/docs/release-readiness-checklist.md`
 
 ## Navigation IA alignment
@@ -75,6 +76,7 @@ No prototype route is left blank.
 - Key nav entries are visible in shell, including placeholder areas.
 - Header has clearer top-level affordances for demo context.
 - Route-level prototype availability is explicit across the app shell.
+- Thread S hard gate now validates critical route definitions and availability labels before demo start/check pass.
 
 ### Still pending
 
