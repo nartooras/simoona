@@ -5,6 +5,7 @@ export interface FeedReply {
     author: string;
     timestamp: string;
     text: string;
+    depth: 0 | 1;
 }
 
 export interface FeedPost {
@@ -13,7 +14,7 @@ export interface FeedPost {
     author: string;
     timestamp: string;
     text: string;
-    mediaLabel: string;
+    mediaLabel?: string;
     likeCount: number;
     likedByCurrentUser: boolean;
     replies: FeedReply[];
@@ -59,7 +60,7 @@ const realFeedFixtures: FeedPost[] = [
         wallLabel: 'Company Wall',
         author: 'Milda Vaitke',
         timestamp: 'Today at 10:24',
-        text: 'Prototype sprint review is live. Please leave feedback on migration priorities before 15:00.',
+        text: 'Prototype sprint review is live. Please leave feedback on migration priorities before 15:00. We still have room to re-sequence API read-contract hardening if the home feed parity checks uncover blockers in demo rehearsal.',
         mediaLabel: 'Sprint update attachment preview',
         likeCount: 12,
         likedByCurrentUser: true,
@@ -69,12 +70,21 @@ const realFeedFixtures: FeedPost[] = [
                 author: 'Greta Simonyte',
                 timestamp: 'Today at 10:47',
                 text: 'Reviewed. Auth migration and directory pagination should stay in this sprint scope.',
+                depth: 0,
             },
             {
                 id: 'reply-demo-order',
                 author: 'Paulius Dainys',
                 timestamp: 'Today at 11:03',
                 text: 'Added demo order notes in the thread checklist so QA can mirror the flow.',
+                depth: 1,
+            },
+            {
+                id: 'reply-scope-confirmed',
+                author: 'Milda Vaitke',
+                timestamp: 'Today at 11:16',
+                text: 'Perfect. Keep service requests out of narration so we avoid showing write-heavy gaps.',
+                depth: 0,
             },
         ],
     },
@@ -83,18 +93,36 @@ const realFeedFixtures: FeedPost[] = [
         wallLabel: 'Engineering Wall',
         author: 'Tomas Petrauskas',
         timestamp: 'Today at 08:41',
-        text: 'Office map draft for Q2 seating is ready. Team leads can review sections in the Company area.',
-        mediaLabel: 'Office map screenshot placeholder',
+        text: 'Office map draft for Q2 seating is ready. Team leads can review sections in Company and comment on desk cluster swaps directly in the planning board.',
         likeCount: 8,
         likedByCurrentUser: false,
         replies: [],
+    },
+    {
+        id: 'post-recognition-note',
+        wallLabel: 'People Wall',
+        author: 'Austeja Gedmintaite',
+        timestamp: 'Today at 07:56',
+        text: 'Quick reminder: recognition snippets in the right rail now use the same muted metadata rhythm as feed cards, so demos should read as one continuous stream instead of switching visual voice between columns.',
+        mediaLabel: 'Right-rail typography comparison snapshot',
+        likeCount: 5,
+        likedByCurrentUser: false,
+        replies: [
+            {
+                id: 'reply-recognition-a11y',
+                author: 'Neringa Jankauskaite',
+                timestamp: 'Today at 08:12',
+                text: 'Confirmed keyboard focus stays visible on the compact action links too.',
+                depth: 0,
+            },
+        ],
     },
     {
         id: 'post-release-checklist',
         wallLabel: 'Product Wall',
         author: 'Rugile Morkunaite',
         timestamp: 'Yesterday at 17:22',
-        text: 'Demo rehearsal checklist is locked. Please verify route availability labels before tomorrow standup.',
+        text: 'Demo rehearsal checklist is locked. Please verify route availability labels before tomorrow standup and call out any mismatch between shell navigation and page-level notices before noon.',
         mediaLabel: 'Checklist summary placeholder',
         likeCount: 15,
         likedByCurrentUser: false,
@@ -104,8 +132,26 @@ const realFeedFixtures: FeedPost[] = [
                 author: 'Egle Janulyte',
                 timestamp: 'Yesterday at 18:05',
                 text: 'QA runbook is synced; I added expected statuses for all mock and disabled routes.',
+                depth: 0,
+            },
+            {
+                id: 'reply-release-followup',
+                author: 'Rugile Morkunaite',
+                timestamp: 'Yesterday at 18:21',
+                text: 'Great, we will pin the pass/fail command list in the handoff template.',
+                depth: 1,
             },
         ],
+    },
+    {
+        id: 'post-standup-note',
+        wallLabel: 'Company Wall',
+        author: 'Monika Leonaviciute',
+        timestamp: 'Yesterday at 09:14',
+        text: 'Standup note: if you see placeholder media blocks during walkthrough, call out that the route is read-first and deterministic by design.',
+        likeCount: 3,
+        likedByCurrentUser: false,
+        replies: [],
     },
 ];
 
@@ -125,6 +171,7 @@ const mockFeedFixtures: FeedPost[] = [
                 author: 'Greta Simonyte',
                 timestamp: 'Today at 10:51',
                 text: 'Confirmed. We can demonstrate the interaction flow without mutating backend state.',
+                depth: 0,
             },
         ],
     },
@@ -134,9 +181,27 @@ const mockFeedFixtures: FeedPost[] = [
         author: 'Jonas Petraitis',
         timestamp: 'Today at 09:12',
         text: 'Right-rail fixture ordering now mirrors legacy priority: Kudos, Events, Rankings, Birthdays.',
-        mediaLabel: 'Mock right-rail ordering placeholder',
         likeCount: 6,
         likedByCurrentUser: true,
+        replies: [
+            {
+                id: 'mock-reply-rail',
+                author: 'Milda Vaitke',
+                timestamp: 'Today at 09:25',
+                text: 'Keep this deterministic so the rehearsal script stays stable across runs.',
+                depth: 0,
+            },
+        ],
+    },
+    {
+        id: 'mock-post-read-only',
+        wallLabel: 'Product Wall',
+        author: 'Rugile Morkunaite',
+        timestamp: 'Yesterday at 16:10',
+        text: 'This mock card intentionally represents a read-only narrative: links and toggles are visible for flow parity, but backend mutation paths stay inactive.',
+        mediaLabel: 'Mock read-only behavior note',
+        likeCount: 4,
+        likedByCurrentUser: false,
         replies: [],
     },
 ];
@@ -303,6 +368,13 @@ const mockWidgetFixtures: WidgetCardData[] = [
     },
 ];
 
+// Home in demo mode intentionally remains fixture-backed for stream and right-rail sections.
+// This keeps replay determinism and protects the no-write prototype boundary.
+const homeAdapterNotes = Object.freeze({
+    feed: 'Mock-backed in demo mode via activitiesFeed source; deterministic fixture stream for walkthrough stability.',
+    widgets: 'Mock-backed in demo mode via kudos source; deterministic right-rail ordering preserved for parity scans.',
+});
+
 const feedAdapters: Record<Extract<DataSource, 'real' | 'mock'>, () => FeedPost[]> = {
     real: () => realFeedFixtures,
     mock: () => mockFeedFixtures,
@@ -357,4 +429,8 @@ export async function fetchHomeExperience(): Promise<HomeExperienceResult> {
             'Home widgets are unavailable in prototype mode while this slice remains disabled.',
         ),
     };
+}
+
+export function getHomeAdapterNotes(): Readonly<typeof homeAdapterNotes> {
+    return homeAdapterNotes;
 }

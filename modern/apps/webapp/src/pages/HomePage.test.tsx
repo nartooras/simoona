@@ -11,9 +11,9 @@ describe('HomePage', () => {
         expect(await screen.findByRole('heading', { name: 'Home' })).toBeInTheDocument();
         expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
         expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
-        expect(screen.getByText('Company Wall')).toBeInTheDocument();
-        expect(screen.getByText('Engineering Wall')).toBeInTheDocument();
-        expect(screen.getByText('Product Wall')).toBeInTheDocument();
+        expect(screen.getAllByText('Company Wall').length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText('Engineering Wall').length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText('Product Wall').length).toBeGreaterThanOrEqual(1);
         expect(screen.getByRole('heading', { name: 'Kudos Feed' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Upcoming Events' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Rankings' })).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe('HomePage', () => {
         expect(await screen.findByText('Milda Vaitke')).toBeInTheDocument();
 
         const firstPost = screen.getAllByTestId('wall-post-card')[0]!;
-        expect(firstPost).toHaveTextContent('12 likes · 2 replies');
+        expect(firstPost).toHaveTextContent('12 people like this · 3 comments');
 
         const unlikeButton = within(firstPost).getByRole('button', { name: 'Unlike' });
         expect(unlikeButton).toHaveAttribute('aria-pressed', 'true');
@@ -44,13 +44,13 @@ describe('HomePage', () => {
         const likeButton = within(firstPost).getByRole('button', { name: 'Like' });
         expect(likeButton).toBeInTheDocument();
         expect(likeButton).toHaveAttribute('aria-pressed', 'false');
-        expect(firstPost).toHaveTextContent('11 likes · 2 replies');
+        expect(firstPost).toHaveTextContent('11 people like this · 3 comments');
 
         await user.click(likeButton);
         const unlikeButtonAgain = within(firstPost).getByRole('button', { name: 'Unlike' });
         expect(unlikeButtonAgain).toBeInTheDocument();
         expect(unlikeButtonAgain).toHaveAttribute('aria-pressed', 'true');
-        expect(firstPost).toHaveTextContent('12 likes · 2 replies');
+        expect(firstPost).toHaveTextContent('12 people like this · 3 comments');
     });
 
     it('supports reply expand and collapse behavior with simulated composer', async () => {
@@ -80,13 +80,13 @@ describe('HomePage', () => {
         expect(await screen.findByText('Milda Vaitke')).toBeInTheDocument();
         expect(screen.queryByTestId('wall-post-thread')).not.toBeInTheDocument();
 
-        await user.click(screen.getByRole('button', { name: 'Show all replies (2)' }));
+        await user.click(screen.getByRole('button', { name: 'Show all replies (3)' }));
         expect(screen.getByRole('button', { name: 'Collapse replies' })).toBeInTheDocument();
         const thread = screen.getByTestId('wall-post-thread');
         expect(thread).toBeInTheDocument();
         expect(screen.getByText('Greta Simonyte')).toBeInTheDocument();
         expect(screen.getByText('Paulius Dainys')).toBeInTheDocument();
-        expect(thread.querySelectorAll('.wall-avatar--reply')).toHaveLength(2);
+        expect(thread.querySelectorAll('.wall-avatar--reply')).toHaveLength(3);
 
         await user.click(screen.getByRole('button', { name: 'Collapse replies' }));
         expect(screen.queryByText('Greta Simonyte')).not.toBeInTheDocument();
@@ -100,13 +100,13 @@ describe('HomePage', () => {
         expect(await screen.findByText('Milda Vaitke')).toBeInTheDocument();
 
         const postCards = screen.getAllByTestId('wall-post-card');
-        expect(postCards).toHaveLength(3);
-        expect(screen.getAllByTestId('wall-post-reaction-line')).toHaveLength(3);
-        expect(screen.getAllByTestId('wall-post-action-row')).toHaveLength(3);
+        expect(postCards).toHaveLength(5);
+        expect(screen.getAllByTestId('wall-post-reaction-line')).toHaveLength(5);
+        expect(screen.getAllByTestId('wall-post-action-row')).toHaveLength(5);
 
-        await user.click(screen.getByRole('button', { name: 'Show all replies (2)' }));
+        await user.click(screen.getByRole('button', { name: 'Show all replies (3)' }));
         expect(screen.getByTestId('wall-post-thread')).toBeInTheDocument();
-        expect(screen.getAllByRole('button', { name: /Show all replies|Show reply|Collapse replies/ })).toHaveLength(2);
+        expect(screen.getAllByRole('button', { name: /Show all replies|Show reply|Collapse replies/ })).toHaveLength(3);
 
         const widgetHeadings = screen.getAllByTestId('wall-widget-heading');
         const widgetLists = screen.getAllByTestId('wall-widget-list');
@@ -138,6 +138,31 @@ describe('HomePage', () => {
         const firstWidgetRow = screen.getAllByTestId('wall-widget-row')[0]!;
         expect(firstWidgetRow.querySelector('.wall-widget-row-meta.wall-meta-muted')).toBeInTheDocument();
         expect(firstWidgetRow.querySelector('.wall-widget-row-subtext.wall-meta-muted')).toBeInTheDocument();
+    });
+
+    it('renders varied post structures for media and nested replies', async () => {
+        const user = userEvent.setup();
+
+        render(<HomePage />);
+
+        expect(await screen.findByText('Milda Vaitke')).toBeInTheDocument();
+        expect(screen.getAllByTestId('wall-post-media-section')).toHaveLength(5);
+        expect(screen.getAllByTestId('wall-post-media-none')).toHaveLength(2);
+
+        await user.click(screen.getByRole('button', { name: 'Show all replies (3)' }));
+        const nestedReplies = screen.getAllByTestId('wall-post-reply').filter((reply) => reply.getAttribute('data-depth') === '1');
+        expect(nestedReplies).toHaveLength(1);
+    });
+
+    it('keeps stable semantic hooks for key card sections', async () => {
+        render(<HomePage />);
+
+        expect(await screen.findByText('Milda Vaitke')).toBeInTheDocument();
+        expect(screen.getAllByTestId('wall-post-meta-line')).toHaveLength(5);
+        expect(screen.getAllByTestId('wall-post-body')).toHaveLength(5);
+        expect(screen.getAllByTestId('wall-post-media-section')).toHaveLength(5);
+        expect(screen.getAllByTestId('wall-post-action-row')).toHaveLength(5);
+        expect(screen.getAllByTestId('wall-post-reaction-line')).toHaveLength(5);
     });
 
     it('keeps post card sections in legacy-like top-to-bottom order', async () => {

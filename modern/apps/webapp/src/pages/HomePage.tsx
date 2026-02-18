@@ -25,9 +25,10 @@ function sortWidgetCards<T extends { id: string; title: string }>(cards: T[]): T
 function formatReactionSummary(post: FeedPost, isLiked: boolean): string {
     const baseLikes = post.likeCount - (post.likedByCurrentUser ? 1 : 0);
     const likeCount = baseLikes + (isLiked ? 1 : 0);
-    const replyLabel = post.replies.length === 1 ? 'reply' : 'replies';
+    const likeLabel = likeCount === 1 ? 'person likes this' : 'people like this';
+    const commentLabel = post.replies.length === 1 ? 'comment' : 'comments';
 
-    return `${likeCount} likes · ${post.replies.length} ${replyLabel}`;
+    return `${likeCount} ${likeLabel} · ${post.replies.length} ${commentLabel}`;
 }
 
 function formatRepliesToggleLabel(replyCount: number, repliesVisible: boolean): string {
@@ -125,7 +126,7 @@ export function HomePage() {
                                             {post.wallLabel}
                                         </p>
                                     </div>
-                                    <header className="wall-post-meta-line" data-section="meta">
+                                    <header className="wall-post-meta-line" data-section="meta" data-testid="wall-post-meta-line">
                                         <span aria-hidden="true" className="wall-avatar">
                                             {post.author
                                                 .split(' ')
@@ -137,10 +138,18 @@ export function HomePage() {
                                             <p className="wall-post-timestamp wall-meta-muted">{post.timestamp}</p>
                                         </div>
                                     </header>
-                                    <p className="wall-post-body" data-section="body">
+                                    <p className="wall-post-body" data-section="body" data-testid="wall-post-body">
                                         {post.text}
                                     </p>
-                                    <div aria-label={post.mediaLabel} className="wall-post-media" data-section="media" />
+                                    <div className="wall-post-media-section" data-section="media" data-testid="wall-post-media-section">
+                                        {post.mediaLabel ? (
+                                            <div aria-label={post.mediaLabel} className="wall-post-media" data-testid="wall-post-media" />
+                                        ) : (
+                                            <p className="wall-post-media wall-post-media--none wall-meta-muted" data-testid="wall-post-media-none">
+                                                No media attached
+                                            </p>
+                                        )}
+                                    </div>
                                     <p
                                         aria-label="Post reactions"
                                         className="wall-post-reaction-line wall-post-separator-row wall-meta-muted"
@@ -212,7 +221,12 @@ export function HomePage() {
                                             data-testid="wall-post-thread"
                                         >
                                             {post.replies.map((reply) => (
-                                                <article className="wall-post-reply" key={reply.id}>
+                                                <article
+                                                    className={`wall-post-reply${reply.depth === 1 ? ' wall-post-reply--nested' : ''}`}
+                                                    data-depth={reply.depth}
+                                                    data-testid="wall-post-reply"
+                                                    key={reply.id}
+                                                >
                                                     <span aria-hidden="true" className="wall-avatar wall-avatar--reply">
                                                         {reply.author
                                                             .split(' ')
