@@ -110,13 +110,16 @@ describe('UserInfoPage', () => {
         expect(await screen.findByText('User information was not found.')).toBeInTheDocument();
     });
 
-    it('renders generic error state for server errors', async () => {
+    it('renders api-unavailable fallback state for server errors', async () => {
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(emptyResponse(500));
 
         render(<UserInfoPage />);
 
         expect(
-            await screen.findByText('Something went wrong while loading user information.'),
+            await screen.findByText('User information is temporarily unavailable because the API is not reachable.'),
+        ).toBeInTheDocument();
+        expect(
+            screen.getByText('For demos, run pnpm demo:start and verify VITE_API_BASE_URL points to the local modern API.'),
         ).toBeInTheDocument();
     });
 

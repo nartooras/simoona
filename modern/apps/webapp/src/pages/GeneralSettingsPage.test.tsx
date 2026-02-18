@@ -88,13 +88,16 @@ describe('GeneralSettingsPage', () => {
         ).toBeInTheDocument();
     });
 
-    it('renders generic error state for server errors', async () => {
+    it('renders api-unavailable fallback state for server errors', async () => {
         vi.spyOn(globalThis, 'fetch').mockResolvedValue(emptyResponse(500));
 
         render(<GeneralSettingsPage />);
 
         expect(
-            await screen.findByText('Something went wrong while loading general settings.'),
+            await screen.findByText('General settings are temporarily unavailable because the API is not reachable.'),
+        ).toBeInTheDocument();
+        expect(
+            screen.getByText('For demos, run pnpm demo:start and verify VITE_API_BASE_URL points to the local modern API.'),
         ).toBeInTheDocument();
     });
 

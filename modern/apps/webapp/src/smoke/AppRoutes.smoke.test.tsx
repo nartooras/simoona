@@ -15,6 +15,7 @@ function renderRoute(path: string) {
 
 describe('Modern webapp smoke routes', () => {
     beforeEach(() => {
+        vi.stubEnv('VITE_DEMO_MODE', 'true');
         vi.stubEnv('VITE_API_ORGANIZATION_ID', '7');
         vi.spyOn(globalThis, 'fetch').mockImplementation(
             () => new Promise(() => {}) as ReturnType<typeof fetch>,
@@ -30,7 +31,11 @@ describe('Modern webapp smoke routes', () => {
         renderRoute('/');
 
         expect(await screen.findByRole('heading', { name: i18next.t('home.title') })).toBeInTheDocument();
+        expect(screen.getByText('Prototype availability: Real.')).toBeInTheDocument();
         expect(screen.getByText('Simoona')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-data-source-summary')).toHaveTextContent(
+            'Feed source: mock fixtures · Widgets source: mock fixtures',
+        );
         expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
         expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Kudos Feed' })).toBeInTheDocument();
@@ -65,6 +70,28 @@ describe('Modern webapp smoke routes', () => {
             '/organization/structure',
         );
         expect(screen.getByRole('link', { name: 'Committees' })).toHaveAttribute('href', '/committees');
+    });
+
+    it('keeps home route sections visible in demo mode without fatal render errors', async () => {
+        renderRoute('/');
+
+        expect(await screen.findByRole('heading', { name: i18next.t('home.title') })).toBeInTheDocument();
+        expect(screen.getByTestId('wall-content-grid')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-feed-column')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-widgets-column')).toBeInTheDocument();
+    });
+
+    it('renders fallback state when api-backed real route cannot reach api', async () => {
+        vi.restoreAllMocks();
+        vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('connect ECONNREFUSED 127.0.0.1:5187'));
+
+        renderRoute('/user-info');
+
+        expect(await screen.findByRole('heading', { name: i18next.t('userInfo.title') })).toBeInTheDocument();
+        expect(
+            screen.getByText('User information is temporarily unavailable because the API is not reachable.'),
+        ).toBeInTheDocument();
+        expect(screen.getByText('Simoona')).toBeInTheDocument();
     });
 
     it('reaches user-info route', async () => {

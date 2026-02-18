@@ -9,6 +9,9 @@ describe('HomePage', () => {
         render(<HomePage />);
 
         expect(await screen.findByRole('heading', { name: 'Home' })).toBeInTheDocument();
+        expect(screen.getByTestId('wall-data-source-summary')).toHaveTextContent(
+            'Feed source: real API · Widgets source: real API',
+        );
         expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
         expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
         expect(screen.getAllByText('Company Wall').length).toBeGreaterThanOrEqual(1);

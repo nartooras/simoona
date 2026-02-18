@@ -126,14 +126,20 @@ export function MyProfilePage() {
         );
     }
 
+    const message =
+        result.kind === 'serverError' || result.kind === 'unknownError'
+            ? t('myProfile.states.apiUnavailable')
+            : t('myProfile.states.error');
+
     return (
         <section aria-labelledby="my-profile-title" className="page-section">
             <h1 className="page-title" id="my-profile-title">
                 {t('myProfile.title')}
             </h1>
             <p className="status-message status-message--error" role="alert">
-                {t('myProfile.states.error')}
+                {message}
             </p>
+            <p className="helper-note">{t('myProfile.meta.fallbackHint')}</p>
         </section>
     );
 }

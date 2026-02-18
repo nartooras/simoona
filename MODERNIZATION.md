@@ -241,6 +241,7 @@ Environment:
 Deterministic demo orchestration runbook:
 
 - `modern/docs/demo-runbook.md`
+- includes exact startup steps, click-path outcomes, and known gap narration for local stakeholder demos
 
 ### Wave 1A Shell Geometry + Header/Nav Parity
 

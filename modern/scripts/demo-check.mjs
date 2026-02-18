@@ -4,6 +4,7 @@ import {
   assertDemoEnvironmentConsistency,
   assertDemoRouteDefinitions,
   ensurePortAvailable,
+  formatDemoFailure,
   mintDevToken,
   readDemoConfig,
   readProcessOutput,
@@ -65,11 +66,7 @@ try {
   console.log(`[demo:check] API health/auth baseline verified at ${config.apiOrigin}`);
 } catch (error) {
   console.error("[demo:check] FAIL");
-  if (error instanceof Error) {
-    console.error(`[demo:check] ${error.message}`);
-  } else {
-    console.error(`[demo:check] ${String(error)}`);
-  }
+  console.error(formatDemoFailure(error, "demo:check"));
 
   process.exitCode = 1;
 } finally {

@@ -279,3 +279,27 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 | Company group | ready | Core migrated read routes are real-backed; remaining company routes are coherent mock previews. |
 | Externals group | constrained | Integrations remains visible for IA parity and explicitly disabled. |
 | System group | ready | Health route remains real-backed and stable for demo checks. |
+
+## Demo-ready baseline definition
+
+The prototype is considered **demo-ready** only when all of the following are true:
+
+- shell parity is visually coherent across header, left rail, home feed, and right rail (single token system, no major spacing/border/typography outliers)
+- route availability signaling is explicit (`real` / `mock` / `disabled`) and consistent on each route via `PrototypeNotice`
+- home route and shell boot without fatal runtime errors in demo mode
+- real-backed routes show graceful fallback messaging when API/read data path is unavailable (no hard crash, no blank screen)
+- demo command flow is deterministic on macOS local setup (`pnpm demo:check`, `pnpm demo:start`, `pnpm demo:stop`)
+
+## Remaining gaps by severity
+
+### Must-fix before demo
+
+- none currently open in this thread baseline
+
+### Acceptable for demo (must be narrated)
+
+- all real-backed routes are read-only; write workflows are intentionally out of scope
+- mock routes remain fixture-backed and non-production by design
+- disabled routes remain IA-only placeholders (`/service-requests`, `/externals/integrations`)
+- home feed media/reaction/comment interactions are local simulation only (non-persistent)
+- advanced legacy interaction details (menus, deep write workflows, per-user reaction detail) are not yet implemented
