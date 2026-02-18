@@ -17,7 +17,7 @@ describe('AppLayout', () => {
         expect(screen.getByText('Simoona')).toBeInTheDocument();
         expect(screen.getByRole('searchbox', { name: 'Global search' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Quick Links' })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Notifications' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Alerts' })).toBeInTheDocument();
         expect(screen.getByText('Demo User')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Walls' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Activities' })).toBeInTheDocument();
@@ -60,6 +60,32 @@ describe('AppLayout', () => {
             '/externals/integrations',
         );
         expect(screen.getByRole('link', { name: 'Health' })).toHaveAttribute('href', '/health');
+    });
+
+    it('keeps deterministic shell regions and grouped navigation density', () => {
+        const { container } = render(
+            <MemoryRouter>
+                <AppLayout>
+                    <div>Layout content</div>
+                </AppLayout>
+            </MemoryRouter>,
+        );
+
+        expect(container.querySelector('[data-shell-geometry="wave1a"]')).not.toBeNull();
+        expect(screen.getByTestId('app-header')).toBeInTheDocument();
+        expect(screen.getByTestId('app-layout')).toBeInTheDocument();
+        expect(screen.getByTestId('app-sidebar')).toBeInTheDocument();
+        expect(screen.getByTestId('app-content')).toBeInTheDocument();
+
+        const nav = screen.getByRole('navigation', { name: 'Primary navigation' });
+        const navSections = nav.querySelectorAll('.app-nav-group');
+        expect(navSections).toHaveLength(5);
+
+        const navRows = nav.querySelectorAll('li');
+        expect(navRows).toHaveLength(19);
+
+        const availabilityBadges = nav.querySelectorAll('.nav-availability');
+        expect(availabilityBadges).toHaveLength(19);
     });
 
     it('toggles mobile navigation state', async () => {

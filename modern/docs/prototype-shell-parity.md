@@ -87,6 +87,18 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 - right rail includes compact cards for kudos feed, upcoming events, rankings, and birthdays with subtle row separators
 - top blue header keeps global chrome and now includes search + quick user actions for legacy-like scanning behavior
 
+### Wave 1A geometry baseline (desktop parity target)
+
+| Geometry target | Value | Notes |
+|---|---|---|
+| Header height | `44px` | Sticky top chrome baseline. |
+| Header content max width | `1360px` | Aligns with shell frame. |
+| Sidebar width | `236px` | Fixed desktop nav rail width. |
+| Content max width (center wall stream) | `748px` | Main wall feed parity target. |
+| Right rail width | `272px` | Widget column parity target. |
+| Core spacing (main grid gap + content gutter) | `18px` | Shared shell rhythm token. |
+| Sidebar nav row height | `31px` | Legacy-like nav density baseline. |
+
 ### Wall Layout Parity: Matches
 
 - compact spacing, thin borders/dividers, and light-gray canvas with white/near-white cards
@@ -97,8 +109,14 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 ### Wall Layout Parity: Remaining differences
 
 - legacy-specific icon set and sprite assets are approximated with text/shape placeholders
-- some exact pixel values (line heights, card paddings, and vertical offsets) remain slightly modernized
 - advanced legacy controls (inline dropdown workflows, context menus, and live counters) are still static demo representations
+
+### Wave 1B deferred deltas
+
+- screenshot pixel-diff automation is not enabled yet; Wave 1B should wire screenshot assertions using `src/smoke/ShellVisualBaseline.scaffold.ts`
+- fine-grain typography parity remains (line-height and glyph metrics still approximate legacy rendering)
+- card-level micro-geometry remains for feed/widgets (nested paddings, separators, and avatar offsets)
+- legacy icon sprite parity remains deferred; current shell uses safe placeholders
 
 ### Still pending
 

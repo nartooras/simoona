@@ -38,7 +38,7 @@ export function HomePage() {
                 <p className="wall-page-subtitle">Legacy-like wall shell parity with compact feed and widgets.</p>
             </header>
             <div className="wall-content-grid" data-testid="wall-content-grid">
-                <section aria-label="Feed stream" className="wall-feed-column">
+                <section aria-label="Feed stream" className="wall-feed-column" data-testid="wall-feed-column">
                     {samplePosts.map((post) => (
                         <article className="wall-post-card" key={post.id}>
                             <div className="wall-post-source">{post.source}</div>
@@ -67,7 +67,7 @@ export function HomePage() {
                         </article>
                     ))}
                 </section>
-                <aside aria-label="Wall widgets" className="wall-widgets-column">
+                <aside aria-label="Wall widgets" className="wall-widgets-column" data-testid="wall-widgets-column">
                     <section className="wall-widget-card">
                         <h2>Kudos Feed</h2>
                         <ul>
