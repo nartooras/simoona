@@ -18,9 +18,12 @@ describe('prototype placeholders', () => {
         expect(activitiesFeed.title).toBe('Activity Feed');
         expect(activitiesFeed.cards).toHaveLength(3);
         expect(activitiesFeed.cards[0]?.title).toBe('Today posts');
+        expect(activitiesFeed.availableNow[0]).toContain('Route and navigation parity');
+        expect(activitiesFeed.actions[0]?.label).toBe('Create Post');
 
         expect(recognition.dataSource).toBe('mock');
         expect(recognition.cards[2]?.title).toBe('Nomination flow');
+        expect(recognition.unavailableInPrototype[0]).toContain('Nomination submit');
     });
 
     it('keeps prototype routes mock-backed even when demo mode is disabled', async () => {
@@ -29,6 +32,7 @@ describe('prototype placeholders', () => {
         const { getPrototypePlaceholder } = await import('./prototypePlaceholders');
 
         expect(getPrototypePlaceholder('/teams').dataSource).toBe('mock');
-        expect(getPrototypePlaceholder('/externals/integrations').dataSource).toBe('mock');
+        expect(getPrototypePlaceholder('/service-requests').dataSource).toBe('disabled');
+        expect(getPrototypePlaceholder('/externals/integrations').dataSource).toBe('disabled');
     });
 });

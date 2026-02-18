@@ -18,8 +18,17 @@ describe('data source selection', () => {
         expect(dataSource.resolveDataSource('myProfile')).toBe('real');
         expect(dataSource.resolveDataSource('activitiesFeed')).toBe('mock');
         expect(dataSource.resolveDataSource('recognition')).toBe('mock');
+        expect(dataSource.resolveDataSource('events')).toBe('mock');
+        expect(dataSource.resolveDataSource('vacations')).toBe('mock');
+        expect(dataSource.resolveDataSource('kudos')).toBe('mock');
+        expect(dataSource.resolveDataSource('books')).toBe('mock');
         expect(dataSource.resolveDataSource('teams')).toBe('mock');
-        expect(dataSource.resolveDataSource('integrations')).toBe('mock');
+        expect(dataSource.resolveDataSource('projects')).toBe('mock');
+        expect(dataSource.resolveDataSource('officeMap')).toBe('mock');
+        expect(dataSource.resolveDataSource('organizationalStructure')).toBe('mock');
+        expect(dataSource.resolveDataSource('committees')).toBe('mock');
+        expect(dataSource.resolveDataSource('serviceRequests')).toBe('disabled');
+        expect(dataSource.resolveDataSource('integrations')).toBe('disabled');
     });
 
     it('defaults to real adapters outside demo mode', async () => {

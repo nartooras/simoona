@@ -294,18 +294,103 @@ body {
     margin: var(--space-1) 0 0;
 }
 
+.placeholder-state-grid {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.placeholder-state-block {
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+    box-shadow: var(--color-shadow-soft);
+    background: var(--color-bg-panel);
+    padding: var(--space-3) var(--space-4);
+}
+
+.placeholder-state-block h2 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.placeholder-state-block ul {
+    margin: 0;
+    padding-left: var(--space-4);
+}
+
+.placeholder-state-block li + li {
+    margin-top: var(--space-2);
+}
+
+.placeholder-action-panel {
+    margin-top: var(--space-4);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+    box-shadow: var(--color-shadow-soft);
+    background: var(--color-bg-panel);
+    padding: var(--space-3) var(--space-4);
+}
+
+.placeholder-action-panel h2 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.placeholder-action-panel ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: var(--space-2);
+}
+
+.placeholder-action-panel li {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+}
+
+.placeholder-action-panel button {
+    min-width: 170px;
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--radius-sm);
+    padding: 6px var(--space-2);
+    font-size: var(--font-size-sm);
+    background: var(--color-bg-panel-muted);
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+}
+
+.placeholder-action-panel span {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
 .data-table-shell {
     border: 1px solid var(--color-border-soft);
     border-radius: var(--radius-sm);
     box-shadow: var(--color-shadow-soft);
     background: var(--color-bg-panel);
     overflow: auto;
+    margin-top: var(--space-4);
 }
 
 .data-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
+}
+
+.data-table caption {
+    text-align: left;
+    padding: var(--space-3) var(--space-3) 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
 }
 
 .data-table th,
