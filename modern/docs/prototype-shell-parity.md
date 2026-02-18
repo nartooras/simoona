@@ -7,7 +7,16 @@ References:
 - `modern/docs/architecture.md`
 - `modern/docs/frontend-visual-parity.md`
 - `modern/docs/demo-runbook.md`
+- `modern/docs/demo-acceptance-checklist.md`
+- `modern/docs/demo-known-gaps-matrix.md`
 - `modern/docs/release-readiness-checklist.md`
+
+## Demo Readiness
+
+- Operator walkthrough: `modern/docs/demo-runbook.md`
+- Stakeholder acceptance criteria (`met` / `partial` / `deferred`): `modern/docs/demo-acceptance-checklist.md`
+- Prioritized known gaps vs legacy: `modern/docs/demo-known-gaps-matrix.md`
+- Deterministic command baseline: `pnpm demo:check`, `pnpm demo:start`, `pnpm demo:stop`
 
 ## Navigation IA alignment
 
@@ -272,15 +281,7 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 
 ## Demo-ready quality checklist
 
-| Focus area | Status | Detail |
-|---|---|---|
-| Visual consistency | ready | Shared spacing, typography hierarchy, notice styling, and card/table rhythm are aligned across migrated and placeholder routes. |
-| Route coverage | ready | All nav entries are wired to concrete routes; route definitions and navigation links are test-validated for parity. |
-| Known limitations | constrained | `mock` routes are fixture-backed; `disabled` routes are intentionally unavailable for write-heavy workflows. |
-| Activities group | ready with constraints | Activity placeholders are demo-stable; Service Requests remains intentionally disabled and clearly labeled. |
-| Company group | ready | Core migrated read routes are real-backed; remaining company routes are coherent mock previews. |
-| Externals group | constrained | Integrations remains visible for IA parity and explicitly disabled. |
-| System group | ready | Health route remains real-backed and stable for demo checks. |
+Current decision statuses are tracked in `modern/docs/demo-acceptance-checklist.md`.
 
 ## Demo-ready baseline definition
 
@@ -293,6 +294,8 @@ The prototype is considered **demo-ready** only when all of the following are tr
 - demo command flow is deterministic on macOS local setup (`pnpm demo:check`, `pnpm demo:start`, `pnpm demo:stop`)
 
 ## Remaining gaps by severity
+
+Prioritized stakeholder-facing gap framing is tracked in `modern/docs/demo-known-gaps-matrix.md`.
 
 ### Must-fix before demo
 

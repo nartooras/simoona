@@ -38,6 +38,30 @@ pnpm install
 - `pnpm modern:api:build`: run `dotnet build` for modern API solution only.
 - `pnpm modern:api:test`: run `dotnet test` for modern API tests only.
 
+## Demo Readiness
+
+Stakeholder demo pack and operational baseline:
+
+- `modern/docs/demo-runbook.md` (10-15 minute operator walkthrough + expected outcomes)
+- `modern/docs/demo-acceptance-checklist.md` (`met` / `partial` / `deferred` decision checklist)
+- `modern/docs/demo-known-gaps-matrix.md` (prioritized known gaps vs legacy)
+- `modern/docs/prototype-shell-parity.md` (route availability/source-of-truth parity framing)
+- `modern/docs/release-readiness-checklist.md` (release/smoke gating baseline)
+
+Canonical command flow for local demos:
+
+```bash
+pnpm demo:check
+pnpm demo:start
+pnpm demo:stop
+```
+
+CI-safe readiness gate:
+
+```bash
+pnpm demo:check -- --ci
+```
+
 ## Modern API Commands
 
 Use these from repository root to work with the modern API only:
@@ -238,10 +262,11 @@ Environment:
   - example: `VITE_API_ORGANIZATION_ID=7`
 - `VITE_API_BEARER_TOKEN` (optional): token sent as `Authorization: Bearer <token>` for user-info calls.
 
-Deterministic demo orchestration runbook:
+Deterministic demo orchestration artifacts:
 
 - `modern/docs/demo-runbook.md`
-- includes exact startup steps, click-path outcomes, and known gap narration for local stakeholder demos
+- `modern/docs/demo-acceptance-checklist.md`
+- `modern/docs/demo-known-gaps-matrix.md`
 
 ### Wave 1A Shell Geometry + Header/Nav Parity
 
