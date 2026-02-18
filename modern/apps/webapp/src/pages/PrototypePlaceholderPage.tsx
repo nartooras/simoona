@@ -56,70 +56,74 @@ export function PrototypePlaceholderPage({
 
     return (
         <section aria-labelledby={sectionTitleId} className="page-section">
-            <h1 className="page-title" id={sectionTitleId}>
-                {title}
-            </h1>
-            <p className="status-message">
-                {summary} <strong>Data source: {dataSourceLabels[dataSource]}.</strong>
-            </p>
-            <p className="helper-note">Actions shown below are intentionally read-only in prototype mode.</p>
-            <dl className="info-grid">
-                {cards.map((card) => (
-                    <div className="info-card" key={card.title}>
-                        <dt>{card.title}</dt>
-                        <dd>{card.value}</dd>
-                    </div>
-                ))}
-            </dl>
-            <div className="placeholder-state-grid">
-                {renderChecklist('Available now', availableNow)}
-                {renderChecklist('Unavailable in prototype', unavailableInPrototype)}
-                {renderChecklist('Planned next wave', plannedNextWave)}
-            </div>
-            {actions.length > 0 ? (
-                <section className="placeholder-action-panel" aria-label="Prototype actions">
-                    <h2>Simulated controls</h2>
-                    <ul>
-                        {actions.map((action, index) => {
-                            const explanationId = `prototype-action-${index}`;
+            <header className="page-header-block">
+                <h1 className="page-title" id={sectionTitleId}>
+                    {title}
+                </h1>
+                <p className="status-message">
+                    {summary} <strong>Data source: {dataSourceLabels[dataSource]}.</strong>
+                </p>
+                <p className="helper-note">Actions shown below are intentionally read-only in prototype mode.</p>
+            </header>
+            <div aria-label={`${title} primary content`} className="page-primary-content">
+                <dl className="info-grid">
+                    {cards.map((card) => (
+                        <div className="info-card" key={card.title}>
+                            <dt>{card.title}</dt>
+                            <dd>{card.value}</dd>
+                        </div>
+                    ))}
+                </dl>
+                <div className="placeholder-state-grid">
+                    {renderChecklist('Available now', availableNow)}
+                    {renderChecklist('Unavailable in prototype', unavailableInPrototype)}
+                    {renderChecklist('Planned next wave', plannedNextWave)}
+                </div>
+                {actions.length > 0 ? (
+                    <section className="placeholder-action-panel" aria-label="Prototype actions">
+                        <h2>Simulated controls</h2>
+                        <ul>
+                            {actions.map((action, index) => {
+                                const explanationId = `prototype-action-${index}`;
 
-                            return (
-                                <li key={action.label}>
-                                    <button aria-describedby={explanationId} disabled type="button">
-                                        {action.label}
-                                    </button>
-                                    <span id={explanationId}>{action.explanation}</span>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </section>
-            ) : null}
-            {table ? (
-                <section className="data-table-shell" aria-label={table.title}>
-                    <table className="data-table">
-                        <caption>{table.title}</caption>
-                        <thead>
-                            <tr>
-                                {table.columns.map((column) => (
-                                    <th key={column} scope="col">
-                                        {column}
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {table.rows.map((row) => (
-                                <tr key={row.join('|')}>
-                                    {row.map((value) => (
-                                        <td key={value}>{value}</td>
+                                return (
+                                    <li key={action.label}>
+                                        <button aria-describedby={explanationId} disabled type="button">
+                                            {action.label}
+                                        </button>
+                                        <span id={explanationId}>{action.explanation}</span>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </section>
+                ) : null}
+                {table ? (
+                    <section className="data-table-shell" aria-label={table.title}>
+                        <table className="data-table">
+                            <caption>{table.title}</caption>
+                            <thead>
+                                <tr>
+                                    {table.columns.map((column) => (
+                                        <th key={column} scope="col">
+                                            {column}
+                                        </th>
                                     ))}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </section>
-            ) : null}
+                            </thead>
+                            <tbody>
+                                {table.rows.map((row) => (
+                                    <tr key={row.join('|')}>
+                                        {row.map((value) => (
+                                            <td key={value}>{value}</td>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </section>
+                ) : null}
+            </div>
         </section>
     );
 }

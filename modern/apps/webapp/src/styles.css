@@ -643,6 +643,10 @@ body {
     max-width: 100%;
 }
 
+.page-content-region {
+    margin: 0;
+}
+
 .wall-page {
     margin: 0;
 }
@@ -1135,6 +1139,21 @@ body {
     font-size: 24px;
     line-height: 1.2;
     font-weight: 600;
+}
+
+.page-header-block {
+    margin: 0 0 var(--space-4);
+}
+
+.page-header-block .page-title,
+.page-header-block .status-message,
+.page-header-block .helper-note {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.page-primary-content {
+    margin: 0;
 }
 
 .status-message {

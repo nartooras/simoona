@@ -78,6 +78,30 @@ Open `http://127.0.0.1:5173` and walk in this order.
 - `mock`: deterministic fixture content for stable walkthroughs.
 - `disabled`: route present for IA parity; workflow intentionally unavailable.
 
+Route status matrix (`route -> real/mock/disabled + demo note`):
+
+| Route | Mode | Demo note |
+|---|---|---|
+| `/` | `real` | Home wall shell parity route with deterministic read-first state behavior. |
+| `/activities/feed` | `mock` | Fixture-backed activity stream for deterministic walkthroughs. |
+| `/recognition` | `mock` | Deterministic recognition summary/cards preserving legacy IA destination. |
+| `/events` | `mock` | Static event schedule + highlights for demo-safe navigation parity. |
+| `/kudos` | `mock` | Mock leaderboard and category distribution cards. |
+| `/service-requests` | `disabled` | Intentionally unavailable workflow route; explicit deferred-scope notice. |
+| `/books` | `mock` | Read-only catalog snapshot for IA parity. |
+| `/vacations` | `mock` | Read-only balances/history blocks close to legacy expectations. |
+| `/office-map` | `mock` | Static occupancy and office coverage metrics; no desk writes. |
+| `/organization/structure` | `mock` | Deterministic hierarchy summaries; non-editable by design. |
+| `/employees` | `real` | API-backed employee directory with resilient fallback states. |
+| `/projects` | `mock` | Deterministic project milestone/risk summary table. |
+| `/committees` | `mock` | Fixture-backed committee membership/open-seat summaries. |
+| `/teams` | `mock` | Read-only team structure/capacity cards for route parity. |
+| `/user-info` | `real` | API-backed user information contract. |
+| `/settings/general` | `real` | API-backed general settings contract. |
+| `/profiles/me` | `real` | API-backed profile contract. |
+| `/externals/integrations` | `disabled` | Visible only for IA parity; connector flows intentionally deferred. |
+| `/health` | `real` | API readiness baseline route used by demo gate checks. |
+
 ## 5) Known gaps to narrate during demo
 
 - Real routes are read-only (no persistent write flows).

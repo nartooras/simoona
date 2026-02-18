@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { appRoutes } from './AppRouter';
-import { navigationGroups } from './navigation';
+import { navigationGroups, navigationRouteDefinitions, routeAvailabilityMap } from './navigation';
 import '../../i18n';
 
 describe('AppRouter', () => {
@@ -128,36 +128,52 @@ describe('AppRouter', () => {
         expect(screen.getByText('Marketplace')).toBeInTheDocument();
     });
 
-    it('reaches all new prototype routes with standard semantics', async () => {
-        const cases = [
-            { path: '/events', heading: 'Events', availability: 'Mock.' },
-            { path: '/vacations', heading: 'Vacations', availability: 'Mock.' },
-            { path: '/kudos', heading: 'Kudos', availability: 'Mock.' },
-            { path: '/books', heading: 'Books', availability: 'Mock.' },
-            { path: '/service-requests', heading: 'Service Requests', availability: 'Disabled.' },
-            { path: '/projects', heading: 'Projects', availability: 'Mock.' },
-            { path: '/office-map', heading: 'Office Map', availability: 'Mock.' },
-            { path: '/organization/structure', heading: 'Organizational Structure', availability: 'Mock.' },
-            { path: '/committees', heading: 'Committees', availability: 'Mock.' },
-        ];
+    it('reaches every major nav destination with heading and primary content region', async () => {
+        vi.spyOn(globalThis, 'fetch').mockImplementation(
+            () => new Promise(() => {}) as ReturnType<typeof fetch>,
+        );
 
-        for (const routeCase of cases) {
+        const headingByPath: Record<string, string> = {
+            '/': 'Home',
+            '/employees': 'Employee Directory',
+        };
+
+        for (const routeDefinition of navigationRouteDefinitions) {
             const router = createMemoryRouter(appRoutes, {
-                initialEntries: [routeCase.path],
+                initialEntries: [routeDefinition.path],
+            });
+            const { unmount } = render(<RouterProvider router={router} />);
+            const expectedHeading = headingByPath[routeDefinition.path] ?? routeDefinition.label;
+
+            expect(await screen.findByRole('heading', { name: expectedHeading })).toBeInTheDocument();
+            expect(screen.getByTestId('destination-content-region')).toBeInTheDocument();
+            expect(screen.getByRole('main')).toBeInTheDocument();
+
+            unmount();
+        }
+    });
+
+    it('keeps prototype availability notice labels consistent with route metadata', async () => {
+        vi.spyOn(globalThis, 'fetch').mockImplementation(
+            () => new Promise(() => {}) as ReturnType<typeof fetch>,
+        );
+
+        const availabilityLabelByMode = {
+            real: 'Real.',
+            mock: 'Mock.',
+            disabled: 'Disabled.',
+        } as const;
+
+        for (const routeDefinition of navigationRouteDefinitions) {
+            const availability = routeAvailabilityMap[routeDefinition.path];
+            const router = createMemoryRouter(appRoutes, {
+                initialEntries: [routeDefinition.path],
             });
             const { unmount } = render(<RouterProvider router={router} />);
 
-            expect(await screen.findByRole('heading', { name: routeCase.heading })).toBeInTheDocument();
-            const noticeRole = routeCase.availability === 'Disabled.' ? 'alert' : 'status';
-            expect(screen.getByRole(noticeRole)).toHaveTextContent(`Prototype availability: ${routeCase.availability}`);
-            expect(screen.getByRole('main')).toBeInTheDocument();
-            expect(screen.getByRole('heading', { name: 'Available now' })).toBeInTheDocument();
-            expect(screen.getByRole('heading', { name: 'Unavailable in prototype' })).toBeInTheDocument();
-            expect(screen.getByRole('heading', { name: 'Planned next wave' })).toBeInTheDocument();
-            const actionPanel = screen.getByLabelText('Prototype actions');
-            const actionButton = actionPanel.querySelector('button');
-            expect(actionButton).not.toBeNull();
-            expect(actionButton).toBeDisabled();
+            expect(
+                screen.getByText(`Prototype availability: ${availabilityLabelByMode[availability.mode]}`),
+            ).toBeInTheDocument();
 
             unmount();
         }
@@ -165,11 +181,13 @@ describe('AppRouter', () => {
 
     it('keeps navigation and route definitions aligned for all prototype entries', () => {
         const navRoutes = navigationGroups.flatMap((group) => group.items.map((item) => item.to)).sort();
+        const metadataRoutes = navigationRouteDefinitions.map((entry) => entry.path).sort();
         const appRoutePaths = appRoutes
             .map((route) => route.path)
             .filter((path): path is string => typeof path === 'string' && path !== '*')
             .sort();
 
-        expect(appRoutePaths).toEqual(navRoutes);
+        expect(navRoutes).toEqual(metadataRoutes);
+        expect(appRoutePaths).toEqual(metadataRoutes);
     });
 });

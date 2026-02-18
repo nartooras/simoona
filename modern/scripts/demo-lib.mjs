@@ -132,13 +132,17 @@ export function assertDemoRouteDefinitions() {
   const routerSource = fs.readFileSync(path.join(repoRoot, appRouterPath), "utf8");
   const navigationSource = fs.readFileSync(path.join(repoRoot, navigationPath), "utf8");
 
+  if (!routerSource.includes("navigationRouteDefinitions.map")) {
+    throw new Error(`App routes must be generated from navigation metadata in ${appRouterPath}.`);
+  }
+
   for (const route of requiredDemoRouteDefinitions) {
-    if (!routerSource.includes(`path: '${route.path}'`)) {
-      throw new Error(`Missing '${route.path}' route definition in ${appRouterPath}.`);
+    if (!routerSource.includes(`'${route.path}':`)) {
+      throw new Error(`Missing '${route.path}' destination mapping in ${appRouterPath}.`);
     }
 
     const escapedPath = escapeRegExp(route.path);
-    const modePattern = new RegExp(`to:\\s*'${escapedPath}'[\\s\\S]{0,300}?availability:\\s*'${route.mode}'`);
+    const modePattern = new RegExp(`path:\\s*'${escapedPath}'[\\s\\S]{0,260}?availability:\\s*'${route.mode}'`);
     if (!modePattern.test(navigationSource)) {
       throw new Error(
         `Route '${route.path}' must be marked availability '${route.mode}' in ${navigationPath}.`,
