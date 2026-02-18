@@ -8,113 +8,52 @@ import { UserInfoPage } from '../../pages/UserInfoPage';
 import { EmployeeDirectoryPage } from '../../pages/EmployeeDirectoryPage';
 import { MyProfilePage } from '../../pages/MyProfilePage';
 import { PrototypeNotice } from '../prototype/PrototypeNotice';
-import { routeAvailabilityMap } from './navigation';
+import { navigationRouteDefinitions, type NavigationRoutePath, routeAvailabilityMap } from './navigation';
 import { PrototypePlaceholderPage } from '../../pages/PrototypePlaceholderPage';
 import { getPrototypePlaceholder } from '../../api/prototypePlaceholders';
 
-function getRouteAvailability(path: string) {
+function getRouteAvailability(path: NavigationRoutePath) {
     return routeAvailabilityMap[path] ?? { mode: 'real' as const };
 }
 
-function renderRoute(path: string, page: ReactNode) {
+const routePageByPath: Record<NavigationRoutePath, ReactNode> = {
+    '/': <HomePage />,
+    '/activities/feed': <PrototypePlaceholderPage {...getPrototypePlaceholder('/activities/feed')} />,
+    '/recognition': <PrototypePlaceholderPage {...getPrototypePlaceholder('/recognition')} />,
+    '/events': <PrototypePlaceholderPage {...getPrototypePlaceholder('/events')} />,
+    '/kudos': <PrototypePlaceholderPage {...getPrototypePlaceholder('/kudos')} />,
+    '/service-requests': <PrototypePlaceholderPage {...getPrototypePlaceholder('/service-requests')} />,
+    '/books': <PrototypePlaceholderPage {...getPrototypePlaceholder('/books')} />,
+    '/vacations': <PrototypePlaceholderPage {...getPrototypePlaceholder('/vacations')} />,
+    '/office-map': <PrototypePlaceholderPage {...getPrototypePlaceholder('/office-map')} />,
+    '/organization/structure': <PrototypePlaceholderPage {...getPrototypePlaceholder('/organization/structure')} />,
+    '/employees': <EmployeeDirectoryPage />,
+    '/projects': <PrototypePlaceholderPage {...getPrototypePlaceholder('/projects')} />,
+    '/committees': <PrototypePlaceholderPage {...getPrototypePlaceholder('/committees')} />,
+    '/teams': <PrototypePlaceholderPage {...getPrototypePlaceholder('/teams')} />,
+    '/user-info': <UserInfoPage />,
+    '/settings/general': <GeneralSettingsPage />,
+    '/profiles/me': <MyProfilePage />,
+    '/externals/integrations': <PrototypePlaceholderPage {...getPrototypePlaceholder('/externals/integrations')} />,
+    '/health': <HealthPage />,
+};
+
+function renderRoute(path: NavigationRoutePath, page: ReactNode, label: string) {
     const availability = getRouteAvailability(path);
 
     return (
         <AppLayout>
             <PrototypeNotice mode={availability.mode} reason={availability.reason} />
-            {page}
+            <section aria-label={`${label} content`} className="page-content-region" data-testid="destination-content-region">
+                {page}
+            </section>
         </AppLayout>
     );
 }
 
-export const appRoutes: RouteObject[] = [
-    {
-        path: '/',
-        element: renderRoute('/', <HomePage />),
-    },
-    {
-        path: '/health',
-        element: renderRoute('/health', <HealthPage />),
-    },
-    {
-        path: '/user-info',
-        element: renderRoute('/user-info', <UserInfoPage />),
-    },
-    {
-        path: '/settings/general',
-        element: renderRoute('/settings/general', <GeneralSettingsPage />),
-    },
-    {
-        path: '/employees',
-        element: renderRoute('/employees', <EmployeeDirectoryPage />),
-    },
-    {
-        path: '/profiles/me',
-        element: renderRoute('/profiles/me', <MyProfilePage />),
-    },
-    {
-        path: '/activities/feed',
-        element: renderRoute('/activities/feed', <PrototypePlaceholderPage {...getPrototypePlaceholder('/activities/feed')} />),
-    },
-    {
-        path: '/recognition',
-        element: renderRoute('/recognition', <PrototypePlaceholderPage {...getPrototypePlaceholder('/recognition')} />),
-    },
-    {
-        path: '/teams',
-        element: renderRoute('/teams', <PrototypePlaceholderPage {...getPrototypePlaceholder('/teams')} />),
-    },
-    {
-        path: '/events',
-        element: renderRoute('/events', <PrototypePlaceholderPage {...getPrototypePlaceholder('/events')} />),
-    },
-    {
-        path: '/vacations',
-        element: renderRoute('/vacations', <PrototypePlaceholderPage {...getPrototypePlaceholder('/vacations')} />),
-    },
-    {
-        path: '/kudos',
-        element: renderRoute('/kudos', <PrototypePlaceholderPage {...getPrototypePlaceholder('/kudos')} />),
-    },
-    {
-        path: '/books',
-        element: renderRoute('/books', <PrototypePlaceholderPage {...getPrototypePlaceholder('/books')} />),
-    },
-    {
-        path: '/service-requests',
-        element: renderRoute(
-            '/service-requests',
-            <PrototypePlaceholderPage {...getPrototypePlaceholder('/service-requests')} />,
-        ),
-    },
-    {
-        path: '/projects',
-        element: renderRoute('/projects', <PrototypePlaceholderPage {...getPrototypePlaceholder('/projects')} />),
-    },
-    {
-        path: '/office-map',
-        element: renderRoute('/office-map', <PrototypePlaceholderPage {...getPrototypePlaceholder('/office-map')} />),
-    },
-    {
-        path: '/organization/structure',
-        element: renderRoute(
-            '/organization/structure',
-            <PrototypePlaceholderPage {...getPrototypePlaceholder('/organization/structure')} />,
-        ),
-    },
-    {
-        path: '/committees',
-        element: renderRoute('/committees', <PrototypePlaceholderPage {...getPrototypePlaceholder('/committees')} />),
-    },
-    {
-        path: '/externals/integrations',
-        element: renderRoute(
-            '/externals/integrations',
-            <PrototypePlaceholderPage {...getPrototypePlaceholder('/externals/integrations')} />,
-        ),
-    },
-    {
-        path: '*',
-        element: <Navigate replace to="/" />,
-    },
-];
+const primaryRoutes: RouteObject[] = navigationRouteDefinitions.map((routeDefinition) => ({
+    path: routeDefinition.path,
+    element: renderRoute(routeDefinition.path, routePageByPath[routeDefinition.path], routeDefinition.label),
+}));
+
+export const appRoutes: RouteObject[] = [...primaryRoutes, { path: '*', element: <Navigate replace to="/" /> }];

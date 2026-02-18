@@ -22,27 +22,29 @@ The top header also includes explicit prototype affordances (`Prototype Shell`, 
 
 ## Route availability map
 
-| Route | Nav group | Availability mode | Data source | Demo status | Notes |
-|---|---|---|---|---|---|
-| `/` | Activities | `real` | `real` | ready | Home shell and parity summary route. |
-| `/activities/feed` | Activities | `mock` | `mock` | ready | Static feed preview; live ingestion remains legacy-owned. |
-| `/recognition` | Activities | `mock` | `mock` | ready | Recognition stream represented by deterministic mock cards. |
-| `/events` | Activities | `mock` | `mock` | ready | Event discovery and schedule preview are fixture-backed. |
-| `/vacations` | Activities | `mock` | `mock` | ready | Vacation overview is visible as read-only prototype scaffolding. |
-| `/kudos` | Activities | `mock` | `mock` | ready | Kudos metrics and leaderboard are static demo content. |
-| `/books` | Activities | `mock` | `mock` | ready | Book catalog entry point included for IA coverage. |
-| `/service-requests` | Activities | `disabled` | `disabled` | constrained | Write-heavy workflow remains intentionally disabled in prototype mode. |
-| `/employees` | Company | `real` | `real` | ready | Backed by modern API (`GET /api/v1/employees`). |
-| `/profiles/me` | Company | `real` | `real` | ready | Backed by modern API (`GET /api/v1/profiles/me`). |
-| `/user-info` | Company | `real` | `real` | ready | Backed by modern API (`GET /api/v1/account/user-info`). |
-| `/settings/general` | Company | `real` | `real` | ready | Backed by modern API read contract (`GET /api/v1/user/general-settings`). |
-| `/teams` | Company | `mock` | `mock` | ready | Team structure and capacity views are fixture-backed placeholders. |
-| `/projects` | Company | `mock` | `mock` | ready | Project board route exposed via static milestone summaries. |
-| `/office-map` | Company | `mock` | `mock` | ready | Office occupancy is demo-only and read-only. |
-| `/organization/structure` | Company | `mock` | `mock` | ready | Organization hierarchy route is static and non-editable. |
-| `/committees` | Company | `mock` | `mock` | ready | Committee overviews are represented with deterministic mock data. |
-| `/externals/integrations` | Externals | `disabled` | `disabled` | constrained | Visible for IA parity only; connector setup remains out of scope. |
-| `/health` | System | `real` | `real` | ready | Modern API readiness baseline route. |
+Route status matrix (source of truth: `modern/apps/webapp/src/app/routes/navigation.ts`).
+
+| Route | Nav group | Availability | Destination mode | Demo note |
+|---|---|---|---|---|
+| `/` | Walls | `real` | `real-backed` | Legacy-like home wall shell with deterministic read-first state handling. |
+| `/activities/feed` | Walls | `mock` | `mock-backed` | Fixture-backed activity stream preserves density and walkthrough flow without writes. |
+| `/recognition` | Walls | `mock` | `mock-backed` | Deterministic recognition totals and queue state mirror legacy IA placement. |
+| `/events` | Activities | `mock` | `mock-backed` | Deterministic schedule table supports legacy-like event discovery demo path. |
+| `/kudos` | Activities | `mock` | `mock-backed` | Stable leaderboard/distribution cards keep kudos route meaningful. |
+| `/service-requests` | Activities | `disabled` | `disabled` | Intentionally unavailable; page explains deferred write-heavy workflow scope. |
+| `/books` | Activities | `mock` | `mock-backed` | Catalog snapshot preserves legacy placement with read-only expectations. |
+| `/vacations` | Activities | `mock` | `mock-backed` | Read-only balances/history blocks reflect legacy vacation overview semantics. |
+| `/office-map` | Company | `mock` | `mock-backed` | Static occupancy metrics retain office visibility while assignment writes stay deferred. |
+| `/organization/structure` | Company | `mock` | `mock-backed` | Deterministic hierarchy summary keeps route non-empty and parity-safe. |
+| `/employees` | Company | `real` | `real-backed` | Modern API employee directory read contract with loading/error fallbacks. |
+| `/projects` | Company | `mock` | `mock-backed` | Milestone/risk snapshot table mirrors legacy project-at-a-glance scanning. |
+| `/committees` | Company | `mock` | `mock-backed` | Deterministic membership/open-seat summaries preserve committee destination parity. |
+| `/teams` | Company | `mock` | `mock-backed` | Read-only team directory/capacity blocks keep destination meaningful and non-empty. |
+| `/user-info` | Company | `real` | `real-backed` | Modern API-backed user info route with standard loading/error handling. |
+| `/settings/general` | Company | `real` | `real-backed` | Modern API general settings route with empty/unavailable state handling. |
+| `/profiles/me` | Company | `real` | `real-backed` | Modern API-backed profile route with non-empty fallback rendering. |
+| `/externals/integrations` | Externals | `disabled` | `disabled` | IA parity route only, with explicit disabled-state scope messaging. |
+| `/health` | System | `real` | `real-backed` | Baseline health destination for demo startup and readiness checks. |
 
 ## Prototype availability labeling
 

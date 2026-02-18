@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { appRoutes } from '../app/routes/AppRouter';
+import { navigationRouteDefinitions } from '../app/routes/navigation';
 import '../i18n';
 
 function renderRoute(path: string) {
@@ -134,6 +135,27 @@ describe('Modern webapp smoke routes', () => {
         for (const route of routes) {
             const view = renderRoute(route.path);
             expect(await screen.findByRole('heading', { name: route.heading })).toBeInTheDocument();
+            expect(screen.getByTestId('destination-content-region')).toBeInTheDocument();
+            view.unmount();
+        }
+    });
+
+    it('keeps every left-nav destination reachable and non-empty', async () => {
+        const headingByPath: Record<string, string> = {
+            '/': i18next.t('home.title'),
+            '/employees': i18next.t('employeeDirectory.title'),
+            '/settings/general': i18next.t('generalSettings.title'),
+            '/user-info': i18next.t('userInfo.title'),
+            '/profiles/me': i18next.t('myProfile.title'),
+        };
+
+        for (const route of navigationRouteDefinitions) {
+            const view = renderRoute(route.path);
+            const expectedHeading = headingByPath[route.path] ?? route.label;
+
+            expect(await screen.findByRole('heading', { name: expectedHeading })).toBeInTheDocument();
+            expect(screen.getByTestId('destination-content-region')).toBeInTheDocument();
+
             view.unmount();
         }
     });
