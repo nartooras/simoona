@@ -10,6 +10,18 @@ function formatReactionSummary(post: FeedPost, isLiked: boolean): string {
     return `${likeCount} likes · ${post.replies.length} ${replyLabel}`;
 }
 
+function formatRepliesToggleLabel(replyCount: number, repliesVisible: boolean): string {
+    if (repliesVisible) {
+        return 'Collapse replies';
+    }
+
+    if (replyCount <= 1) {
+        return 'Show reply';
+    }
+
+    return `Show all replies (${replyCount})`;
+}
+
 export function HomePage() {
     const { t } = useTranslation();
     const [result, setResult] = useState<Awaited<ReturnType<typeof fetchHomeExperience>> | null>(null);
@@ -79,6 +91,7 @@ export function HomePage() {
                             const isLiked = likedByPostId[post.id] ?? post.likedByCurrentUser;
                             const isReplyExpanded = replyExpandedByPostId[post.id] ?? false;
                             const repliesVisible = repliesVisibleByPostId[post.id] ?? false;
+                            const threadId = `wall-post-thread-${post.id}`;
 
                             return (
                                 <article
@@ -87,9 +100,11 @@ export function HomePage() {
                                     data-testid="wall-post-card"
                                     key={post.id}
                                 >
-                                    <p className="wall-post-label-line" data-section="wall-label">
-                                        {post.wallLabel}
-                                    </p>
+                                    <div className="wall-post-title-row" data-section="wall-title">
+                                        <p className="wall-post-label-line" data-section="wall-label">
+                                            {post.wallLabel}
+                                        </p>
+                                    </div>
                                     <header className="wall-post-meta-line" data-section="meta">
                                         <span aria-hidden="true" className="wall-avatar">
                                             {post.author
@@ -122,6 +137,7 @@ export function HomePage() {
                                     >
                                         <button
                                             className="wall-post-action-button"
+                                            aria-pressed={isLiked}
                                             onClick={() => {
                                                 setLikedByPostId((current) => ({
                                                     ...current,
@@ -134,6 +150,7 @@ export function HomePage() {
                                         </button>
                                         <button
                                             className="wall-post-action-button"
+                                            aria-pressed={isReplyExpanded}
                                             onClick={() => {
                                                 setReplyExpandedByPostId((current) => ({
                                                     ...current,
@@ -147,6 +164,8 @@ export function HomePage() {
                                         {post.replies.length > 0 && (
                                             <button
                                                 className="wall-post-action-button wall-post-action-button--link"
+                                                aria-controls={threadId}
+                                                aria-expanded={repliesVisible}
                                                 onClick={() => {
                                                     setRepliesVisibleByPostId((current) => ({
                                                         ...current,
@@ -155,12 +174,18 @@ export function HomePage() {
                                                 }}
                                                 type="button"
                                             >
-                                                {repliesVisible ? 'Hide replies' : `Show replies (${post.replies.length})`}
+                                                {formatRepliesToggleLabel(post.replies.length, repliesVisible)}
                                             </button>
                                         )}
                                     </div>
+                                    {post.replies.length === 0 && (
+                                        <p className="wall-post-thread-empty wall-post-separator-row" data-section="thread-empty">
+                                            No replies yet
+                                        </p>
+                                    )}
                                     {post.replies.length > 0 && repliesVisible && (
                                         <section
+                                            id={threadId}
                                             aria-label="Comment thread"
                                             className="wall-post-thread"
                                             data-section="thread"
@@ -168,11 +193,19 @@ export function HomePage() {
                                         >
                                             {post.replies.map((reply) => (
                                                 <article className="wall-post-reply" key={reply.id}>
-                                                    <div className="wall-post-reply-meta">
-                                                        <p className="wall-post-reply-author">{reply.author}</p>
-                                                        <p className="wall-post-reply-timestamp">{reply.timestamp}</p>
+                                                    <span aria-hidden="true" className="wall-avatar wall-avatar--reply">
+                                                        {reply.author
+                                                            .split(' ')
+                                                            .map((part) => part[0])
+                                                            .join('')}
+                                                    </span>
+                                                    <div className="wall-post-reply-body">
+                                                        <div className="wall-post-reply-meta">
+                                                            <p className="wall-post-reply-author">{reply.author}</p>
+                                                            <p className="wall-post-reply-timestamp">{reply.timestamp}</p>
+                                                        </div>
+                                                        <p className="wall-post-reply-text">{reply.text}</p>
                                                     </div>
-                                                    <p className="wall-post-reply-text">{reply.text}</p>
                                                 </article>
                                             ))}
                                         </section>
@@ -192,6 +225,9 @@ export function HomePage() {
                                                 placeholder="Commenting is disabled in prototype mode"
                                                 type="text"
                                             />
+                                            <button className="wall-post-comment-submit" disabled type="button">
+                                                Reply
+                                            </button>
                                         </div>
                                     )}
                                 </article>
