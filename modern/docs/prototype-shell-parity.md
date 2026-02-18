@@ -161,6 +161,23 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
   - long navigation labels now truncate with ellipsis instead of overflow wrapping
 - shell geometry regression guardrails now assert semantic hooks (topbar + left rail) rather than brittle pixel-only expectations.
 
+### Wave 2C alignment completed
+
+- wall post card fidelity moved closer to legacy card anatomy and hierarchy:
+  - explicit wall title row + author/avatar/timestamp row ordering semantics are now enforced in component tests
+  - card chrome was tuned for legacy-like border/shadow/background contrast and denser vertical rhythm
+  - body/media/reaction/action section spacing was compacted to better match legacy feed density
+- comment thread rows now mirror legacy-like compact structure:
+  - reply rows include avatar + author + timestamp + text hierarchy
+  - compact per-reply spacing and subtle separators were refined for stacked readability
+  - replies toggle behavior now uses legacy-like language and flow (`Show all replies (...)` / `Collapse replies`) where applicable
+- action row fidelity was tightened while staying prototype-safe:
+  - like/unlike and reply actions now expose clearer interactive states (`aria-pressed`) without persistence
+  - link styling and hover/active/focus treatments were aligned to legacy-like text-link actions with accessible focus
+- empty/loading/unavailable state treatment for wall sections remains standardized and legacy-consistent:
+  - loading, empty, and unavailable card treatment stays uniform between feed and right rail
+  - posts with no replies now render an explicit compact empty-thread line (`No replies yet`) to avoid blank comment areas
+
 ### Explicit gaps vs legacy after Wave 2B
 
 - legacy icon sprite assets are still represented by simple text/placeholders
@@ -170,6 +187,15 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 - screenshot pixel-diff automation is still not wired; baseline scaffold exists at `modern/apps/webapp/src/smoke/ShellVisualBaseline.scaffold.ts`
 - profile/settings account dropdown parity in topbar remains simplified in prototype shell (single non-interactive trigger only)
 - externals split (`Externals important` vs `Externals basic`) remains condensed into a single modern externals section
+
+### Explicit card/comment deltas still remaining after Wave 2C
+
+- legacy media/content blocks still use simplified placeholder visuals (no original asset rendering/cropping rules)
+- reaction detail depth remains simplified (aggregate text only; no per-user reaction popovers)
+- thread interactions are still prototype-only:
+  - reply composer submit is disabled
+  - no persistent comment/reply writes or live counter synchronization
+- advanced legacy comment affordances (inline edit/delete/history/context menus) are not yet represented
 
 ### Still pending
 
