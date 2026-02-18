@@ -99,24 +99,21 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 | Core spacing (main grid gap + content gutter) | `18px` | Shared shell rhythm token. |
 | Sidebar nav row height | `31px` | Legacy-like nav density baseline. |
 
-### Wall Layout Parity: Matches
+### Wave 1B alignment completed
 
-- compact spacing, thin borders/dividers, and light-gray canvas with white/near-white cards
-- blue accent hierarchy on links, section titles, and navigational emphasis
-- responsive behavior where side columns collapse/stack while preserving key feed and widget content
-- prototype safety maintained: interaction controls shown but non-destructive and no backend write behavior added
+- wall post card anatomy now follows legacy rhythm more closely: wall label line, avatar/author/timestamp line, body spacing, media block proportion, reaction/meta line, and action row
+- action affordances were aligned to legacy naming (`Like`/`Unlike`, `Reply`) while remaining read-only and non-persistent in prototype mode
+- comment composer row now matches legacy visual treatment more closely (avatar + muted input field) and stays disabled
+- read-only sample comment thread blocks were added under feed content to mirror legacy nested reply rhythm
+- right-rail widgets (kudos, events, rankings, birthdays) now use tighter heading chrome, row separators, and compact two-line text hierarchy
 
-### Wall Layout Parity: Remaining differences
+### Explicit gaps vs legacy after Wave 1B
 
-- legacy-specific icon set and sprite assets are approximated with text/shape placeholders
-- advanced legacy controls (inline dropdown workflows, context menus, and live counters) are still static demo representations
-
-### Wave 1B deferred deltas
-
-- screenshot pixel-diff automation is not enabled yet; Wave 1B should wire screenshot assertions using `src/smoke/ShellVisualBaseline.scaffold.ts`
-- fine-grain typography parity remains (line-height and glyph metrics still approximate legacy rendering)
-- card-level micro-geometry remains for feed/widgets (nested paddings, separators, and avatar offsets)
-- legacy icon sprite parity remains deferred; current shell uses safe placeholders
+- legacy icon sprite assets are still represented by simple text/placeholders
+- write interactions remain intentionally non-persistent (no real like/reply/comment mutations)
+- advanced legacy controls (context menus, inline dropdown workflows, live counters) are still static
+- fine-grain font rendering parity (glyph metrics/kerning) remains approximate
+- screenshot pixel-diff automation is still not wired; baseline scaffold exists at `modern/apps/webapp/src/smoke/ShellVisualBaseline.scaffold.ts`
 
 ### Still pending
 
