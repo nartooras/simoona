@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { fetchWallExperience, getWallAdapterNotes } from './wallExperience';
+import { fetchWallExperience, getWallAdapterNotes, getWallCollections, getWallFeedPath, officialWallId } from './wallExperience';
 
 afterEach(() => {
     vi.unstubAllEnvs();
@@ -7,24 +7,31 @@ afterEach(() => {
 });
 
 describe('wallExperience', () => {
-    it('returns deterministic mock-backed contexts in demo mode', async () => {
+    it('returns deterministic mock-backed official/all/subscribed wall collections in demo mode', async () => {
         vi.stubEnv('VITE_DEMO_MODE', 'true');
 
         const result = await fetchWallExperience({
-            wallId: 'company-wall',
+            wallId: officialWallId,
             sort: 'latest',
             category: 'all',
         });
 
         expect(result.feed.kind).toBe('success');
         expect(result.widgets.kind).toBe('success');
-        expect(result.availableWalls.map((wall) => wall.id)).toEqual([
+        expect(result.officialWall.id).toBe(officialWallId);
+        expect(result.allWalls.map((wall) => wall.id)).toEqual([
             'company-wall',
             'engineering-wall',
             'culture-wall',
             'newcomers-wall',
             'incident-wall',
         ]);
+        expect(result.subscribedWalls.map((wall) => wall.id)).toEqual([
+            'engineering-wall',
+            'culture-wall',
+            'newcomers-wall',
+        ]);
+        expect(result.availableWalls.map((wall) => wall.id)).toEqual(result.allWalls.map((wall) => wall.id));
 
         if (result.feed.kind !== 'success' || result.widgets.kind !== 'success') {
             return;
@@ -100,7 +107,7 @@ describe('wallExperience', () => {
         ]);
     });
 
-    it('returns explicit empty state for walls without posts', async () => {
+    it('returns explicit empty state for subscribed walls without posts', async () => {
         vi.stubEnv('VITE_DEMO_MODE', 'true');
 
         const result = await fetchWallExperience({
@@ -110,11 +117,12 @@ describe('wallExperience', () => {
         });
 
         expect(result.selectedWall.status).toBe('empty');
+        expect(result.selectedWall.subscription).toBe('subscribed');
         expect(result.feed.kind).toBe('empty');
         expect(result.widgets.kind).toBe('success');
     });
 
-    it('returns explicit unavailable state for restricted wall contexts', async () => {
+    it('returns explicit unavailable state for unsubscribed restricted wall contexts', async () => {
         vi.stubEnv('VITE_DEMO_MODE', 'true');
 
         const result = await fetchWallExperience({
@@ -124,6 +132,7 @@ describe('wallExperience', () => {
         });
 
         expect(result.selectedWall.status).toBe('unavailable');
+        expect(result.selectedWall.subscription).toBe('unsubscribed');
         expect(result.feed.kind).toBe('unavailable');
         expect(result.widgets.kind).toBe('unavailable');
         if (result.feed.kind === 'unavailable') {
@@ -131,11 +140,24 @@ describe('wallExperience', () => {
         }
     });
 
+    it('returns deterministic wall routes for official and subscribed contexts', () => {
+        vi.stubEnv('VITE_DEMO_MODE', 'true');
+
+        const collections = getWallCollections();
+
+        expect(getWallFeedPath(collections.officialWall.id)).toBe('/');
+        expect(collections.subscribedWalls.map((wall) => getWallFeedPath(wall.id))).toEqual([
+            '/walls/engineering-wall',
+            '/walls/culture-wall',
+            '/walls/newcomers-wall',
+        ]);
+    });
+
     it('documents wall adapter data boundaries', () => {
         const notes = getWallAdapterNotes();
 
         expect(notes.feed).toContain('activitiesFeed');
         expect(notes.widgets).toContain('kudos');
-        expect(notes.contexts).toContain('fixture-backed');
+        expect(notes.contexts).toContain('official context');
     });
 });

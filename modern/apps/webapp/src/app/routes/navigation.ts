@@ -1,3 +1,5 @@
+import { getWallCollections, getWallFeedPath } from '../../api/wallExperience';
+
 export type RouteAvailability = 'real' | 'mock' | 'disabled';
 export type RouteDestinationMode = 'real-backed' | 'mock-backed' | 'disabled';
 
@@ -41,29 +43,47 @@ const navigationGroupDefinitions: ReadonlyArray<NavigationGroupDefinition> = [
     { key: 'system', title: 'System' },
 ];
 
-export const navigationRouteDefinitions = [
+const wallCollections = getWallCollections();
+
+const wallRouteDefinitions: NavigationRouteDefinition[] = [
     {
         path: '/',
-        label: 'Home',
+        label: 'Official wall',
         group: 'walls',
         end: true,
-        availability: 'real',
-        destinationMode: 'real-backed',
-        demoNote: 'Legacy-like home wall shell with deterministic read-first feed/widget state handling.',
-    },
-    {
-        path: '/wall',
-        label: 'Wall',
-        group: 'walls',
         availability: 'mock',
         destinationMode: 'mock-backed',
-        reason: 'Dedicated wall switching/filtering route is deterministic fixture-backed while wall read contracts are still migrating.',
-        demoNote: 'Legacy-like wall flow with deterministic wall selector, read-side filters, and demo-safe non-persistent interactions.',
+        reason: 'Official wall context remains deterministic and fixture-backed while read contract migration is in progress.',
+        demoNote: 'Mandatory official wall feed context aligned to legacy IA with read-only interactions.',
     },
+    {
+        path: '/walls',
+        label: 'All walls',
+        group: 'walls',
+        end: true,
+        availability: 'mock',
+        destinationMode: 'mock-backed',
+        reason: 'All walls directory is deterministic and fixture-backed while subscribed wall contracts are still migrating.',
+        demoNote: 'Read-only all-walls directory with explicit official, subscribed, empty, and unavailable context states.',
+    },
+    ...wallCollections.subscribedWalls.map<NavigationRouteDefinition>((wall) => ({
+        path: getWallFeedPath(wall.id),
+        label: wall.label,
+        group: 'walls',
+        end: true,
+        availability: 'mock',
+        destinationMode: 'mock-backed',
+        reason: 'Subscribed wall feeds are deterministic fixture-backed contexts during read-first migration.',
+        demoNote: `Subscribed wall feed for ${wall.label} context with deterministic filtering and no persistent writes.`,
+    })),
+];
+
+export const navigationRouteDefinitions: ReadonlyArray<NavigationRouteDefinition> = [
+    ...wallRouteDefinitions,
     {
         path: '/activities/feed',
         label: 'Activity Feed',
-        group: 'walls',
+        group: 'activities',
         availability: 'mock',
         destinationMode: 'mock-backed',
         reason: 'Live feed and reactions still run from legacy modules in this prototype.',
@@ -72,7 +92,7 @@ export const navigationRouteDefinitions = [
     {
         path: '/recognition',
         label: 'Recognition',
-        group: 'walls',
+        group: 'activities',
         availability: 'mock',
         destinationMode: 'mock-backed',
         reason: 'Recognition stream and nomination flows are represented with demo-only static data.',
@@ -217,13 +237,13 @@ export const navigationRouteDefinitions = [
         destinationMode: 'real-backed',
         demoNote: 'Baseline health destination confirms modern API readiness for demo startup checks.',
     },
-] as const satisfies ReadonlyArray<NavigationRouteDefinition>;
+];
 
-export type NavigationRoutePath = (typeof navigationRouteDefinitions)[number]['path'];
+export type NavigationRoutePath = string;
 
 const routeDefinitionsByPath = Object.fromEntries(
     navigationRouteDefinitions.map((entry) => [entry.path, entry]),
-) as Record<NavigationRoutePath, (typeof navigationRouteDefinitions)[number]>;
+) as Record<string, NavigationRouteDefinition>;
 
 const groupTitleByKey = Object.fromEntries(
     navigationGroupDefinitions.map((group) => [group.key, group.title]),
@@ -315,17 +335,17 @@ export interface RouteAvailabilityEntry {
 }
 
 const routeEntries = navigationRouteDefinitions.map((entry) => [
-        entry.path,
-        {
-            mode: entry.availability,
-            reason: 'reason' in entry ? entry.reason : undefined,
-        } as RouteAvailabilityEntry,
-    ]);
+    entry.path,
+    {
+        mode: entry.availability,
+        reason: 'reason' in entry ? entry.reason : undefined,
+    } as RouteAvailabilityEntry,
+]);
 
-export const routeAvailabilityMap = Object.fromEntries(routeEntries) as Record<NavigationRoutePath, RouteAvailabilityEntry>;
+export const routeAvailabilityMap = Object.fromEntries(routeEntries) as Record<string, RouteAvailabilityEntry>;
 
 export interface RouteStatusMatrixEntry {
-    route: NavigationRoutePath;
+    route: string;
     label: string;
     navGroup: string;
     availability: RouteAvailability;
@@ -342,6 +362,11 @@ export const routeStatusMatrix: RouteStatusMatrixEntry[] = navigationRouteDefini
     demoNote: entry.demoNote,
 }));
 
-export function getRouteDefinition(path: NavigationRoutePath) {
-    return routeDefinitionsByPath[path];
+export function getRouteDefinition(path: string): NavigationRouteDefinition {
+    const routeDefinition = routeDefinitionsByPath[path];
+    if (!routeDefinition) {
+        throw new Error(`Unknown navigation route path: ${path}`);
+    }
+
+    return routeDefinition;
 }

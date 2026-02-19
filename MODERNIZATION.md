@@ -51,13 +51,13 @@ Stakeholder demo pack and operational baseline:
 ### Current Demo Baseline
 
 - Parity-acceptable now:
-  - Wave 6 shell/home parity geometry remains stable, and Wave 7 unifies theme tokens + shared UI primitives across shell/pages/widgets to remove cross-route visual drift.
-  - Dedicated `/wall` route now provides legacy-like wall selector/filter behavior with deterministic context switching and explicit empty/unavailable handling.
+  - Wave 6 shell/wall parity geometry remains stable, and Wave 7 unifies theme tokens + shared UI primitives across shell/pages/widgets to remove cross-route visual drift.
+  - Walls IA now matches legacy navigation semantics: mandatory `Official wall` (`/`), dedicated `All walls` (`/walls`), and subscribed wall feed routes (`/walls/<id>`).
   - Major route destinations are non-empty and render consistent route contract + availability metadata (`real` / `mock` / `disabled`).
   - Demo orchestration checks provide explicit diagnostics for occupied ports, API reachability failures, read-DB availability failures, and missing env/token setup.
 - Known remaining gaps:
   - mock-backed routes remain deterministic fixtures until read contract migration waves are complete.
-  - write-heavy workflows stay intentionally disabled or local-only simulation in prototype mode (`/` and `/wall` interactions remain non-persistent).
+  - write-heavy workflows stay intentionally disabled or local-only simulation in prototype mode (wall interactions remain non-persistent).
 - Exact demo flow references:
   - `modern/docs/demo-runbook.md` (section `3) 10-15 Minute Walkthrough Script`)
   - `modern/docs/demo-acceptance-checklist.md`
@@ -269,7 +269,7 @@ Environment:
 
 - `VITE_DEMO_MODE` (required for demo orchestration): when `true`, adapter selection is deterministic by route/slice:
   - real-backed: `/health`, `/user-info`, `/settings/general`, `/employees`, `/profiles/me`
-  - mock-backed: `/activities/feed`, `/recognition`, `/events`, `/vacations`, `/kudos`, `/books`, `/teams`, `/projects`, `/office-map`, `/organization/structure`, `/committees`
+  - mock-backed: `/`, `/walls`, `/walls/engineering-wall`, `/walls/culture-wall`, `/walls/newcomers-wall`, `/activities/feed`, `/recognition`, `/events`, `/vacations`, `/kudos`, `/books`, `/teams`, `/projects`, `/office-map`, `/organization/structure`, `/committees`
   - disabled-backed: `/service-requests`, `/externals/integrations`
 - `VITE_API_BASE_URL` (optional): base URL used by the modern webapp API client.
   - default: `/api`
@@ -431,15 +431,16 @@ Remaining differences:
 - Some micro-spacing/line-height values remain approximations rather than exact pixel parity.
 - Interactive legacy wall behaviors (real reactions/comments/live counters) remain simulated or disabled in prototype mode.
 
-## Wall Page Prototype (Thread AK)
+## Wall Navigation Prototype (Legacy IA Alignment)
 
-Thread AK adds a dedicated legacy-like wall route at `/wall` so wall behavior can be demoed independently of the Home route.
+The modern shell now mirrors legacy wall IA by default: `Official wall` is mandatory (`/`), `All walls` is route-distinct (`/walls`), and subscribed walls open dedicated feed contexts (`/walls/<id>`).
 
 Implemented prototype behavior:
 
-- wall context selector with deterministic switching across distinct contexts (`Company`, `Engineering`, `People`)
+- deterministic subscribed wall feeds across distinct contexts (`Engineering`, `People`, `Newcomers`)
+- dedicated `All walls` directory showing official/subscribed/unsubscribed contexts
 - read-side controls for deterministic sorting (`latest`, `top`) and topic filtering
-- shared feed/comment card rendering reused between `/` and `/wall` to keep anatomy/token parity consistent
+- shared feed/comment card rendering reused across wall feed routes to keep anatomy/token parity consistent
 - contextual right-rail widgets that switch with selected wall context
 - explicit wall-specific states:
   - empty feed state (`Newcomers Wall`)
@@ -447,7 +448,7 @@ Implemented prototype behavior:
 
 Known limitations:
 
-- `/wall` is route-classified as `mock` / `mock-backed` in navigation metadata
+- wall IA routes are classified as `mock` / `mock-backed` in navigation metadata
 - feed and widget content remain fixture-backed in demo mode
 - like/reply/comment interactions are still local simulation only (no persistent writes)
 - restricted incident-wall data stays unavailable until legacy access-policy migration is defined

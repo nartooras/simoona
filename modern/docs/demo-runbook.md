@@ -15,16 +15,16 @@ Operator runbook for a repeatable 10-15 minute stakeholder demo with decision-fo
 - Parity-acceptable now:
   - Wave 6 shell geometry is harmonized across topbar, left rail, home feed column, and right rail at common desktop widths.
   - Wave 7 theme unification applies one shared token system and shared UI primitives across shell chrome, page headers, route markers, cards, and list rows.
-  - Dedicated `/wall` route now demonstrates legacy-like wall context switching, deterministic sort/topic filters, and wall-specific empty/unavailable states.
+  - Walls IA now matches legacy semantics: mandatory `Official wall` (`/`), dedicated `All walls` (`/walls`), and subscribed wall feed routes (`/walls/<id>`).
   - Dedicated `/events` route now provides deterministic upcoming/past grouping, contextual right-rail widgets, and expandable read-only event details.
   - Dedicated `/kudos` route now provides a dense recognition feed, deterministic period/type/team filters, and leaderboard/distribution side panels.
-  - Home feed cards, comment thread anatomy, and right-rail widgets use a consistent compact hierarchy and deterministic content.
+  - Wall feed cards, comment thread anatomy, and right-rail widgets use a consistent compact hierarchy and deterministic content.
   - Every major left-nav route renders a non-empty destination with route contract metadata + explicit availability (`real` / `mock` / `disabled`).
   - Demo commands surface actionable diagnostics for port collisions, API reachability, read-DB failures, and missing env/token setup.
 - Known remaining gaps:
   - Write-heavy routes remain intentionally unavailable (`/service-requests`, `/externals/integrations`).
   - Mock-backed routes still use deterministic fixtures instead of live contracts.
-  - Home and Wall social interactions remain local-only simulation (no persistent writes).
+  - Wall social interactions remain local-only simulation (no persistent writes).
   - Events/Kudos write-like actions remain disabled (event creation/RSVP updates and kudos submission).
 - Exact demo flow references:
   - Route-by-route walkthrough: section `3) 10-15 Minute Walkthrough Script` in this document.
@@ -81,8 +81,8 @@ Open `http://127.0.0.1:5173`.
 | Minute | Route / action | Expected visual/behavior outcome |
 |---|---|---|
 | 0-1 | Confirm terminal shows `[demo:start] PASS` and open app | API + webapp are running in deterministic demo mode. |
-| 1-3 | Home shell tour (`/`) | Header, grouped left rail, feed, and right rail render with unified Wave 7 token styling; notice reads `Prototype availability: Real.`; wall data summary indicates mock feed/widgets for stability. |
-| 3-5 | Wall prototype tour (`/wall`) | Wall selector switches across at least three contexts; sort/topic filters deterministically reshape feed; empty (`Newcomers Wall`) and unavailable (`Incident Wall`) states render explicit messaging with no blank regions. |
+| 1-3 | Official wall landing tour (`/`) | Header, grouped left rail, feed, and right rail render with unified Wave 7 token styling; notice reads `Prototype availability: Mock.`; official wall context is mandatory and loaded by default. |
+| 3-5 | All walls + subscribed wall tour (`/walls` then `/walls/engineering-wall`) | `All walls` lists official/subscribed/unavailable contexts; opening a subscribed wall route shows deterministic sort/topic filtering and non-persistent interactions with no blank regions. |
 | 5-6 | Real-backed read route: `/user-info` | User payload is shown from modern API, or explicit API-unavailable fallback text appears without crashing/navigation loss. |
 | 6-7 | Real-backed read route: `/settings/general` | Language/time zone settings load from modern API or clear fallback state renders. |
 | 7-8 | Real-backed read route: `/employees` | Employee table/content region renders or explicit fallback appears; no blank page. |

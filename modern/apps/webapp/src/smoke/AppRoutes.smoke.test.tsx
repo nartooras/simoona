@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import i18next from 'i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
@@ -29,13 +29,13 @@ describe('Modern webapp smoke routes', () => {
         vi.restoreAllMocks();
     });
 
-    it('loads app shell on home route', async () => {
+    it('loads app shell on official wall landing route', async () => {
         renderRoute('/');
 
-        expect(await screen.findByRole('heading', { name: i18next.t('home.title') })).toBeInTheDocument();
-        expect(screen.getByText('Prototype availability: Real.')).toBeInTheDocument();
+        expect(await screen.findByRole('heading', { name: 'Official wall' })).toBeInTheDocument();
+        expect(screen.getByText('Prototype availability: Mock.')).toBeInTheDocument();
         expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/');
-        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'real');
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'mock');
         expect(screen.getByTestId('destination-content-region')).toHaveAttribute('data-page-theme', 'legacy-unified-wave7');
         expect(screen.getByText('Simoona')).toBeInTheDocument();
         expect(screen.getByTestId('wall-data-source-summary')).toHaveTextContent(
@@ -44,8 +44,10 @@ describe('Modern webapp smoke routes', () => {
         expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
         expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Kudos Feed' })).toBeInTheDocument();
-        expect(screen.getByRole('heading', { name: 'Upcoming Events' })).toBeInTheDocument();
-        expect(screen.getByRole('link', { name: 'Wall' })).toHaveAttribute('href', '/wall');
+        expect(screen.getByRole('heading', { name: 'Official wall' })).toBeInTheDocument();
+        const nav = screen.getByRole('navigation', { name: 'Primary navigation' });
+        expect(within(nav).getByRole('link', { name: 'All walls' })).toHaveAttribute('href', '/walls');
+        expect(within(nav).getByRole('link', { name: 'Engineering Wall' })).toHaveAttribute('href', '/walls/engineering-wall');
         expect(screen.getByRole('link', { name: 'User Info' })).toHaveAttribute('href', '/user-info');
         expect(screen.getByRole('link', { name: 'General Settings' })).toHaveAttribute(
             'href',
@@ -57,6 +59,7 @@ describe('Modern webapp smoke routes', () => {
             'href',
             '/activities/feed',
         );
+        expect(screen.getByRole('link', { name: 'Recognition' })).toHaveAttribute('href', '/recognition');
         expect(screen.getByRole('link', { name: 'Integrations' })).toHaveAttribute(
             'href',
             '/externals/integrations',
@@ -78,27 +81,38 @@ describe('Modern webapp smoke routes', () => {
         expect(screen.getByRole('link', { name: 'Committees' })).toHaveAttribute('href', '/committees');
     });
 
-    it('keeps home route sections visible in demo mode without fatal render errors', async () => {
+    it('keeps official wall route sections visible in demo mode without fatal render errors', async () => {
         renderRoute('/');
 
-        expect(await screen.findByRole('heading', { name: i18next.t('home.title') })).toBeInTheDocument();
+        expect(await screen.findByRole('heading', { name: 'Official wall' })).toBeInTheDocument();
         expect(screen.getByTestId('wall-content-grid')).toBeInTheDocument();
         expect(screen.getByTestId('wall-feed-column')).toBeInTheDocument();
         expect(screen.getByTestId('wall-widgets-column')).toBeInTheDocument();
     });
 
-    it('keeps dedicated wall route sections visible in demo mode without fatal render errors', async () => {
-        renderRoute('/wall');
+    it('keeps all walls directory route visible in demo mode without fatal render errors', async () => {
+        renderRoute('/walls');
 
-        expect(await screen.findByRole('heading', { name: 'Wall' })).toBeInTheDocument();
-        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/wall');
+        expect(await screen.findByRole('heading', { name: 'All walls' })).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/walls');
         expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'mock');
-        expect(screen.getByTestId('wall-context-select')).toHaveValue('company-wall');
-        expect(screen.getByTestId('wall-sort-select')).toBeInTheDocument();
-        expect(screen.getByTestId('wall-category-select')).toBeInTheDocument();
-        expect(screen.getByTestId('wall-content-grid')).toBeInTheDocument();
-        expect(screen.getByTestId('wall-feed-column')).toBeInTheDocument();
-        expect(screen.getByTestId('wall-widgets-column')).toBeInTheDocument();
+        expect(screen.getByTestId('all-walls-list')).toBeInTheDocument();
+        expect(screen.getByTestId('all-walls-item-company-wall')).toBeInTheDocument();
+        expect(screen.getByTestId('all-walls-item-incident-wall')).toBeInTheDocument();
+    });
+
+    it('navigates from all walls to a subscribed wall feed context', async () => {
+        const user = userEvent.setup();
+
+        renderRoute('/walls');
+
+        expect(await screen.findByRole('heading', { name: 'All walls' })).toBeInTheDocument();
+        await user.click(within(screen.getByTestId('all-walls-list')).getByRole('link', { name: 'Engineering Wall' }));
+
+        expect(await screen.findByRole('heading', { name: 'Engineering Wall' })).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/walls/engineering-wall');
+        expect(screen.getByTestId('wall-context-link-engineering-wall')).toHaveAttribute('data-selected', 'true');
+        expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
     });
 
     it('covers walkthrough-critical events and kudos paths with deterministic state transitions', async () => {
@@ -234,7 +248,7 @@ describe('Modern webapp smoke routes', () => {
 
     it('keeps every left-nav destination reachable and non-empty', async () => {
         const headingByPath: Record<string, string> = {
-            '/': i18next.t('home.title'),
+            '/': 'Official wall',
             '/employees': i18next.t('employeeDirectory.title'),
             '/settings/general': i18next.t('generalSettings.title'),
             '/user-info': i18next.t('userInfo.title'),

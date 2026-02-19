@@ -23,10 +23,10 @@ References:
 - Parity-acceptable now:
   - shell geometry + interaction states are normalized under Wave 6 semantics (`data-shell-geometry="wave6"` and matching topbar/left-rail tags).
   - Wave 7 unifies design tokens (palette/spacing/type/radius/shadows/state colors) and shared UI primitives (`SectionHeader`, `StatusBadge`, `InfoMetaRow`, `ListRow`, `CardChrome`) across shell + route content.
-  - dedicated `/wall` route now provides deterministic wall context switching/filtering with explicit empty/unavailable states.
+  - Walls IA now matches legacy semantics: mandatory `Official wall`, dedicated `All walls`, and deterministic subscribed wall feed routes.
   - dedicated `/events` route now delivers deterministic upcoming/past grouping, contextual widgets, and local-only detail expansion.
   - dedicated `/kudos` route now delivers deterministic period/type/team filtering with dense feed + leaderboard/distribution panels.
-  - home feed card anatomy, reply threads, and right-rail widget hierarchy are compact and legacy-consistent for demo scanning.
+  - wall feed card anatomy, reply threads, and right-rail widget hierarchy are compact and legacy-consistent for demo scanning.
   - every navigation destination has a route contract marker, availability notice, and non-empty deterministic content.
   - demo command flow emits actionable diagnostics for port, API, DB, and env/token failures.
 - Known remaining gaps:
@@ -42,6 +42,7 @@ References:
 
 The modern shell now mirrors legacy IA grouping more closely:
 
+- Walls: `Official wall`, `All walls`, subscribed wall list
 - Activities
 - Company
 - Externals
@@ -55,10 +56,13 @@ Route status matrix (source of truth: `modern/apps/webapp/src/app/routes/navigat
 
 | Route | Nav group | Availability | Destination mode | Demo note |
 |---|---|---|---|---|
-| `/` | Walls | `real` | `real-backed` | Legacy-like home wall shell with deterministic read-first state handling. |
-| `/wall` | Walls | `mock` | `mock-backed` | Dedicated wall route with deterministic context switching/filter controls and explicit empty/unavailable states. |
-| `/activities/feed` | Walls | `mock` | `mock-backed` | Fixture-backed activity stream preserves density and walkthrough flow without writes. |
-| `/recognition` | Walls | `mock` | `mock-backed` | Deterministic recognition totals and queue state mirror legacy IA placement. |
+| `/` | Walls | `mock` | `mock-backed` | Mandatory official wall feed context aligned with legacy wall navigation semantics. |
+| `/walls` | Walls | `mock` | `mock-backed` | Read-only all-walls directory exposing official/subscribed/unavailable context states. |
+| `/walls/engineering-wall` | Walls | `mock` | `mock-backed` | Subscribed wall feed route with deterministic sort/topic controls and no persistent writes. |
+| `/walls/culture-wall` | Walls | `mock` | `mock-backed` | Subscribed wall feed route for People wall context with deterministic read-only state handling. |
+| `/walls/newcomers-wall` | Walls | `mock` | `mock-backed` | Subscribed wall feed route that explicitly demonstrates empty-state behavior. |
+| `/activities/feed` | Activities | `mock` | `mock-backed` | Fixture-backed activity stream preserves density and walkthrough flow without writes. |
+| `/recognition` | Activities | `mock` | `mock-backed` | Deterministic recognition totals and queue state mirror legacy IA placement. |
 | `/events` | Activities | `mock` | `mock-backed` | Legacy-like grouped events view with deterministic filters, detail expansion, and contextual widgets. |
 | `/kudos` | Activities | `mock` | `mock-backed` | Dense kudos feed with deterministic period/type/team filters, leaderboard panel, and disabled give action. |
 | `/service-requests` | Activities | `disabled` | `disabled` | Intentionally unavailable; page explains deferred write-heavy workflow scope. |
@@ -153,28 +157,29 @@ Events and Kudos are no longer placeholder pages in this wave; both now have ded
 
 ## Wall Layout Parity
 
-The `/` home route now mirrors legacy wall layout rhythm more closely with a dense three-column shell:
+The default `/` route now loads the mandatory official wall feed and mirrors legacy wall layout rhythm with a dense three-column shell:
 
 - left navigation column keeps grouped sections with visual expand/collapse indicators (`Walls`, `Activities`, `Company`, `Externals`, `System`) and active-item emphasis
 - center stream includes stacked wall cards with source label, avatar/author/timestamp line, body text, media placeholder, reaction row, and disabled comment input row
 - right rail includes compact cards for kudos feed, upcoming events, rankings, and birthdays with subtle row separators
 - top blue header keeps global chrome and now includes search + quick user actions for legacy-like scanning behavior
 
-### Wall Page Prototype (Wave 8)
+### Wall Navigation Prototype (Wave 8+)
 
-The `/wall` route now extends wall parity into a dedicated legacy-like wall destination instead of relying only on `/`:
+Wall navigation now aligns with legacy IA using route-distinct contexts:
 
-- wall selector supports deterministic switching between multiple contexts with distinct fixture datasets (`Company`, `Engineering`, `People`, plus explicit empty/unavailable contexts)
+- `Official wall` is mandatory and remains the default landing context (`/`)
+- `All walls` has its own route (`/walls`) and lists official/subscribed/unsubscribed contexts
+- subscribed walls (`Engineering`, `People`, `Newcomers`) have dedicated feed routes (`/walls/<id>`)
 - read-side controls provide deterministic sort (`latest`, `top`) and topic filtering without introducing write behavior
-- feed/comment card anatomy reuses the same wall card component used on `/` to keep visual and interaction parity aligned
-- right-rail widgets update with selected wall context and remain deterministic in demo mode
-- empty and unavailable wall contexts render explicit messages (`No posts in selected wall`, restricted incident data) with no blank state gaps
+- feed/comment card anatomy reuses shared wall columns to keep visual and interaction parity aligned
+- empty and unavailable contexts render explicit messages with no blank state gaps
 
 Known limitations:
 
-- wall feed/widgets remain fixture-backed in demo mode (`mock`)
+- wall feed/widgets remain fixture-backed in demo mode (`mock`) for wall contexts
 - like/reply/comment interactions remain local-only and non-persistent
-- incident wall context is intentionally unavailable pending access-policy migration from legacy flows
+- incident wall context stays listed under `All walls` as unavailable and is intentionally not part of subscribed navigation
 
 ### Wave 6 geometry baseline (desktop parity target)
 

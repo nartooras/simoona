@@ -8,6 +8,8 @@ export type WallContextId =
     | 'newcomers-wall'
     | 'incident-wall';
 
+export type WallSubscription = 'official' | 'subscribed' | 'unsubscribed';
+
 export type WallSortMode = 'latest' | 'top';
 
 export type WallCategoryFilter = 'all' | 'announcements' | 'delivery' | 'culture' | 'operations';
@@ -22,6 +24,7 @@ export interface WallContextSummary {
     label: string;
     description: string;
     status: 'available' | 'empty' | 'unavailable';
+    subscription: WallSubscription;
 }
 
 interface WallPostFixture {
@@ -35,6 +38,7 @@ interface WallContextFixture {
     label: string;
     description: string;
     status: 'available' | 'empty' | 'unavailable';
+    subscription: WallSubscription;
     unavailableReason?: string;
     posts: WallPostFixture[];
     widgets: WidgetCardData[];
@@ -46,6 +50,9 @@ interface WallExperienceFixtureSet {
 
 export interface WallExperienceResult {
     selectedWall: WallContextSummary;
+    officialWall: WallContextSummary;
+    allWalls: WallContextSummary[];
+    subscribedWalls: WallContextSummary[];
     availableWalls: WallContextSummary[];
     filters: WallFilterState;
     feed: SectionState<FeedPost>;
@@ -63,6 +70,8 @@ export const wallContextOrder: ReadonlyArray<WallContextId> = [
     'newcomers-wall',
     'incident-wall',
 ];
+
+export const officialWallId: WallContextId = 'company-wall';
 
 const wallSortLabels: Record<WallSortMode, string> = {
     latest: 'Latest first',
@@ -94,6 +103,7 @@ const realFixtures: WallExperienceFixtureSet = {
             label: 'Company Wall',
             description: 'Cross-team announcements and execution updates for the whole organization.',
             status: 'available',
+            subscription: 'official',
             posts: [
                 {
                     recencyRank: 95,
@@ -207,6 +217,7 @@ const realFixtures: WallExperienceFixtureSet = {
             label: 'Engineering Wall',
             description: 'Build, integration, and reliability updates for delivery teams.',
             status: 'available',
+            subscription: 'subscribed',
             posts: [
                 {
                     recencyRank: 96,
@@ -216,7 +227,7 @@ const realFixtures: WallExperienceFixtureSet = {
                         wallLabel: 'Engineering Wall',
                         author: 'Jonas Petraitis',
                         timestamp: 'Today at 11:18',
-                        text: 'Regression bundle is green after introducing dedicated /wall route and selector controls.',
+                        text: 'Regression bundle is green after introducing official/all/subscribed wall routes and deterministic feed controls.',
                         mediaLabel: 'Pipeline summary panel',
                         likeCount: 11,
                         likedByCurrentUser: false,
@@ -225,7 +236,7 @@ const realFixtures: WallExperienceFixtureSet = {
                                 id: 'eng-regression-reply-1',
                                 author: 'Neringa Jankauskaite',
                                 timestamp: 'Today at 11:31',
-                                text: 'Smoke now explicitly exercises /wall in demo mode.',
+                                text: 'Smoke now explicitly exercises official and subscribed wall routes in demo mode.',
                                 depth: 0,
                             },
                         ],
@@ -261,7 +272,7 @@ const realFixtures: WallExperienceFixtureSet = {
                                 id: 'eng-refactor-reply-1',
                                 author: 'Jonas Petraitis',
                                 timestamp: 'Yesterday at 16:02',
-                                text: 'This should reduce future drift between Home and Wall routes.',
+                                text: 'This should reduce future drift between official and subscribed wall feeds.',
                                 depth: 0,
                             },
                         ],
@@ -312,6 +323,7 @@ const realFixtures: WallExperienceFixtureSet = {
             label: 'People Wall',
             description: 'Culture highlights, onboarding updates, and recognition highlights.',
             status: 'available',
+            subscription: 'subscribed',
             posts: [
                 {
                     recencyRank: 94,
@@ -389,6 +401,7 @@ const realFixtures: WallExperienceFixtureSet = {
             label: 'Newcomers Wall',
             description: 'Onboarding announcements and first-week updates.',
             status: 'empty',
+            subscription: 'subscribed',
             posts: [],
             widgets: [
                 {
@@ -410,6 +423,7 @@ const realFixtures: WallExperienceFixtureSet = {
             label: 'Incident Wall',
             description: 'Restricted incident updates requiring legacy-only access.',
             status: 'unavailable',
+            subscription: 'unsubscribed',
             unavailableReason:
                 'Incident wall data is unavailable in the modern prototype while access control and redaction policies remain in legacy modules.',
             posts: [],
@@ -425,6 +439,7 @@ const mockFixtures: WallExperienceFixtureSet = {
             label: 'Company Wall',
             description: 'Mocked cross-team announcements for deterministic walkthroughs.',
             status: 'available',
+            subscription: 'official',
             posts: [
                 {
                     recencyRank: 93,
@@ -484,6 +499,7 @@ const mockFixtures: WallExperienceFixtureSet = {
             label: 'Engineering Wall',
             description: 'Mocked engineering updates for deterministic filtering and sorting.',
             status: 'available',
+            subscription: 'subscribed',
             posts: [
                 {
                     recencyRank: 92,
@@ -542,6 +558,7 @@ const mockFixtures: WallExperienceFixtureSet = {
             label: 'People Wall',
             description: 'Mocked people updates with realistic but deterministic content.',
             status: 'available',
+            subscription: 'subscribed',
             posts: [
                 {
                     recencyRank: 91,
@@ -578,6 +595,7 @@ const mockFixtures: WallExperienceFixtureSet = {
             label: 'Newcomers Wall',
             description: 'Mock onboarding wall with no current posts.',
             status: 'empty',
+            subscription: 'subscribed',
             posts: [],
             widgets: [
                 {
@@ -599,6 +617,7 @@ const mockFixtures: WallExperienceFixtureSet = {
             label: 'Incident Wall',
             description: 'Restricted incident updates requiring legacy-only access.',
             status: 'unavailable',
+            subscription: 'unsubscribed',
             unavailableReason:
                 'Incident wall data is unavailable in demo mode while the redacted incident feed remains in legacy systems.',
             posts: [],
@@ -611,7 +630,7 @@ const wallAdapterNotes = Object.freeze({
     feed: 'Wall feed resolves from activitiesFeed source (real outside demo, mock in demo) with deterministic client-side sort/filter transforms.',
     widgets: 'Wall widgets resolve from kudos source (real outside demo, mock in demo) and remain read-only.',
     contexts:
-        'Wall selector includes available, empty, and unavailable fixture-backed contexts to demo route behavior without persistent writes.',
+        'Wall collections expose mandatory official context, all walls, and subscribed walls from deterministic fixture-backed metadata with no persistent writes.',
 });
 
 function toWallSummary(context: WallContextFixture): WallContextSummary {
@@ -620,7 +639,37 @@ function toWallSummary(context: WallContextFixture): WallContextSummary {
         label: context.label,
         description: context.description,
         status: context.status,
+        subscription: context.subscription,
     };
+}
+
+export interface WallCollections {
+    officialWall: WallContextSummary;
+    allWalls: WallContextSummary[];
+    subscribedWalls: WallContextSummary[];
+}
+
+export function getWallFeedPath(wallId: WallContextId): string {
+    return wallId === officialWallId ? '/' : `/walls/${wallId}`;
+}
+
+function toWallCollections(fixtures: WallExperienceFixtureSet): WallCollections {
+    const allWalls = wallContextOrder.map((wallId) => toWallSummary(fixtures.contexts[wallId]));
+    const subscribedWalls = wallContextOrder
+        .map((wallId) => fixtures.contexts[wallId])
+        .filter((wall) => wall.subscription === 'subscribed')
+        .map((wall) => toWallSummary(wall));
+
+    return {
+        officialWall: toWallSummary(fixtures.contexts[officialWallId]),
+        allWalls,
+        subscribedWalls,
+    };
+}
+
+export function getWallCollections(source: DataSource = resolveDataSource('activitiesFeed')): WallCollections {
+    const fixtures = selectFixtures(source);
+    return toWallCollections(fixtures);
 }
 
 function selectFixtures(source: DataSource): WallExperienceFixtureSet {
@@ -670,9 +719,8 @@ export async function fetchWallExperience(params: FetchWallExperienceParams): Pr
     const feedSource = resolveDataSource('activitiesFeed');
     const widgetsSource = resolveDataSource('kudos');
     const fixtures = selectFixtures(feedSource);
-    const selectedContext = fixtures.contexts[params.wallId] ?? fixtures.contexts['company-wall'];
-
-    const availableWalls = wallContextOrder.map((wallId) => toWallSummary(fixtures.contexts[wallId]));
+    const selectedContext = fixtures.contexts[params.wallId] ?? fixtures.contexts[officialWallId];
+    const collections = toWallCollections(fixtures);
 
     const feedUnavailableReason =
         selectedContext.status === 'unavailable'
@@ -712,7 +760,10 @@ export async function fetchWallExperience(params: FetchWallExperienceParams): Pr
 
     return {
         selectedWall: toWallSummary(selectedContext),
-        availableWalls,
+        officialWall: collections.officialWall,
+        allWalls: collections.allWalls,
+        subscribedWalls: collections.subscribedWalls,
+        availableWalls: collections.allWalls,
         filters: {
             sort: params.sort,
             category: params.category,
