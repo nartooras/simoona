@@ -29,6 +29,12 @@ describe('HomePage', () => {
             'Rankings',
             'Birthdays',
         ]);
+        expect(screen.getAllByTestId('wall-widget-meta').map((meta) => meta.textContent?.trim())).toEqual([
+            '3 items',
+            '3 items',
+            '3 items',
+            '2 items',
+        ]);
     });
 
     it('simulates like and unlike toggles without persistence', async () => {

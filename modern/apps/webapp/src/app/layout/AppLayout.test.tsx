@@ -89,8 +89,8 @@ describe('AppLayout', () => {
             </MemoryRouter>,
         );
 
-        expect(container.querySelector('[data-shell-geometry="wave2b"]')).not.toBeNull();
-        expect(container.querySelector('[data-shell-fidelity="wave2b-topbar-leftnav"]')).not.toBeNull();
+        expect(container.querySelector('[data-shell-geometry="wave6"]')).not.toBeNull();
+        expect(container.querySelector('[data-shell-fidelity="wave6-shell-home-bundle"]')).not.toBeNull();
         expect(screen.getByTestId('app-header')).toBeInTheDocument();
         expect(screen.getByTestId('app-layout')).toBeInTheDocument();
         expect(screen.getByTestId('app-sidebar')).toBeInTheDocument();
@@ -144,7 +144,7 @@ describe('AppLayout', () => {
         expect(screen.getByRole('link', { name: 'Vacations' })).not.toHaveClass('active');
     });
 
-    it('keeps topbar and left rail geometry semantics for wave 2b parity', () => {
+    it('keeps topbar and left rail geometry semantics for wave 6 parity', () => {
         const { container } = render(
             <MemoryRouter>
                 <AppLayout>
@@ -153,14 +153,14 @@ describe('AppLayout', () => {
             </MemoryRouter>,
         );
 
-        expect(container.querySelector('[data-shell-taxonomy="wave2b-left-rail-taxonomy"]')).not.toBeNull();
+        expect(container.querySelector('[data-shell-taxonomy="wave6-left-rail-taxonomy"]')).not.toBeNull();
         expect(container.querySelector('.topbar-height-legacy-44')).not.toBeNull();
-        expect(container.querySelector('.topbar-geometry-wave2b')).not.toBeNull();
+        expect(container.querySelector('.topbar-geometry-wave6')).not.toBeNull();
         expect(container.querySelector('[data-topbar-controls="legacy-hierarchy-v3a"]')).not.toBeNull();
-        expect(screen.getByTestId('app-sidebar')).toHaveAttribute('data-left-rail-width', 'legacy-232');
+        expect(screen.getByTestId('app-sidebar')).toHaveAttribute('data-left-rail-width', 'legacy-236');
         expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toHaveAttribute(
             'data-left-rail-density',
-            'legacy-compact-wave2b',
+            'legacy-compact-wave6',
         );
         expect(screen.getByRole('searchbox', { name: 'Global search' })).toHaveClass('topbar-search-input');
         expect(screen.getByRole('button', { name: 'Quick Links' })).toHaveClass('topbar-action');

@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { appRoutes } from './AppRouter';
-import { navigationGroups, navigationRouteDefinitions, routeAvailabilityMap } from './navigation';
+import { navigationGroups, navigationRouteDefinitions, routeAvailabilityMap, routeStatusMatrix } from './navigation';
 import '../../i18n';
 
 describe('AppRouter', () => {
@@ -26,6 +26,8 @@ describe('AppRouter', () => {
         expect(await screen.findByRole('heading', { name: 'Health' })).toBeInTheDocument();
         expect(screen.getByText('Status: OK. Modern API baseline is healthy for demo start.')).toBeInTheDocument();
         expect(screen.getByText('Prototype availability: Real.')).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/health');
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'real');
     });
 
     it('renders home wall layout shell', async () => {
@@ -146,6 +148,8 @@ describe('AppRouter', () => {
             const expectedHeading = headingByPath[routeDefinition.path] ?? routeDefinition.label;
 
             expect(await screen.findByRole('heading', { name: expectedHeading })).toBeInTheDocument();
+            expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', routeDefinition.path);
+            expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', routeDefinition.availability);
             expect(screen.getByTestId('destination-content-region')).toBeInTheDocument();
             expect(screen.getByRole('main')).toBeInTheDocument();
 
@@ -174,6 +178,29 @@ describe('AppRouter', () => {
             expect(
                 screen.getByText(`Prototype availability: ${availabilityLabelByMode[availability.mode]}`),
             ).toBeInTheDocument();
+            expect(screen.getByTestId('destination-content-region')).toHaveAttribute('data-route-status', availability.mode);
+
+            unmount();
+        }
+    });
+
+    it('keeps route contract notes aligned with route status matrix metadata', async () => {
+        const headingByPath: Record<string, string> = {
+            '/': 'Home',
+            '/employees': 'Employee Directory',
+        };
+
+        for (const routeEntry of routeStatusMatrix) {
+            const router = createMemoryRouter(appRoutes, {
+                initialEntries: [routeEntry.route],
+            });
+            const { unmount } = render(<RouterProvider router={router} />);
+            const expectedHeading = headingByPath[routeEntry.route] ?? routeEntry.label;
+            const marker = screen.getByTestId('route-contract-marker');
+
+            expect(await screen.findByRole('heading', { name: expectedHeading })).toBeInTheDocument();
+            expect(marker).toHaveTextContent(routeEntry.demoNote);
+            expect(marker).toHaveAttribute('data-route-mode', routeEntry.destinationMode);
 
             unmount();
         }

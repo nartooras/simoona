@@ -48,6 +48,21 @@ Stakeholder demo pack and operational baseline:
 - `modern/docs/prototype-shell-parity.md` (route availability/source-of-truth parity framing)
 - `modern/docs/release-readiness-checklist.md` (release/smoke gating baseline)
 
+### Current Demo Baseline
+
+- Parity-acceptable now:
+  - Wave 6 shell/home parity pass aligns topbar, left rail, feed cards, and right rail with compact legacy-like rhythm.
+  - Major route destinations are non-empty and render consistent route contract + availability metadata (`real` / `mock` / `disabled`).
+  - Demo orchestration checks provide explicit diagnostics for occupied ports, API reachability failures, read-DB availability failures, and missing env/token setup.
+- Known remaining gaps:
+  - mock-backed routes remain deterministic fixtures until read contract migration waves are complete.
+  - write-heavy workflows stay intentionally disabled or local-only simulation in prototype mode.
+- Exact demo flow references:
+  - `modern/docs/demo-runbook.md` (section `3) 10-15 Minute Walkthrough Script`)
+  - `modern/docs/demo-acceptance-checklist.md`
+  - `modern/docs/demo-known-gaps-matrix.md`
+  - `modern/docs/prototype-shell-parity.md`
+
 Canonical command flow for local demos:
 
 ```bash

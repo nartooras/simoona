@@ -55,6 +55,10 @@ function formatSectionSourceLabel(section: HomeSectionState<unknown>): string {
     return 'disabled';
 }
 
+function formatWidgetCountLabel(count: number): string {
+    return `${count} ${count === 1 ? 'item' : 'items'}`;
+}
+
 export function HomePage() {
     const { t } = useTranslation();
     const [result, setResult] = useState<Awaited<ReturnType<typeof fetchHomeExperience>> | null>(null);
@@ -97,7 +101,7 @@ export function HomePage() {
         <section className="wall-page" aria-label="Wall page">
             <header className="wall-page-header">
                 <h1 className="page-title">{t('home.title')}</h1>
-                <p className="wall-page-subtitle">Legacy-like wall shell parity with compact feed and widgets.</p>
+                <p className="wall-page-subtitle">Core wall stream with compact parity-ready feed and right-rail density.</p>
                 {result && (
                     <p className="wall-data-source-summary" data-testid="wall-data-source-summary">
                         Feed source: {formatSectionSourceLabel(result.feed)} · Widgets source:{' '}
@@ -136,6 +140,8 @@ export function HomePage() {
                                 <article
                                     aria-label={`Wall post by ${post.author}`}
                                     className="wall-post-card"
+                                    data-replies-visible={repliesVisible ? 'true' : 'false'}
+                                    data-reply-composer={isReplyExpanded ? 'expanded' : 'collapsed'}
                                     data-testid="wall-post-card"
                                     key={post.id}
                                 >
@@ -227,7 +233,7 @@ export function HomePage() {
                                     </div>
                                     {post.replies.length === 0 && (
                                         <p className="wall-post-thread-empty wall-post-separator-row" data-section="thread-empty">
-                                            No replies yet
+                                            No replies yet in this snapshot
                                         </p>
                                     )}
                                     {post.replies.length > 0 && repliesVisible && (
@@ -274,7 +280,7 @@ export function HomePage() {
                                             <input
                                                 aria-label="Prototype comment input"
                                                 disabled
-                                                placeholder="Commenting is disabled in prototype mode"
+                                                placeholder="Reply publishing is disabled in this read-only prototype"
                                                 type="text"
                                             />
                                             <button className="wall-post-comment-submit" disabled type="button">
@@ -312,6 +318,9 @@ export function HomePage() {
                                     <h2 className="wall-widget-heading" data-testid="wall-widget-heading">
                                         {card.title}
                                     </h2>
+                                    <p className="wall-widget-meta wall-meta-muted" data-testid="wall-widget-meta">
+                                        {formatWidgetCountLabel(card.rows.length)}
+                                    </p>
                                 </header>
                                 <ul aria-label={`${card.title} items`} data-testid="wall-widget-list">
                                     {card.rows.map((row) => (

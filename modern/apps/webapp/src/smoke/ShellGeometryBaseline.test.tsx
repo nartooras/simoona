@@ -14,7 +14,7 @@ describe('Shell geometry baseline scaffold', () => {
         vi.unstubAllEnvs();
     });
 
-    it('keeps deterministic shell structure for Wave 2B parity semantics', async () => {
+    it('keeps deterministic shell structure for Wave 6 parity semantics', async () => {
         const router = createMemoryRouter(appRoutes, {
             initialEntries: [shellVisualBaselineSpec.route],
         });
@@ -38,11 +38,11 @@ describe('Shell geometry baseline scaffold', () => {
         expect(sidebar.getAttribute('data-left-rail-width')).toBe(shellVisualBaselineSpec.semantics.leftRailWidthTag);
         expect(nav.getAttribute('data-left-rail-density')).toBe(shellVisualBaselineSpec.semantics.leftRailDensityTag);
         expect(shellVisualBaselineSpec.semantics).toEqual({
-            shellGeometryTag: 'wave2b',
+            shellGeometryTag: 'wave6',
             topbarHeightTag: 'legacy-44',
-            topbarGeometryClass: 'topbar-geometry-wave2b',
-            leftRailWidthTag: 'legacy-232',
-            leftRailDensityTag: 'legacy-compact-wave2b',
+            topbarGeometryClass: 'topbar-geometry-wave6',
+            leftRailWidthTag: 'legacy-236',
+            leftRailDensityTag: 'legacy-compact-wave6',
         });
     });
 

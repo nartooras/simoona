@@ -30,6 +30,7 @@ try {
   assertDemoEnvironmentConsistency(config);
   assertDemoRouteDefinitions();
 
+  console.log("[demo:start] Verifying required ports...");
   await ensurePortAvailable(config.apiHost, config.apiPort, "API");
   await ensurePortAvailable(config.webHost, config.webPort, "Webapp");
 
@@ -40,6 +41,7 @@ try {
 
   const apiStdoutFd = openLogFile(apiLogPath);
   const apiStderrFd = openLogFile(apiLogPath);
+  console.log("[demo:start] Starting modern API...");
   const apiProcess = spawnApi(config, {
     detached: true,
     stdio: ["ignore", apiStdoutFd, apiStderrFd],
@@ -53,11 +55,13 @@ try {
     throw error;
   }
 
+  console.log("[demo:start] Validating API auth and read baselines...");
   const mintedToken = await mintDevToken(config);
   await assertApiHealthAndAuthBaseline(config, mintedToken);
 
   const webappStdoutFd = openLogFile(webappLogPath);
   const webappStderrFd = openLogFile(webappLogPath);
+  console.log("[demo:start] Starting modern webapp...");
   const webappProcess = spawnWebapp(config, mintedToken, {
     detached: true,
     stdio: ["ignore", webappStdoutFd, webappStderrFd],

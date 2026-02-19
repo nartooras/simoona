@@ -1,4 +1,4 @@
-# Prototype Shell Parity Pass (Threads P + R)
+# Prototype Shell Parity Baseline (Wave 6)
 
 This document captures the prototype-focused shell/navigation parity work for `modern/apps/webapp`, including route availability labeling and broader high-visibility prototype route coverage for demo-safe walkthroughs.
 
@@ -17,6 +17,22 @@ References:
 - Stakeholder acceptance criteria (`met` / `partial` / `deferred`): `modern/docs/demo-acceptance-checklist.md`
 - Prioritized known gaps vs legacy: `modern/docs/demo-known-gaps-matrix.md`
 - Deterministic command baseline: `pnpm demo:check`, `pnpm demo:start`, `pnpm demo:stop`
+
+## Current Demo Baseline
+
+- Parity-acceptable now:
+  - shell geometry + interaction states are normalized under Wave 6 semantics (`data-shell-geometry="wave6"` and matching topbar/left-rail tags).
+  - home feed card anatomy, reply threads, and right-rail widget hierarchy are compact and legacy-consistent for demo scanning.
+  - every navigation destination has a route contract marker, availability notice, and non-empty deterministic content.
+  - demo command flow emits actionable diagnostics for port, API, DB, and env/token failures.
+- Known remaining gaps:
+  - write workflows remain deferred; social interactions are still local-only.
+  - mock-backed destinations remain fixture-driven until read contracts migrate.
+  - disabled routes stay IA-visible only (`/service-requests`, `/externals/integrations`).
+- Exact demo flow references:
+  - walkthrough script: `modern/docs/demo-runbook.md` section `3) 10-15 Minute Walkthrough Script`.
+  - acceptance framing: `modern/docs/demo-acceptance-checklist.md`.
+  - gap priority order: `modern/docs/demo-known-gaps-matrix.md`.
 
 ## Navigation IA alignment
 
@@ -98,14 +114,14 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 - right rail includes compact cards for kudos feed, upcoming events, rankings, and birthdays with subtle row separators
 - top blue header keeps global chrome and now includes search + quick user actions for legacy-like scanning behavior
 
-### Wave 1A geometry baseline (desktop parity target)
+### Wave 6 geometry baseline (desktop parity target)
 
 | Geometry target | Value | Notes |
 |---|---|---|
 | Header height | `44px` | Sticky top chrome baseline. |
 | Header content max width | `1360px` | Aligns with shell frame. |
 | Sidebar width | `236px` | Fixed desktop nav rail width. |
-| Content max width (center wall stream) | `748px` | Main wall feed parity target. |
+| Content max width (center wall stream) | `752px` | Main wall feed parity target. |
 | Right rail width | `272px` | Widget column parity target. |
 | Core spacing (main grid gap + content gutter) | `18px` | Shared shell rhythm token. |
 | Sidebar nav row height | `31px` | Legacy-like nav density baseline. |

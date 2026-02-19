@@ -71,7 +71,7 @@ const fixtures: Record<PrototypePlaceholderRoute, PrototypeFixture> = {
     '/recognition': {
         title: 'Recognition',
         summary:
-            'Recognition cards are visual placeholders that mirror the planned IA location for social modules.',
+            'Recognition queue snapshots mirror weekly nomination operations while approval writes stay deferred.',
         defaultSource: 'mock',
         cards: [
             { title: 'Open recognitions', value: '12 draft shout-outs in this static preview set.' },
@@ -90,7 +90,7 @@ const fixtures: Record<PrototypePlaceholderRoute, PrototypeFixture> = {
     },
     '/events': {
         title: 'Events',
-        summary: 'Event discovery and schedule surfaces are represented with deterministic mock schedule blocks.',
+        summary: 'Event discovery and schedule surfaces use deterministic planning fixtures for rehearsal-safe walkthroughs.',
         defaultSource: 'mock',
         cards: [
             { title: 'Upcoming events', value: '6 scheduled prototype items seeded from static fixtures.' },
@@ -156,7 +156,7 @@ const fixtures: Record<PrototypePlaceholderRoute, PrototypeFixture> = {
     },
     '/books': {
         title: 'Books',
-        summary: 'Book catalog placement is preserved with mock inventory cards for prototype route coverage.',
+        summary: 'Book catalog placement is preserved with deterministic inventory fixtures for route-complete demos.',
         defaultSource: 'mock',
         cards: [
             { title: 'Catalog items', value: '28 sample books listed for UI layout parity.' },
@@ -194,7 +194,7 @@ const fixtures: Record<PrototypePlaceholderRoute, PrototypeFixture> = {
     },
     '/teams': {
         title: 'Teams',
-        summary: 'The teams area is included to preserve legacy IA expectations during prototype walkthroughs.',
+        summary: 'Teams destination keeps staffing context visible with deterministic headcount and utilization snapshots.',
         defaultSource: 'mock',
         cards: [
             { title: 'Team directory', value: '7 example teams with synthetic headcount values.' },
@@ -260,7 +260,7 @@ const fixtures: Record<PrototypePlaceholderRoute, PrototypeFixture> = {
     },
     '/organization/structure': {
         title: 'Organizational Structure',
-        summary: 'Organizational hierarchy appears with static level summaries to preserve IA familiarity.',
+        summary: 'Organizational hierarchy appears with deterministic department and span-of-control summaries.',
         defaultSource: 'mock',
         cards: [
             { title: 'Departments', value: '12 departments represented in this snapshot.' },
@@ -279,7 +279,7 @@ const fixtures: Record<PrototypePlaceholderRoute, PrototypeFixture> = {
     },
     '/committees': {
         title: 'Committees',
-        summary: 'Committee pages are represented with static membership blocks for route completeness.',
+        summary: 'Committee pages show deterministic membership and open-seat summaries for route completeness.',
         defaultSource: 'mock',
         cards: [
             { title: 'Active committees', value: '5 committees shown in fixture-backed list.' },
