@@ -52,6 +52,15 @@ export const navigationRouteDefinitions = [
         demoNote: 'Legacy-like home wall shell with deterministic read-first feed/widget state handling.',
     },
     {
+        path: '/wall',
+        label: 'Wall',
+        group: 'walls',
+        availability: 'mock',
+        destinationMode: 'mock-backed',
+        reason: 'Dedicated wall switching/filtering route is deterministic fixture-backed while wall read contracts are still migrating.',
+        demoNote: 'Legacy-like wall flow with deterministic wall selector, read-side filters, and demo-safe non-persistent interactions.',
+    },
+    {
         path: '/activities/feed',
         label: 'Activity Feed',
         group: 'walls',

@@ -23,6 +23,7 @@ References:
 - Parity-acceptable now:
   - shell geometry + interaction states are normalized under Wave 6 semantics (`data-shell-geometry="wave6"` and matching topbar/left-rail tags).
   - Wave 7 unifies design tokens (palette/spacing/type/radius/shadows/state colors) and shared UI primitives (`SectionHeader`, `StatusBadge`, `InfoMetaRow`, `ListRow`, `CardChrome`) across shell + route content.
+  - dedicated `/wall` route now provides deterministic wall context switching/filtering with explicit empty/unavailable states.
   - home feed card anatomy, reply threads, and right-rail widget hierarchy are compact and legacy-consistent for demo scanning.
   - every navigation destination has a route contract marker, availability notice, and non-empty deterministic content.
   - demo command flow emits actionable diagnostics for port, API, DB, and env/token failures.
@@ -53,6 +54,7 @@ Route status matrix (source of truth: `modern/apps/webapp/src/app/routes/navigat
 | Route | Nav group | Availability | Destination mode | Demo note |
 |---|---|---|---|---|
 | `/` | Walls | `real` | `real-backed` | Legacy-like home wall shell with deterministic read-first state handling. |
+| `/wall` | Walls | `mock` | `mock-backed` | Dedicated wall route with deterministic context switching/filter controls and explicit empty/unavailable states. |
 | `/activities/feed` | Walls | `mock` | `mock-backed` | Fixture-backed activity stream preserves density and walkthrough flow without writes. |
 | `/recognition` | Walls | `mock` | `mock-backed` | Deterministic recognition totals and queue state mirror legacy IA placement. |
 | `/events` | Activities | `mock` | `mock-backed` | Deterministic schedule table supports legacy-like event discovery demo path. |
@@ -129,6 +131,22 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 - center stream includes stacked wall cards with source label, avatar/author/timestamp line, body text, media placeholder, reaction row, and disabled comment input row
 - right rail includes compact cards for kudos feed, upcoming events, rankings, and birthdays with subtle row separators
 - top blue header keeps global chrome and now includes search + quick user actions for legacy-like scanning behavior
+
+### Wall Page Prototype (Wave 8)
+
+The `/wall` route now extends wall parity into a dedicated legacy-like wall destination instead of relying only on `/`:
+
+- wall selector supports deterministic switching between multiple contexts with distinct fixture datasets (`Company`, `Engineering`, `People`, plus explicit empty/unavailable contexts)
+- read-side controls provide deterministic sort (`latest`, `top`) and topic filtering without introducing write behavior
+- feed/comment card anatomy reuses the same wall card component used on `/` to keep visual and interaction parity aligned
+- right-rail widgets update with selected wall context and remain deterministic in demo mode
+- empty and unavailable wall contexts render explicit messages (`No posts in selected wall`, restricted incident data) with no blank state gaps
+
+Known limitations:
+
+- wall feed/widgets remain fixture-backed in demo mode (`mock`)
+- like/reply/comment interactions remain local-only and non-persistent
+- incident wall context is intentionally unavailable pending access-policy migration from legacy flows
 
 ### Wave 6 geometry baseline (desktop parity target)
 

@@ -27,6 +27,7 @@ export const requiredDemoRouteDefinitions = [
   { path: "/settings/general", mode: "real" },
   { path: "/employees", mode: "real" },
   { path: "/profiles/me", mode: "real" },
+  { path: "/wall", mode: "mock" },
   { path: "/activities/feed", mode: "mock" },
   { path: "/recognition", mode: "mock" },
   { path: "/service-requests", mode: "disabled" },

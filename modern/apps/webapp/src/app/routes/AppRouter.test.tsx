@@ -47,6 +47,23 @@ describe('AppRouter', () => {
         expect(screen.getByRole('heading', { name: 'Upcoming Events' })).toBeInTheDocument();
     });
 
+    it('renders dedicated wall route with switching and filter controls', async () => {
+        const router = createMemoryRouter(appRoutes, {
+            initialEntries: ['/wall'],
+        });
+
+        render(<RouterProvider router={router} />);
+
+        expect(await screen.findByRole('heading', { name: 'Wall' })).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/wall');
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'mock');
+        expect(screen.getByTestId('wall-context-select')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-sort-select')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-category-select')).toBeInTheDocument();
+        expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
+        expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
+    });
+
     it('renders user-info route', async () => {
         vi.spyOn(globalThis, 'fetch').mockImplementation(
             () => new Promise(() => {}) as ReturnType<typeof fetch>,

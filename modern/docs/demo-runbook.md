@@ -15,13 +15,14 @@ Operator runbook for a repeatable 10-15 minute stakeholder demo with decision-fo
 - Parity-acceptable now:
   - Wave 6 shell geometry is harmonized across topbar, left rail, home feed column, and right rail at common desktop widths.
   - Wave 7 theme unification applies one shared token system and shared UI primitives across shell chrome, page headers, route markers, cards, and list rows.
+  - Dedicated `/wall` route now demonstrates legacy-like wall context switching, deterministic sort/topic filters, and wall-specific empty/unavailable states.
   - Home feed cards, comment thread anatomy, and right-rail widgets use a consistent compact hierarchy and deterministic content.
   - Every major left-nav route renders a non-empty destination with route contract metadata + explicit availability (`real` / `mock` / `disabled`).
   - Demo commands surface actionable diagnostics for port collisions, API reachability, read-DB failures, and missing env/token setup.
 - Known remaining gaps:
   - Write-heavy routes remain intentionally unavailable (`/service-requests`, `/externals/integrations`).
   - Mock-backed routes still use deterministic fixtures instead of live contracts.
-  - Home social interactions remain local-only simulation (no persistent writes).
+  - Home and Wall social interactions remain local-only simulation (no persistent writes).
 - Exact demo flow references:
   - Route-by-route walkthrough: section `3) 10-15 Minute Walkthrough Script` in this document.
   - Acceptance status: `modern/docs/demo-acceptance-checklist.md`.
@@ -78,12 +79,13 @@ Open `http://127.0.0.1:5173`.
 |---|---|---|
 | 0-1 | Confirm terminal shows `[demo:start] PASS` and open app | API + webapp are running in deterministic demo mode. |
 | 1-3 | Home shell tour (`/`) | Header, grouped left rail, feed, and right rail render with unified Wave 7 token styling; notice reads `Prototype availability: Real.`; wall data summary indicates mock feed/widgets for stability. |
-| 3-5 | Real-backed read route: `/user-info` | User payload is shown from modern API, or explicit API-unavailable fallback text appears without crashing/navigation loss. |
-| 5-6 | Real-backed read route: `/settings/general` | Language/time zone settings load from modern API or clear fallback state renders. |
-| 6-7 | Real-backed read route: `/employees` | Employee table/content region renders or explicit fallback appears; no blank page. |
-| 7-9 | Mock-backed route: `/activities/feed` | Notice reads `Prototype availability: Mock.`; deterministic fixture content appears with read-only interaction framing. |
-| 9-10 | Mock-backed route: `/kudos` (or `/events`) | Deterministic fixture cards/tables load; destination remains non-empty and stable between refreshes. |
-| 10-12 | Deferred/disabled route: `/service-requests` | Notice reads `Prototype availability: Disabled.` and reason text explains deferred write-heavy workflow scope. |
+| 3-5 | Wall prototype tour (`/wall`) | Wall selector switches across at least three contexts; sort/topic filters deterministically reshape feed; empty (`Newcomers Wall`) and unavailable (`Incident Wall`) states render explicit messaging with no blank regions. |
+| 5-6 | Real-backed read route: `/user-info` | User payload is shown from modern API, or explicit API-unavailable fallback text appears without crashing/navigation loss. |
+| 6-7 | Real-backed read route: `/settings/general` | Language/time zone settings load from modern API or clear fallback state renders. |
+| 7-8 | Real-backed read route: `/employees` | Employee table/content region renders or explicit fallback appears; no blank page. |
+| 8-10 | Mock-backed route: `/activities/feed` | Notice reads `Prototype availability: Mock.`; deterministic fixture content appears with read-only interaction framing. |
+| 10-11 | Mock-backed route: `/kudos` (or `/events`) | Deterministic fixture cards/tables load; destination remains non-empty and stable between refreshes. |
+| 11-12 | Deferred/disabled route: `/service-requests` | Notice reads `Prototype availability: Disabled.` and reason text explains deferred write-heavy workflow scope. |
 | 12-15 | Decision wrap-up using docs | Open acceptance checklist + gaps matrix to confirm what is met now and what is intentionally deferred. |
 
 ## 4) Narration Guardrails
