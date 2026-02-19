@@ -1,24 +1,19 @@
 import { useEffect, useMemo, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import {
     fetchWallExperience,
+    getWallCollections,
+    getWallFeedPath,
     type WallCategoryFilter,
     wallCategoryOptions,
     type WallContextId,
-    wallContextOrder,
+    officialWallId,
     wallSortOptions,
     type WallSortMode,
 } from '../api/wallExperience';
 import type { SectionState } from '../api/wallExperienceTypes';
 import { WallExperienceColumns } from '../app/wall/WallExperienceColumns';
 import { SectionHeader, StatusBadge } from '../app/ui/primitives';
-
-const defaultWallLabels: Record<WallContextId, string> = {
-    'company-wall': 'Company Wall',
-    'engineering-wall': 'Engineering Wall',
-    'culture-wall': 'People Wall',
-    'newcomers-wall': 'Newcomers Wall',
-    'incident-wall': 'Incident Wall',
-};
 
 function formatSectionSourceLabel(section: SectionState<unknown>): string {
     if (section.adapter === 'real') {
@@ -44,8 +39,12 @@ function statusToBadgeMode(status: 'available' | 'empty' | 'unavailable'): 'real
     return 'real';
 }
 
-export function WallPage() {
-    const [selectedWallId, setSelectedWallId] = useState<WallContextId>('company-wall');
+export interface WallPageProps {
+    wallId: WallContextId;
+    routeLabel: string;
+}
+
+export function WallPage({ wallId, routeLabel }: WallPageProps) {
     const [sortMode, setSortMode] = useState<WallSortMode>('latest');
     const [category, setCategory] = useState<WallCategoryFilter>('all');
     const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +57,7 @@ export function WallPage() {
             setIsLoading(true);
 
             const response = await fetchWallExperience({
-                wallId: selectedWallId,
+                wallId,
                 sort: sortMode,
                 category,
             });
@@ -76,25 +75,17 @@ export function WallPage() {
         return () => {
             isMounted = false;
         };
-    }, [category, selectedWallId, sortMode]);
+    }, [category, sortMode, wallId]);
 
-    const wallOptions = useMemo(() => {
-        if (result) {
-            return result.availableWalls;
-        }
-
-        return wallContextOrder.map((wallId) => ({
-            id: wallId,
-            label: defaultWallLabels[wallId],
-            description: 'Loading wall context details...',
-            status: 'available' as const,
-        }));
-    }, [result]);
-
-    const selectedWall = wallOptions.find((wall) => wall.id === selectedWallId) ?? wallOptions[0];
+    const fallbackCollections = useMemo(() => getWallCollections(), []);
+    const selectedWall =
+        result?.selectedWall ?? fallbackCollections.allWalls.find((wall) => wall.id === wallId) ?? fallbackCollections.officialWall;
+    const feedNavigationWalls = result
+        ? [result.officialWall, ...result.subscribedWalls]
+        : [fallbackCollections.officialWall, ...fallbackCollections.subscribedWalls];
 
     return (
-        <section aria-label="Legacy-like Wall page" className="wall-page wall-page--prototype" data-testid="wall-page">
+        <section aria-label="Wall feed page" className="wall-page wall-page--prototype" data-testid="wall-page">
             <SectionHeader
                 className="wall-page-header"
                 meta={
@@ -106,44 +97,25 @@ export function WallPage() {
                     ) : undefined
                 }
                 metaClassName="wall-data-source-summary"
-                subtitle="Dedicated wall flow with deterministic context switching, filtering, and demo-safe interactions."
+                subtitle={`Read-only ${selectedWall.label} feed context aligned to legacy wall navigation semantics.`}
                 subtitleClassName="wall-page-subtitle"
-                title="Wall"
+                title={routeLabel}
                 titleAs="h1"
                 titleClassName="page-title"
             />
             <section className="wall-context-controls" data-testid="wall-context-controls">
                 <header className="wall-context-controls-header">
                     <h2 className="wall-context-controls-title">Wall context</h2>
-                    {selectedWall ? (
-                        <StatusBadge
-                            className="wall-context-status"
-                            label={selectedWall.status}
-                            mode={statusToBadgeMode(selectedWall.status)}
-                        />
-                    ) : null}
+                    <StatusBadge
+                        className="wall-context-status"
+                        label={selectedWall.status}
+                        mode={statusToBadgeMode(selectedWall.status)}
+                    />
                 </header>
                 <p className="wall-context-description" data-testid="wall-context-summary">
-                    {selectedWall?.description ?? 'Loading wall context details...'}
+                    {selectedWall.description}
                 </p>
                 <div className="wall-context-control-grid">
-                    <label className="wall-control-group" htmlFor="wall-context-select">
-                        <span>Wall</span>
-                        <select
-                            data-testid="wall-context-select"
-                            id="wall-context-select"
-                            onChange={(event) => {
-                                setSelectedWallId(event.target.value as WallContextId);
-                            }}
-                            value={selectedWallId}
-                        >
-                            {wallOptions.map((wall) => (
-                                <option key={wall.id} value={wall.id}>
-                                    {wall.label}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
                     <label className="wall-control-group" htmlFor="wall-sort-select">
                         <span>Sort</span>
                         <select
@@ -179,22 +151,28 @@ export function WallPage() {
                         </select>
                     </label>
                 </div>
-                <div className="wall-context-chip-row" data-testid="wall-context-chip-row">
-                    {wallOptions.slice(0, 4).map((wall) => (
-                        <button
-                            className="wall-context-chip"
-                            data-selected={wall.id === selectedWallId ? 'true' : 'false'}
-                            data-testid={`wall-context-chip-${wall.id}`}
-                            key={wall.id}
-                            onClick={() => {
-                                setSelectedWallId(wall.id);
-                            }}
-                            type="button"
-                        >
-                            <span>{wall.label}</span>
-                            <span className="wall-context-chip-state">{wall.status}</span>
-                        </button>
-                    ))}
+                <div className="wall-context-chip-row" data-testid="wall-context-link-row">
+                    <NavLink className="wall-context-chip" data-selected="false" data-testid="wall-context-link-all" end to="/walls">
+                        <span>All walls</span>
+                        <span className="wall-context-chip-state">directory</span>
+                    </NavLink>
+                    {feedNavigationWalls.map((wall) => {
+                        const isOfficial = wall.id === officialWallId;
+
+                        return (
+                            <NavLink
+                                className="wall-context-chip"
+                                data-selected={wall.id === wallId ? 'true' : 'false'}
+                                data-testid={`wall-context-link-${wall.id}`}
+                                end
+                                key={wall.id}
+                                to={getWallFeedPath(wall.id)}
+                            >
+                                <span>{isOfficial ? 'Official wall' : wall.label}</span>
+                                <span className="wall-context-chip-state">{wall.status}</span>
+                            </NavLink>
+                        );
+                    })}
                 </div>
                 <p className="wall-filter-summary" data-testid="wall-filter-summary">
                     Active controls: {sortMode} sort, {category} topic.
@@ -202,10 +180,10 @@ export function WallPage() {
             </section>
             <WallExperienceColumns
                 copy={{
-                    feedLoadingMessage: `Loading ${selectedWall?.label ?? 'selected'} feed...`,
+                    feedLoadingMessage: `Loading ${selectedWall.label} feed...`,
                     feedEmptyTitle: 'No posts in selected wall',
-                    feedEmptyMessage: `No posts are available in ${selectedWall?.label ?? 'this wall'} for the current filter selection.`,
-                    widgetsLoadingMessage: `Loading ${selectedWall?.label ?? 'selected'} widgets...`,
+                    feedEmptyMessage: `No posts are available in ${selectedWall.label} for the current filter selection.`,
+                    widgetsLoadingMessage: `Loading ${selectedWall.label} widgets...`,
                 }}
                 result={isLoading ? null : result}
             />

@@ -21,13 +21,13 @@ const criticalProtectedApiChecks = [
 ];
 
 export const requiredDemoRouteDefinitions = [
-  { path: "/", mode: "real" },
+  { path: "/", mode: "mock" },
+  { path: "/walls", mode: "mock" },
   { path: "/health", mode: "real" },
   { path: "/user-info", mode: "real" },
   { path: "/settings/general", mode: "real" },
   { path: "/employees", mode: "real" },
   { path: "/profiles/me", mode: "real" },
-  { path: "/wall", mode: "mock" },
   { path: "/activities/feed", mode: "mock" },
   { path: "/recognition", mode: "mock" },
   { path: "/service-requests", mode: "disabled" },
@@ -159,11 +159,11 @@ export function assertDemoRouteDefinitions() {
     throw new Error(`App routes must be generated from navigation metadata in ${appRouterPath}.`);
   }
 
-  for (const route of requiredDemoRouteDefinitions) {
-    if (!routerSource.includes(`'${route.path}':`)) {
-      throw new Error(`Missing '${route.path}' destination mapping in ${appRouterPath}.`);
-    }
+  if (!navigationSource.includes("subscribedWalls.map")) {
+    throw new Error(`Walls IA must be generated from subscribed wall collection metadata in ${navigationPath}.`);
+  }
 
+  for (const route of requiredDemoRouteDefinitions) {
     const escapedPath = escapeRegExp(route.path);
     const modePattern = new RegExp(`path:\\s*'${escapedPath}'[\\s\\S]{0,260}?availability:\\s*'${route.mode}'`);
     if (!modePattern.test(navigationSource)) {

@@ -21,7 +21,7 @@ describe('navigation metadata', () => {
 
     it('keeps route labels, availability states, and demo notes aligned with source definitions', () => {
         for (const definition of navigationRouteDefinitions) {
-            const availability = routeAvailabilityMap[definition.path];
+            const availability = routeAvailabilityMap[definition.path]!;
             const routeMatrixEntry = routeStatusMatrix.find((entry) => entry.route === definition.path);
             const byPathDefinition = getRouteDefinition(definition.path);
 

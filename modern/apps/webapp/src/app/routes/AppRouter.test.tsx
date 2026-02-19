@@ -30,34 +30,46 @@ describe('AppRouter', () => {
         expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'real');
     });
 
-    it('renders home wall layout shell', async () => {
+    it('renders official wall landing route', async () => {
         const router = createMemoryRouter(appRoutes, {
             initialEntries: ['/'],
         });
 
         render(<RouterProvider router={router} />);
 
-        expect(await screen.findByRole('heading', { name: 'Home' })).toBeInTheDocument();
+        expect(await screen.findByRole('heading', { name: 'Official wall' })).toBeInTheDocument();
         expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
         expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
         expect(screen.getByTestId('wall-content-grid')).toBeInTheDocument();
         expect(screen.getByTestId('wall-feed-column')).toBeInTheDocument();
         expect(screen.getByTestId('wall-widgets-column')).toBeInTheDocument();
-        expect(screen.getByRole('heading', { name: 'Kudos Feed' })).toBeInTheDocument();
-        expect(screen.getByRole('heading', { name: 'Upcoming Events' })).toBeInTheDocument();
     });
 
-    it('renders dedicated wall route with switching and filter controls', async () => {
+    it('renders all walls route as dedicated directory', async () => {
         const router = createMemoryRouter(appRoutes, {
-            initialEntries: ['/wall'],
+            initialEntries: ['/walls'],
         });
 
         render(<RouterProvider router={router} />);
 
-        expect(await screen.findByRole('heading', { name: 'Wall' })).toBeInTheDocument();
-        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/wall');
+        expect(await screen.findByRole('heading', { name: 'All walls' })).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/walls');
         expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'mock');
-        expect(screen.getByTestId('wall-context-select')).toBeInTheDocument();
+        expect(screen.getByTestId('all-walls-list')).toBeInTheDocument();
+        expect(screen.getByTestId('all-walls-item-company-wall')).toBeInTheDocument();
+        expect(screen.getByTestId('all-walls-item-incident-wall')).toBeInTheDocument();
+    });
+
+    it('renders subscribed wall route with deterministic filter controls', async () => {
+        const router = createMemoryRouter(appRoutes, {
+            initialEntries: ['/walls/engineering-wall'],
+        });
+
+        render(<RouterProvider router={router} />);
+
+        expect(await screen.findByRole('heading', { name: 'Engineering Wall' })).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/walls/engineering-wall');
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'mock');
         expect(screen.getByTestId('wall-sort-select')).toBeInTheDocument();
         expect(screen.getByTestId('wall-category-select')).toBeInTheDocument();
         expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
@@ -191,7 +203,6 @@ describe('AppRouter', () => {
         );
 
         const headingByPath: Record<string, string> = {
-            '/': 'Home',
             '/employees': 'Employee Directory',
         };
 
@@ -228,7 +239,7 @@ describe('AppRouter', () => {
         } as const;
 
         for (const routeDefinition of navigationRouteDefinitions) {
-            const availability = routeAvailabilityMap[routeDefinition.path];
+            const availability = routeAvailabilityMap[routeDefinition.path]!;
             const router = createMemoryRouter(appRoutes, {
                 initialEntries: [routeDefinition.path],
             });
@@ -249,7 +260,6 @@ describe('AppRouter', () => {
 
     it('keeps route contract notes aligned with route status matrix metadata', async () => {
         const headingByPath: Record<string, string> = {
-            '/': 'Home',
             '/employees': 'Employee Directory',
         };
 
