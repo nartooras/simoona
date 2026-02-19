@@ -32,4 +32,4 @@
 - No auth-path changes in this thread; no ADR-0003/auth-migration exceptions observed.
 
 ## 7. Final commit hash
-- Pending commit for this review report.
+- `b46bc959`
