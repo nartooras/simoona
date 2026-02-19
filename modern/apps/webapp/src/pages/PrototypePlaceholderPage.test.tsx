@@ -23,7 +23,7 @@ describe('PrototypePlaceholderPage', () => {
         );
 
         expect(screen.getByRole('heading', { name: 'Placeholder Route' })).toBeInTheDocument();
-        expect(screen.getByText('Data source: Mock fixtures.')).toBeInTheDocument();
+        expect(screen.getByText(/Static preview with safe interactions\./)).toHaveTextContent('Data source: Mock fixtures.');
         expect(screen.getByText('Actions shown below are intentionally read-only in prototype mode.')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Available now' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Unavailable in prototype' })).toBeInTheDocument();

@@ -1,4 +1,5 @@
 import type { RouteAvailability } from '../routes/navigation';
+import { StatusBadge } from '../ui/primitives';
 
 interface PrototypeNoticeProps {
     mode: RouteAvailability;
@@ -35,7 +36,7 @@ export function PrototypeNotice({ mode, reason }: PrototypeNoticeProps) {
         >
             <p className="prototype-notice-title">
                 <strong>Prototype availability: {meta.label}.</strong>
-                <span className={`prototype-notice-severity prototype-notice-severity--${mode}`}>{meta.severity}</span>
+                <StatusBadge className="prototype-notice-severity" label={meta.severity} mode={mode} />
             </p>
             <p className="prototype-notice-copy">{reason ?? meta.description}</p>
         </section>

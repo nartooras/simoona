@@ -11,6 +11,7 @@ import { PrototypeNotice } from '../prototype/PrototypeNotice';
 import { getRouteDefinition, navigationRouteDefinitions, type NavigationRoutePath, routeAvailabilityMap } from './navigation';
 import { PrototypePlaceholderPage } from '../../pages/PrototypePlaceholderPage';
 import { getPrototypePlaceholder } from '../../api/prototypePlaceholders';
+import { CardChrome, StatusBadge } from '../ui/primitives';
 
 function getRouteAvailability(path: NavigationRoutePath) {
     return routeAvailabilityMap[path] ?? { mode: 'real' as const };
@@ -64,7 +65,8 @@ function renderRoute(path: NavigationRoutePath, page: ReactNode) {
     return (
         <AppLayout>
             <PrototypeNotice mode={availability.mode} reason={availability.reason} />
-            <section
+            <CardChrome
+                as="section"
                 aria-label={`${routeDefinition.label} route contract`}
                 className="route-contract-marker"
                 data-route-availability={availability.mode}
@@ -73,13 +75,15 @@ function renderRoute(path: NavigationRoutePath, page: ReactNode) {
                 data-testid="route-contract-marker"
             >
                 <p className="route-contract-heading">
-                    {routeDefinition.label} · {availability.mode}
+                    {routeDefinition.label}
+                    <StatusBadge className="route-contract-badge" label={availability.mode} mode={availability.mode} />
                 </p>
                 <p className="route-contract-note">{routeDefinition.demoNote}</p>
-            </section>
+            </CardChrome>
             <section
                 aria-label={`${routeDefinition.label} content`}
                 className="page-content-region"
+                data-page-theme="legacy-unified-wave7"
                 data-route-status={availability.mode}
                 data-testid="destination-content-region"
             >

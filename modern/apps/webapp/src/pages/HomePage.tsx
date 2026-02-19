@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchHomeExperience, type FeedPost, type HomeSectionState } from '../api/homeExperience';
+import { CardChrome, InfoMetaRow, ListRow, SectionHeader } from '../app/ui/primitives';
 
 const widgetPriority: Record<string, number> = {
     'Kudos Feed': 0,
@@ -98,36 +99,49 @@ export function HomePage() {
     }, []);
 
     return (
-        <section className="wall-page" aria-label="Wall page">
-            <header className="wall-page-header">
-                <h1 className="page-title">{t('home.title')}</h1>
-                <p className="wall-page-subtitle">Core wall stream with compact parity-ready feed and right-rail density.</p>
-                {result && (
-                    <p className="wall-data-source-summary" data-testid="wall-data-source-summary">
-                        Feed source: {formatSectionSourceLabel(result.feed)} · Widgets source:{' '}
-                        {formatSectionSourceLabel(result.widgets)}
-                    </p>
-                )}
-            </header>
+        <section aria-label="Wall page" className="wall-page">
+            <SectionHeader
+                className="wall-page-header"
+                meta={
+                    result ? (
+                        <span data-testid="wall-data-source-summary">
+                            Feed source: {formatSectionSourceLabel(result.feed)} · Widgets source:{' '}
+                            {formatSectionSourceLabel(result.widgets)}
+                        </span>
+                    ) : undefined
+                }
+                metaClassName="wall-data-source-summary"
+                subtitle="Core wall stream with compact parity-ready feed and right-rail density."
+                subtitleClassName="wall-page-subtitle"
+                title={t('home.title')}
+                titleAs="h1"
+                titleClassName="page-title"
+            />
             <div className="wall-content-grid" data-testid="wall-content-grid">
                 <section aria-label="Feed stream" className="wall-feed-column" data-testid="wall-feed-column">
                     {result === null && (
-                        <section className="wall-section-state" data-testid="wall-feed-loading" role="status">
+                        <CardChrome as="section" className="wall-section-state" data-testid="wall-feed-loading" role="status">
                             <h2 className="wall-section-state-title">Feed loading</h2>
                             <p>Loading home feed...</p>
-                        </section>
+                        </CardChrome>
                     )}
                     {result?.feed.kind === 'unavailable' && (
-                        <section className="wall-section-state wall-section-state--warning" data-testid="wall-feed-unavailable" role="alert">
+                        <CardChrome
+                            as="section"
+                            className="wall-section-state wall-section-state--warning"
+                            data-testid="wall-feed-unavailable"
+                            role="alert"
+                            tone="warning"
+                        >
                             <h2 className="wall-section-state-title">Feed unavailable</h2>
                             <p>{result.feed.reason}</p>
-                        </section>
+                        </CardChrome>
                     )}
                     {result?.feed.kind === 'empty' && (
-                        <section className="wall-section-state" data-testid="wall-feed-empty" role="status">
+                        <CardChrome as="section" className="wall-section-state" data-testid="wall-feed-empty" role="status">
                             <h2 className="wall-section-state-title">No feed posts yet</h2>
                             <p>Home feed fixtures are empty for this adapter snapshot.</p>
-                        </section>
+                        </CardChrome>
                     )}
                     {result?.feed.kind === 'success' &&
                         result.feed.items.map((post) => {
@@ -137,7 +151,8 @@ export function HomePage() {
                             const threadId = `wall-post-thread-${post.id}`;
 
                             return (
-                                <article
+                                <CardChrome
+                                    as="article"
                                     aria-label={`Wall post by ${post.author}`}
                                     className="wall-post-card"
                                     data-replies-visible={repliesVisible ? 'true' : 'false'}
@@ -157,10 +172,13 @@ export function HomePage() {
                                                 .map((part) => part[0])
                                                 .join('')}
                                         </span>
-                                        <div className="wall-post-meta-copy">
-                                            <p className="wall-post-author">{post.author}</p>
-                                            <p className="wall-post-timestamp wall-meta-muted">{post.timestamp}</p>
-                                        </div>
+                                        <InfoMetaRow
+                                            className="wall-post-meta-copy"
+                                            primary={post.author}
+                                            primaryClassName="wall-post-author"
+                                            secondary={post.timestamp}
+                                            secondaryClassName="wall-post-timestamp wall-meta-muted"
+                                        />
                                     </header>
                                     <p className="wall-post-body" data-section="body" data-testid="wall-post-body">
                                         {post.text}
@@ -258,10 +276,13 @@ export function HomePage() {
                                                             .join('')}
                                                     </span>
                                                     <div className="wall-post-reply-body">
-                                                        <div className="wall-post-reply-meta">
-                                                            <p className="wall-post-reply-author">{reply.author}</p>
-                                                            <p className="wall-post-reply-timestamp">{reply.timestamp}</p>
-                                                        </div>
+                                                        <InfoMetaRow
+                                                            className="wall-post-reply-meta"
+                                                            primary={reply.author}
+                                                            primaryClassName="wall-post-reply-author"
+                                                            secondary={reply.timestamp}
+                                                            secondaryClassName="wall-post-reply-timestamp"
+                                                        />
                                                         <p className="wall-post-reply-text">{reply.text}</p>
                                                     </div>
                                                 </article>
@@ -288,32 +309,38 @@ export function HomePage() {
                                             </button>
                                         </div>
                                     )}
-                                </article>
+                                </CardChrome>
                             );
                         })}
                 </section>
                 <aside aria-label="Wall widgets" className="wall-widgets-column" data-testid="wall-widgets-column">
                     {result === null && (
-                        <section className="wall-section-state" data-testid="wall-widget-loading" role="status">
+                        <CardChrome as="section" className="wall-section-state" data-testid="wall-widget-loading" role="status">
                             <h2 className="wall-section-state-title">Widgets loading</h2>
                             <p>Loading right-rail widgets...</p>
-                        </section>
+                        </CardChrome>
                     )}
                     {result?.widgets.kind === 'unavailable' && (
-                        <section className="wall-section-state wall-section-state--warning" data-testid="wall-widget-unavailable" role="alert">
+                        <CardChrome
+                            as="section"
+                            className="wall-section-state wall-section-state--warning"
+                            data-testid="wall-widget-unavailable"
+                            role="alert"
+                            tone="warning"
+                        >
                             <h2 className="wall-section-state-title">Widgets unavailable</h2>
                             <p>{result.widgets.reason}</p>
-                        </section>
+                        </CardChrome>
                     )}
                     {result?.widgets.kind === 'empty' && (
-                        <section className="wall-section-state" data-testid="wall-widget-empty" role="status">
+                        <CardChrome as="section" className="wall-section-state" data-testid="wall-widget-empty" role="status">
                             <h2 className="wall-section-state-title">No widget fixtures yet</h2>
                             <p>Right-rail fixtures are empty for this adapter snapshot.</p>
-                        </section>
+                        </CardChrome>
                     )}
                     {result?.widgets.kind === 'success' &&
                         sortWidgetCards(result.widgets.items).map((card) => (
-                            <section className="wall-widget-card" data-testid="wall-widget-card" key={card.id}>
+                            <CardChrome as="section" className="wall-widget-card" data-testid="wall-widget-card" key={card.id}>
                                 <header className="wall-widget-header">
                                     <h2 className="wall-widget-heading" data-testid="wall-widget-heading">
                                         {card.title}
@@ -324,25 +351,24 @@ export function HomePage() {
                                 </header>
                                 <ul aria-label={`${card.title} items`} data-testid="wall-widget-list">
                                     {card.rows.map((row) => (
-                                        <li className="wall-widget-row" data-testid="wall-widget-row" key={row.id}>
-                                            <p className="wall-widget-row-primary wall-widget-row-title" data-testid="wall-widget-row-title">
-                                                {row.primary}
-                                            </p>
-                                            <p
-                                                className="wall-widget-row-secondary wall-widget-row-meta wall-meta-muted"
-                                                data-testid="wall-widget-row-meta"
-                                            >
-                                                {row.secondary}
-                                            </p>
+                                        <ListRow className="wall-widget-row" data-testid="wall-widget-row" key={row.id}>
+                                            <InfoMetaRow
+                                                primary={row.primary}
+                                                primaryClassName="wall-widget-row-primary wall-widget-row-title"
+                                                primaryTestId="wall-widget-row-title"
+                                                secondary={row.secondary}
+                                                secondaryClassName="wall-widget-row-secondary wall-widget-row-meta wall-meta-muted"
+                                                secondaryTestId="wall-widget-row-meta"
+                                            />
                                             {row.subtext && (
                                                 <p className="wall-widget-row-subtext wall-meta-muted" data-testid="wall-widget-row-subtext">
                                                     {row.subtext}
                                                 </p>
                                             )}
-                                        </li>
+                                        </ListRow>
                                     ))}
                                 </ul>
-                            </section>
+                            </CardChrome>
                         ))}
                 </aside>
             </div>

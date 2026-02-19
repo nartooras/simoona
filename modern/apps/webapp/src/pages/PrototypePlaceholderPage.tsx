@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { CardChrome, ListRow, SectionHeader, StatusBadge } from '../app/ui/primitives';
 
 interface PrototypePlaceholderPageProps {
     title: string;
@@ -24,14 +25,16 @@ interface PrototypePlaceholderPageProps {
 
 function renderChecklist(title: string, entries: ReadonlyArray<string>) {
     return (
-        <section className="placeholder-state-block">
+        <CardChrome as="section" className="placeholder-state-block">
             <h2>{title}</h2>
             <ul>
                 {entries.map((entry) => (
-                    <li key={entry}>{entry}</li>
+                    <ListRow key={entry} withSeparator={false}>
+                        {entry}
+                    </ListRow>
                 ))}
             </ul>
-        </section>
+        </CardChrome>
     );
 }
 
@@ -56,22 +59,30 @@ export function PrototypePlaceholderPage({
 
     return (
         <section aria-labelledby={sectionTitleId} className="page-section">
-            <header className="page-header-block">
-                <h1 className="page-title" id={sectionTitleId}>
-                    {title}
-                </h1>
-                <p className="status-message">
-                    {summary} <strong>Data source: {dataSourceLabels[dataSource]}.</strong>
-                </p>
-                <p className="helper-note">Actions shown below are intentionally read-only in prototype mode.</p>
-            </header>
+            <SectionHeader
+                className="page-header-block"
+                subtitle={
+                    <span>
+                        {summary}{' '}
+                        <strong>
+                            Data source: <StatusBadge className="page-data-source-badge" label={dataSourceLabels[dataSource]} mode={dataSource} />.
+                        </strong>
+                    </span>
+                }
+                subtitleClassName="status-message"
+                title={title}
+                titleAs="h1"
+                titleClassName="page-title"
+                titleId={sectionTitleId}
+            />
+            <p className="helper-note">Actions shown below are intentionally read-only in prototype mode.</p>
             <div aria-label={`${title} primary content`} className="page-primary-content">
                 <dl className="info-grid">
                     {cards.map((card) => (
-                        <div className="info-card" key={card.title}>
+                        <CardChrome as="div" className="info-card" key={card.title}>
                             <dt>{card.title}</dt>
                             <dd>{card.value}</dd>
-                        </div>
+                        </CardChrome>
                     ))}
                 </dl>
                 <div className="placeholder-state-grid">
@@ -80,26 +91,26 @@ export function PrototypePlaceholderPage({
                     {renderChecklist('Planned next wave', plannedNextWave)}
                 </div>
                 {actions.length > 0 ? (
-                    <section className="placeholder-action-panel" aria-label="Prototype actions">
+                    <CardChrome as="section" aria-label="Prototype actions" className="placeholder-action-panel">
                         <h2>Simulated controls</h2>
                         <ul>
                             {actions.map((action, index) => {
                                 const explanationId = `prototype-action-${index}`;
 
                                 return (
-                                    <li key={action.label}>
+                                    <ListRow key={action.label} withSeparator={false}>
                                         <button aria-describedby={explanationId} disabled type="button">
                                             {action.label}
                                         </button>
                                         <span id={explanationId}>{action.explanation}</span>
-                                    </li>
+                                    </ListRow>
                                 );
                             })}
                         </ul>
-                    </section>
+                    </CardChrome>
                 ) : null}
                 {table ? (
-                    <section className="data-table-shell" aria-label={table.title}>
+                    <CardChrome as="section" aria-label={table.title} className="data-table-shell">
                         <table className="data-table">
                             <caption>{table.title}</caption>
                             <thead>
@@ -121,7 +132,7 @@ export function PrototypePlaceholderPage({
                                 ))}
                             </tbody>
                         </table>
-                    </section>
+                    </CardChrome>
                 ) : null}
             </div>
         </section>

@@ -91,6 +91,7 @@ describe('AppLayout', () => {
 
         expect(container.querySelector('[data-shell-geometry="wave6"]')).not.toBeNull();
         expect(container.querySelector('[data-shell-fidelity="wave6-shell-home-bundle"]')).not.toBeNull();
+        expect(container.querySelector('[data-theme-system="legacy-unified-wave7"]')).not.toBeNull();
         expect(screen.getByTestId('app-header')).toBeInTheDocument();
         expect(screen.getByTestId('app-layout')).toBeInTheDocument();
         expect(screen.getByTestId('app-sidebar')).toBeInTheDocument();

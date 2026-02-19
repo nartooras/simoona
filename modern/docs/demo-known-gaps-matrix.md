@@ -12,6 +12,7 @@ Practical, prioritized view of remaining differences to narrate during demo deci
 
 - Parity-acceptable now:
   - Shell/home parity is stable for stakeholder walkthroughs.
+  - Wave 7 unified design tokens and reusable UI primitives across major routes, reducing visual drift between shell, real-backed pages, and placeholder pages.
   - Route contract metadata and availability labels are synchronized and non-empty across major destinations.
   - Demo reliability diagnostics are actionable for the main local failure classes.
 - Known remaining gaps:
@@ -32,7 +33,7 @@ Practical, prioritized view of remaining differences to narrate during demo deci
 | 3 | Home feed interactions | medium | `mock` | Likes/replies/comments are simulated only, no persistence or live counters. | Keep read-first framing in demos; define write semantics and backend ownership before implementation. |
 | 4 | Activity/event/kudos/books/vacations slices | medium | `mock` | Deterministic fixtures replace live backend data and legacy dynamic behavior. | Prioritize migration of highest-value read contracts to modern API; retire fixtures slice-by-slice. |
 | 5 | Teams/projects/office/organization/committees | medium | `mock` | Company module destinations are route-complete but still non-live previews. | Convert by business priority, starting with routes that unblock stakeholder adoption decisions. |
-| 6 | Shell micro-fidelity (icons, exact spacing) | low | `real` shell + mixed route modes | Remaining pixel-level differences from legacy topbar/icon/chrome treatment. | Treat as polish backlog; avoid blocking demo unless visual regressions affect comprehension. |
+| 6 | Shell micro-fidelity (icons, exact spacing) | low | `real` shell + mixed route modes | Wave 7 removed token drift, but pixel-exact legacy iconography and some fine-grain spacing nuances still differ. | Treat as polish backlog; avoid blocking demo unless visual regressions affect comprehension. |
 | 7 | Advanced legacy interaction affordances | low | mixed (`real` + `mock`) | Context menus, inline edit/history, and richer interaction depth are not fully represented. | Add only where migration value is clear; keep current flows explicit about read-only/deferred scope. |
 
 ## Demo Framing Guidance
