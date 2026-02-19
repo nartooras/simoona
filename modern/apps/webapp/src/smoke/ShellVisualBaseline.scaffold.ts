@@ -21,7 +21,7 @@ export const shellVisualBaselineSpec: ShellVisualBaselineSpec = {
         height: 900,
     },
     selectors: [
-        '[data-shell-geometry="wave2b"]',
+        '[data-shell-geometry="wave6"]',
         '[data-testid="app-header"]',
         '[data-testid="app-sidebar"]',
         '[data-testid="app-content"]',
@@ -30,10 +30,10 @@ export const shellVisualBaselineSpec: ShellVisualBaselineSpec = {
         '[data-testid="wall-widgets-column"]',
     ],
     semantics: {
-        shellGeometryTag: 'wave2b',
+        shellGeometryTag: 'wave6',
         topbarHeightTag: 'legacy-44',
-        topbarGeometryClass: 'topbar-geometry-wave2b',
-        leftRailWidthTag: 'legacy-232',
-        leftRailDensityTag: 'legacy-compact-wave2b',
+        topbarGeometryClass: 'topbar-geometry-wave6',
+        leftRailWidthTag: 'legacy-236',
+        leftRailDensityTag: 'legacy-compact-wave6',
     },
 };

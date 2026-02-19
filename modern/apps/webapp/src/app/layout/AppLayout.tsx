@@ -23,13 +23,13 @@ export function AppLayout({ children }: PropsWithChildren) {
 
     return (
         <div
-            className="app-shell shell-wave2b"
-            data-shell-fidelity="wave2b-topbar-leftnav"
-            data-shell-geometry="wave2b"
-            data-shell-taxonomy="wave2b-left-rail-taxonomy"
+            className="app-shell shell-wave6"
+            data-shell-fidelity="wave6-shell-home-bundle"
+            data-shell-geometry="wave6"
+            data-shell-taxonomy="wave6-left-rail-taxonomy"
         >
             <header className="app-header topbar-height-legacy-44" data-testid="app-header">
-                <div className="app-header-content topbar-geometry-wave2b" data-topbar-geometry="legacy-v2b">
+                <div className="app-header-content topbar-geometry-wave6" data-topbar-geometry="legacy-v6">
                     <button
                         aria-controls="app-sidebar-nav"
                         aria-expanded={isMobileNavOpen}
@@ -110,59 +110,70 @@ export function AppLayout({ children }: PropsWithChildren) {
             </header>
             <div className="app-layout" data-testid="app-layout">
                 <aside
-                    className={`app-sidebar left-rail-width-legacy-232${isMobileNavOpen ? ' open' : ''}`}
-                    data-left-rail-width="legacy-232"
+                    className={`app-sidebar left-rail-width-legacy-236${isMobileNavOpen ? ' open' : ''}`}
+                    data-left-rail-width="legacy-236"
                     data-testid="app-sidebar"
                     id="app-sidebar-nav"
                 >
                     <nav
                         aria-label="Primary navigation"
-                        className="app-nav left-rail-density-wave2b"
-                        data-left-rail-density="legacy-compact-wave2b"
+                        className="app-nav left-rail-density-wave6"
+                        data-left-rail-density="legacy-compact-wave6"
                     >
-                        {navigationGroups.map((group) => (
-                            <section className="app-nav-group" data-group={group.key} key={group.title}>
-                                <h2 className="app-nav-group-title" id={`nav-group-${group.key}`}>
-                                    <button
-                                        aria-controls={`nav-group-list-${group.key}`}
-                                        aria-expanded={!collapsedGroups[group.key]}
-                                        className="app-nav-group-toggle"
-                                        data-testid={`nav-group-toggle-${group.key}`}
-                                        type="button"
-                                        onClick={() => toggleGroup(group.key)}
-                                    >
-                                        <span
-                                            aria-hidden="true"
-                                            className={`app-nav-group-chevron${collapsedGroups[group.key] ? ' collapsed' : ''}`}
-                                        >
-                                            ▾
-                                        </span>
-                                        <span aria-hidden="true" className={`app-nav-group-icon app-nav-group-icon--${group.key}`} />
-                                        <span className="app-nav-group-label">{group.title}</span>
-                                    </button>
-                                </h2>
-                                <ul
-                                    aria-labelledby={`nav-group-${group.key}`}
-                                    hidden={collapsedGroups[group.key]}
-                                    id={`nav-group-list-${group.key}`}
+                        {navigationGroups.map((group) => {
+                            const isCollapsed = collapsedGroups[group.key];
+
+                            return (
+                                <section
+                                    className="app-nav-group"
+                                    data-group={group.key}
+                                    data-group-state={isCollapsed ? 'collapsed' : 'expanded'}
+                                    key={group.title}
                                 >
-                                    {group.items.map((item) => (
-                                        <li key={item.to}>
-                                            <NavLink end={item.end} onClick={closeMobileNav} to={item.to}>
-                                                <span aria-hidden="true" className="app-nav-item-bullet" />
-                                                <span className="nav-item-label">{item.label}</span>
-                                                <span
-                                                    aria-hidden="true"
-                                                    className={`nav-availability nav-availability--${item.availability}`}
-                                                >
-                                                    {item.availability}
-                                                </span>
-                                            </NavLink>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </section>
-                        ))}
+                                    <h2 className="app-nav-group-title" id={`nav-group-${group.key}`}>
+                                        <button
+                                            aria-controls={`nav-group-list-${group.key}`}
+                                            aria-expanded={!isCollapsed}
+                                            className="app-nav-group-toggle"
+                                            data-testid={`nav-group-toggle-${group.key}`}
+                                            type="button"
+                                            onClick={() => toggleGroup(group.key)}
+                                        >
+                                            <span
+                                                aria-hidden="true"
+                                                className={`app-nav-group-chevron${isCollapsed ? ' collapsed' : ''}`}
+                                            >
+                                                ▾
+                                            </span>
+                                            <span aria-hidden="true" className={`app-nav-group-icon app-nav-group-icon--${group.key}`} />
+                                            <span className="app-nav-group-label">{group.title}</span>
+                                        </button>
+                                    </h2>
+                                    <ul
+                                        aria-hidden={isCollapsed}
+                                        aria-labelledby={`nav-group-${group.key}`}
+                                        className="app-nav-group-list"
+                                        data-collapsed={isCollapsed ? 'true' : 'false'}
+                                        id={`nav-group-list-${group.key}`}
+                                    >
+                                        {group.items.map((item) => (
+                                            <li key={item.to}>
+                                                <NavLink end={item.end} onClick={closeMobileNav} tabIndex={isCollapsed ? -1 : undefined} to={item.to}>
+                                                    <span aria-hidden="true" className="app-nav-item-bullet" />
+                                                    <span className="nav-item-label">{item.label}</span>
+                                                    <span
+                                                        aria-hidden="true"
+                                                        className={`nav-availability nav-availability--${item.availability}`}
+                                                    >
+                                                        {item.availability}
+                                                    </span>
+                                                </NavLink>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </section>
+                            );
+                        })}
                     </nav>
                 </aside>
                 <main className="app-content" data-testid="app-content">

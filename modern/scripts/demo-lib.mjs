@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import net from "node:net";
 import path from "node:path";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -53,6 +53,14 @@ const defaultConfig = {
 
 export const pidFilePath = "/tmp/simoona-modern-demo.json";
 
+function diagnosticError(code, message) {
+  return new Error(`DEMO_DIAG[${code}] ${message}`);
+}
+
+function hasDiagnostic(message, code) {
+  return message.includes(`DEMO_DIAG[${code}]`);
+}
+
 export function readDemoConfig() {
   const apiHost = process.env.DEMO_API_HOST ?? defaultConfig.apiHost;
   const apiPort = readPort(process.env.DEMO_API_PORT, defaultConfig.apiPort, "DEMO_API_PORT");
@@ -61,12 +69,12 @@ export function readDemoConfig() {
   const organizationId = (process.env.VITE_API_ORGANIZATION_ID ?? defaultConfig.organizationId).trim();
 
   if (!/^\d+$/.test(organizationId)) {
-    throw new Error("VITE_API_ORGANIZATION_ID must be a numeric value.");
+    throw diagnosticError("ENV_MISSING", "VITE_API_ORGANIZATION_ID must be a numeric value.");
   }
 
   const demoModeRaw = (process.env.VITE_DEMO_MODE ?? "true").trim().toLowerCase();
   if (demoModeRaw !== "true") {
-    throw new Error("VITE_DEMO_MODE must be 'true' for demo orchestration.");
+    throw diagnosticError("ENV_MISSING", "VITE_DEMO_MODE must be 'true' for demo orchestration.");
   }
 
   const jwtIssuer = (process.env.Auth__Jwt__Issuer ?? defaultConfig.jwtIssuer).trim();
@@ -75,17 +83,30 @@ export function readDemoConfig() {
   const jwtAuthority = (process.env.Auth__Jwt__Authority ?? defaultConfig.jwtAuthority).trim();
 
   if (!jwtIssuer || !jwtAudience || !jwtSigningKey) {
-    throw new Error("Auth__Jwt__Issuer, Auth__Jwt__Audience, and Auth__Jwt__SigningKey must be configured for demo mode.");
+    throw diagnosticError(
+      "ENV_MISSING",
+      "Auth__Jwt__Issuer, Auth__Jwt__Audience, and Auth__Jwt__SigningKey must be configured for demo mode.",
+    );
   }
 
   if (jwtSigningKey.length < 32) {
-    throw new Error("Auth__Jwt__SigningKey must be at least 32 characters for demo mode.");
+    throw diagnosticError("ENV_MISSING", "Auth__Jwt__SigningKey must be at least 32 characters for demo mode.");
   }
 
   const apiOrigin = `http://${apiHost}:${apiPort}`;
   const webOrigin = `http://${webHost}:${webPort}`;
   const apiBaseUrl = (process.env.VITE_API_BASE_URL ?? `${apiOrigin}/api`).trim();
   const token = process.env.VITE_API_BEARER_TOKEN?.trim() ?? "";
+  const tokenUserId = (process.env.DEMO_TOKEN_USER_ID ?? defaultConfig.tokenUserId).trim();
+  const tokenTenantId = (process.env.DEMO_TOKEN_TENANT_ID ?? defaultConfig.tokenTenantId).trim();
+
+  if (!tokenUserId) {
+    throw diagnosticError("TOKEN_MISSING", "DEMO_TOKEN_USER_ID must be set for dev token minting.");
+  }
+
+  if (!tokenTenantId) {
+    throw diagnosticError("TOKEN_MISSING", "DEMO_TOKEN_TENANT_ID must be set for dev token minting.");
+  }
 
   return {
     apiHost,
@@ -103,8 +124,8 @@ export function readDemoConfig() {
     jwtSigningKey,
     jwtAuthority,
     devTokenEnabled: process.env.Auth__DevToken__Enabled ?? defaultConfig.devTokenEnabled,
-    tokenUserId: process.env.DEMO_TOKEN_USER_ID ?? defaultConfig.tokenUserId,
-    tokenTenantId: process.env.DEMO_TOKEN_TENANT_ID ?? defaultConfig.tokenTenantId,
+    tokenUserId,
+    tokenTenantId,
     tokenExpiresMinutes: defaultConfig.tokenExpiresMinutes,
     healthTimeoutMs: defaultConfig.healthTimeoutMs,
     healthPollIntervalMs: defaultConfig.healthPollIntervalMs,
@@ -114,17 +135,18 @@ export function readDemoConfig() {
 export function assertDemoEnvironmentConsistency(config) {
   const apiBaseUrl = parseUrl(config.apiBaseUrl, "VITE_API_BASE_URL");
   if (apiBaseUrl.origin !== config.apiOrigin) {
-    throw new Error(
+    throw diagnosticError(
+      "ENV_MISSING",
       `VITE_API_BASE_URL must target ${config.apiOrigin} for deterministic demo mode, got ${apiBaseUrl.origin}.`,
     );
   }
 
   if (!apiBaseUrl.pathname.startsWith("/api")) {
-    throw new Error(`VITE_API_BASE_URL must use '/api' path prefix, got '${apiBaseUrl.pathname}'.`);
+    throw diagnosticError("ENV_MISSING", `VITE_API_BASE_URL must use '/api' path prefix, got '${apiBaseUrl.pathname}'.`);
   }
 
   if (config.devTokenEnabled.trim().toLowerCase() !== "true") {
-    throw new Error("Auth__DevToken__Enabled must be 'true' for demo orchestration.");
+    throw diagnosticError("ENV_MISSING", "Auth__DevToken__Enabled must be 'true' for demo orchestration.");
   }
 }
 
@@ -154,7 +176,12 @@ export function assertDemoRouteDefinitions() {
 export async function ensurePortAvailable(host, port, name) {
   const available = await isPortAvailable(host, port);
   if (!available) {
-    throw new Error(`${name} port ${port} is already in use on ${host}. Stop the running service or pick another port via DEMO_API_PORT/DEMO_WEB_PORT.`);
+    const occupiedBy = readPortOccupant(port);
+    const ownerHint = occupiedBy ? ` Occupied by ${occupiedBy}.` : "";
+    throw diagnosticError(
+      "PORT_IN_USE",
+      `${name} port ${port} is already in use on ${host}.${ownerHint} Stop the running service or pick another port via DEMO_API_PORT/DEMO_WEB_PORT.`,
+    );
   }
 }
 
@@ -225,7 +252,7 @@ export async function waitForApiHealthy(apiOrigin, timeoutMs, pollIntervalMs) {
     await sleep(pollIntervalMs);
   }
 
-  throw new Error(`API health check timed out after ${timeoutMs}ms.${formatCause(lastError)}`);
+  throw diagnosticError("API_UNREACHABLE", `API health check timed out after ${timeoutMs}ms.${formatCause(lastError)}`);
 }
 
 export async function waitForWebappReady(webOrigin, timeoutMs, pollIntervalMs, fetchImpl = fetch) {
@@ -247,7 +274,7 @@ export async function waitForWebappReady(webOrigin, timeoutMs, pollIntervalMs, f
     await sleep(pollIntervalMs);
   }
 
-  throw new Error(`Webapp readiness check timed out after ${timeoutMs}ms.${formatCause(lastError)}`);
+  throw diagnosticError("WEBAPP_UNREACHABLE", `Webapp readiness check timed out after ${timeoutMs}ms.${formatCause(lastError)}`);
 }
 
 export async function mintDevToken(config) {
@@ -266,14 +293,14 @@ export async function mintDevToken(config) {
 
   if (!response.ok) {
     const body = await safeReadBody(response);
-    throw new Error(`Failed to mint development token (${response.status}). ${body}`.trim());
+    throw diagnosticError("TOKEN_MISSING", `Failed to mint development token (${response.status}). ${body}`.trim());
   }
 
   const payload = await response.json();
   const token = typeof payload?.accessToken === "string" ? payload.accessToken.trim() : "";
 
   if (!token) {
-    throw new Error("Development token response did not include accessToken.");
+    throw diagnosticError("TOKEN_MISSING", "Development token response did not include accessToken.");
   }
 
   return token;
@@ -312,14 +339,17 @@ export function formatDemoFailure(error, context = "demo") {
   const rawMessage = error instanceof Error ? error.message : String(error);
   const hints = [];
 
-  if (rawMessage.includes("port") && rawMessage.includes("already in use")) {
-    hints.push("Port collision: stop the process on that port or set DEMO_API_PORT / DEMO_WEB_PORT.");
+  if (hasDiagnostic(rawMessage, "PORT_IN_USE") || (rawMessage.includes("port") && rawMessage.includes("already in use"))) {
+    hints.push("Port collision: stop the listed process or change DEMO_API_PORT / DEMO_WEB_PORT.");
   }
 
   if (
+    hasDiagnostic(rawMessage, "ENV_MISSING") ||
     rawMessage.includes("VITE_API_BASE_URL") ||
     rawMessage.includes("VITE_API_ORGANIZATION_ID") ||
     rawMessage.includes("VITE_DEMO_MODE") ||
+    rawMessage.includes("DEMO_TOKEN_USER_ID") ||
+    rawMessage.includes("DEMO_TOKEN_TENANT_ID") ||
     rawMessage.includes("Auth__")
   ) {
     hints.push(
@@ -328,23 +358,29 @@ export function formatDemoFailure(error, context = "demo") {
   }
 
   if (
+    hasDiagnostic(rawMessage, "API_UNREACHABLE") ||
+    hasDiagnostic(rawMessage, "WEBAPP_UNREACHABLE") ||
     rawMessage.includes("Health endpoint") ||
     rawMessage.includes("timed out") ||
+    rawMessage.includes("ECONNREFUSED") ||
+    rawMessage.includes("ENOTFOUND") ||
     rawMessage.includes("API process exited before health became ready")
   ) {
-    hints.push("API startup issue: inspect API logs and confirm ASPNETCORE_URLS and JWT settings match demo config.");
+    hints.push("API unreachable: confirm ASPNETCORE_URLS, that the API process is running, and that /health responds.");
   }
 
   if (
+    hasDiagnostic(rawMessage, "TOKEN_MISSING") ||
     rawMessage.includes("dev-auth/token") ||
     rawMessage.includes("Failed to mint development token") ||
     rawMessage.includes("must return 401 without token") ||
     rawMessage.includes("must return 200 with demo token")
   ) {
-    hints.push("Auth bootstrap issue: confirm /api/v1/dev-auth/token is enabled and demo org/user claims are valid.");
+    hints.push("Missing/invalid token setup: confirm /api/v1/dev-auth/token is enabled and DEMO_TOKEN_USER_ID / DEMO_TOKEN_TENANT_ID are set.");
   }
 
   if (
+    hasDiagnostic(rawMessage, "DB_UNAVAILABLE") ||
     rawMessage.includes("SqlException") ||
     rawMessage.includes("ConnectionStrings__LegacyReadOnly") ||
     rawMessage.includes("No such host is known") ||
@@ -477,6 +513,35 @@ function isPortAvailable(host, port) {
   });
 }
 
+function readPortOccupant(port) {
+  const result = spawnSync("lsof", ["-nP", `-iTCP:${port}`, "-sTCP:LISTEN"], {
+    encoding: "utf8",
+  });
+
+  if (result.status !== 0 || !result.stdout) {
+    return "";
+  }
+
+  const outputLines = result.stdout
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  if (outputLines.length < 2) {
+    return "";
+  }
+
+  const firstProcessColumns = outputLines[1].split(/\s+/);
+  const command = firstProcessColumns[0];
+  const pid = firstProcessColumns[1];
+
+  if (!command || !pid) {
+    return "";
+  }
+
+  return `PID ${pid} (${command})`;
+}
+
 function formatCause(error) {
   if (!error) {
     return "";
@@ -492,18 +557,21 @@ function formatCause(error) {
 async function assertHealthResponse(apiOrigin, fetchImpl) {
   const response = await fetchImpl(`${apiOrigin}/health`);
   if (!response.ok) {
-    throw new Error(`Health endpoint failed with ${response.status}. ${await formatResponseBody(response)}`.trim());
+    throw diagnosticError(
+      "API_UNREACHABLE",
+      `Health endpoint failed with ${response.status}. ${await formatResponseBody(response)}`.trim(),
+    );
   }
 
   let payload = null;
   try {
     payload = await response.json();
   } catch {
-    throw new Error("Health endpoint response must be valid JSON.");
+    throw diagnosticError("API_UNREACHABLE", "Health endpoint response must be valid JSON.");
   }
 
   if (payload?.status !== "healthy") {
-    throw new Error(`Health endpoint status must be 'healthy', got '${payload?.status ?? "<missing>"}'.`);
+    throw diagnosticError("API_UNREACHABLE", `Health endpoint status must be 'healthy', got '${payload?.status ?? "<missing>"}'.`);
   }
 }
 
@@ -531,6 +599,13 @@ async function assertAuthorizedBaselines(organizationId, token, fetchImpl, apiOr
         Authorization: `Bearer ${token}`,
       },
     });
+
+    if (response.status >= 500) {
+      throw diagnosticError(
+        "DB_UNAVAILABLE",
+        `${check.apiPath} returned ${response.status} with demo token. ${await formatResponseBody(response)}`.trim(),
+      );
+    }
 
     if (response.status !== 200) {
       throw new Error(

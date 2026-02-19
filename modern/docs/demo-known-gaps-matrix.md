@@ -8,6 +8,21 @@ Practical, prioritized view of remaining differences to narrate during demo deci
 - Acceptance status: `modern/docs/demo-acceptance-checklist.md`
 - Route/source baseline: `modern/docs/prototype-shell-parity.md`
 
+## Current Demo Baseline
+
+- Parity-acceptable now:
+  - Shell/home parity is stable for stakeholder walkthroughs.
+  - Route contract metadata and availability labels are synchronized and non-empty across major destinations.
+  - Demo reliability diagnostics are actionable for the main local failure classes.
+- Known remaining gaps:
+  - write-heavy modules are still disabled.
+  - fixture-backed modules are still mock data.
+  - social write interactions remain non-persistent.
+- Exact demo flow references:
+  - walkthrough path: `modern/docs/demo-runbook.md` section `3`.
+  - acceptance scoring: `modern/docs/demo-acceptance-checklist.md`.
+  - route/source baseline: `modern/docs/prototype-shell-parity.md`.
+
 ## Matrix
 
 | Priority | Area | Impact | Current status (`real` / `mock` / `disabled`) | Gap vs legacy | Recommended next action |

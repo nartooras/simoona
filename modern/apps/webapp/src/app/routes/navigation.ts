@@ -234,15 +234,30 @@ function availabilityFromDestination(destinationMode: RouteDestinationMode): Rou
 
 function assertNavigationConsistency() {
     const seenPaths = new Set<string>();
+    const seenLabels = new Set<string>();
 
     for (const entry of navigationRouteDefinitions) {
         const routeReason = 'reason' in entry ? entry.reason : undefined;
+
+        if (!entry.path.startsWith('/')) {
+            throw new Error(`Navigation route path must start with '/': ${entry.path}`);
+        }
 
         if (seenPaths.has(entry.path)) {
             throw new Error(`Duplicate navigation route path detected: ${entry.path}`);
         }
 
         seenPaths.add(entry.path);
+
+        if (!entry.label.trim()) {
+            throw new Error(`Navigation route ${entry.path} must include a non-empty label.`);
+        }
+
+        if (seenLabels.has(entry.label)) {
+            throw new Error(`Duplicate navigation route label detected: ${entry.label}`);
+        }
+
+        seenLabels.add(entry.label);
 
         if (!groupTitleByKey[entry.group]) {
             throw new Error(`Navigation route ${entry.path} references unknown group ${entry.group}`);
@@ -257,6 +272,10 @@ function assertNavigationConsistency() {
 
         if (entry.availability !== 'real' && !routeReason) {
             throw new Error(`Navigation route ${entry.path} requires a reason for availability '${entry.availability}'.`);
+        }
+
+        if (entry.availability === 'real' && routeReason) {
+            throw new Error(`Navigation route ${entry.path} should not include a reason when availability is 'real'.`);
         }
 
         if (!entry.demoNote.trim()) {

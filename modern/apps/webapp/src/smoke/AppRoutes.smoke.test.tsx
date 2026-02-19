@@ -33,6 +33,8 @@ describe('Modern webapp smoke routes', () => {
 
         expect(await screen.findByRole('heading', { name: i18next.t('home.title') })).toBeInTheDocument();
         expect(screen.getByText('Prototype availability: Real.')).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/');
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'real');
         expect(screen.getByText('Simoona')).toBeInTheDocument();
         expect(screen.getByTestId('wall-data-source-summary')).toHaveTextContent(
             'Feed source: mock fixtures · Widgets source: mock fixtures',
@@ -112,6 +114,32 @@ describe('Modern webapp smoke routes', () => {
         expect(screen.getByText('Simoona')).toBeInTheDocument();
     });
 
+    it('renders explicit fallback state for employee directory when api is unreachable', async () => {
+        vi.restoreAllMocks();
+        vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('connect ECONNREFUSED 127.0.0.1:5187'));
+
+        renderRoute('/employees');
+
+        expect(await screen.findByRole('heading', { name: i18next.t('employeeDirectory.title') })).toBeInTheDocument();
+        expect(
+            screen.getByText('Employee directory is temporarily unavailable because the API is not reachable.'),
+        ).toBeInTheDocument();
+        expect(screen.getByText('Simoona')).toBeInTheDocument();
+    });
+
+    it('renders explicit fallback state for general settings when api is unreachable', async () => {
+        vi.restoreAllMocks();
+        vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('connect ECONNREFUSED 127.0.0.1:5187'));
+
+        renderRoute('/settings/general');
+
+        expect(await screen.findByRole('heading', { name: i18next.t('generalSettings.title') })).toBeInTheDocument();
+        expect(
+            screen.getByText('General settings are temporarily unavailable because the API is not reachable.'),
+        ).toBeInTheDocument();
+        expect(screen.getByText('Simoona')).toBeInTheDocument();
+    });
+
     it('reaches user-info route', async () => {
         renderRoute('/user-info');
         expect(await screen.findByRole('heading', { name: i18next.t('userInfo.title') })).toBeInTheDocument();
@@ -152,6 +180,7 @@ describe('Modern webapp smoke routes', () => {
         for (const route of routes) {
             const view = renderRoute(route.path);
             expect(await screen.findByRole('heading', { name: route.heading })).toBeInTheDocument();
+            expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', route.path);
             expect(screen.getByTestId('destination-content-region')).toBeInTheDocument();
             view.unmount();
         }
@@ -171,7 +200,10 @@ describe('Modern webapp smoke routes', () => {
             const expectedHeading = headingByPath[route.path] ?? route.label;
 
             expect(await screen.findByRole('heading', { name: expectedHeading })).toBeInTheDocument();
+            expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', route.path);
+            expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', route.availability);
             expect(screen.getByTestId('destination-content-region')).toBeInTheDocument();
+            expect(screen.getByTestId('destination-content-region')).toHaveAttribute('data-route-status', route.availability);
 
             view.unmount();
         }

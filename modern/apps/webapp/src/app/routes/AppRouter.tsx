@@ -8,7 +8,7 @@ import { UserInfoPage } from '../../pages/UserInfoPage';
 import { EmployeeDirectoryPage } from '../../pages/EmployeeDirectoryPage';
 import { MyProfilePage } from '../../pages/MyProfilePage';
 import { PrototypeNotice } from '../prototype/PrototypeNotice';
-import { navigationRouteDefinitions, type NavigationRoutePath, routeAvailabilityMap } from './navigation';
+import { getRouteDefinition, navigationRouteDefinitions, type NavigationRoutePath, routeAvailabilityMap } from './navigation';
 import { PrototypePlaceholderPage } from '../../pages/PrototypePlaceholderPage';
 import { getPrototypePlaceholder } from '../../api/prototypePlaceholders';
 
@@ -38,22 +38,64 @@ const routePageByPath: Record<NavigationRoutePath, ReactNode> = {
     '/health': <HealthPage />,
 };
 
-function renderRoute(path: NavigationRoutePath, page: ReactNode, label: string) {
+function assertRoutePageCoverage() {
+    const declaredPaths = new Set(navigationRouteDefinitions.map((entry) => entry.path as NavigationRoutePath));
+    const mappedPaths = new Set(Object.keys(routePageByPath) as NavigationRoutePath[]);
+
+    for (const declaredPath of declaredPaths) {
+        if (!mappedPaths.has(declaredPath)) {
+            throw new Error(`Route '${declaredPath}' is missing from AppRouter routePageByPath.`);
+        }
+    }
+
+    for (const mappedPath of mappedPaths) {
+        if (!declaredPaths.has(mappedPath)) {
+            throw new Error(`Route '${mappedPath}' is mapped in AppRouter but not declared in navigation metadata.`);
+        }
+    }
+}
+
+assertRoutePageCoverage();
+
+function renderRoute(path: NavigationRoutePath, page: ReactNode) {
     const availability = getRouteAvailability(path);
+    const routeDefinition = getRouteDefinition(path);
 
     return (
         <AppLayout>
             <PrototypeNotice mode={availability.mode} reason={availability.reason} />
-            <section aria-label={`${label} content`} className="page-content-region" data-testid="destination-content-region">
+            <section
+                aria-label={`${routeDefinition.label} route contract`}
+                className="route-contract-marker"
+                data-route-availability={availability.mode}
+                data-route-mode={routeDefinition.destinationMode}
+                data-route-path={path}
+                data-testid="route-contract-marker"
+            >
+                <p className="route-contract-heading">
+                    {routeDefinition.label} · {availability.mode}
+                </p>
+                <p className="route-contract-note">{routeDefinition.demoNote}</p>
+            </section>
+            <section
+                aria-label={`${routeDefinition.label} content`}
+                className="page-content-region"
+                data-route-status={availability.mode}
+                data-testid="destination-content-region"
+            >
                 {page}
             </section>
         </AppLayout>
     );
 }
 
-const primaryRoutes: RouteObject[] = navigationRouteDefinitions.map((routeDefinition) => ({
-    path: routeDefinition.path,
-    element: renderRoute(routeDefinition.path, routePageByPath[routeDefinition.path], routeDefinition.label),
-}));
+const primaryRoutes: RouteObject[] = navigationRouteDefinitions.map((routeDefinition) => {
+    const path = routeDefinition.path as NavigationRoutePath;
+
+    return {
+        path,
+        element: renderRoute(path, routePageByPath[path]),
+    };
+});
 
 export const appRoutes: RouteObject[] = [...primaryRoutes, { path: '*', element: <Navigate replace to="/" /> }];

@@ -112,6 +112,24 @@ test("formats db availability hints for startup failures", () => {
   assert.match(message, /Read DB unavailable:/);
 });
 
+test("formats missing token hints for demo auth bootstrap failures", () => {
+  const message = formatDemoFailure(
+    new Error("DEMO_DIAG[TOKEN_MISSING] DEMO_TOKEN_USER_ID must be set for dev token minting."),
+    "demo:check",
+  );
+
+  assert.match(message, /Missing\/invalid token setup:/);
+});
+
+test("formats api unreachable hints for health timeout failures", () => {
+  const message = formatDemoFailure(
+    new Error("DEMO_DIAG[API_UNREACHABLE] API health check timed out after 45000ms."),
+    "demo:start",
+  );
+
+  assert.match(message, /API unreachable:/);
+});
+
 function jsonResponse(status, payload) {
   return new Response(JSON.stringify(payload), {
     status,

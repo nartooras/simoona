@@ -1,4 +1,4 @@
-# Demo Runbook (Wave 5 Stakeholder Pack)
+# Demo Runbook (Wave 6 Stakeholder Pack)
 
 Operator runbook for a repeatable 10-15 minute stakeholder demo with decision-focused narration.
 
@@ -9,6 +9,23 @@ Operator runbook for a repeatable 10-15 minute stakeholder demo with decision-fo
 - Known gaps vs legacy matrix: `modern/docs/demo-known-gaps-matrix.md`
 - Route parity/source of truth: `modern/docs/prototype-shell-parity.md`
 - Release gate baseline: `modern/docs/release-readiness-checklist.md`
+
+## Current Demo Baseline
+
+- Parity-acceptable now:
+  - Wave 6 shell geometry is harmonized across topbar, left rail, home feed column, and right rail at common desktop widths.
+  - Home feed cards, comment thread anatomy, and right-rail widgets use a consistent compact hierarchy and deterministic content.
+  - Every major left-nav route renders a non-empty destination with route contract metadata + explicit availability (`real` / `mock` / `disabled`).
+  - Demo commands surface actionable diagnostics for port collisions, API reachability, read-DB failures, and missing env/token setup.
+- Known remaining gaps:
+  - Write-heavy routes remain intentionally unavailable (`/service-requests`, `/externals/integrations`).
+  - Mock-backed routes still use deterministic fixtures instead of live contracts.
+  - Home social interactions remain local-only simulation (no persistent writes).
+- Exact demo flow references:
+  - Route-by-route walkthrough: section `3) 10-15 Minute Walkthrough Script` in this document.
+  - Acceptance status: `modern/docs/demo-acceptance-checklist.md`.
+  - Gap narration order: `modern/docs/demo-known-gaps-matrix.md`.
+  - Route availability/source of truth: `modern/docs/prototype-shell-parity.md`.
 
 ## 1) Startup and Control Commands
 
@@ -48,7 +65,9 @@ Failure hints from command output are authoritative:
 
 - port collision: free port or set `DEMO_API_PORT` / `DEMO_WEB_PORT`
 - env mismatch: correct `VITE_*` and `Auth__*` configuration
+- missing token env: set `DEMO_TOKEN_USER_ID` / `DEMO_TOKEN_TENANT_ID` for dev token minting
 - DB unavailable: verify `ConnectionStrings__LegacyReadOnly` and SQL Server access
+- API unreachable: confirm modern API startup and `/health` reachability on `http://127.0.0.1:5187`
 
 ## 3) 10-15 Minute Walkthrough Script
 

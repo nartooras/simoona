@@ -29,9 +29,11 @@ try {
     process.exit(0);
   }
 
+  console.log("[demo:check] Verifying required ports...");
   await ensurePortAvailable(config.apiHost, config.apiPort, "API");
   await ensurePortAvailable(config.webHost, config.webPort, "Webapp");
 
+  console.log("[demo:check] Booting modern API for health/auth checks...");
   apiProcess = spawnApi(config, { stdio: "pipe" });
   const readOutput = readProcessOutput(apiProcess);
   await new Promise((resolve, reject) => {
@@ -55,6 +57,7 @@ try {
       });
   });
 
+  console.log("[demo:check] Verifying API auth + read baselines...");
   const token = await mintDevToken(config);
   await assertApiHealthAndAuthBaseline(config, token);
 
