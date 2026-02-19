@@ -32,4 +32,4 @@
 - No auth-path changes in this thread; no ADR-0003/auth-migration exceptions observed.
 
 ## 7. Final commit hash
-- `b46bc959`
+- Reviewed dev commit: `50aafcc8`
