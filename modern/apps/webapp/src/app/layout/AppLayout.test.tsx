@@ -50,7 +50,7 @@ describe('AppLayout', () => {
         ]);
 
         const expectedOrder = {
-            walls: ['Home', 'Activity Feed', 'Recognition'],
+            walls: ['Home', 'Wall', 'Activity Feed', 'Recognition'],
             activities: ['Events', 'Kudos', 'Service Requests', 'Books', 'Vacations'],
             company: [
                 'Office Map',
@@ -102,10 +102,10 @@ describe('AppLayout', () => {
         expect(navSections).toHaveLength(5);
 
         const navRows = nav.querySelectorAll('li');
-        expect(navRows).toHaveLength(19);
+        expect(navRows).toHaveLength(20);
 
         const availabilityBadges = nav.querySelectorAll('.nav-availability');
-        expect(availabilityBadges).toHaveLength(19);
+        expect(availabilityBadges).toHaveLength(20);
     });
 
     it('supports group expand and collapse', async () => {

@@ -44,6 +44,7 @@ describe('Modern webapp smoke routes', () => {
         expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Kudos Feed' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Upcoming Events' })).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: 'Wall' })).toHaveAttribute('href', '/wall');
         expect(screen.getByRole('link', { name: 'User Info' })).toHaveAttribute('href', '/user-info');
         expect(screen.getByRole('link', { name: 'General Settings' })).toHaveAttribute(
             'href',
@@ -80,6 +81,20 @@ describe('Modern webapp smoke routes', () => {
         renderRoute('/');
 
         expect(await screen.findByRole('heading', { name: i18next.t('home.title') })).toBeInTheDocument();
+        expect(screen.getByTestId('wall-content-grid')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-feed-column')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-widgets-column')).toBeInTheDocument();
+    });
+
+    it('keeps dedicated wall route sections visible in demo mode without fatal render errors', async () => {
+        renderRoute('/wall');
+
+        expect(await screen.findByRole('heading', { name: 'Wall' })).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/wall');
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'mock');
+        expect(screen.getByTestId('wall-context-select')).toHaveValue('company-wall');
+        expect(screen.getByTestId('wall-sort-select')).toBeInTheDocument();
+        expect(screen.getByTestId('wall-category-select')).toBeInTheDocument();
         expect(screen.getByTestId('wall-content-grid')).toBeInTheDocument();
         expect(screen.getByTestId('wall-feed-column')).toBeInTheDocument();
         expect(screen.getByTestId('wall-widgets-column')).toBeInTheDocument();

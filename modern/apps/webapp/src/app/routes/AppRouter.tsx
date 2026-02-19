@@ -3,6 +3,7 @@ import { Navigate, type RouteObject } from 'react-router-dom';
 import { AppLayout } from '../layout/AppLayout';
 import { HealthPage } from '../../pages/HealthPage';
 import { HomePage } from '../../pages/HomePage';
+import { WallPage } from '../../pages/WallPage';
 import { GeneralSettingsPage } from '../../pages/GeneralSettingsPage';
 import { UserInfoPage } from '../../pages/UserInfoPage';
 import { EmployeeDirectoryPage } from '../../pages/EmployeeDirectoryPage';
@@ -19,6 +20,7 @@ function getRouteAvailability(path: NavigationRoutePath) {
 
 const routePageByPath: Record<NavigationRoutePath, ReactNode> = {
     '/': <HomePage />,
+    '/wall': <WallPage />,
     '/activities/feed': <PrototypePlaceholderPage {...getPrototypePlaceholder('/activities/feed')} />,
     '/recognition': <PrototypePlaceholderPage {...getPrototypePlaceholder('/recognition')} />,
     '/events': <PrototypePlaceholderPage {...getPrototypePlaceholder('/events')} />,

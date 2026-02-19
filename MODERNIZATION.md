@@ -52,11 +52,12 @@ Stakeholder demo pack and operational baseline:
 
 - Parity-acceptable now:
   - Wave 6 shell/home parity geometry remains stable, and Wave 7 unifies theme tokens + shared UI primitives across shell/pages/widgets to remove cross-route visual drift.
+  - Dedicated `/wall` route now provides legacy-like wall selector/filter behavior with deterministic context switching and explicit empty/unavailable handling.
   - Major route destinations are non-empty and render consistent route contract + availability metadata (`real` / `mock` / `disabled`).
   - Demo orchestration checks provide explicit diagnostics for occupied ports, API reachability failures, read-DB availability failures, and missing env/token setup.
 - Known remaining gaps:
   - mock-backed routes remain deterministic fixtures until read contract migration waves are complete.
-  - write-heavy workflows stay intentionally disabled or local-only simulation in prototype mode.
+  - write-heavy workflows stay intentionally disabled or local-only simulation in prototype mode (`/` and `/wall` interactions remain non-persistent).
 - Exact demo flow references:
   - `modern/docs/demo-runbook.md` (section `3) 10-15 Minute Walkthrough Script`)
   - `modern/docs/demo-acceptance-checklist.md`
@@ -429,6 +430,27 @@ Remaining differences:
 - Exact legacy icon spriteography is still represented by local placeholders.
 - Some micro-spacing/line-height values remain approximations rather than exact pixel parity.
 - Interactive legacy wall behaviors (real reactions/comments/live counters) remain simulated or disabled in prototype mode.
+
+## Wall Page Prototype (Thread AK)
+
+Thread AK adds a dedicated legacy-like wall route at `/wall` so wall behavior can be demoed independently of the Home route.
+
+Implemented prototype behavior:
+
+- wall context selector with deterministic switching across distinct contexts (`Company`, `Engineering`, `People`)
+- read-side controls for deterministic sorting (`latest`, `top`) and topic filtering
+- shared feed/comment card rendering reused between `/` and `/wall` to keep anatomy/token parity consistent
+- contextual right-rail widgets that switch with selected wall context
+- explicit wall-specific states:
+  - empty feed state (`Newcomers Wall`)
+  - unavailable wall data state (`Incident Wall`)
+
+Known limitations:
+
+- `/wall` is route-classified as `mock` / `mock-backed` in navigation metadata
+- feed and widget content remain fixture-backed in demo mode
+- like/reply/comment interactions are still local simulation only (no persistent writes)
+- restricted incident-wall data stays unavailable until legacy access-policy migration is defined
 
 ### Demo-ready quality checklist
 
