@@ -82,6 +82,23 @@ describe('Modern webapp smoke routes', () => {
         expect(screen.getByTestId('wall-widgets-column')).toBeInTheDocument();
     });
 
+    it('shows explicit walkthrough mode labeling for mock and disabled routes', async () => {
+        const mockView = renderRoute('/activities/feed');
+        expect(await screen.findByRole('heading', { name: 'Activity Feed' })).toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Mock.');
+        expect(screen.getByText('Live feed and reactions still run from legacy modules in this prototype.')).toBeInTheDocument();
+        expect(screen.getByText('Data source: Mock fixtures.')).toBeInTheDocument();
+        mockView.unmount();
+
+        const disabledView = renderRoute('/service-requests');
+        expect(await screen.findByRole('heading', { name: 'Service Requests' })).toBeInTheDocument();
+        expect(screen.getByRole('alert')).toHaveTextContent('Prototype availability: Disabled.');
+        expect(
+            screen.getByText('Service request creation and workflow actions are intentionally disabled in prototype mode.'),
+        ).toBeInTheDocument();
+        disabledView.unmount();
+    });
+
     it('renders fallback state when api-backed real route cannot reach api', async () => {
         vi.restoreAllMocks();
         vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('connect ECONNREFUSED 127.0.0.1:5187'));

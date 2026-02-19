@@ -1,120 +1,74 @@
-# Demo Runbook (Demo-Ready Baseline)
+# Demo Runbook (Wave 5 Stakeholder Pack)
 
-This runbook is the single operator checklist for local stakeholder demos of the modern prototype.
+Operator runbook for a repeatable 10-15 minute stakeholder demo with decision-focused narration.
 
-References:
+## Demo Readiness
 
-- `modern/docs/prototype-shell-parity.md`
-- `modern/docs/release-readiness-checklist.md`
+- Walkthrough script: `modern/docs/demo-runbook.md`
+- Acceptance checklist (met/partial/deferred): `modern/docs/demo-acceptance-checklist.md`
+- Known gaps vs legacy matrix: `modern/docs/demo-known-gaps-matrix.md`
+- Route parity/source of truth: `modern/docs/prototype-shell-parity.md`
+- Release gate baseline: `modern/docs/release-readiness-checklist.md`
 
-## 1) Startup (exact order)
+## 1) Startup and Control Commands
 
-From repository root:
+Run from repository root in this exact order:
 
 ```bash
 pnpm demo:check
 pnpm demo:start
 ```
 
-Stop after demo:
+Stop after the session:
 
 ```bash
 pnpm demo:stop
 ```
 
-CI gate equivalent:
+CI-safe command (no local server boot):
 
 ```bash
 pnpm demo:check -- --ci
 ```
 
-## 2) Preflight expectations
+Use `demo:start` for demos. Do not substitute ad hoc `pnpm --filter @simoona/webapp dev` + manual API startup for stakeholder walkthroughs.
 
-`pnpm demo:check` must pass with:
+## 2) Preflight Expectations
+
+`pnpm demo:check` must validate:
 
 - `VITE_DEMO_MODE=true`
-- valid `VITE_API_BASE_URL` (`http://127.0.0.1:5187/api` by default)
+- `VITE_API_BASE_URL` targeting local modern API (`http://127.0.0.1:5187/api` by default)
 - numeric `VITE_API_ORGANIZATION_ID`
-- JWT/dev-token bootstrap enabled (`Auth__DevToken__Enabled=true`)
-- required route definitions and availability labels present
-- API health + auth baseline checks passing
+- `Auth__DevToken__Enabled=true`
+- critical route definitions + availability labels present
+- API health and authenticated baseline calls succeeding
 
-If it fails, follow the hint in command output:
+Failure hints from command output are authoritative:
 
-- port collision: free the port or set `DEMO_API_PORT` / `DEMO_WEB_PORT`
-- env mismatch: fix `VITE_*` / `Auth__*` values
-- DB unavailable: verify `ConnectionStrings__LegacyReadOnly` and SQL Server connectivity
+- port collision: free port or set `DEMO_API_PORT` / `DEMO_WEB_PORT`
+- env mismatch: correct `VITE_*` and `Auth__*` configuration
+- DB unavailable: verify `ConnectionStrings__LegacyReadOnly` and SQL Server access
 
-## 3) Demo click path (exact flow)
+## 3) 10-15 Minute Walkthrough Script
 
-Open `http://127.0.0.1:5173` and walk in this order.
+Open `http://127.0.0.1:5173`.
 
-1. `/`
-- Expected: shell loads, left rail visible, feed + right rail render.
-- Expected notice: `Prototype availability: Real.`
-
-2. `/user-info`
-- Expected: real API-backed user payload or explicit API-unavailable fallback message.
-- No crash; page remains navigable.
-
-3. `/settings/general`
-- Expected: selected language/time zone (real-backed) or explicit fallback message.
-
-4. `/employees`
-- Expected: directory table rows (real-backed) or explicit fallback message.
-
-5. `/profiles/me`
-- Expected: profile cards (real-backed) or explicit fallback message.
-
-6. `/activities/feed`
-- Expected: deterministic mock fixtures with read-only interaction semantics.
-
-7. `/service-requests`
-- Expected: disabled prototype route with explicit scope notice.
-
-## 4) Route mode expectations
-
-- `real`: API-backed read contract; writes remain out of scope.
-- `mock`: deterministic fixture content for stable walkthroughs.
-- `disabled`: route present for IA parity; workflow intentionally unavailable.
-
-Route status matrix (`route -> real/mock/disabled + demo note`):
-
-| Route | Mode | Demo note |
+| Minute | Route / action | Expected visual/behavior outcome |
 |---|---|---|
-| `/` | `real` | Home wall shell parity route with deterministic read-first state behavior. |
-| `/activities/feed` | `mock` | Fixture-backed activity stream for deterministic walkthroughs. |
-| `/recognition` | `mock` | Deterministic recognition summary/cards preserving legacy IA destination. |
-| `/events` | `mock` | Static event schedule + highlights for demo-safe navigation parity. |
-| `/kudos` | `mock` | Mock leaderboard and category distribution cards. |
-| `/service-requests` | `disabled` | Intentionally unavailable workflow route; explicit deferred-scope notice. |
-| `/books` | `mock` | Read-only catalog snapshot for IA parity. |
-| `/vacations` | `mock` | Read-only balances/history blocks close to legacy expectations. |
-| `/office-map` | `mock` | Static occupancy and office coverage metrics; no desk writes. |
-| `/organization/structure` | `mock` | Deterministic hierarchy summaries; non-editable by design. |
-| `/employees` | `real` | API-backed employee directory with resilient fallback states. |
-| `/projects` | `mock` | Deterministic project milestone/risk summary table. |
-| `/committees` | `mock` | Fixture-backed committee membership/open-seat summaries. |
-| `/teams` | `mock` | Read-only team structure/capacity cards for route parity. |
-| `/user-info` | `real` | API-backed user information contract. |
-| `/settings/general` | `real` | API-backed general settings contract. |
-| `/profiles/me` | `real` | API-backed profile contract. |
-| `/externals/integrations` | `disabled` | Visible only for IA parity; connector flows intentionally deferred. |
-| `/health` | `real` | API readiness baseline route used by demo gate checks. |
+| 0-1 | Confirm terminal shows `[demo:start] PASS` and open app | API + webapp are running in deterministic demo mode. |
+| 1-3 | Home shell tour (`/`) | Header, grouped left rail, feed, and right rail render; notice reads `Prototype availability: Real.`; wall data summary indicates mock feed/widgets for stability. |
+| 3-5 | Real-backed read route: `/user-info` | User payload is shown from modern API, or explicit API-unavailable fallback text appears without crashing/navigation loss. |
+| 5-6 | Real-backed read route: `/settings/general` | Language/time zone settings load from modern API or clear fallback state renders. |
+| 6-7 | Real-backed read route: `/employees` | Employee table/content region renders or explicit fallback appears; no blank page. |
+| 7-9 | Mock-backed route: `/activities/feed` | Notice reads `Prototype availability: Mock.`; deterministic fixture content appears with read-only interaction framing. |
+| 9-10 | Mock-backed route: `/kudos` (or `/events`) | Deterministic fixture cards/tables load; destination remains non-empty and stable between refreshes. |
+| 10-12 | Deferred/disabled route: `/service-requests` | Notice reads `Prototype availability: Disabled.` and reason text explains deferred write-heavy workflow scope. |
+| 12-15 | Decision wrap-up using docs | Open acceptance checklist + gaps matrix to confirm what is met now and what is intentionally deferred. |
 
-## 5) Known gaps to narrate during demo
+## 4) Narration Guardrails
 
-- Real routes are read-only (no persistent write flows).
-- Mock routes are deterministic fixtures, not live integrations.
-- Disabled routes (`/service-requests`, `/externals/integrations`) are intentionally unavailable.
-- Media/reaction/comment flows in feed are prototype-safe simulations.
-
-## 6) Demo-ready acceptance checklist
-
-Confirm before stakeholder session:
-
-- `pnpm demo:check` passes locally
-- `pnpm demo:start` boots API + webapp and prints PASS
-- shell/header/left rail/feed/right rail render without visual outliers
-- real-route API outage fallback messaging is visible and non-fatal
-- mock/real/disabled mode signaling is explicit on every shown screen
+- `real` routes are read-first and no persistent writes are shown.
+- `mock` routes are deterministic fixtures for walkthrough stability.
+- `disabled` routes are visible for IA parity but intentionally unavailable.
+- Keep "known gaps vs legacy" framing aligned to `modern/docs/demo-known-gaps-matrix.md`.
