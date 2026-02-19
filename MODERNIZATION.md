@@ -452,6 +452,29 @@ Known limitations:
 - like/reply/comment interactions are still local simulation only (no persistent writes)
 - restricted incident-wall data stays unavailable until legacy access-policy migration is defined
 
+## Events + Kudos Vertical Slice Prototype Bundle (Thread AL)
+
+Thread AL upgrades `/events` and `/kudos` from generic placeholders to dedicated, demo-usable read-first route slices.
+
+Implemented now:
+
+- `/events`:
+  - legacy-like grouped route layout (`Upcoming` + `Past`) with realistic date/time/location/status card hierarchy
+  - deterministic read-side controls (`window`, `office`, `type`, `sort`) and local-only detail expansion
+  - contextual side widgets with explicit success/empty/unavailable handling
+- `/kudos`:
+  - dense kudos feed hierarchy (sender -> receiver -> date -> message)
+  - deterministic read-side filters (`period`, `type`, `team`) with explicit success/empty/unavailable handling
+  - leaderboard/distribution side panel and clearly disabled `Give Kudos` CTA
+- shared data strategy:
+  - explicit typed `real | mock` adapter boundaries for both domains
+  - deterministic fixtures in demo mode with no legacy runtime coupling and no persistent writes
+
+Deferred scope (explicitly not implemented):
+
+- Events: create/edit, RSVP persistence, reporting/export writes
+- Kudos: submission/persistence flows and reward/category management writes
+
 ### Demo-ready quality checklist
 
 | Area | Status | Notes |

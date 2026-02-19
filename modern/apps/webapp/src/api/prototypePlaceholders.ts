@@ -31,9 +31,7 @@ export type PrototypePlaceholderContent = {
 export type PrototypePlaceholderRoute =
     | '/activities/feed'
     | '/recognition'
-    | '/events'
     | '/vacations'
-    | '/kudos'
     | '/books'
     | '/service-requests'
     | '/teams'
@@ -88,34 +86,6 @@ const fixtures: Record<PrototypePlaceholderRoute, PrototypeFixture> = {
             },
         ],
     },
-    '/events': {
-        title: 'Events',
-        summary: 'Event discovery and schedule surfaces use deterministic planning fixtures for rehearsal-safe walkthroughs.',
-        defaultSource: 'mock',
-        cards: [
-            { title: 'Upcoming events', value: '6 scheduled prototype items seeded from static fixtures.' },
-            { title: 'Next event', value: 'Monthly all-hands in Vilnius HQ (demo fixture).' },
-            { title: 'RSVP mode', value: 'Read-only prototype state; attendance changes are disabled.' },
-        ],
-        availableNow: ['Events route discoverability from main navigation.', 'Stable fixture-backed event highlights for demos.'],
-        unavailableInPrototype: ['RSVP updates, event creation, and reporting exports.'],
-        plannedNextWave: ['API-backed events read contracts and filtering by office/type.'],
-        actions: [
-            {
-                label: 'Create Event',
-                explanation: 'Prototype mode is read-only for event management; create/edit will arrive in a later wave.',
-            },
-        ],
-        table: {
-            title: 'Prototype event schedule',
-            columns: ['Event', 'Date', 'Office', 'Status'],
-            rows: [
-                ['All-hands', '2026-03-05', 'Vilnius', 'Scheduled'],
-                ['Community Meetup', '2026-03-11', 'Remote', 'Planned'],
-                ['Product Demo', '2026-03-18', 'Kaunas', 'Draft'],
-            ],
-        },
-    },
     '/vacations': {
         title: 'Vacations',
         summary: 'Vacation balance and request history are shown as mock cards without any write capability.',
@@ -132,25 +102,6 @@ const fixtures: Record<PrototypePlaceholderRoute, PrototypeFixture> = {
             {
                 label: 'Submit Vacation Request',
                 explanation: 'Disabled: this prototype pass avoids write flows and approval side effects.',
-            },
-        ],
-    },
-    '/kudos': {
-        title: 'Kudos',
-        summary: 'Kudos leaderboard and activity summaries are available as static prototype visuals.',
-        defaultSource: 'mock',
-        cards: [
-            { title: 'Monthly kudos', value: '64 kudos actions represented in mock dataset.' },
-            { title: 'Top contributor', value: 'Elena S. with 14 acknowledgements (fixture).' },
-            { title: 'Distribution', value: 'Engineering and Support are leading this sample period.' },
-        ],
-        availableNow: ['Kudos route coverage in activities navigation.', 'Prototype achievement summary cards.'],
-        unavailableInPrototype: ['Sending kudos and editing reward categories.'],
-        plannedNextWave: ['Modern API read contract for kudos analytics.'],
-        actions: [
-            {
-                label: 'Give Kudos',
-                explanation: 'Read-only in prototype mode: write interactions are intentionally disabled.',
             },
         ],
     },
@@ -321,9 +272,7 @@ const fixtures: Record<PrototypePlaceholderRoute, PrototypeFixture> = {
 const routeToSlice = {
     '/activities/feed': 'activitiesFeed',
     '/recognition': 'recognition',
-    '/events': 'events',
     '/vacations': 'vacations',
-    '/kudos': 'kudos',
     '/books': 'books',
     '/service-requests': 'serviceRequests',
     '/teams': 'teams',

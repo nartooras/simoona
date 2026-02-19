@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import i18next from 'i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -100,6 +101,31 @@ describe('Modern webapp smoke routes', () => {
         expect(screen.getByTestId('wall-widgets-column')).toBeInTheDocument();
     });
 
+    it('covers walkthrough-critical events and kudos paths with deterministic state transitions', async () => {
+        const user = userEvent.setup();
+
+        const eventsView = renderRoute('/events');
+        expect(await screen.findByRole('heading', { name: 'Events' })).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/events');
+        expect(screen.getByTestId('events-create-cta')).toBeDisabled();
+        await user.selectOptions(screen.getByTestId('events-office-select'), 'tallinn');
+        expect(await screen.findByTestId('events-upcoming-empty')).toBeInTheDocument();
+        await user.selectOptions(screen.getByTestId('events-type-select'), 'external');
+        expect(await screen.findByTestId('events-upcoming-unavailable')).toBeInTheDocument();
+        eventsView.unmount();
+
+        const kudosView = renderRoute('/kudos');
+        expect(await screen.findByRole('heading', { name: 'Kudos' })).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/kudos');
+        expect(screen.getByTestId('kudos-give-cta')).toBeDisabled();
+        await user.selectOptions(screen.getByTestId('kudos-period-select'), 'last-30-days');
+        await user.selectOptions(screen.getByTestId('kudos-team-select'), 'finance');
+        expect(await screen.findByTestId('kudos-feed-empty')).toBeInTheDocument();
+        await user.selectOptions(screen.getByTestId('kudos-type-select'), 'external');
+        expect(await screen.findByTestId('kudos-feed-unavailable')).toBeInTheDocument();
+        kudosView.unmount();
+    });
+
     it('shows explicit walkthrough mode labeling for mock and disabled routes', async () => {
         const mockView = renderRoute('/activities/feed');
         expect(await screen.findByRole('heading', { name: 'Activity Feed' })).toBeInTheDocument();
@@ -178,13 +204,11 @@ describe('Modern webapp smoke routes', () => {
         expect(await screen.findByRole('heading', { name: i18next.t('myProfile.title') })).toBeInTheDocument();
     });
 
-    it('reaches placeholder prototype routes', async () => {
+    it('reaches remaining placeholder prototype routes', async () => {
         const routes = [
             { path: '/activities/feed', heading: 'Activity Feed' },
             { path: '/recognition', heading: 'Recognition' },
-            { path: '/events', heading: 'Events' },
             { path: '/vacations', heading: 'Vacations' },
-            { path: '/kudos', heading: 'Kudos' },
             { path: '/books', heading: 'Books' },
             { path: '/service-requests', heading: 'Service Requests' },
             { path: '/teams', heading: 'Teams' },

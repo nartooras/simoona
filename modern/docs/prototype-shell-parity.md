@@ -24,6 +24,8 @@ References:
   - shell geometry + interaction states are normalized under Wave 6 semantics (`data-shell-geometry="wave6"` and matching topbar/left-rail tags).
   - Wave 7 unifies design tokens (palette/spacing/type/radius/shadows/state colors) and shared UI primitives (`SectionHeader`, `StatusBadge`, `InfoMetaRow`, `ListRow`, `CardChrome`) across shell + route content.
   - dedicated `/wall` route now provides deterministic wall context switching/filtering with explicit empty/unavailable states.
+  - dedicated `/events` route now delivers deterministic upcoming/past grouping, contextual widgets, and local-only detail expansion.
+  - dedicated `/kudos` route now delivers deterministic period/type/team filtering with dense feed + leaderboard/distribution panels.
   - home feed card anatomy, reply threads, and right-rail widget hierarchy are compact and legacy-consistent for demo scanning.
   - every navigation destination has a route contract marker, availability notice, and non-empty deterministic content.
   - demo command flow emits actionable diagnostics for port, API, DB, and env/token failures.
@@ -57,8 +59,8 @@ Route status matrix (source of truth: `modern/apps/webapp/src/app/routes/navigat
 | `/wall` | Walls | `mock` | `mock-backed` | Dedicated wall route with deterministic context switching/filter controls and explicit empty/unavailable states. |
 | `/activities/feed` | Walls | `mock` | `mock-backed` | Fixture-backed activity stream preserves density and walkthrough flow without writes. |
 | `/recognition` | Walls | `mock` | `mock-backed` | Deterministic recognition totals and queue state mirror legacy IA placement. |
-| `/events` | Activities | `mock` | `mock-backed` | Deterministic schedule table supports legacy-like event discovery demo path. |
-| `/kudos` | Activities | `mock` | `mock-backed` | Stable leaderboard/distribution cards keep kudos route meaningful. |
+| `/events` | Activities | `mock` | `mock-backed` | Legacy-like grouped events view with deterministic filters, detail expansion, and contextual widgets. |
+| `/kudos` | Activities | `mock` | `mock-backed` | Dense kudos feed with deterministic period/type/team filters, leaderboard panel, and disabled give action. |
 | `/service-requests` | Activities | `disabled` | `disabled` | Intentionally unavailable; page explains deferred write-heavy workflow scope. |
 | `/books` | Activities | `mock` | `mock-backed` | Catalog snapshot preserves legacy placement with read-only expectations. |
 | `/vacations` | Activities | `mock` | `mock-backed` | Read-only balances/history blocks reflect legacy vacation overview semantics. |
@@ -84,9 +86,9 @@ Every route now renders a `PrototypeNotice` banner with one of:
 
 For non-real routes, the notice includes an explicit reason to prevent demo ambiguity and false production assumptions.
 
-## Placeholder quality baseline
+## Placeholder Quality Baseline (Remaining Placeholder Routes)
 
-Prototype (`mock`/`disabled`) routes now include consistent semantic content blocks:
+Remaining placeholder routes (for example `/activities/feed`, `/recognition`, `/books`, `/vacations`, `/teams`, `/projects`, `/office-map`, `/organization/structure`, `/committees`, `/service-requests`, `/externals/integrations`) include consistent semantic content blocks:
 
 - summary context + deterministic data source marker
 - representative cards/table blocks
@@ -96,7 +98,33 @@ Prototype (`mock`/`disabled`) routes now include consistent semantic content blo
   - planned next wave
 - simulated disabled controls with explicit prototype-mode explanation
 
-No prototype route is left blank.
+Events and Kudos are no longer placeholder pages in this wave; both now have dedicated route implementations with read-side interactions.
+
+## Events + Kudos Vertical Slice (Wave 9)
+
+### Events (`/events`)
+
+- works now:
+  - deterministic grouped list layout (`Upcoming` + `Past`) with realistic event card hierarchy (date/time/location/status).
+  - deterministic controls (`window`, `office`, `type`, `sort`) and local-only detail expansion.
+  - contextual right-rail cards that remain explicit for success/empty/unavailable route states.
+- mock-backed:
+  - fixture-backed event inventory in demo mode selected via explicit `real|mock` adapter boundaries.
+  - contextual widget summaries derived from filtered fixture slices.
+- deferred:
+  - RSVP writes, event create/edit, and export/reporting workflows remain disabled.
+
+### Kudos (`/kudos`)
+
+- works now:
+  - dense kudos feed with sender -> receiver -> date -> message hierarchy.
+  - deterministic filters (`period`, `type`, `team`) with explicit empty/unavailable states.
+  - side panel with leaderboard and type distribution summaries.
+- mock-backed:
+  - fixture-backed kudos feed in demo mode selected via explicit `real|mock` adapter boundaries.
+  - leaderboard/distribution computed from filtered fixture feed.
+- deferred:
+  - `Give Kudos` submission and reward/category management remain disabled.
 
 ## Parity status after this pass
 

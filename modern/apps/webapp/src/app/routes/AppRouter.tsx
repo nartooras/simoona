@@ -8,6 +8,8 @@ import { GeneralSettingsPage } from '../../pages/GeneralSettingsPage';
 import { UserInfoPage } from '../../pages/UserInfoPage';
 import { EmployeeDirectoryPage } from '../../pages/EmployeeDirectoryPage';
 import { MyProfilePage } from '../../pages/MyProfilePage';
+import { EventsPage } from '../../pages/EventsPage';
+import { KudosPage } from '../../pages/KudosPage';
 import { PrototypeNotice } from '../prototype/PrototypeNotice';
 import { getRouteDefinition, navigationRouteDefinitions, type NavigationRoutePath, routeAvailabilityMap } from './navigation';
 import { PrototypePlaceholderPage } from '../../pages/PrototypePlaceholderPage';
@@ -23,8 +25,8 @@ const routePageByPath: Record<NavigationRoutePath, ReactNode> = {
     '/wall': <WallPage />,
     '/activities/feed': <PrototypePlaceholderPage {...getPrototypePlaceholder('/activities/feed')} />,
     '/recognition': <PrototypePlaceholderPage {...getPrototypePlaceholder('/recognition')} />,
-    '/events': <PrototypePlaceholderPage {...getPrototypePlaceholder('/events')} />,
-    '/kudos': <PrototypePlaceholderPage {...getPrototypePlaceholder('/kudos')} />,
+    '/events': <EventsPage />,
+    '/kudos': <KudosPage />,
     '/service-requests': <PrototypePlaceholderPage {...getPrototypePlaceholder('/service-requests')} />,
     '/books': <PrototypePlaceholderPage {...getPrototypePlaceholder('/books')} />,
     '/vacations': <PrototypePlaceholderPage {...getPrototypePlaceholder('/vacations')} />,
