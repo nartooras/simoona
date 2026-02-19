@@ -12,6 +12,7 @@ Use this checklist during rehearsal and stakeholder walkthrough sign-off.
 
 - Parity-acceptable now:
   - Shell and home route fidelity are consistent enough for stakeholder walkthroughs at desktop demo widths.
+  - Wave 7 theme unification removes remaining cross-route token drift through shared primitives and consistent page/header/card/list semantics.
   - Route contract and availability signaling are synchronized across navigation metadata, notices, and rendered destinations.
   - Demo commands provide actionable diagnostics for ports, API reachability, DB availability, and env/token setup.
 - Known remaining gaps:
@@ -26,7 +27,7 @@ Use this checklist during rehearsal and stakeholder walkthrough sign-off.
 
 | Area | Pass criteria | Status (`met` / `partial` / `deferred`) | Notes |
 |---|---|---|---|
-| Shell parity expectations | Header, left navigation, home feed, and right rail are coherent and stable at demo desktop widths; no major visual breakage during route changes. | `met` | Wave 6 geometry and interaction polish removed remaining high-visibility spacing/state inconsistencies in shell + home. |
+| Shell parity expectations | Header, left navigation, home feed, and right rail are coherent and stable at demo desktop widths; no major visual breakage during route changes. | `met` | Wave 6 geometry + Wave 7 theme-token/primitives pass removed remaining high-visibility spacing/state drift in shell + pages. |
 | Route completeness expectations | All left-nav destinations open non-empty pages with explicit route availability mode (`real`, `mock`, `disabled`). | `met` | Navigation and route wiring are smoke-tested; mode labeling is present across demoed routes. |
 | Data realism expectations | Real routes show modern API read data (or explicit fallback); mock routes show deterministic but believable fixtures; disabled routes clearly explain scope. | `partial` | Real routes are read-only and fallback-capable; fixture-backed modules remain deterministic until read contracts migrate. |
 | Demo reliability expectations | `pnpm demo:check` and `pnpm demo:start` complete reliably; key walkthrough path is repeatable without manual patching. | `met` | Diagnostics now clearly classify port collisions, API unreachable, DB unavailable, and missing env/token setup. |

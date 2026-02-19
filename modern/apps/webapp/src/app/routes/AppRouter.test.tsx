@@ -151,6 +151,10 @@ describe('AppRouter', () => {
             expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', routeDefinition.path);
             expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', routeDefinition.availability);
             expect(screen.getByTestId('destination-content-region')).toBeInTheDocument();
+            expect(screen.getByTestId('destination-content-region')).toHaveAttribute(
+                'data-page-theme',
+                'legacy-unified-wave7',
+            );
             expect(screen.getByRole('main')).toBeInTheDocument();
 
             unmount();
@@ -179,6 +183,10 @@ describe('AppRouter', () => {
                 screen.getByText(`Prototype availability: ${availabilityLabelByMode[availability.mode]}`),
             ).toBeInTheDocument();
             expect(screen.getByTestId('destination-content-region')).toHaveAttribute('data-route-status', availability.mode);
+            expect(screen.getByTestId('destination-content-region')).toHaveAttribute(
+                'data-page-theme',
+                'legacy-unified-wave7',
+            );
 
             unmount();
         }

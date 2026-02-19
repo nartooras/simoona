@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchGeneralSettings, type GeneralSettingsResult } from '../api/generalSettings';
+import { CardChrome, SectionHeader } from '../app/ui/primitives';
 
 export function GeneralSettingsPage() {
     const { t } = useTranslation();
@@ -27,9 +28,12 @@ export function GeneralSettingsPage() {
     if (result === null) {
         return (
             <section aria-labelledby="general-settings-title" className="page-section">
-                <h1 className="page-title" id="general-settings-title">
-                    {t('generalSettings.title')}
-                </h1>
+                <SectionHeader
+                    title={t('generalSettings.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="general-settings-title"
+                />
                 <p className="status-message" role="status">
                     {t('generalSettings.states.loading')}
                 </p>
@@ -47,19 +51,22 @@ export function GeneralSettingsPage() {
 
         return (
             <section aria-labelledby="general-settings-title" className="page-section">
-                <h1 className="page-title" id="general-settings-title">
-                    {t('generalSettings.title')}
-                </h1>
+                <SectionHeader
+                    title={t('generalSettings.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="general-settings-title"
+                />
                 <p className="helper-note">{t('generalSettings.meta.readOnly')}</p>
                 <dl className="info-grid">
-                    <div className="info-card">
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('generalSettings.fields.language')}</dt>
                         <dd>{selectedLanguage}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('generalSettings.fields.timeZone')}</dt>
                         <dd>{selectedTimeZone}</dd>
-                    </div>
+                    </CardChrome>
                 </dl>
             </section>
         );
@@ -68,9 +75,12 @@ export function GeneralSettingsPage() {
     if (result.kind === 'empty') {
         return (
             <section aria-labelledby="general-settings-title" className="page-section">
-                <h1 className="page-title" id="general-settings-title">
-                    {t('generalSettings.title')}
-                </h1>
+                <SectionHeader
+                    title={t('generalSettings.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="general-settings-title"
+                />
                 <p className="status-message status-message--warning" role="alert">
                     {t('generalSettings.states.empty')}
                 </p>
@@ -81,9 +91,12 @@ export function GeneralSettingsPage() {
     if (result.kind === 'unauthorized') {
         return (
             <section aria-labelledby="general-settings-title" className="page-section">
-                <h1 className="page-title" id="general-settings-title">
-                    {t('generalSettings.title')}
-                </h1>
+                <SectionHeader
+                    title={t('generalSettings.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="general-settings-title"
+                />
                 <p className="status-message status-message--warning" role="alert">
                     {t('generalSettings.states.unauthorized')}
                 </p>
@@ -94,9 +107,12 @@ export function GeneralSettingsPage() {
     if (result.kind === 'forbidden') {
         return (
             <section aria-labelledby="general-settings-title" className="page-section">
-                <h1 className="page-title" id="general-settings-title">
-                    {t('generalSettings.title')}
-                </h1>
+                <SectionHeader
+                    title={t('generalSettings.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="general-settings-title"
+                />
                 <p className="status-message status-message--warning" role="alert">
                     {t('generalSettings.states.forbidden')}
                 </p>
@@ -107,9 +123,12 @@ export function GeneralSettingsPage() {
     if (result.kind === 'badRequest') {
         return (
             <section aria-labelledby="general-settings-title" className="page-section">
-                <h1 className="page-title" id="general-settings-title">
-                    {t('generalSettings.title')}
-                </h1>
+                <SectionHeader
+                    title={t('generalSettings.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="general-settings-title"
+                />
                 <p className="status-message status-message--error" role="alert">
                     {t('generalSettings.states.badRequest')}
                 </p>
@@ -124,9 +143,12 @@ export function GeneralSettingsPage() {
 
     return (
         <section aria-labelledby="general-settings-title" className="page-section">
-            <h1 className="page-title" id="general-settings-title">
-                {t('generalSettings.title')}
-            </h1>
+            <SectionHeader
+                title={t('generalSettings.title')}
+                titleAs="h1"
+                titleClassName="page-title"
+                titleId="general-settings-title"
+            />
             <p className="status-message status-message--error" role="alert">
                 {message}
             </p>

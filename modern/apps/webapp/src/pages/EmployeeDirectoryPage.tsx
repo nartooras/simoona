@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchEmployeeDirectory, type EmployeeDirectoryResult } from '../api/employeeDirectory';
+import { CardChrome, SectionHeader } from '../app/ui/primitives';
 
 export function EmployeeDirectoryPage() {
     const { t } = useTranslation();
@@ -27,9 +28,12 @@ export function EmployeeDirectoryPage() {
     if (result === null) {
         return (
             <section aria-labelledby="employee-directory-title" className="page-section">
-                <h1 className="page-title" id="employee-directory-title">
-                    {t('employeeDirectory.title')}
-                </h1>
+                <SectionHeader
+                    title={t('employeeDirectory.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="employee-directory-title"
+                />
                 <p className="status-message" role="status">
                     {t('employeeDirectory.states.loading')}
                 </p>
@@ -40,11 +44,14 @@ export function EmployeeDirectoryPage() {
     if (result.kind === 'success') {
         return (
             <section aria-labelledby="employee-directory-title" className="page-section">
-                <h1 className="page-title" id="employee-directory-title">
-                    {t('employeeDirectory.title')}
-                </h1>
+                <SectionHeader
+                    title={t('employeeDirectory.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="employee-directory-title"
+                />
                 <p className="helper-note">{t('employeeDirectory.meta.readOnly')}</p>
-                <div className="data-table-shell">
+                <CardChrome as="div" className="data-table-shell">
                     <table className="data-table">
                         <caption>{t('employeeDirectory.meta.caption')}</caption>
                         <thead>
@@ -64,7 +71,7 @@ export function EmployeeDirectoryPage() {
                             ))}
                         </tbody>
                     </table>
-                </div>
+                </CardChrome>
             </section>
         );
     }
@@ -72,9 +79,12 @@ export function EmployeeDirectoryPage() {
     if (result.kind === 'empty') {
         return (
             <section aria-labelledby="employee-directory-title" className="page-section">
-                <h1 className="page-title" id="employee-directory-title">
-                    {t('employeeDirectory.title')}
-                </h1>
+                <SectionHeader
+                    title={t('employeeDirectory.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="employee-directory-title"
+                />
                 <p className="status-message status-message--warning" role="alert">
                     {t('employeeDirectory.states.empty')}
                 </p>
@@ -85,9 +95,12 @@ export function EmployeeDirectoryPage() {
     if (result.kind === 'notFound') {
         return (
             <section aria-labelledby="employee-directory-title" className="page-section">
-                <h1 className="page-title" id="employee-directory-title">
-                    {t('employeeDirectory.title')}
-                </h1>
+                <SectionHeader
+                    title={t('employeeDirectory.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="employee-directory-title"
+                />
                 <p className="status-message status-message--warning" role="alert">
                     {t('employeeDirectory.states.notFound')}
                 </p>
@@ -98,9 +111,12 @@ export function EmployeeDirectoryPage() {
     if (result.kind === 'unauthorized') {
         return (
             <section aria-labelledby="employee-directory-title" className="page-section">
-                <h1 className="page-title" id="employee-directory-title">
-                    {t('employeeDirectory.title')}
-                </h1>
+                <SectionHeader
+                    title={t('employeeDirectory.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="employee-directory-title"
+                />
                 <p className="status-message status-message--warning" role="alert">
                     {t('employeeDirectory.states.unauthorized')}
                 </p>
@@ -111,9 +127,12 @@ export function EmployeeDirectoryPage() {
     if (result.kind === 'forbidden') {
         return (
             <section aria-labelledby="employee-directory-title" className="page-section">
-                <h1 className="page-title" id="employee-directory-title">
-                    {t('employeeDirectory.title')}
-                </h1>
+                <SectionHeader
+                    title={t('employeeDirectory.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="employee-directory-title"
+                />
                 <p className="status-message status-message--warning" role="alert">
                     {t('employeeDirectory.states.forbidden')}
                 </p>
@@ -124,9 +143,12 @@ export function EmployeeDirectoryPage() {
     if (result.kind === 'badRequest') {
         return (
             <section aria-labelledby="employee-directory-title" className="page-section">
-                <h1 className="page-title" id="employee-directory-title">
-                    {t('employeeDirectory.title')}
-                </h1>
+                <SectionHeader
+                    title={t('employeeDirectory.title')}
+                    titleAs="h1"
+                    titleClassName="page-title"
+                    titleId="employee-directory-title"
+                />
                 <p className="status-message status-message--error" role="alert">
                     {t('employeeDirectory.states.badRequest')}
                 </p>
@@ -141,9 +163,12 @@ export function EmployeeDirectoryPage() {
 
     return (
         <section aria-labelledby="employee-directory-title" className="page-section">
-            <h1 className="page-title" id="employee-directory-title">
-                {t('employeeDirectory.title')}
-            </h1>
+            <SectionHeader
+                title={t('employeeDirectory.title')}
+                titleAs="h1"
+                titleClassName="page-title"
+                titleId="employee-directory-title"
+            />
             <p className="status-message status-message--error" role="alert">
                 {message}
             </p>

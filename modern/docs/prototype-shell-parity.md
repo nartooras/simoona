@@ -1,6 +1,6 @@
-# Prototype Shell Parity Baseline (Wave 6)
+# Prototype Shell Parity Baseline (Wave 7 Theme Unification)
 
-This document captures the prototype-focused shell/navigation parity work for `modern/apps/webapp`, including route availability labeling and broader high-visibility prototype route coverage for demo-safe walkthroughs.
+This document captures the prototype-focused shell/navigation parity work for `modern/apps/webapp`, including Wave 7 theme-token and shared-component unification across shell, routes, and widgets.
 
 References:
 
@@ -22,6 +22,7 @@ References:
 
 - Parity-acceptable now:
   - shell geometry + interaction states are normalized under Wave 6 semantics (`data-shell-geometry="wave6"` and matching topbar/left-rail tags).
+  - Wave 7 unifies design tokens (palette/spacing/type/radius/shadows/state colors) and shared UI primitives (`SectionHeader`, `StatusBadge`, `InfoMetaRow`, `ListRow`, `CardChrome`) across shell + route content.
   - home feed card anatomy, reply threads, and right-rail widget hierarchy are compact and legacy-consistent for demo scanning.
   - every navigation destination has a route contract marker, availability notice, and non-empty deterministic content.
   - demo command flow emits actionable diagnostics for port, API, DB, and env/token failures.
@@ -104,6 +105,21 @@ No prototype route is left blank.
 - Header has clearer top-level affordances for demo context.
 - Route-level prototype availability is explicit across the app shell.
 - Thread S hard gate now validates critical route definitions and availability labels before demo start/check pass.
+
+### Wave 7 theme unification completed
+
+- Work package A (legacy design token system):
+  - normalized shared tokens in `modern/apps/webapp/src/styles.css` for topbar blues/neutrals, spacing scale, typography weights/sizes, border/radius/shadow layers, and interactive/status states.
+  - reduced page-level one-off styling by routing repeated chrome and states through tokenized classes.
+- Work package B (shared primitives):
+  - introduced reusable primitives in `modern/apps/webapp/src/app/ui/primitives.tsx` for section headers, status badges, info/meta rows, list rows, and card chrome wrappers.
+  - applied primitives across shell route markers, prototype availability notice, home feed/widgets, and route pages.
+- Work package C (cross-route visual parity sweep):
+  - standardized heading hierarchy and content rhythm through shared `SectionHeader` usage across home, user info, general settings, employees, my profile, health, and placeholder routes.
+  - unified route content semantics under `data-page-theme="legacy-unified-wave7"` and shell under `data-theme-system="legacy-unified-wave7"`.
+- Work package D (demo reliability/docs sync):
+  - demo command flow remains unchanged (`demo:check`, `demo:start`, `demo:stop`) and aligned with route availability expectations.
+  - demo/runbook/checklist/gaps docs now explicitly include Wave 7 unification framing and remaining gaps.
 
 ## Wall Layout Parity
 
@@ -275,6 +291,7 @@ The `/` home route now mirrors legacy wall layout rhythm more closely with a den
 
 ### Explicit shortlist of remaining parity gaps after Wave 3C
 
+- token and shared primitive foundations are unified in Wave 7; remaining parity work is now mostly feature-depth and legacy-asset fidelity rather than cross-route theme drift
 - feed media rows are still fixture placeholders (no legacy thumbnail/crop assets)
 - reaction detail depth remains aggregate-only (no per-user reaction popovers)
 - widget rows remain non-navigable fixture entries (no deep-link routing yet)

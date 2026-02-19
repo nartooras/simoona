@@ -51,7 +51,7 @@ Stakeholder demo pack and operational baseline:
 ### Current Demo Baseline
 
 - Parity-acceptable now:
-  - Wave 6 shell/home parity pass aligns topbar, left rail, feed cards, and right rail with compact legacy-like rhythm.
+  - Wave 6 shell/home parity geometry remains stable, and Wave 7 unifies theme tokens + shared UI primitives across shell/pages/widgets to remove cross-route visual drift.
   - Major route destinations are non-empty and render consistent route contract + availability metadata (`real` / `mock` / `disabled`).
   - Demo orchestration checks provide explicit diagnostics for occupied ports, API reachability failures, read-DB availability failures, and missing env/token setup.
 - Known remaining gaps:

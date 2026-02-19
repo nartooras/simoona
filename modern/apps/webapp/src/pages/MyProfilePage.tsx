@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchMyProfile, type MyProfileResult } from '../api/myProfile';
+import { CardChrome, SectionHeader } from '../app/ui/primitives';
 
 export function MyProfilePage() {
     const { t } = useTranslation();
@@ -27,9 +28,7 @@ export function MyProfilePage() {
     if (result === null) {
         return (
             <section aria-labelledby="my-profile-title" className="page-section">
-                <h1 className="page-title" id="my-profile-title">
-                    {t('myProfile.title')}
-                </h1>
+                <SectionHeader title={t('myProfile.title')} titleAs="h1" titleClassName="page-title" titleId="my-profile-title" />
                 <p className="status-message" role="status">
                     {t('myProfile.states.loading')}
                 </p>
@@ -40,35 +39,33 @@ export function MyProfilePage() {
     if (result.kind === 'success') {
         return (
             <section aria-labelledby="my-profile-title" className="page-section">
-                <h1 className="page-title" id="my-profile-title">
-                    {t('myProfile.title')}
-                </h1>
+                <SectionHeader title={t('myProfile.title')} titleAs="h1" titleClassName="page-title" titleId="my-profile-title" />
                 <p className="helper-note">{t('myProfile.meta.readOnly')}</p>
                 <dl className="info-grid">
-                    <div className="info-card">
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('myProfile.fields.fullName')}</dt>
                         <dd>{result.profile.fullName || t('myProfile.fallback.notAvailable')}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('myProfile.fields.email')}</dt>
                         <dd>{result.profile.email ?? t('myProfile.fallback.notAvailable')}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('myProfile.fields.jobTitle')}</dt>
                         <dd>{result.profile.jobTitle ?? t('myProfile.fallback.notAvailable')}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('myProfile.fields.department')}</dt>
                         <dd>{result.profile.department ?? t('myProfile.fallback.notAvailable')}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('myProfile.fields.office')}</dt>
                         <dd>{result.profile.office ?? t('myProfile.fallback.notAvailable')}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('myProfile.fields.timeZone')}</dt>
                         <dd>{result.profile.timeZone ?? t('myProfile.fallback.notAvailable')}</dd>
-                    </div>
+                    </CardChrome>
                 </dl>
             </section>
         );
@@ -77,9 +74,7 @@ export function MyProfilePage() {
     if (result.kind === 'notFound') {
         return (
             <section aria-labelledby="my-profile-title" className="page-section">
-                <h1 className="page-title" id="my-profile-title">
-                    {t('myProfile.title')}
-                </h1>
+                <SectionHeader title={t('myProfile.title')} titleAs="h1" titleClassName="page-title" titleId="my-profile-title" />
                 <p className="status-message status-message--warning" role="alert">
                     {t('myProfile.states.notFound')}
                 </p>
@@ -90,9 +85,7 @@ export function MyProfilePage() {
     if (result.kind === 'unauthorized') {
         return (
             <section aria-labelledby="my-profile-title" className="page-section">
-                <h1 className="page-title" id="my-profile-title">
-                    {t('myProfile.title')}
-                </h1>
+                <SectionHeader title={t('myProfile.title')} titleAs="h1" titleClassName="page-title" titleId="my-profile-title" />
                 <p className="status-message status-message--warning" role="alert">
                     {t('myProfile.states.unauthorized')}
                 </p>
@@ -103,9 +96,7 @@ export function MyProfilePage() {
     if (result.kind === 'forbidden') {
         return (
             <section aria-labelledby="my-profile-title" className="page-section">
-                <h1 className="page-title" id="my-profile-title">
-                    {t('myProfile.title')}
-                </h1>
+                <SectionHeader title={t('myProfile.title')} titleAs="h1" titleClassName="page-title" titleId="my-profile-title" />
                 <p className="status-message status-message--warning" role="alert">
                     {t('myProfile.states.forbidden')}
                 </p>
@@ -116,9 +107,7 @@ export function MyProfilePage() {
     if (result.kind === 'badRequest') {
         return (
             <section aria-labelledby="my-profile-title" className="page-section">
-                <h1 className="page-title" id="my-profile-title">
-                    {t('myProfile.title')}
-                </h1>
+                <SectionHeader title={t('myProfile.title')} titleAs="h1" titleClassName="page-title" titleId="my-profile-title" />
                 <p className="status-message status-message--error" role="alert">
                     {t('myProfile.states.badRequest')}
                 </p>
@@ -133,9 +122,7 @@ export function MyProfilePage() {
 
     return (
         <section aria-labelledby="my-profile-title" className="page-section">
-            <h1 className="page-title" id="my-profile-title">
-                {t('myProfile.title')}
-            </h1>
+            <SectionHeader title={t('myProfile.title')} titleAs="h1" titleClassName="page-title" titleId="my-profile-title" />
             <p className="status-message status-message--error" role="alert">
                 {message}
             </p>

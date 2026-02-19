@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchUserInfo, type UserInfoResult } from '../api/userInfo';
+import { CardChrome, SectionHeader } from '../app/ui/primitives';
 
 export function UserInfoPage() {
     const { t } = useTranslation();
@@ -27,9 +28,7 @@ export function UserInfoPage() {
     if (result === null) {
         return (
             <section aria-labelledby="user-info-title" className="page-section">
-                <h1 className="page-title" id="user-info-title">
-                    {t('userInfo.title')}
-                </h1>
+                <SectionHeader title={t('userInfo.title')} titleAs="h1" titleClassName="page-title" titleId="user-info-title" />
                 <p className="status-message" role="status">
                     {t('userInfo.states.loading')}
                 </p>
@@ -42,35 +41,33 @@ export function UserInfoPage() {
 
         return (
             <section aria-labelledby="user-info-title" className="page-section">
-                <h1 className="page-title" id="user-info-title">
-                    {t('userInfo.title')}
-                </h1>
+                <SectionHeader title={t('userInfo.title')} titleAs="h1" titleClassName="page-title" titleId="user-info-title" />
                 <p className="helper-note">{t('userInfo.meta.readOnly')}</p>
                 <dl className="info-grid">
-                    <div className="info-card">
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('userInfo.fields.fullName')}</dt>
                         <dd>{userInfo.fullName || t('userInfo.fallback.notAvailable')}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('userInfo.fields.email')}</dt>
                         <dd>{userInfo.email ?? t('userInfo.fallback.notAvailable')}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('userInfo.fields.userName')}</dt>
                         <dd>{userInfo.userName ?? t('userInfo.fallback.notAvailable')}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('userInfo.fields.organizationId')}</dt>
                         <dd>{userInfo.organizationId}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('userInfo.fields.cultureCode')}</dt>
                         <dd>{userInfo.cultureCode ?? t('userInfo.fallback.notAvailable')}</dd>
-                    </div>
-                    <div className="info-card">
+                    </CardChrome>
+                    <CardChrome as="div" className="info-card">
                         <dt>{t('userInfo.fields.timeZone')}</dt>
                         <dd>{userInfo.timeZone ?? t('userInfo.fallback.notAvailable')}</dd>
-                    </div>
+                    </CardChrome>
                 </dl>
             </section>
         );
@@ -79,9 +76,7 @@ export function UserInfoPage() {
     if (result.kind === 'unauthorized') {
         return (
             <section aria-labelledby="user-info-title" className="page-section">
-                <h1 className="page-title" id="user-info-title">
-                    {t('userInfo.title')}
-                </h1>
+                <SectionHeader title={t('userInfo.title')} titleAs="h1" titleClassName="page-title" titleId="user-info-title" />
                 <p className="status-message status-message--warning" role="alert">
                     {t('userInfo.states.unauthorized')}
                 </p>
@@ -92,9 +87,7 @@ export function UserInfoPage() {
     if (result.kind === 'notFound') {
         return (
             <section aria-labelledby="user-info-title" className="page-section">
-                <h1 className="page-title" id="user-info-title">
-                    {t('userInfo.title')}
-                </h1>
+                <SectionHeader title={t('userInfo.title')} titleAs="h1" titleClassName="page-title" titleId="user-info-title" />
                 <p className="status-message status-message--warning" role="alert">
                     {t('userInfo.states.notFound')}
                 </p>
@@ -105,9 +98,7 @@ export function UserInfoPage() {
     if (result.kind === 'badRequest') {
         return (
             <section aria-labelledby="user-info-title" className="page-section">
-                <h1 className="page-title" id="user-info-title">
-                    {t('userInfo.title')}
-                </h1>
+                <SectionHeader title={t('userInfo.title')} titleAs="h1" titleClassName="page-title" titleId="user-info-title" />
                 <p className="status-message status-message--error" role="alert">
                     {t('userInfo.states.badRequest')}
                 </p>
@@ -122,9 +113,7 @@ export function UserInfoPage() {
 
     return (
         <section aria-labelledby="user-info-title" className="page-section">
-            <h1 className="page-title" id="user-info-title">
-                {t('userInfo.title')}
-            </h1>
+            <SectionHeader title={t('userInfo.title')} titleAs="h1" titleClassName="page-title" titleId="user-info-title" />
             <p className="status-message status-message--error" role="alert">
                 {message}
             </p>

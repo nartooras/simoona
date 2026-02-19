@@ -35,6 +35,7 @@ describe('Modern webapp smoke routes', () => {
         expect(screen.getByText('Prototype availability: Real.')).toBeInTheDocument();
         expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/');
         expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'real');
+        expect(screen.getByTestId('destination-content-region')).toHaveAttribute('data-page-theme', 'legacy-unified-wave7');
         expect(screen.getByText('Simoona')).toBeInTheDocument();
         expect(screen.getByTestId('wall-data-source-summary')).toHaveTextContent(
             'Feed source: mock fixtures · Widgets source: mock fixtures',
@@ -89,7 +90,9 @@ describe('Modern webapp smoke routes', () => {
         expect(await screen.findByRole('heading', { name: 'Activity Feed' })).toBeInTheDocument();
         expect(screen.getByRole('status')).toHaveTextContent('Prototype availability: Mock.');
         expect(screen.getByText('Live feed and reactions still run from legacy modules in this prototype.')).toBeInTheDocument();
-        expect(screen.getByText('Data source: Mock fixtures.')).toBeInTheDocument();
+        expect(screen.getByText(/This feed demonstrates card density and information hierarchy/)).toHaveTextContent(
+            'Data source: Mock fixtures.',
+        );
         mockView.unmount();
 
         const disabledView = renderRoute('/service-requests');
@@ -182,6 +185,10 @@ describe('Modern webapp smoke routes', () => {
             expect(await screen.findByRole('heading', { name: route.heading })).toBeInTheDocument();
             expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', route.path);
             expect(screen.getByTestId('destination-content-region')).toBeInTheDocument();
+            expect(screen.getByTestId('destination-content-region')).toHaveAttribute(
+                'data-page-theme',
+                'legacy-unified-wave7',
+            );
             view.unmount();
         }
     });
@@ -204,6 +211,10 @@ describe('Modern webapp smoke routes', () => {
             expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', route.availability);
             expect(screen.getByTestId('destination-content-region')).toBeInTheDocument();
             expect(screen.getByTestId('destination-content-region')).toHaveAttribute('data-route-status', route.availability);
+            expect(screen.getByTestId('destination-content-region')).toHaveAttribute(
+                'data-page-theme',
+                'legacy-unified-wave7',
+            );
 
             view.unmount();
         }

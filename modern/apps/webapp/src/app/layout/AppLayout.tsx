@@ -2,6 +2,7 @@ import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { navigationGroups } from '../routes/navigation';
+import { StatusBadge } from '../ui/primitives';
 
 export function AppLayout({ children }: PropsWithChildren) {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -27,6 +28,7 @@ export function AppLayout({ children }: PropsWithChildren) {
             data-shell-fidelity="wave6-shell-home-bundle"
             data-shell-geometry="wave6"
             data-shell-taxonomy="wave6-left-rail-taxonomy"
+            data-theme-system="legacy-unified-wave7"
         >
             <header className="app-header topbar-height-legacy-44" data-testid="app-header">
                 <div className="app-header-content topbar-geometry-wave6" data-topbar-geometry="legacy-v6">
@@ -161,12 +163,12 @@ export function AppLayout({ children }: PropsWithChildren) {
                                                 <NavLink end={item.end} onClick={closeMobileNav} tabIndex={isCollapsed ? -1 : undefined} to={item.to}>
                                                     <span aria-hidden="true" className="app-nav-item-bullet" />
                                                     <span className="nav-item-label">{item.label}</span>
-                                                    <span
+                                                    <StatusBadge
                                                         aria-hidden="true"
                                                         className={`nav-availability nav-availability--${item.availability}`}
-                                                    >
-                                                        {item.availability}
-                                                    </span>
+                                                        label={item.availability}
+                                                        mode={item.availability}
+                                                    />
                                                 </NavLink>
                                             </li>
                                         ))}

@@ -22,6 +22,7 @@ export const shellVisualBaselineSpec: ShellVisualBaselineSpec = {
     },
     selectors: [
         '[data-shell-geometry="wave6"]',
+        '[data-theme-system="legacy-unified-wave7"]',
         '[data-testid="app-header"]',
         '[data-testid="app-sidebar"]',
         '[data-testid="app-content"]',

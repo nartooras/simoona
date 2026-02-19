@@ -27,6 +27,7 @@ describe('Shell geometry baseline scaffold', () => {
 
         expect(screen.getByLabelText('Feed stream')).toBeInTheDocument();
         expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
+        expect(document.querySelector('[data-theme-system="legacy-unified-wave7"]')).not.toBeNull();
 
         const header = screen.getByTestId('app-header');
         const sidebar = screen.getByTestId('app-sidebar');
