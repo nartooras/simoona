@@ -84,8 +84,8 @@ export const navigationRouteDefinitions = [
         group: 'activities',
         availability: 'mock',
         destinationMode: 'mock-backed',
-        reason: 'Event calendar and reporting remain prototype placeholders with deterministic demo data.',
-        demoNote: 'Includes deterministic schedule table matching legacy event discovery expectations.',
+        reason: 'Event discovery is deterministic and read-only while RSVP and event-management writes remain deferred.',
+        demoNote: 'Legacy-like grouped events view with deterministic filters, detail expansion, and contextual widgets.',
     },
     {
         path: '/kudos',
@@ -93,8 +93,8 @@ export const navigationRouteDefinitions = [
         group: 'activities',
         availability: 'mock',
         destinationMode: 'mock-backed',
-        reason: 'Kudos metrics and history are represented by static cards in prototype mode.',
-        demoNote: 'Leaderboard and distribution cards are deterministic for consistent demos.',
+        reason: 'Kudos feed and leaderboard are fixture-backed; give-kudos submission stays disabled in prototype mode.',
+        demoNote: 'Dense kudos feed with deterministic period/type/team filters, leaderboard panel, and disabled give action.',
     },
     {
         path: '/service-requests',

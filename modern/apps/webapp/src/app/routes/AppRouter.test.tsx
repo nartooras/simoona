@@ -64,6 +64,44 @@ describe('AppRouter', () => {
         expect(screen.getByLabelText('Wall widgets')).toBeInTheDocument();
     });
 
+    it('renders events route with deterministic control surface and contextual widgets', async () => {
+        const router = createMemoryRouter(appRoutes, {
+            initialEntries: ['/events'],
+        });
+
+        render(<RouterProvider router={router} />);
+
+        expect(await screen.findByRole('heading', { name: 'Events' })).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/events');
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'mock');
+        expect(screen.getByTestId('events-controls')).toBeInTheDocument();
+        expect(screen.getByTestId('events-timeframe-select')).toHaveValue('all');
+        expect(screen.getByTestId('events-office-select')).toHaveValue('all');
+        expect(screen.getByTestId('events-type-select')).toHaveValue('all');
+        expect(screen.getByTestId('events-sort-select')).toHaveValue('soonest');
+        expect(screen.getByTestId('events-create-cta')).toBeDisabled();
+        expect(await screen.findByTestId('events-upcoming-success')).toBeInTheDocument();
+        expect(screen.getByTestId('events-widgets-success')).toBeInTheDocument();
+    });
+
+    it('renders kudos route with deterministic feed controls and disabled give CTA', async () => {
+        const router = createMemoryRouter(appRoutes, {
+            initialEntries: ['/kudos'],
+        });
+
+        render(<RouterProvider router={router} />);
+
+        expect(await screen.findByRole('heading', { name: 'Kudos' })).toBeInTheDocument();
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-path', '/kudos');
+        expect(screen.getByTestId('route-contract-marker')).toHaveAttribute('data-route-availability', 'mock');
+        expect(screen.getByTestId('kudos-controls')).toBeInTheDocument();
+        expect(screen.getByTestId('kudos-period-select')).toHaveValue('quarter-to-date');
+        expect(screen.getByTestId('kudos-type-select')).toHaveValue('all');
+        expect(screen.getByTestId('kudos-team-select')).toHaveValue('all');
+        expect(screen.getByTestId('kudos-give-cta')).toBeDisabled();
+        expect(await screen.findByTestId('kudos-feed-success')).toBeInTheDocument();
+    });
+
     it('renders user-info route', async () => {
         vi.spyOn(globalThis, 'fetch').mockImplementation(
             () => new Promise(() => {}) as ReturnType<typeof fetch>,
