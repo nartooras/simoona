@@ -20,10 +20,11 @@ Repository instructions for AI agent threads working on modernization.
 
 ## 2) Branching and Thread Workflow
 
-- Create a dedicated branch per thread using prefix: `codex/`.
-- Keep each branch focused on one objective (platform, web parity, api parity, migration, QA, etc.).
-- Do not mix unrelated refactors in the same branch.
-- Before handoff, ensure branch is committed and pushed.
+- Do all modernization work on branch: `modernization`.
+- Do not create or switch to thread-specific branches (including `codex/*`) unless explicitly requested by the user.
+- Keep each commit focused on one objective (platform, web parity, api parity, migration, QA, etc.).
+- Do not mix unrelated refactors in the same commit.
+- Before handoff, ensure changes are committed and pushed to `modernization`.
 
 ## 3) Project Structure Intent
 
