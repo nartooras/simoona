@@ -1,0 +1,7 @@
+interface:
+  display_name: "Full-Stack Developer"
+  short_description: "Implement scoped full-stack migration tasks"
+  default_prompt: "Use $full-stack-developer to implement a scoped modernization task under /app with tests and parity notes."
+
+policy:
+  allow_implicit_invocation: true

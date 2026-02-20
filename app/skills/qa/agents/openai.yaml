@@ -1,0 +1,7 @@
+interface:
+  display_name: "QA Gatekeeper"
+  short_description: "Run tests and issue green-light decisions"
+  default_prompt: "Use $qa to validate this task, run required tests, and return a GREEN/YELLOW/RED gate decision with actionable feedback."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Data Migration Engineer"
+  short_description: "Run safe migration dry-runs and checks"
+  default_prompt: "Use $data-migration-engineer to prepare migration scripts, run dry-runs, and report cutover readiness with integrity evidence."
+
+policy:
+  allow_implicit_invocation: true

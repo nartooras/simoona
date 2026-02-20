@@ -1,0 +1,7 @@
+interface:
+  display_name: "Reviewer"
+  short_description: "Review scope, architecture, and code quality"
+  default_prompt: "Use $reviewer to evaluate this implementation for scope compliance, over-engineering, and architecture/best-practice alignment."
+
+policy:
+  allow_implicit_invocation: true

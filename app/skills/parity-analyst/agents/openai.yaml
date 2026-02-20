@@ -1,0 +1,7 @@
+interface:
+  display_name: "Parity Analyst"
+  short_description: "Track legacy-to-modern parity coverage"
+  default_prompt: "Use $parity-analyst to update parity matrices, detect gaps, and report coverage status for this phase."
+
+policy:
+  allow_implicit_invocation: true

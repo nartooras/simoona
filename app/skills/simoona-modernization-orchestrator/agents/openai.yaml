@@ -1,0 +1,7 @@
+interface:
+  display_name: "Simoona Migration Orchestrator"
+  short_description: "Orchestrate full-parity Simoona modernization"
+  default_prompt: "Use $simoona-modernization-orchestrator to coordinate phased migration work under /app with strict parity gates."
+
+policy:
+  allow_implicit_invocation: true

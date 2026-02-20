@@ -1,0 +1,7 @@
+interface:
+  display_name: "Platform DevOps"
+  short_description: "Own CI/CD and runtime platform reliability"
+  default_prompt: "Use $platform-devops to implement platform, CI/CD, and deployment readiness tasks under /app."
+
+policy:
+  allow_implicit_invocation: true
