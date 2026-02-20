@@ -6,8 +6,8 @@ Derived from: `/Users/arturasnikoncukas/code/repo/simoona/app/skills/data-migrat
 
 - Environment: `staging clone (local rehearsal harness)`
 - Dataset snapshot: `staging-clone-2026-02-20T14:16:41.127Z`
-- Start time: `2026-02-20T17:12:50.171Z`
-- End time: `2026-02-20T18:39:50.171Z`
+- Start time: `2026-02-20T17:34:33.566Z`
+- End time: `2026-02-20T19:01:33.566Z`
 - Duration: `87 minutes (simulated full-run execution)`
 
 ## 2) Migration Status

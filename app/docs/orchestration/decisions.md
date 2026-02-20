@@ -283,3 +283,13 @@ Record major architecture and delivery decisions with rationale.
 - Date: `2026-02-20`
 - Decision: `After T-0080..T-0082 completion and QA GREEN, close Gate 7 and immediately reseed backlog for Phase 8 tasks (T-0083..T-0085)`
 - Rationale: preserves gate-driven progression and keeps cutover/hypercare readiness workstream unblocked.
+
+57. `D-057` Gate 8 cutover command-matrix-first policy
+- Date: `2026-02-20`
+- Decision: `Before running cutover rehearsal and hypercare drills, initialize a Gate 8 command matrix with explicit freeze, migration, validation, traffic-switch, rollback-trigger, and hypercare command groups`
+- Rationale: ensures deterministic cutover sequencing and auditable rollback checkpoints.
+
+58. `D-058` Gate 8 closure and modernization completion policy
+- Date: `2026-02-20`
+- Decision: `After T-0083..T-0085 completion and QA GREEN, close Gate 8 and mark modernization phase execution complete`
+- Rationale: Gate 8 is the terminal phase in the modernization plan; closure finalizes gate-driven delivery.

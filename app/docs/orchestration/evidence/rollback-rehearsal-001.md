@@ -3,8 +3,8 @@
 ## 1) Run Metadata
 
 - Linked dry-run: `dry-run-002`
-- Start time: `2026-02-20T17:12:50.348Z`
-- End time: `2026-02-20T17:31:50.348Z`
+- Start time: `2026-02-20T17:34:39.686Z`
+- End time: `2026-02-20T17:53:39.686Z`
 - Duration: `19 minutes (simulated rollback execution)`
 
 ## 2) Deterministic Step Outcomes

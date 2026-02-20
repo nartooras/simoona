@@ -40,17 +40,6 @@ Track active modernization risks, owners, and mitigations.
   - validate Docker-on-VM deployment regularly
 - Next review date: `2026-02-27`
 
-3. `R-008` Weekend cutover orchestration may surface late execution-order defects
-- Severity: `Medium`
-- Area: `Cutover + Hypercare`
-- Owner role: `$platform-devops-agent` + `$qa-parity-agent`
-- Status: `Open`
-- Mitigation:
-  - initialize Gate 8 weekend cutover command matrix before rehearsal execution (`T-0083`)
-  - run freeze/migration/validation rehearsal with explicit timing and rollback checkpoints (`T-0084`)
-  - run hypercare readiness drill with on-call escalation and rollback-window validation (`T-0085`)
-- Next review date: `2026-02-27`
-
 ## Closed Risks
 
 1. `R-004` Gate 4 closure pending changed-screen visual approval workflow and final QA closure checkpoint
@@ -111,3 +100,14 @@ Track active modernization risks, owners, and mitigations.
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-7-security-hardening-pack.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-7-performance-baseline.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-7-uat-signoff-rehearsal.md`
+
+6. `R-008` Weekend cutover orchestration may surface late execution-order defects
+- Severity: `Medium`
+- Area: `Cutover + Hypercare`
+- Owner role: `$platform-devops-agent` + `$qa-parity-agent`
+- Status: `Closed`
+- Closure date: `2026-02-20`
+- Closure evidence:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-8-cutover-hypercare-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-8-cutover-rehearsal.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-8-hypercare-readiness-drill.md`

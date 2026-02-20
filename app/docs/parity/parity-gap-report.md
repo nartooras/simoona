@@ -41,10 +41,10 @@
 
 ## 4) Verification Blockers
 
-- No active Phase 7 gate blockers after `T-0080`..`T-0082` completion.
+- No active phase-gate blockers after Gate 8 closure (`T-0083`..`T-0085` complete).
 
 ## 5) Recommended Next Tasks
 
-1. `T-0083` Build Gate 8 weekend cutover command matrix and checklist baseline.
-2. `T-0084` Execute weekend cutover rehearsal and final migration validation suite.
-3. `T-0085` Run hypercare readiness drill and Gate 8 checkpoint.
+1. Add runtime-depth parity assertions for external jobs flow in Wave F execution scope.
+2. Add route-level media/storage URL parity assertions beyond smoke-level checks.
+3. Fill UI/API matrix verification timestamps for stronger auditability on future maintenance cycles.

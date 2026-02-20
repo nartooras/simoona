@@ -4,32 +4,7 @@ Use this backlog as the task source of truth for the orchestrator.
 
 ## Priority Queue
 
-1. `T-0083` `P0` Build Gate 8 weekend cutover command matrix and checklist baseline (`READY`)
-- Owner role: `$platform-devops-agent` + `$qa-parity-agent`
-- Phase: `Phase 8 - Weekend Cutover and Hypercare`
-- Dependencies: `Gate 7` completed (`T-0082`)
-- Acceptance:
-  - Gate 8 checklist is initialized with explicit command groups for freeze, final migration, validation suite, traffic switch, and rollback trigger points
-  - execution order, owner roles, and rollback checkpoints are documented
-  - required evidence artifact links are pre-seeded in checklist
-
-2. `T-0084` `P0` Execute weekend cutover rehearsal and final migration validation suite (`BLOCKED`)
-- Owner role: `$data-migration-agent` + `$qa-parity-agent`
-- Phase: `Phase 8 - Weekend Cutover and Hypercare`
-- Dependencies: `T-0083`
-- Acceptance:
-  - freeze-window rehearsal and final migration command pack are executed with timing evidence
-  - validation suite is executed after rehearsal with reproducible pass/fail output
-  - unresolved `P0/P1` findings block Gate 8 `GO`
-
-3. `T-0085` `P1` Run hypercare readiness drill and Gate 8 checkpoint (`BLOCKED`)
-- Owner role: `$platform-devops-agent` + `$qa-parity-agent`
-- Phase: `Phase 8 - Weekend Cutover and Hypercare`
-- Dependencies: `T-0083`, `T-0084`
-- Acceptance:
-  - hypercare monitoring/alerting and rollback-window readiness drill is documented with pass/fail status
-  - Gate 8 checklist is re-evaluated with explicit `GO|NO-GO`
-  - no unresolved `P0/P1` blockers remain for recommended `GO`
+No open phase-gate tasks. All defined modernization phases and gates are complete as of `2026-02-20`.
 
 ## Completed Archive
 
@@ -515,6 +490,24 @@ Use this backlog as the task source of truth for the orchestrator.
 - Main artifacts:
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-7-uat-signoff-rehearsal.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-7-hardening-uat-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+
+83. `T-0083` `P0` Build Gate 8 weekend cutover command matrix and checklist baseline (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-8-cutover-hypercare-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+
+84. `T-0084` `P0` Execute weekend cutover rehearsal and final migration validation suite (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-8-cutover-rehearsal.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-8-cutover-hypercare-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+
+85. `T-0085` `P1` Run hypercare readiness drill and Gate 8 checkpoint (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-8-hypercare-readiness-drill.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-8-cutover-hypercare-checklist.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
 
 ## Intake Template
