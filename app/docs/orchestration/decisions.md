@@ -22,3 +22,10 @@
 - Decision: Stop execution after completing `R0`; do not start `R1` implementation tasks.
 - Rationale: Explicit user instruction to stop before Phase 1.
 
+6. `D-R0-006` Build-first execution policy
+- Decision: Prioritize implementation of a fully working parity application before any publishing/deployment execution.
+- Rationale: User requested focus on creating a working deliverable first and defer publishing decisions.
+
+7. `D-R0-007` Deployment deferral
+- Decision: Keep Cloudflare deployment planning artifacts in scope, but defer actual publish/release actions until application parity gates are complete.
+- Rationale: Prevents environment and infrastructure uncertainty from blocking core product completion.

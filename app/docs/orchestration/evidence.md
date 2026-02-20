@@ -39,6 +39,7 @@ Date: `2026-02-20`
 - `app/docs/orchestration/risks.md`
 - `app/docs/orchestration/decisions.md`
 - `app/docs/orchestration/evidence.md`
+- `app/docs/orchestration/next-agent-handoff.md`
 
 ### Command-Path Rewire Evidence
 

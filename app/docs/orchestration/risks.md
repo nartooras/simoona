@@ -26,9 +26,16 @@
 - Owner: `$platform-devops`
 - Status: `Open`
 
+4. `RISK-R4-PUBLISH-DEFERRED`
+- Severity: `Low`
+- Description: Publishing execution is intentionally deferred while implementation parity is being completed.
+- Impact: Late discovery of deployment-specific integration issues is possible.
+- Mitigation: Prepare deployment artifacts during `R1-R3`, then run full staging publish rehearsal before production.
+- Owner: `$platform-devops`
+- Status: `Open`
+
 ## Resolved
 
 1. `RISK-R0-STALE-ORCHESTRATION`
 - Resolution date: `2026-02-20`
 - Outcome: Obsolete orchestration and wave-specific artifacts removed; control files reset to `R0-R5`.
-

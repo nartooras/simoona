@@ -2,6 +2,8 @@
 
 Modernization source-of-truth backlog for the reset delivery model (`R0` to `R5`).
 
+Use `app/docs/orchestration/next-agent-handoff.md` as the immediate execution brief for the next AI agent.
+
 ## Priority Queue
 
 1. `R1-001` (`P0`, owner `$parity-analyst`): Re-baseline API/UI matrices with domain columns and real coverage counters.
@@ -23,11 +25,10 @@ Modernization source-of-truth backlog for the reset delivery model (`R0` to `R5`
    - Depends on: `R2-001`
 6. `R3-001` (`P0`, owner `$full-stack-developer`): Implement auth shell and core route parity wave.
    - Depends on: `R1-003`
-7. `R4-001` (`P1`, owner `$cloudflare-deploy` + `$platform-devops`): Create Cloudflare Pages and Containers deployment assets.
+7. `R4-001` (`P1`, owner `$cloudflare-deploy` + `$platform-devops`): Create Cloudflare Pages and Containers deployment assets (no publish execution yet).
    - Depends on: `R2-*` and `R3-*` completion gates
 
 ## Completed
 
 1. `R0-001` (`P0`, owner `$platform-devops`): Hard-delete obsolete modernization artifacts from orchestration, wave scaffolding, and foundation docs.
 2. `R0-002` (`P0`, owner `$simoona-modernization-orchestrator`): Recreate orchestration control files with gate model `R0-R5`.
-
