@@ -49,7 +49,7 @@ For each completed task or gate, append:
 - Artifact paths:
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
-  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/task-T-0001.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0001.md`
 - Result summary:
   - Highest-priority unblocked task `T-0001` assigned to `$parity-analyst` with explicit scope, acceptance criteria, and validation commands.
 

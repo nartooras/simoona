@@ -23,6 +23,7 @@
 - `T-0003` completed: `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/feature-checklist.md` baseline created with `core/admin/premium/integration` sections.
 - `T-0006` completed: `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/golden-fixtures-index.md` created with required critical-flow sections.
 - `Gate 0` closed for baseline artifacts and fixture linkage.
+- Completed assignment records archived under `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed`.
 
 ## Blocked Tasks
 
