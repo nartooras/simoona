@@ -248,3 +248,13 @@ Record major architecture and delivery decisions with rationale.
 - Date: `2026-02-20`
 - Decision: `After T-0076 completion, restore priority queue to integration sequence T-0071 -> T-0072 -> T-0073 without additional Phase 3/4 detours`
 - Rationale: keeps integration-critical execution focused now that live web runtime closure requirements are satisfied.
+
+50. `D-050` Phase 5 credential-reference contract and failure-path smoke policy
+- Date: `2026-02-20`
+- Decision: `Gate 5 integration smoke now enforces secret-reference formats, ownership/source-of-truth metadata (including external-jobs callback URL/token ownership), and deterministic provider failure-path simulations in both baseline and strict staging modes`
+- Rationale: ensures credential readiness and outage/auth-failure handling can be validated without committing secrets or mutating external providers.
+
+51. `D-051` Gate 5 closure and Phase 6 transition sequencing
+- Date: `2026-02-20`
+- Decision: `After T-0071..T-0073 completion and QA GREEN, close Gate 5 and immediately reseed backlog for Phase 6 tasks (T-0077..T-0079)`
+- Rationale: preserves gate-driven progression and keeps migration-readiness workstream unblocked after integration parity closure.

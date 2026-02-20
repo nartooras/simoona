@@ -4,31 +4,32 @@ Use this backlog as the task source of truth for the orchestrator.
 
 ## Priority Queue
 
-1. `T-0071` `P0` Provision critical integration staging credential references (`READY`)
-- Owner role: `$platform-devops-agent`
-- Phase: `Phase 5 - Integration Parity`
-- Dependencies: `T-0076` completed (Gate 3 and Gate 4 re-closed)
+1. `T-0077` `P0` Build Phase 6 migration tooling idempotency contract baseline (`READY`)
+- Owner role: `$data-migration-agent`
+- Phase: `Phase 6 - Data and File Migration`
+- Dependencies: `Gate 5` completed (`T-0073`)
 - Acceptance:
-  - secret-safe env references are provisioned for OAuth, SMTP, storage, and external-jobs integration contracts
-  - ownership and source-of-truth for external-jobs callback base URL/token are confirmed
-  - `smoke:integrations:strict` passes in staging-ready execution context or blockers are explicitly re-owned with target date
+  - Phase 6 dry-run command contract is documented with idempotency and rollback-safe invariants
+  - migration integrity report template is extended with duration and bottleneck capture fields
+  - scope and prerequisites are aligned with `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/phase-6-dry-run-plan-v1.md`
 
-2. `T-0072` `P1` Add provider failure-path integration smoke checks (`BLOCKED`)
-- Owner role: `$platform-devops-agent`
-- Phase: `Phase 5 - Integration Parity`
-- Dependencies: `T-0071`
+2. `T-0078` `P1` Execute Dry-Run 002 migration rehearsal with timing capture (`BLOCKED`)
+- Owner role: `$data-migration-agent`
+- Phase: `Phase 6 - Data and File Migration`
+- Dependencies: `T-0077`
 - Acceptance:
-  - failure-path checks exist for critical providers (timeouts/auth failures where safely testable)
-  - smoke harness report clearly differentiates config readiness and runtime failure-path results
-  - runbook includes incident and rollback-safe remediation steps for each provider
+  - Dry-Run 002 execution report includes start/end timestamps, duration, and throughput notes
+  - integrity checks include row-count and referential-consistency summaries
+  - blockers and optimization actions are explicitly assigned
 
-3. `T-0073` `P1` Re-run Gate 5 integration readiness checkpoint (`BLOCKED`)
-- Owner role: `$qa-parity-agent`
-- Phase: `Phase 5 - Integration Parity`
-- Dependencies: `T-0071`, `T-0072`
+3. `T-0079` `P1` Execute rollback rehearsal and publish Gate 6 precheck (`BLOCKED`)
+- Owner role: `$qa-parity-agent` + `$data-migration-agent`
+- Phase: `Phase 6 - Data and File Migration`
+- Dependencies: `T-0077`, `T-0078`
 - Acceptance:
-  - Gate 5 checklist is re-evaluated with strict smoke and failure-path evidence
-  - explicit `GO|NO-GO` recommendation is recorded with no unresolved P0/P1 blockers for `GO`
+  - rollback rehearsal result is documented with deterministic step outcomes
+  - Gate 6 precheck status is recorded with explicit `GO|NO-GO`
+  - no unresolved P0/P1 issues remain for migration rehearsal scope when recommending `GO`
 
 ## Completed Archive
 
@@ -453,6 +454,26 @@ Use this backlog as the task source of truth for the orchestrator.
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-wave-a-execution-plan.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-wave-a-runtime-smoke.mjs`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/package.json`
+
+74. `T-0071` `P0` Provision critical integration staging credential references (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/integration-staging-credential-references.env`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/integration-credential-references.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/integration-smoke-contract.json`
+
+75. `T-0072` `P1` Add provider failure-path integration smoke checks (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/scripts/verify-integration-smoke.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/integration-smoke-contract.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/integration-smoke-runbook.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/package.json`
+
+76. `T-0073` `P1` Re-run Gate 5 integration readiness checkpoint (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-5-integration-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
 
 ## Intake Template
 

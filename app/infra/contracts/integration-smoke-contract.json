@@ -1,11 +1,19 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "phase": "Phase 5 - Integration Parity",
+  "defaults": {
+    "runbookPath": "docs/orchestration/integration-smoke-runbook.md",
+    "credentialReferenceEnvFile": "infra/contracts/integration-staging-credential-references.env"
+  },
   "providers": [
     {
       "id": "oauth-external-auth",
       "priority": "P0",
       "requiredForGate": true,
+      "ownership": {
+        "ownerRole": "$platform-devops-agent",
+        "sourceOfTruth": "1password://simoona/staging/integrations/oauth"
+      },
       "checks": {
         "requiredEnv": [
           "INTEGRATION_AUTH_CLIENT_ID",
@@ -16,13 +24,34 @@
         "urlEnv": [
           "INTEGRATION_AUTH_AUTHORITY_URL",
           "INTEGRATION_AUTH_REDIRECT_URI"
+        ],
+        "secretRefEnv": [
+          "INTEGRATION_AUTH_CLIENT_SECRET_REF"
         ]
-      }
+      },
+      "failurePathChecks": [
+        {
+          "id": "oauth-timeout",
+          "type": "timeout",
+          "requiredForGate": true,
+          "remediationKey": "oauth-timeout"
+        },
+        {
+          "id": "oauth-auth-failure",
+          "type": "auth-failure",
+          "requiredForGate": true,
+          "remediationKey": "oauth-auth-failure"
+        }
+      ]
     },
     {
       "id": "smtp-email",
       "priority": "P0",
       "requiredForGate": true,
+      "ownership": {
+        "ownerRole": "$platform-devops-agent",
+        "sourceOfTruth": "1password://simoona/staging/integrations/smtp"
+      },
       "checks": {
         "requiredEnv": [
           "INTEGRATION_SMTP_HOST",
@@ -33,13 +62,34 @@
         ],
         "numericEnv": [
           "INTEGRATION_SMTP_PORT"
+        ],
+        "secretRefEnv": [
+          "INTEGRATION_SMTP_PASSWORD_REF"
         ]
-      }
+      },
+      "failurePathChecks": [
+        {
+          "id": "smtp-timeout",
+          "type": "timeout",
+          "requiredForGate": true,
+          "remediationKey": "smtp-timeout"
+        },
+        {
+          "id": "smtp-auth-failure",
+          "type": "auth-failure",
+          "requiredForGate": true,
+          "remediationKey": "smtp-auth-failure"
+        }
+      ]
     },
     {
       "id": "storage-media",
       "priority": "P1",
       "requiredForGate": true,
+      "ownership": {
+        "ownerRole": "$platform-devops-agent",
+        "sourceOfTruth": "1password://simoona/staging/integrations/storage"
+      },
       "checks": {
         "requiredEnv": [
           "INTEGRATION_STORAGE_PROVIDER",
@@ -50,13 +100,39 @@
         ],
         "urlEnv": [
           "INTEGRATION_STORAGE_BASE_URL"
+        ],
+        "secretRefEnv": [
+          "INTEGRATION_STORAGE_ACCESS_KEY_REF",
+          "INTEGRATION_STORAGE_SECRET_KEY_REF"
         ]
-      }
+      },
+      "failurePathChecks": [
+        {
+          "id": "storage-timeout",
+          "type": "timeout",
+          "requiredForGate": true,
+          "remediationKey": "storage-timeout"
+        },
+        {
+          "id": "storage-auth-failure",
+          "type": "auth-failure",
+          "requiredForGate": true,
+          "remediationKey": "storage-auth-failure"
+        }
+      ]
     },
     {
       "id": "external-jobs",
       "priority": "P0",
       "requiredForGate": true,
+      "ownership": {
+        "ownerRole": "$platform-devops-agent",
+        "sourceOfTruth": "1password://simoona/staging/integrations/external-jobs",
+        "callbackBaseUrlOwnerRole": "$platform-devops-agent",
+        "callbackBaseUrlSourceOfTruth": "staging runtime env contract: INTEGRATION_EXTERNAL_JOBS_BASE_URL",
+        "callbackTokenOwnerRole": "$platform-devops-agent",
+        "callbackTokenSourceOfTruth": "1password://simoona/staging/integrations/external-jobs/token"
+      },
       "checks": {
         "requiredEnv": [
           "INTEGRATION_EXTERNAL_JOBS_BASE_URL",
@@ -64,13 +140,34 @@
         ],
         "urlEnv": [
           "INTEGRATION_EXTERNAL_JOBS_BASE_URL"
+        ],
+        "secretRefEnv": [
+          "INTEGRATION_EXTERNAL_JOBS_TOKEN_REF"
         ]
-      }
+      },
+      "failurePathChecks": [
+        {
+          "id": "external-jobs-timeout",
+          "type": "timeout",
+          "requiredForGate": true,
+          "remediationKey": "external-jobs-timeout"
+        },
+        {
+          "id": "external-jobs-auth-failure",
+          "type": "auth-failure",
+          "requiredForGate": true,
+          "remediationKey": "external-jobs-auth-failure"
+        }
+      ]
     },
     {
       "id": "staging-sql-clone",
       "priority": "P0",
       "requiredForGate": false,
+      "ownership": {
+        "ownerRole": "$data-migration-engineer",
+        "sourceOfTruth": "docs/orchestration/evidence/staging-clone-access.md"
+      },
       "checks": {
         "requiredFiles": [
           "docs/orchestration/evidence/staging-clone-access.md"

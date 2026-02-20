@@ -5,11 +5,11 @@
 
 ## Current Phase
 
-- `Phase 5 - Integration Parity`
+- `Phase 6 - Data and File Migration`
 
 ## Assigned Tasks
 
-- `T-0071` Provision critical integration staging credential references (`READY`, owner: `$platform-devops-agent`).
+- `T-0077` Build Phase 6 migration tooling idempotency contract baseline (`READY`, owner: `$data-migration-agent`).
 
 ## Completed Tasks
 
@@ -99,26 +99,30 @@
 - `T-0075` completed: Wave A shell-critical routes wired in runtime process using existing shell boundary modules.
 - `T-0076` completed: Gate 3 and Gate 4 were re-evaluated with runtime web evidence and re-closed as `COMPLETE`.
 - Phase transitioned back to Phase 5 after Gate 3/4 re-closure.
+- `T-0071` completed: secret-safe staging credential references and ownership/source-of-truth evidence were published for OAuth/SMTP/storage/external-jobs.
+- `T-0072` completed: integration smoke harness now executes provider failure-path simulations and reports readiness vs failure-path status independently.
+- `T-0073` completed: Gate 5 checklist was re-run with strict staging smoke evidence and updated to QA `GREEN` (`GO`).
+- `Gate 5` closed for integration parity readiness.
+- Phase transitioned to Phase 6 after Gate 5 closure.
 
 ## Blocked Tasks
 
-1. `T-0072` Add provider failure-path integration smoke checks
-- Blocker: depends on `T-0071` credential provisioning completion.
-2. `T-0073` Re-run Gate 5 integration readiness checkpoint
-- Blocker: depends on `T-0071` and `T-0072` completion.
+1. `T-0078` Execute Dry-Run 002 migration rehearsal with timing capture
+- Blocker: depends on `T-0077` migration tooling idempotency contract baseline completion.
+2. `T-0079` Execute rollback rehearsal and publish Gate 6 precheck
+- Blocker: depends on `T-0077` and `T-0078` completion.
 
 ## Open Risks
 
 1. `R-001` Incomplete parity coverage in early phases (`Medium`).
 2. `R-002` Migration runtime may exceed weekend window (`High`).
 3. `R-003` CI/runtime drift between local and target deployment (`Medium`).
-4. `R-005` Critical integration credentials/readiness may block Gate 5 execution (`High`).
 
 ## Next 3 Tasks
 
-1. Execute `T-0071` via `$platform-devops-agent` to provision secret-safe staging credential references for gate-critical integrations.
-2. Execute `T-0072` via `$platform-devops-agent` to add provider failure-path smoke checks and remediation runbook paths.
-3. Execute `T-0073` via `$qa-parity-agent` to re-run Gate 5 checkpoint and record updated `GO|NO-GO`.
+1. Execute `T-0077` via `$data-migration-agent` to baseline idempotent migration tooling contract and duration capture fields.
+2. Execute `T-0078` via `$data-migration-agent` to run Dry-Run 002 with timing and integrity outputs.
+3. Execute `T-0079` via `$qa-parity-agent` + `$data-migration-agent` to run rollback rehearsal and publish Gate 6 precheck `GO|NO-GO`.
 
 ## Gate Status
 
@@ -127,4 +131,5 @@
 - `Gate 2 (Core Compatibility)`: `COMPLETE`
 - `Gate 3 (UI Parity Foundation)`: `COMPLETE`
 - `Gate 4 (Feature Waves)`: `COMPLETE`
-- `Gate 5 (Integrations)`: `IN_PROGRESS`
+- `Gate 5 (Integrations)`: `COMPLETE`
+- `Gate 6 (Data and File Migration)`: `IN_PROGRESS`

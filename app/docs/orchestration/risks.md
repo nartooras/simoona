@@ -52,21 +52,6 @@ Track active modernization risks, owners, and mitigations.
   - validate Docker-on-VM deployment regularly
 - Next review date: `2026-02-27`
 
-4. `R-005` Critical integration credentials/readiness may block Gate 5 execution
-- Severity: `High`
-- Area: `Phase 5 integration parity`
-- Owner role: `$platform-devops` + `$parity-analyst-agent`
-- Status: `Open`
-- Mitigation:
-  - publish integration inventory + credential matrix with explicit `ready|missing|blocked` state (`T-0068`)
-  - inventory outcome: gate-critical OAuth/SMTP/storage/external-jobs credentials are `missing|blocked`; SQL clone prerequisite remains `ready`
-  - implement integration smoke harness baseline with secret-safe environment contracts (`T-0069`)
-  - smoke outcome: baseline command reports blockers while strict mode fails on missing gate-critical provider readiness
-  - evaluate Gate 5 readiness and escalate any missing critical staging credentials immediately (`T-0070`)
-  - Gate 5 checkpoint result: QA `RED`, recommendation `NO-GO` until credential provisioning (`T-0071`) and failure-path checks (`T-0072`) are complete
-  - Phase 5 resumed after Gate 3/4 re-closure (`T-0076`); next active mitigation is credential provisioning (`T-0071`)
-- Next review date: `2026-02-27`
-
 ## Closed Risks
 
 1. `R-004` Gate 4 closure pending changed-screen visual approval workflow and final QA closure checkpoint
@@ -91,3 +76,15 @@ Track active modernization risks, owners, and mitigations.
   - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-wave-a-runtime-smoke.mjs`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+
+3. `R-005` Critical integration credentials/readiness may block Gate 5 execution
+- Severity: `High`
+- Area: `Phase 5 integration parity`
+- Owner role: `$platform-devops` + `$parity-analyst-agent`
+- Status: `Closed`
+- Closure date: `2026-02-20`
+- Closure evidence:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/integration-staging-credential-references.env`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/integration-credential-references.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-5-integration-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/integration-inventory-matrix.md`

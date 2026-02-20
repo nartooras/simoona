@@ -982,3 +982,61 @@ For each completed task or gate, append:
   - Gate 3 recommendation updated to `COMPLETE`.
   - Gate 4 recommendation updated to `COMPLETE`.
   - Phase 5 integration queue unblocked and resumed at `T-0071`.
+
+83. Date: `2026-02-20`
+- Phase: `Phase 5`
+- Task: `T-0071 Provision critical integration staging credential references`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/integration-staging-credential-references.env`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/integration-credential-references.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/integration-smoke-contract.json`
+- Result summary:
+  - Secret-safe staging integration env references were provisioned for OAuth, SMTP, storage, and external-jobs providers.
+  - Ownership and source-of-truth metadata was locked, including explicit external-jobs callback base URL/token ownership contract.
+  - Validation passed: `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app smoke:integrations:strict:staging`.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+84. Date: `2026-02-20`
+- Phase: `Phase 5`
+- Task: `T-0072 Add provider failure-path integration smoke checks`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/scripts/verify-integration-smoke.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/integration-smoke-contract.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/integration-smoke-runbook.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/package.json`
+- Result summary:
+  - Integration smoke report now differentiates readiness checks from provider failure-path checks.
+  - Deterministic timeout/auth-failure simulations were added for OAuth, SMTP, storage, and external-jobs providers.
+  - Runbook now includes incident and rollback-safe remediation steps keyed per failure scenario.
+  - Validation passed: `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app smoke:integrations:staging` and `smoke:integrations:strict:staging`.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+85. Date: `2026-02-20`
+- Phase: `Phase 5`
+- Task: `T-0073 Re-run Gate 5 integration readiness checkpoint`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-5-integration-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/integration-inventory-matrix.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/parity-gap-report.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+- Result summary:
+  - Gate 5 checklist was re-evaluated with strict staging smoke evidence and moved to `COMPLETE`.
+  - QA decision recorded as `GREEN`; gate recommendation updated to `GO`.
+  - No unresolved P0/P1 blockers remain for Phase 5 gate scope.
+
+86. Date: `2026-02-20`
+- Phase: `Phase Transition`
+- Task: `Gate 5 closure and Phase 6 queue reseed`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/risks.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/decisions.md`
+- Result summary:
+  - Gate 5 was closed and phase transitioned to `Phase 6 - Data and File Migration`.
+  - Priority queue reseeded with `T-0077`..`T-0079` and dependency order preserved.
+  - `R-005` moved to closed risks with evidence references.

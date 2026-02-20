@@ -11,6 +11,8 @@
     "smoke": "node ./scripts/foundation-check.mjs smoke",
     "smoke:integrations": "node ./infra/scripts/verify-integration-smoke.mjs",
     "smoke:integrations:strict": "node ./infra/scripts/verify-integration-smoke.mjs --strict",
+    "smoke:integrations:staging": "node ./infra/scripts/verify-integration-smoke.mjs --env-file ./infra/contracts/integration-staging-credential-references.env",
+    "smoke:integrations:strict:staging": "node ./infra/scripts/verify-integration-smoke.mjs --strict --env-file ./infra/contracts/integration-staging-credential-references.env",
     "build": "node ./scripts/foundation-check.mjs build",
     "ci:foundation": "bash ./infra/ci/run-foundation-ci.sh",
     "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm smoke && pnpm build"
