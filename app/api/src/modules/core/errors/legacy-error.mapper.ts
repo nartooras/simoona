@@ -1,18 +1,13 @@
 import { Injectable } from "@nestjs/common";
+import { createLegacyErrorEnvelope } from "@simoona/contracts/error-envelope";
 
 @Injectable()
 export class LegacyErrorMapper {
   map(error: unknown) {
     if (error instanceof Error) {
-      return {
-        errorCode: "LEGACY_COMPAT_ERROR",
-        errorMessage: error.message
-      };
+      return createLegacyErrorEnvelope("LEGACY_COMPAT_ERROR", error.message);
     }
 
-    return {
-      errorCode: "LEGACY_COMPAT_UNKNOWN",
-      errorMessage: "Unknown error"
-    };
+    return createLegacyErrorEnvelope("LEGACY_COMPAT_UNKNOWN", "Unknown error");
   }
 }

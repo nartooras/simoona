@@ -17,41 +17,38 @@ Build a working, parity-focused application under `/app` before any publishing/d
 
 ## Immediate Execution Queue
 
-1. `R1-001` (`$parity-analyst`)
+1. `R2-001` (`$full-stack-developer`)
 - In scope:
-  - Re-baseline `app/docs/parity/api-endpoint-matrix.csv`.
-  - Re-baseline `app/docs/parity/ui-route-matrix.csv`.
-  - Update `app/docs/parity/parity-gap-report.md` with current factual coverage.
+  - Implement auth/token/account endpoint parity slice using canonical contracts package.
+  - Move mapped auth/account/token endpoints from `mapped` to `implemented` with fixture-backed checks.
 - Acceptance:
-  - Coverage summary includes mapped/implemented/verified percentages for API and UI.
-  - Domain grouping columns are present and consistent.
+  - Endpoint handlers exist for scoped auth/account/token contracts.
+  - Contract fixtures and parity tests pass for the scoped endpoints.
+  - `app/docs/parity/api-endpoint-matrix.csv` statuses updated for implemented rows.
 
-2. `R1-002` (`$platform-devops`)
+2. `R2-002` (`$full-stack-developer`)
 - In scope:
-  - Remove remaining placeholder-oriented language or command behavior in active `/app` scripts.
-  - Ensure root/api/web/tests commands represent real baseline execution contracts.
+  - Implement tenant/permission/localization/error compatibility slice.
+  - Ensure legacy error/permission behavior remains contract-compatible.
 - Acceptance:
-  - `pnpm --dir app lint|typecheck|test|smoke|build|verify` pass.
-  - `pnpm --dir app/api lint|typecheck|test|build` pass.
-  - No active command script references deleted `wave-a` artifacts.
+  - Scoped API parity tests pass and fixtures remain aligned.
+  - Permission and error compatibility contracts remain green.
 
-3. `R1-003` (`$full-stack-developer`)
+3. `R3-001` prep (`$parity-analyst` + `$full-stack-developer`)
 - In scope:
-  - Expand `app/packages/contracts` into the canonical parity contract package.
-  - Add typed route map, auth claim contracts, permission constants, and error envelope types.
+  - Use rebased UI matrix to define first auth shell + core route implementation slice.
+  - Prepare route-level parity verification requirements for runtime and visual checks.
 - Acceptance:
-  - API and web import these shared contracts where applicable.
-  - Type checks remain green.
+  - `R3-001` task scope lists exact routes and verification commands.
 
 ## Success Criteria For This Stage
 
 1. `R1` tasks are complete and documented in orchestration files.
 2. The app workspace runs as a coherent baseline for implementation waves.
-3. A next implementation wave (`R2-001`) is READY with explicit endpoint scope.
+3. `R2-001` is the active next gate and ready for endpoint implementation execution.
 
 ## Explicitly Deferred
 
 1. Cloudflare publishing/deployment execution.
 2. Production DNS or traffic switching.
 3. Release cutover tasks.
-

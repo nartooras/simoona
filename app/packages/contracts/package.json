@@ -1,0 +1,14 @@
+{
+  "name": "@simoona/contracts",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./auth": "./auth.ts",
+    "./auth-claims": "./auth-claims.ts",
+    "./permissions": "./permissions.ts",
+    "./route-map": "./route-map.ts",
+    "./error-envelope": "./error-envelope.ts"
+  }
+}

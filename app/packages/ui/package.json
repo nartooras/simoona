@@ -1,0 +1,8 @@
+{
+  "name": "@simoona/ui",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "primitives:check": "node ./scripts/verify-ui-primitives.mjs"
+  }
+}

@@ -29,3 +29,17 @@
 7. `D-R0-007` Deployment deferral
 - Decision: Keep Cloudflare deployment planning artifacts in scope, but defer actual publish/release actions until application parity gates are complete.
 - Rationale: Prevents environment and infrastructure uncertainty from blocking core product completion.
+
+## 2026-02-20 (R1 execution)
+
+1. `D-R1-001` Parity matrix normalization
+- Decision: Normalize API/UI parity matrices to stable schemas with explicit domain columns and per-domain status counters.
+- Rationale: Enables deterministic coverage reporting and cleaner phase handoff decisions for `R1` and `R2/R3` wave planning.
+
+2. `D-R1-002` Runtime command contract policy
+- Decision: Replace placeholder root/API gate wrappers with executable lint/typecheck/test/smoke/build command contracts; permit smoke fallback to static shell + visual checks when local port binding is blocked by environment restrictions.
+- Rationale: Keeps CI/local contracts executable in constrained environments while preserving deterministic gate behavior.
+
+3. `D-R1-003` Canonical shared contracts baseline
+- Decision: Establish `app/packages/contracts` as canonical source for route map, auth claims, permissions, and error envelope schemas used by both API and web compatibility layers.
+- Rationale: Reduces cross-app drift and sets contract-first baseline required before `R2/R3` parity implementation waves.

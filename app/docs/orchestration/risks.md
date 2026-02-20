@@ -2,19 +2,19 @@
 
 ## Active
 
-1. `RISK-R1-API-COVERAGE`
+1. `RISK-R2-API-COVERAGE`
 - Severity: `High`
-- Description: API parity matrix currently has broad `unmapped`/`unimplemented` coverage.
+- Description: API parity matrix is re-baselined but still has broad `unmapped`/`unimplemented` coverage (`161/190` unmapped; `0` implemented; `0` verified).
 - Impact: Release cannot proceed without complete endpoint parity.
-- Mitigation: Run `R1-001` matrix re-baselining, then execute domain-by-domain `R2` waves with strict verification.
+- Mitigation: Execute domain-by-domain `R2` waves with strict contract-first implementation and verification evidence.
 - Owner: `$parity-analyst` + `$full-stack-developer`
 - Status: `Open`
 
-2. `RISK-R1-UI-COVERAGE`
+2. `RISK-R3-UI-COVERAGE`
 - Severity: `High`
-- Description: UI route matrix currently has broad `unmapped`/`unimplemented` coverage.
+- Description: UI route matrix is re-baselined but remains fully `unmapped`/`unimplemented` (`115/115` unmapped).
 - Impact: UI parity and user-flow compatibility are not release-ready.
-- Mitigation: Run `R1-001` route-domain mapping, then execute `R3` route waves with visual and behavior checks.
+- Mitigation: Execute `R3` route waves with visual and behavior checks after core API parity wave starts.
 - Owner: `$parity-analyst` + `$full-stack-developer`
 - Status: `Open`
 

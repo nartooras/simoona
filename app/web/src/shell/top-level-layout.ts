@@ -2,6 +2,7 @@ import {
   createLegacyShellNavItem,
   resolveLegacyMotionTokens
 } from "../../../packages/ui/src/index.ts";
+import { LEGACY_WEB_ROUTES } from "../../../packages/contracts/route-map.ts";
 
 export interface TopLevelLayoutState {
   title: string;
@@ -30,8 +31,8 @@ export function createTopLevelLayoutState(
     navRegion: "legacyTopNavFrame",
     contentRegion: "legacyMainContentFrame",
     navItems: [
-      createLegacyShellNavItem("home", "/", "Home"),
-      createLegacyShellNavItem("profile", "/profile", "Profile")
+      createLegacyShellNavItem("home", LEGACY_WEB_ROUTES.root, "Home"),
+      createLegacyShellNavItem("profile", LEGACY_WEB_ROUTES.profile, "Profile")
     ],
     motion: resolveLegacyMotionTokens(prefersReducedMotion),
     source: "legacyTopLevelLayout"
