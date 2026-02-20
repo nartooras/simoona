@@ -5,11 +5,11 @@
 
 ## Current Phase
 
-- `Phase 7 - Hardening and UAT`
+- `Phase 8 - Weekend Cutover and Hypercare`
 
 ## Assigned Tasks
 
-- `T-0080` Build Gate 7 hardening regression command matrix baseline (`READY`, owner: `$qa-parity-agent`).
+- `T-0083` Build Gate 8 weekend cutover command matrix and checklist baseline (`READY`, owner: `$platform-devops-agent` + `$qa-parity-agent`).
 
 ## Completed Tasks
 
@@ -109,25 +109,30 @@
 - `T-0079` completed: rollback rehearsal and Gate 6 strict precheck passed with QA `GREEN` (`GO`).
 - `Gate 6` closed for data/file migration readiness.
 - Phase transitioned to Phase 7 after Gate 6 closure.
+- `T-0080` completed: Gate 7 hardening regression command matrix baseline was initialized with ordered parity/performance/security/UAT execution groups.
+- `T-0081` completed: security/auth/secret hardening verification pack executed with strict staging checks and no unresolved `P0`/`P1` findings.
+- `T-0082` completed: UAT sign-off rehearsal command pack executed and Gate 7 checklist updated to QA `GREEN` (`GO`).
+- `Gate 7` closed for hardening and UAT readiness.
+- Phase transitioned to Phase 8 after Gate 7 closure.
 
 ## Blocked Tasks
 
-1. `T-0081` Execute security/auth/secret hardening verification pack
-- Blocker: depends on `T-0080` hardening regression command matrix baseline completion.
-2. `T-0082` Run UAT sign-off rehearsal and Gate 7 checkpoint
-- Blocker: depends on `T-0080` and `T-0081` completion.
+1. `T-0084` Execute weekend cutover rehearsal and final migration validation suite
+- Blocker: depends on `T-0083` weekend cutover command matrix and checklist baseline completion.
+2. `T-0085` Run hypercare readiness drill and Gate 8 checkpoint
+- Blocker: depends on `T-0083` and `T-0084` completion.
 
 ## Open Risks
 
 1. `R-001` Incomplete parity coverage in early phases (`Medium`).
 2. `R-003` CI/runtime drift between local and target deployment (`Medium`).
-3. `R-007` Gate 7 hardening/UAT evidence may surface late P1 defects (`Medium`).
+3. `R-008` Weekend cutover orchestration may surface late execution-order defects (`Medium`).
 
 ## Next 3 Tasks
 
-1. Execute `T-0080` via `$qa-parity-agent` to initialize Gate 7 regression command matrix and evidence map.
-2. Execute `T-0081` via `$qa-parity-agent` + `$platform-devops-agent` to run security/auth/secret hardening verification pack.
-3. Execute `T-0082` via `$qa-parity-agent` to run UAT sign-off rehearsal and publish Gate 7 `GO|NO-GO`.
+1. Execute `T-0083` via `$platform-devops-agent` + `$qa-parity-agent` to initialize Gate 8 weekend cutover command matrix and checklist baseline.
+2. Execute `T-0084` via `$data-migration-agent` + `$qa-parity-agent` to run weekend cutover rehearsal and final migration validation suite.
+3. Execute `T-0085` via `$platform-devops-agent` + `$qa-parity-agent` to run hypercare readiness drill and publish Gate 8 `GO|NO-GO`.
 
 ## Gate Status
 
@@ -138,4 +143,5 @@
 - `Gate 4 (Feature Waves)`: `COMPLETE`
 - `Gate 5 (Integrations)`: `COMPLETE`
 - `Gate 6 (Data and File Migration)`: `COMPLETE`
-- `Gate 7 (Hardening and UAT)`: `IN_PROGRESS`
+- `Gate 7 (Hardening and UAT)`: `COMPLETE`
+- `Gate 8 (Cutover and Hypercare)`: `IN_PROGRESS`

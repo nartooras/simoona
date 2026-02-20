@@ -273,3 +273,13 @@ Record major architecture and delivery decisions with rationale.
 - Date: `2026-02-20`
 - Decision: `After T-0077..T-0079 completion and Gate 6 GREEN, close Gate 6 and reseed backlog for Phase 7 tasks (T-0080..T-0082)`
 - Rationale: preserves gate-driven phase progression and keeps hardening/UAT work unblocked.
+
+55. `D-055` Gate 7 command-matrix-first hardening policy
+- Date: `2026-02-20`
+- Decision: `Before executing hardening/UAT checks, initialize a Gate 7 command matrix with ordered parity, performance, security, and UAT command groups and pre-linked evidence targets`
+- Rationale: guarantees reproducible execution order and removes ambiguity in gate evidence ownership.
+
+56. `D-056` Gate 7 closure and Phase 8 transition sequencing
+- Date: `2026-02-20`
+- Decision: `After T-0080..T-0082 completion and QA GREEN, close Gate 7 and immediately reseed backlog for Phase 8 tasks (T-0083..T-0085)`
+- Rationale: preserves gate-driven progression and keeps cutover/hypercare readiness workstream unblocked.

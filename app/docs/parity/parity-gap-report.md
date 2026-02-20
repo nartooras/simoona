@@ -41,10 +41,10 @@
 
 ## 4) Verification Blockers
 
-- No active Phase 6 gate blockers after `T-0077`..`T-0079` completion.
+- No active Phase 7 gate blockers after `T-0080`..`T-0082` completion.
 
 ## 5) Recommended Next Tasks
 
-1. `T-0080` Build Gate 7 hardening regression command matrix baseline.
-2. `T-0081` Execute security/auth/secret hardening verification pack.
-3. `T-0082` Run UAT sign-off rehearsal and Gate 7 checkpoint.
+1. `T-0083` Build Gate 8 weekend cutover command matrix and checklist baseline.
+2. `T-0084` Execute weekend cutover rehearsal and final migration validation suite.
+3. `T-0085` Run hypercare readiness drill and Gate 8 checkpoint.

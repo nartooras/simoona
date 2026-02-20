@@ -4,32 +4,32 @@ Use this backlog as the task source of truth for the orchestrator.
 
 ## Priority Queue
 
-1. `T-0080` `P0` Build Gate 7 hardening regression command matrix baseline (`READY`)
-- Owner role: `$qa-parity-agent`
-- Phase: `Phase 7 - Hardening and UAT`
-- Dependencies: `Gate 6` completed (`T-0079`)
+1. `T-0083` `P0` Build Gate 8 weekend cutover command matrix and checklist baseline (`READY`)
+- Owner role: `$platform-devops-agent` + `$qa-parity-agent`
+- Phase: `Phase 8 - Weekend Cutover and Hypercare`
+- Dependencies: `Gate 7` completed (`T-0082`)
 - Acceptance:
-  - Gate 7 checklist is initialized with explicit command groups for parity, performance, security, and UAT sign-off
-  - command ownership and execution order are documented
+  - Gate 8 checklist is initialized with explicit command groups for freeze, final migration, validation suite, traffic switch, and rollback trigger points
+  - execution order, owner roles, and rollback checkpoints are documented
   - required evidence artifact links are pre-seeded in checklist
 
-2. `T-0081` `P1` Execute security/auth/secret hardening verification pack (`BLOCKED`)
-- Owner role: `$qa-parity-agent` + `$platform-devops-agent`
-- Phase: `Phase 7 - Hardening and UAT`
-- Dependencies: `T-0080`
+2. `T-0084` `P0` Execute weekend cutover rehearsal and final migration validation suite (`BLOCKED`)
+- Owner role: `$data-migration-agent` + `$qa-parity-agent`
+- Phase: `Phase 8 - Weekend Cutover and Hypercare`
+- Dependencies: `T-0083`
 - Acceptance:
-  - auth boundary, permission enforcement, and secret handling checks are executed with evidence
-  - findings include severity and reproducible commands
-  - unresolved P0/P1 findings block Gate 7 `GO`
+  - freeze-window rehearsal and final migration command pack are executed with timing evidence
+  - validation suite is executed after rehearsal with reproducible pass/fail output
+  - unresolved `P0/P1` findings block Gate 8 `GO`
 
-3. `T-0082` `P1` Run UAT sign-off rehearsal and Gate 7 checkpoint (`BLOCKED`)
-- Owner role: `$qa-parity-agent`
-- Phase: `Phase 7 - Hardening and UAT`
-- Dependencies: `T-0080`, `T-0081`
+3. `T-0085` `P1` Run hypercare readiness drill and Gate 8 checkpoint (`BLOCKED`)
+- Owner role: `$platform-devops-agent` + `$qa-parity-agent`
+- Phase: `Phase 8 - Weekend Cutover and Hypercare`
+- Dependencies: `T-0083`, `T-0084`
 - Acceptance:
-  - UAT checklist run is documented with pass/fail status
-  - Gate 7 checklist is re-evaluated with explicit `GO|NO-GO`
-  - no unresolved P0/P1 blockers remain for recommended `GO`
+  - hypercare monitoring/alerting and rollback-window readiness drill is documented with pass/fail status
+  - Gate 8 checklist is re-evaluated with explicit `GO|NO-GO`
+  - no unresolved `P0/P1` blockers remain for recommended `GO`
 
 ## Completed Archive
 
@@ -498,6 +498,24 @@ Use this backlog as the task source of truth for the orchestrator.
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-6-migration-checklist.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/scripts/run-migration-rollback-rehearsal.mjs`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/scripts/verify-gate6-readiness.mjs`
+
+80. `T-0080` `P0` Build Gate 7 hardening regression command matrix baseline (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-7-hardening-uat-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+
+81. `T-0081` `P1` Execute security/auth/secret hardening verification pack (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-7-security-hardening-pack.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-7-performance-baseline.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-7-hardening-uat-checklist.md`
+
+82. `T-0082` `P1` Run UAT sign-off rehearsal and Gate 7 checkpoint (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-7-uat-signoff-rehearsal.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-7-hardening-uat-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
 
 ## Intake Template
 

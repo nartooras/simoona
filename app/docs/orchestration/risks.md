@@ -40,15 +40,15 @@ Track active modernization risks, owners, and mitigations.
   - validate Docker-on-VM deployment regularly
 - Next review date: `2026-02-27`
 
-3. `R-007` Gate 7 hardening/UAT evidence may surface late P1 defects
+3. `R-008` Weekend cutover orchestration may surface late execution-order defects
 - Severity: `Medium`
-- Area: `Hardening + UAT`
-- Owner role: `$qa-parity-agent` + `$platform-devops-agent`
+- Area: `Cutover + Hypercare`
+- Owner role: `$platform-devops-agent` + `$qa-parity-agent`
 - Status: `Open`
 - Mitigation:
-  - initialize Gate 7 regression command matrix before executing hardening checks (`T-0080`)
-  - run explicit security/auth/secret handling verification pack (`T-0081`)
-  - execute UAT sign-off rehearsal and capture reproducible findings (`T-0082`)
+  - initialize Gate 8 weekend cutover command matrix before rehearsal execution (`T-0083`)
+  - run freeze/migration/validation rehearsal with explicit timing and rollback checkpoints (`T-0084`)
+  - run hypercare readiness drill with on-call escalation and rollback-window validation (`T-0085`)
 - Next review date: `2026-02-27`
 
 ## Closed Risks
@@ -99,3 +99,15 @@ Track active modernization risks, owners, and mitigations.
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-002-integrity-report.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/rollback-rehearsal-001.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-6-migration-checklist.md`
+
+5. `R-007` Gate 7 hardening/UAT evidence may surface late P1 defects
+- Severity: `Medium`
+- Area: `Hardening + UAT`
+- Owner role: `$qa-parity-agent` + `$platform-devops-agent`
+- Status: `Closed`
+- Closure date: `2026-02-20`
+- Closure evidence:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-7-hardening-uat-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-7-security-hardening-pack.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-7-performance-baseline.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/gate-7-uat-signoff-rehearsal.md`
