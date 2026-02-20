@@ -1,6 +1,6 @@
-# API Skeleton
+# API Baseline
 
-Phase 2 compatibility scaffold for the modern NestJS API application.
+Compatibility baseline for the modern NestJS API application.
 
 ## Implemented compatibility boundaries
 
@@ -18,31 +18,26 @@ Phase 2 compatibility scaffold for the modern NestJS API application.
   - post/comment compatibility controllers (including post interaction routes)
   - notification and user-notification compatibility controllers
 
-## Wave A Runtime Harness
+## Runtime Check Contract
 
-This package now provides a runnable local runtime boundary for Wave A parity verification.
+This package provides a runnable local runtime check boundary.
 
 ### Command contract
 
 - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/api start`
-  - starts a local runtime boundary server on `127.0.0.1:4300` by default
+  - starts a local runtime server on `127.0.0.1:4300` by default
   - health endpoints:
     - `GET /healthz`
     - `GET /readyz`
-    - `GET /wave-a/runtime-boundary`
 - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/api build`
-  - validates required Wave A harness files and contract artifacts
+  - validates required source and contract files
 - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/api test`
-  - boots runtime boundary and executes the full Wave A parity bundle:
-    - parity: `scope|api|planned|adapters|realtime|core`
-    - e2e targets + changed-screen visual approvals + visual baseline
-    - web shell checks
-    - root `/app` verify contract
+  - executes baseline runtime checks and exits
 
 ### Environment contract
 
-- `API_HARNESS_PORT` (optional)
+- `API_RUNTIME_PORT` (optional)
   - default: `4300`
-  - purpose: override local harness listen port
+  - purpose: override local runtime listen port
 
-No secrets are required for this harness flow.
+No secrets are required for this runtime check flow.

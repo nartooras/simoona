@@ -1,6 +1,6 @@
-# CI Pipeline Contract (Phase 1 Baseline)
+# CI Pipeline Contract
 
-This contract defines the minimum CI steps for the empty `/app` skeleton.
+This contract defines the minimum CI steps for the `/app` workspace baseline.
 
 ## Required steps
 
@@ -11,7 +11,7 @@ bash app/infra/ci/run-foundation-ci.sh
 pnpm --dir app build
 ```
 
-Phase 5 integration baseline adds a non-blocking smoke contract check:
+Integration baseline includes a smoke contract check:
 
 ```bash
 pnpm --dir app smoke:integrations
@@ -24,4 +24,4 @@ pnpm --dir app smoke:integrations
 
 ## Transition rule
 
-When web/api implementation begins, replace placeholder checks with real lint/typecheck/test/build jobs while preserving command names.
+As API/web coverage expands, replace baseline checks with full parity lint/typecheck/test/build while preserving command names.

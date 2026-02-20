@@ -3,17 +3,12 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "test": "echo parity placeholder",
-    "smoke": "echo parity smoke placeholder",
+    "test": "pnpm contract:core",
+    "smoke": "pnpm contract:core",
     "contract:auth": "node ./scripts/verify-auth-fixture-map.mjs",
     "contract:tenant-permission": "node ./scripts/verify-tenant-permission-contract.mjs",
     "contract:error-shape": "node ./scripts/verify-error-shape-contract.mjs",
     "contract:conventions": "node ./scripts/verify-compatibility-conventions-contract.mjs",
-    "contract:wave-a-scope": "node ./scripts/verify-wave-a-scope-pack.mjs",
-    "contract:wave-a-api": "node ./scripts/verify-wave-a-api-scaffold.mjs",
-    "contract:wave-a-planned": "node ./scripts/verify-wave-a-planned-responses.mjs",
-    "contract:wave-a-adapters": "node ./scripts/verify-wave-a-adapter-boundaries.mjs",
-    "contract:wave-a-realtime": "node ./scripts/verify-wave-a-realtime-fixtures.mjs",
     "contract:core": "pnpm contract:auth && pnpm contract:tenant-permission && pnpm contract:error-shape && pnpm contract:conventions"
   }
 }

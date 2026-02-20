@@ -1,3 +1,3 @@
-# Parity Test Skeleton
+# Parity Tests
 
-Phase 1 placeholder for contract and parity checks against legacy fixtures.
+Contract and parity checks against legacy fixtures.

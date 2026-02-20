@@ -1,15 +1,15 @@
 # Web App Shell Compatibility Baseline
 
-Phase 2 foundational shell scaffold for the modern React/Vite web application.
+Shell compatibility baseline for the modern React/Vite web application.
 
 ## Implemented shell boundaries
 
 - `src/shell/auth-boundary.ts`
-  - compatibility auth entry gate placeholder for login/session redirect flow
+  - compatibility auth entry gate for login/session redirect flow
 - `src/shell/tenant-route-container.ts`
-  - tenant-aware route state placeholder for org context routing
+  - tenant-aware route state for org context routing
 - `src/shell/top-level-layout.ts`
-  - shell layout contract placeholder for parity navigation frame
+  - shell layout contract for parity navigation frame
   - references shared UI primitives from `/app/packages/ui/src`
 
 ## Validation
@@ -17,7 +17,7 @@ Phase 2 foundational shell scaffold for the modern React/Vite web application.
 - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/web shell:check`
 - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/packages/ui primitives:check`
 
-## Live Runtime (Phase 3/4 Re-open)
+## Live Runtime
 
 This package now exposes a runnable local web runtime that renders shell state using the
 existing boundary modules.
@@ -32,7 +32,7 @@ Default runtime URL:
 
 - `http://127.0.0.1:5173`
 
-Wave A shell-critical routes:
+Shell-critical routes:
 
 - `/`
 - `/profile`

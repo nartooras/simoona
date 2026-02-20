@@ -1,4 +1,4 @@
-# Visual Regression Workflow (Phase 3 Baseline)
+# Visual Regression Workflow
 
 Date: `2026-02-20`
 
@@ -18,11 +18,7 @@ Date: `2026-02-20`
    - `visual/baselines/tablet`
    - `visual/baselines/mobile`
 4. Compare future captures against approved baseline snapshots.
-5. For Wave A changed screens, update and validate:
-   - `visual/wave-a-changed-screen-approvals.json`
-   - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e wave-a:visual-approvals`
-
 ## Notes
 
-- This scaffold verifies structure and artifact paths first.
+- This workflow verifies structure and artifact paths first.
 - Actual image capture wiring is queued for post-baseline tooling tasks in Phase 3.

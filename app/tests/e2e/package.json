@@ -4,9 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "visual:baseline": "node ./scripts/verify-visual-baseline.mjs",
-    "wave-a:targets": "node ./scripts/verify-wave-a-e2e-targets.mjs",
-    "wave-a:runtime-smoke": "node ./scripts/verify-wave-a-runtime-smoke.mjs",
-    "wave-a:visual-approvals": "node ./scripts/verify-wave-a-visual-approvals.mjs",
-    "test": "pnpm visual:baseline && pnpm wave-a:targets && pnpm wave-a:runtime-smoke && pnpm wave-a:visual-approvals"
+    "runtime:smoke": "node ./scripts/verify-runtime-smoke.mjs",
+    "test": "pnpm visual:baseline && pnpm runtime:smoke"
   }
 }

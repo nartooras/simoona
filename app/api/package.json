@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "lint": "node ./scripts/wave-a-api-harness.mjs lint",
-    "typecheck": "node ./scripts/wave-a-api-harness.mjs typecheck",
-    "test": "node ./scripts/wave-a-api-harness.mjs test",
-    "build": "node ./scripts/wave-a-api-harness.mjs build",
-    "start": "node ./scripts/wave-a-api-harness.mjs start"
+    "lint": "node ./scripts/api-runtime-check.mjs lint",
+    "typecheck": "node ./scripts/api-runtime-check.mjs typecheck",
+    "test": "node ./scripts/api-runtime-check.mjs test",
+    "build": "node ./scripts/api-runtime-check.mjs build",
+    "start": "node ./scripts/api-runtime-check.mjs start"
   }
 }

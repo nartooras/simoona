@@ -16,14 +16,17 @@ const requiredDirs = [
   "tests/parity",
   "infra/docker",
   "infra/ci",
-  "docs/foundation"
+  "docs/orchestration"
 ];
 
 const requiredFiles = [
   "package.json",
   "pnpm-workspace.yaml",
-  "docs/foundation/command-contract.md",
-  "docs/foundation/local-bootstrap.md",
+  "docs/orchestration/backlog.md",
+  "docs/orchestration/status.md",
+  "docs/orchestration/risks.md",
+  "docs/orchestration/decisions.md",
+  "docs/orchestration/evidence.md",
   "infra/docker/docker-compose.yml",
   "infra/ci/pipeline-contract.md"
 ];
@@ -62,13 +65,13 @@ if ((mode === "test" || mode === "smoke") && missingFixtureDirs.length) {
 }
 
 const okMessage = {
-  bootstrap: "Workspace foundation bootstrapped and validated.",
-  lint: "Lint gate passed for empty foundation skeleton.",
-  typecheck: "Typecheck gate passed for empty foundation skeleton.",
-  test: "Unit gate passed for empty foundation skeleton.",
-  smoke: "Smoke gate passed for empty foundation skeleton.",
-  build: "Build gate passed for empty foundation skeleton.",
-  check: "Foundation check passed."
+  bootstrap: "Workspace baseline validated.",
+  lint: "Lint gate passed for workspace baseline.",
+  typecheck: "Typecheck gate passed for workspace baseline.",
+  test: "Unit gate passed for workspace baseline.",
+  smoke: "Smoke gate passed for workspace baseline.",
+  build: "Build gate passed for workspace baseline.",
+  check: "Workspace check passed."
 }[mode] ?? `Foundation mode '${mode}' passed.`;
 
-console.log(`[foundation] ${okMessage}`);
+console.log(`[workspace] ${okMessage}`);

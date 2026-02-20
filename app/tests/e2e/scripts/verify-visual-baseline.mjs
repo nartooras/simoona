@@ -39,4 +39,4 @@ if (requiredViewports.size) {
   process.exit(1);
 }
 
-console.log("[visual-baseline] Visual regression baseline scaffold checks passed.");
+console.log("[visual-baseline] Visual regression baseline checks passed.");
