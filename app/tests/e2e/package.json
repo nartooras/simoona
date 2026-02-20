@@ -4,6 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "visual:baseline": "node ./scripts/verify-visual-baseline.mjs",
-    "test": "pnpm visual:baseline"
+    "wave-a:targets": "node ./scripts/verify-wave-a-e2e-targets.mjs",
+    "wave-a:visual-approvals": "node ./scripts/verify-wave-a-visual-approvals.mjs",
+    "test": "pnpm visual:baseline && pnpm wave-a:targets && pnpm wave-a:visual-approvals"
   }
 }

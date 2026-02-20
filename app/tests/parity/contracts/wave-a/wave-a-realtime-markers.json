@@ -1,0 +1,50 @@
+{
+  "wave": "A",
+  "name": "Social Core Realtime Compatibility Markers",
+  "ownerRole": "$api-compat-agent",
+  "sourceService": "/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/services/social-compatibility.service.ts",
+  "markers": [
+    {
+      "id": "wave-a-realtime-notificationhub-new-notification",
+      "compatibility": "Realtime/NotificationHub:newNotification",
+      "touchpoint": "NotificationHub",
+      "legacySource": "/Users/arturasnikoncukas/code/repo/simoona/src/api/Shrooms.Presentation.Common/Hubs/NotificationHub.cs",
+      "ownerRole": "$api-compat-agent"
+    },
+    {
+      "id": "wave-a-realtime-notificationhub-new-content",
+      "compatibility": "Realtime/NotificationHub:newContent",
+      "touchpoint": "NotificationHub",
+      "legacySource": "/Users/arturasnikoncukas/code/repo/simoona/src/api/Shrooms.Presentation.Common/Hubs/NotificationHub.cs",
+      "ownerRole": "$api-compat-agent"
+    },
+    {
+      "id": "wave-a-realtime-postnotifier-new-post",
+      "compatibility": "Realtime/PostNotifier:NotifyAboutNewPostAsync",
+      "touchpoint": "PostNotifier",
+      "legacySource": "/Users/arturasnikoncukas/code/repo/simoona/src/api/Shrooms.Presentation.Api/BackgroundWorkers/PostNotifier.cs",
+      "ownerRole": "$api-compat-agent"
+    },
+    {
+      "id": "wave-a-realtime-postnotifier-updated-mentions",
+      "compatibility": "Realtime/PostNotifier:NotifyUpdatedPostMentionsAsync",
+      "touchpoint": "PostNotifier",
+      "legacySource": "/Users/arturasnikoncukas/code/repo/simoona/src/api/Shrooms.Presentation.Api/BackgroundWorkers/PostNotifier.cs",
+      "ownerRole": "$api-compat-agent"
+    },
+    {
+      "id": "wave-a-realtime-commentnotifier-new-comment",
+      "compatibility": "Realtime/CommentNotifier:NotifyAboutNewCommentAsync",
+      "touchpoint": "CommentNotifier",
+      "legacySource": "/Users/arturasnikoncukas/code/repo/simoona/src/api/Shrooms.Presentation.Api/BackgroundWorkers/CommentNotifier.cs",
+      "ownerRole": "$api-compat-agent"
+    },
+    {
+      "id": "wave-a-realtime-commentnotifier-updated-mentions",
+      "compatibility": "Realtime/CommentNotifier:NotifyUpdatedCommentMentionsAsync",
+      "touchpoint": "CommentNotifier",
+      "legacySource": "/Users/arturasnikoncukas/code/repo/simoona/src/api/Shrooms.Presentation.Api/BackgroundWorkers/CommentNotifier.cs",
+      "ownerRole": "$api-compat-agent"
+    }
+  ]
+}

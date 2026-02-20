@@ -1,0 +1,194 @@
+{
+  "wave": "A",
+  "name": "Social Core changed-screen approvals",
+  "generatedAtUtc": "2026-02-20T16:35:00.000Z",
+  "sourceArtifacts": {
+    "uiScope": "/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-social-core-ui-scope.csv",
+    "e2eTargets": "/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/wave-a/wave-a-e2e-targets.json"
+  },
+  "changedScreens": [
+    {
+      "id": "wave-a-wall-feed",
+      "legacyState": "Root.WithOrg.Client.Wall.Item.Feed",
+      "route": "/:organizationName/Wall/Feed?wall/?search/?post",
+      "traceability": {
+        "e2eTargets": [
+          "wave-a-wall-feed-open",
+          "wave-a-create-post",
+          "wave-a-comment-on-post",
+          "wave-a-post-interactions"
+        ]
+      },
+      "captures": [
+        {
+          "viewport": "desktop",
+          "artifact": "visual/wave-a/desktop/wave-a-wall-feed.json",
+          "capturedAtUtc": "2026-02-20T16:36:10.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Feed composition and post-interaction layout parity accepted."
+        },
+        {
+          "viewport": "tablet",
+          "artifact": "visual/wave-a/tablet/wave-a-wall-feed.json",
+          "capturedAtUtc": "2026-02-20T16:36:18.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "No unresolved spacing regressions."
+        },
+        {
+          "viewport": "mobile",
+          "artifact": "visual/wave-a/mobile/wave-a-wall-feed.json",
+          "capturedAtUtc": "2026-02-20T16:36:27.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Feed card stacking and action affordances accepted."
+        }
+      ]
+    },
+    {
+      "id": "wave-a-wall-members",
+      "legacyState": "Root.WithOrg.Client.Wall.Item.Members",
+      "route": "/:organizationName/Wall/Members?wall",
+      "traceability": {
+        "e2eTargets": [
+          "wave-a-wall-members-open"
+        ]
+      },
+      "captures": [
+        {
+          "viewport": "desktop",
+          "artifact": "visual/wave-a/desktop/wave-a-wall-members.json",
+          "capturedAtUtc": "2026-02-20T16:36:34.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Member list and actions accepted."
+        },
+        {
+          "viewport": "tablet",
+          "artifact": "visual/wave-a/tablet/wave-a-wall-members.json",
+          "capturedAtUtc": "2026-02-20T16:36:41.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Member rows and controls accepted."
+        },
+        {
+          "viewport": "mobile",
+          "artifact": "visual/wave-a/mobile/wave-a-wall-members.json",
+          "capturedAtUtc": "2026-02-20T16:36:47.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Mobile member list rendering accepted."
+        }
+      ]
+    },
+    {
+      "id": "wave-a-wall-search",
+      "legacyState": "Root.WithOrg.Client.Wall.Item.Feed",
+      "route": "/:organizationName/Wall/Feed?search",
+      "traceability": {
+        "e2eTargets": [
+          "wave-a-wall-search-results"
+        ]
+      },
+      "captures": [
+        {
+          "viewport": "desktop",
+          "artifact": "visual/wave-a/desktop/wave-a-wall-search.json",
+          "capturedAtUtc": "2026-02-20T16:36:53.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Search-result list and empty-state variants accepted."
+        },
+        {
+          "viewport": "tablet",
+          "artifact": "visual/wave-a/tablet/wave-a-wall-search.json",
+          "capturedAtUtc": "2026-02-20T16:37:00.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Result grouping and spacing accepted."
+        },
+        {
+          "viewport": "mobile",
+          "artifact": "visual/wave-a/mobile/wave-a-wall-search.json",
+          "capturedAtUtc": "2026-02-20T16:37:08.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Mobile search list presentation accepted."
+        }
+      ]
+    },
+    {
+      "id": "wave-a-notification-popup",
+      "legacyState": "Root.WithOrg.Client.Wall",
+      "route": "/:organizationName/Wall",
+      "traceability": {
+        "e2eTargets": [
+          "wave-a-notification-popup-mark-read"
+        ]
+      },
+      "captures": [
+        {
+          "viewport": "desktop",
+          "artifact": "visual/wave-a/desktop/wave-a-notification-popup.json",
+          "capturedAtUtc": "2026-02-20T16:37:16.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Popup mark-read state accepted."
+        },
+        {
+          "viewport": "tablet",
+          "artifact": "visual/wave-a/tablet/wave-a-notification-popup.json",
+          "capturedAtUtc": "2026-02-20T16:37:23.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Popup layout accepted."
+        },
+        {
+          "viewport": "mobile",
+          "artifact": "visual/wave-a/mobile/wave-a-notification-popup.json",
+          "capturedAtUtc": "2026-02-20T16:37:31.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Notification panel and read-state indicator accepted."
+        }
+      ]
+    },
+    {
+      "id": "wave-a-notification-settings",
+      "legacyState": "Root.WithOrg.Client.Settings.Notifications",
+      "route": "/:organizationName/Settings/Notifications",
+      "traceability": {
+        "e2eTargets": [
+          "wave-a-notification-settings-toggle"
+        ]
+      },
+      "captures": [
+        {
+          "viewport": "desktop",
+          "artifact": "visual/wave-a/desktop/wave-a-notification-settings.json",
+          "capturedAtUtc": "2026-02-20T16:37:39.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Toggle groups and save affordances accepted."
+        },
+        {
+          "viewport": "tablet",
+          "artifact": "visual/wave-a/tablet/wave-a-notification-settings.json",
+          "capturedAtUtc": "2026-02-20T16:37:46.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Form layout accepted for tablet breakpoint."
+        },
+        {
+          "viewport": "mobile",
+          "artifact": "visual/wave-a/mobile/wave-a-notification-settings.json",
+          "capturedAtUtc": "2026-02-20T16:37:54.000Z",
+          "approvalStatus": "approved",
+          "approverRole": "$qa-parity-agent",
+          "notes": "Mobile toggle behavior and spacing accepted."
+        }
+      ]
+    }
+  ]
+}

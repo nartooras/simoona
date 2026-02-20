@@ -19,6 +19,13 @@ Track active modernization risks, owners, and mitigations.
   - aggregate core compatibility contract command added for repeatable verification (`T-0022`)
   - conventions contract and shell baseline checks complete (`T-0025`, `T-0026`)
   - Phase 3 shell route parity pack, shared primitives, and visual baseline scaffold complete (`T-0029`..`T-0032`)
+  - Wave A scope pack plus contract/e2e target manifests and checks are now in place (`T-0034`..`T-0037`)
+  - Wave A wall/post/comment/notification API scaffolds and parity marker checks are in place (`T-0039`..`T-0042`)
+  - Wave A wall mutation/membership and post interaction mappings are now scaffolded and parity-verified (`T-0044`..`T-0047`)
+  - Wave A realtime compatibility markers and payload fixture parity checks are in place (`T-0049`, `T-0050`)
+  - Wave A planned-response contract baseline and executable verifier command are in place (`T-0053`, `T-0054`)
+  - Wave A wall-read adapter boundary and notification-settings DTO normalization scaffolds are in place (`T-0057`, `T-0058`)
+  - Wave A contract bundle checkpoint has current passing baseline evidence (`T-0059`)
   - escalate critical unmapped flows immediately
 - Next review date: `2026-02-27`
 
@@ -28,6 +35,8 @@ Track active modernization risks, owners, and mitigations.
 - Owner role: `$data-migration-engineer`
 - Status: `Open`
 - Mitigation:
+  - stage-access prerequisite task completed (`T-0051`) with read-only connectivity evidence (`2026-02-20T14:16:41.127Z`)
+  - first dry-run planning baseline completed (`T-0005`) with bounded scope and integrity/rollback report templates
   - run staged dry-runs early
   - measure end-to-end timing and optimize bottlenecks
 - Next review date: `2026-02-27`
@@ -43,6 +52,26 @@ Track active modernization risks, owners, and mitigations.
   - validate Docker-on-VM deployment regularly
 - Next review date: `2026-02-27`
 
+4. `R-005` Critical integration credentials/readiness may block Gate 5 execution
+- Severity: `High`
+- Area: `Phase 5 integration parity`
+- Owner role: `$platform-devops` + `$parity-analyst-agent`
+- Status: `Open`
+- Mitigation:
+  - publish integration inventory + credential matrix with explicit `ready|missing|blocked` state (`T-0068`)
+  - implement integration smoke harness baseline with secret-safe environment contracts (`T-0069`)
+  - evaluate Gate 5 readiness and escalate any missing critical staging credentials immediately (`T-0070`)
+- Next review date: `2026-02-27`
+
 ## Closed Risks
 
-- None yet.
+1. `R-004` Gate 4 closure pending changed-screen visual approval workflow and final QA closure checkpoint
+- Severity: `High`
+- Area: `Phase 4 gate readiness`
+- Owner role: `$platform-devops` + `$web-parity-agent`
+- Status: `Closed`
+- Closure date: `2026-02-20`
+- Closure evidence:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-visual-approval-pack.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`

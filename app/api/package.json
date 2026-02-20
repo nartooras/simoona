@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "lint": "echo api lint placeholder",
-    "typecheck": "echo api typecheck placeholder",
-    "test": "echo api test placeholder",
-    "build": "echo api build placeholder",
-    "start": "echo api start placeholder"
+    "lint": "node ./scripts/wave-a-api-harness.mjs lint",
+    "typecheck": "node ./scripts/wave-a-api-harness.mjs typecheck",
+    "test": "node ./scripts/wave-a-api-harness.mjs test",
+    "build": "node ./scripts/wave-a-api-harness.mjs build",
+    "start": "node ./scripts/wave-a-api-harness.mjs start"
   }
 }

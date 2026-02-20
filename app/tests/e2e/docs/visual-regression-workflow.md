@@ -18,6 +18,9 @@ Date: `2026-02-20`
    - `visual/baselines/tablet`
    - `visual/baselines/mobile`
 4. Compare future captures against approved baseline snapshots.
+5. For Wave A changed screens, update and validate:
+   - `visual/wave-a-changed-screen-approvals.json`
+   - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e wave-a:visual-approvals`
 
 ## Notes
 

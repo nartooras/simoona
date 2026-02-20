@@ -1,0 +1,90 @@
+{
+  "wallMutationMembership": {
+    "controllerFile": "wall-compatibility.controller.ts",
+    "serviceFile": "social-compatibility.service.ts",
+    "requiredRoutes": [
+      "Wall/Create",
+      "Wall/Edit",
+      "Wall/Delete",
+      "Wall/Members",
+      "Wall/Follow",
+      "Wall/Search"
+    ],
+    "requiredHandlers": [
+      "createWall",
+      "editWall",
+      "deleteWall",
+      "getWallMembers",
+      "followWall",
+      "searchWall"
+    ]
+  },
+  "wallReadFeed": {
+    "controllerFile": "wall-compatibility.controller.ts",
+    "serviceFile": "social-compatibility.service.ts",
+    "requiredRoutes": ["Wall/List", "Wall/Details", "Wall/Posts", "Wall/AllPosts"],
+    "requiredHandlers": ["getWallList", "getWallDetails", "getWallPosts", "getAllWallPosts"]
+  },
+  "postCrud": {
+    "controllerFile": "post-compatibility.controller.ts",
+    "serviceFile": "social-compatibility.service.ts",
+    "requiredRoutes": ["Post/Create", "Post/Edit", "Post/Delete", "Post/GetPost"],
+    "requiredHandlers": ["createPost", "editPost", "deletePost", "getPost"]
+  },
+  "postInteractions": {
+    "controllerFile": "post-compatibility.controller.ts",
+    "serviceFile": "social-compatibility.service.ts",
+    "requiredRoutes": ["Post/Hide", "Post/Like", "Post/Watch", "Post/Unwatch"],
+    "requiredHandlers": ["hidePost", "likePost", "watchPost", "unwatchPost"]
+  },
+  "commentCrud": {
+    "controllerFile": "comment-compatibility.controller.ts",
+    "serviceFile": "social-compatibility.service.ts",
+    "requiredRoutes": [
+      "Comment/Create",
+      "Comment/Edit",
+      "Comment/Delete",
+      "Comment/Hide",
+      "Comment/Like"
+    ],
+    "requiredHandlers": ["createComment", "editComment", "deleteComment", "hideComment", "likeComment"]
+  },
+  "notificationCrud": {
+    "controllerFile": "notification-compatibility.controller.ts",
+    "serviceFile": "social-compatibility.service.ts",
+    "requiredRoutes": [
+      "Notification/GetAll",
+      "Notification/MarkAsRead",
+      "Notification/MarkAllAsRead",
+      "User/Notifications:Get",
+      "User/Notifications:Put"
+    ],
+    "requiredHandlers": [
+      "getNotifications",
+      "markNotificationsAsRead",
+      "markAllNotificationsAsRead",
+      "getUserNotificationSettings",
+      "updateUserNotificationSettings"
+    ]
+  },
+  "realtimeCompatibility": {
+    "controllerFile": "notification-compatibility.controller.ts",
+    "serviceFile": "social-compatibility.service.ts",
+    "requiredRoutes": [
+      "Realtime/NotificationHub:newNotification",
+      "Realtime/NotificationHub:newContent",
+      "Realtime/PostNotifier:NotifyAboutNewPostAsync",
+      "Realtime/PostNotifier:NotifyUpdatedPostMentionsAsync",
+      "Realtime/CommentNotifier:NotifyAboutNewCommentAsync",
+      "Realtime/CommentNotifier:NotifyUpdatedCommentMentionsAsync"
+    ],
+    "requiredHandlers": [
+      "emitNotificationHubNewNotification",
+      "emitNotificationHubNewContent",
+      "triggerPostNotifierNewPost",
+      "triggerPostNotifierUpdatedMentions",
+      "triggerCommentNotifierNewComment",
+      "triggerCommentNotifierUpdatedMentions"
+    ]
+  }
+}

@@ -49,7 +49,6 @@ For each completed task or gate, append:
 - Artifact paths:
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
-  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0001.md`
 - Result summary:
   - Highest-priority unblocked task `T-0001` assigned to `$parity-analyst` with explicit scope, acceptance criteria, and validation commands.
 
@@ -120,7 +119,6 @@ For each completed task or gate, append:
 - Task: `T-0004 phase kickoff assignment prepared`
 - Evidence type: `process`
 - Artifact paths:
-  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0004.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
 - Result summary:
   - Next unblocked Phase 1 task is staged with explicit scope and acceptance criteria.
@@ -338,7 +336,6 @@ For each completed task or gate, append:
 - Artifact paths:
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
-  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0025.md`
 - Result summary:
   - Autopilot cycle advanced five tasks (`T-0020` to `T-0024`) and queued `T-0025` as the next highest-priority unblocked item.
 
@@ -385,7 +382,6 @@ For each completed task or gate, append:
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
-  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0029.md`
 - Result summary:
   - Phase 2 was closed, Phase 3 opened, and next unblocked task `T-0029` assigned.
 
@@ -441,7 +437,440 @@ For each completed task or gate, append:
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
-  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/task-T-0034.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
 - Result summary:
   - Gate 3 is complete, Phase 4 is active, and `T-0034` is queued as next unblocked task.
+
+39. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0034 Build Wave A (Social Core) scope-to-contract mapping pack`
+- Evidence type: `parity`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-social-core-scope-pack.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-social-core-api-scope.csv`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-social-core-ui-scope.csv`
+- Result summary:
+  - Wave A API/UI scope is extracted from parity matrices with explicit inclusion criteria and dependency statuses.
+
+40. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0035 Draft Gate 4 quality checklist execution plan for Wave A`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-wave-a-execution-plan.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+- Result summary:
+  - Gate 4 Wave A pass/fail criteria and execution commands are documented.
+
+41. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0036 Add Wave A contract target manifest and scope verifier`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-contract-targets.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/scripts/verify-wave-a-scope-pack.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/package.json`
+- Result summary:
+  - `contract:wave-a-scope` verifies Wave A API/UI scope markers and dependency completeness.
+
+42. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0037 Add Wave A e2e target manifest and verifier`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/wave-a/wave-a-e2e-targets.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-wave-a-e2e-targets.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/package.json`
+- Result summary:
+  - `wave-a:targets` verifies Wave A e2e route targets and dependency completeness.
+
+43. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0038 Record Phase 4 checkpoint and queue first implementation slice`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+- Result summary:
+  - Autopilot cycle completed five tasks and queued `T-0039` as next highest-priority unblocked item.
+
+44. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0039 Build Wave A wall read/feed compatibility endpoint scaffold`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/controllers/wall-compatibility.controller.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/services/social-compatibility.service.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/api-endpoint-matrix.csv`
+- Result summary:
+  - Wall read/feed compatibility handlers were scaffolded and mapped in parity matrix.
+
+45. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0040 Build Wave A post create/edit compatibility endpoint scaffold`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/controllers/post-compatibility.controller.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/services/social-compatibility.service.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-api-scaffold-baseline.json`
+- Result summary:
+  - Post create/edit/delete/get compatibility scaffold and source markers were added.
+
+46. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0041 Build Wave A comment compatibility endpoint scaffold`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/controllers/comment-compatibility.controller.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/scripts/verify-wave-a-api-scaffold.mjs`
+- Result summary:
+  - Comment create/edit/delete/hide/like compatibility scaffold is in place and verified.
+
+47. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0042 Build Wave A notification compatibility endpoint scaffold`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/controllers/notification-compatibility.controller.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/controllers/user-notification-compatibility.controller.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-contract-targets.json`
+- Result summary:
+  - Notification and user-notification compatibility endpoints are scaffolded and aligned to Wave A targets.
+
+48. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0043 Record Phase 4 checkpoint and queue next Wave A slice`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+- Result summary:
+  - Autopilot cycle advanced five tasks and queued `T-0044` as next highest-priority unblocked item.
+
+49. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0044 Build Wave A wall mutation and membership compatibility scaffold`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/controllers/wall-compatibility.controller.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/services/social-compatibility.service.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-social-core-api-scope.csv`
+- Result summary:
+  - Wall mutation and membership endpoints are scaffolded and mapped in parity scope/matrix artifacts.
+
+50. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0045 Build Wave A post interaction compatibility endpoint scaffold`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/controllers/post-compatibility.controller.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/services/social-compatibility.service.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-contract-targets.json`
+- Result summary:
+  - Post `Hide|Like|Watch|Unwatch` compatibility handlers are scaffolded with route markers and mapped targets.
+
+51. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0046 Extend Wave A parity manifests/checks for mutation and interaction routes`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-api-scaffold-baseline.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-contract-targets.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/scripts/verify-wave-a-scope-pack.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-social-core-scope-pack.md`
+- Result summary:
+  - Wave A scope and contract checks now enforce wall mutation and post interaction markers.
+
+52. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0047 Expand Wave A e2e target pack for wall/post interaction coverage`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/wave-a/wave-a-e2e-targets.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-wave-a-e2e-targets.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/README.md`
+- Result summary:
+  - Wave A e2e targets include wall members/search and post interaction scenarios with executable checks.
+
+53. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0048 Record Phase 4 checkpoint and queue next Wave A slice`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+- Result summary:
+  - Autopilot cycle advanced five tasks (`T-0044`..`T-0048`) and queued `T-0049` as next highest-priority unblocked item.
+
+54. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0049 Build Wave A realtime-notification compatibility scaffold`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/services/social-compatibility.service.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-api-scaffold-baseline.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-contract-targets.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-realtime-markers.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-social-core-scope-pack.md`
+- Result summary:
+  - Wave A realtime scaffolds now explicitly mark `NotificationHub`, `PostNotifier`, and `CommentNotifier` touchpoints with owned compatibility marker IDs.
+  - Reviewer decision: `APPROVED`.
+  - QA decision: `GREEN`.
+
+55. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0050 Build Wave A realtime payload fixture parity pack`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-realtime-fixture-map.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/fixtures/wave-a/realtime/wave-a-realtime-payload-fixtures.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/scripts/verify-wave-a-realtime-fixtures.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-wave-a-execution-plan.md`
+- Result summary:
+  - Realtime payload fixture IDs are now validated against Wave A realtime marker IDs and include notification/post/comment baseline payloads.
+  - Reviewer decision: `APPROVED`.
+  - QA decision: `GREEN`.
+
+56. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `Autopilot resume checkpoint`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+- Result summary:
+  - Autopilot resumed with limit `5` and stopped immediately because no unblocked queue items were available.
+  - Highest-priority item `T-0005` remains blocked pending explicit staging-clone availability confirmation.
+
+57. Date: `2026-02-20`
+- Phase: `Phase 4 support / Phase 6 prep`
+- Task: `T-0051 queue activation for staging clone provisioning`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+- Result summary:
+  - Added explicit platform prerequisite task for staging SQL clone provisioning and verification.
+  - Restored unblocked autopilot queue by making `T-0051` `READY` and linking `T-0005` dependency to `T-0051`.
+
+58. Date: `2026-02-20`
+- Phase: `Phase 4 support / Phase 6 prep`
+- Task: `T-0051 Provision and verify staging SQL clone access`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/staging-clone-access.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+- Result summary:
+  - Local staging SQL clone (`SimoonaStagingClone`) provisioned and reachable on `127.0.0.1:14333`.
+  - Read-only authentication/query succeeded as `simoona_ro` with `checked_at_utc=2026-02-20T14:16:41.127Z`.
+  - `T-0005` moved from `BLOCKED` to `READY`.
+
+59. Date: `2026-02-20`
+- Phase: `Phase 6 prep`
+- Task: `T-0005 Define first migration dry-run plan`
+- Evidence type: `migration`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/phase-6-dry-run-plan-v1.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-001-integrity-report.md`
+- Result summary:
+  - Dry-Run 001 plan published with bounded scope, invariants, checklist usage, and rollback-safe execution notes.
+  - Integrity report template instance prepared for first rehearsal run.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+60. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0052 Refill Phase 4 queue with runtime contract-hardening batch`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+- Result summary:
+  - Priority queue was restored with bounded Wave A runtime contract-hardening tasks.
+  - Next READY implementation task is `T-0057`.
+
+61. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0053 Add Wave A planned-response contract baseline`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-planned-response-contract.json`
+- Result summary:
+  - Endpoint-level planned response contract now tracks `serviceMethod`, `compatibility`, and `expectedStatus` for Wave A social-core scaffolds.
+
+62. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0054 Add executable Wave A planned-response verifier command`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/scripts/verify-wave-a-planned-responses.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/package.json`
+- Result summary:
+  - Added `contract:wave-a-planned` command that validates planned scaffold outputs for all Wave A social-core endpoint methods.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+63. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0055 Update Gate 4 docs with planned-response contract checks`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-wave-a-execution-plan.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+- Result summary:
+  - Gate 4 command set and checklist evidence now include planned-response contract checks as part of Wave A API gate signals.
+
+64. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0056 Record Phase 4 checkpoint and queue next runtime slice`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/decisions.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/risks.md`
+- Result summary:
+  - Five-task autopilot batch checkpoint recorded.
+  - Wave A next runtime slice `T-0057` is queued as READY.
+
+65. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0057 Build Wave A wall read adapter and DTO normalization scaffold`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/adapters/wall-read.adapter.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/dto/wall-read-compatibility.dto.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/services/social-compatibility.service.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/social-compatibility.module.ts`
+- Result summary:
+  - Wall read service methods now delegate through a bounded adapter interface and normalize outputs via DTO helpers.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+66. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0058 Add Wave A notification settings DTO normalizer scaffold`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/dto/notification-settings-compatibility.dto.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/services/social-compatibility.service.ts`
+- Result summary:
+  - User notification settings read/write methods are wrapped with explicit normalization boundaries while preserving compatibility markers.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+67. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0059 Run Wave A contract bundle checkpoint`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/package.json`
+- Result summary:
+  - Command bundle passed: `contract:wave-a-scope`, `contract:wave-a-api`, `contract:wave-a-planned`, `contract:wave-a-realtime`, `contract:core`, `wave-a:targets`, `visual:baseline`, `shell:check`, and root `verify`.
+  - Gate 4 checklist current-state text refreshed with latest scaffold-level evidence; gate remains `IN_PROGRESS`.
+
+68. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0060 Refill no-limit autopilot queue for runtime boundary continuation`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+- Result summary:
+  - Next continuation batch defined for post/comment/notification adapter-boundary hardening and closure-blocker escalation.
+
+69. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0061 Add Wave A post/comment adapter-boundary scaffolds`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/adapters/social-operation.adapter.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/dto/social-operation-compatibility.dto.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/services/social-compatibility.service.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/social-compatibility.module.ts`
+- Result summary:
+  - Post/comment scaffold methods now execute through shared adapter-boundary normalization helpers.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+70. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0062 Extend adapter-boundary scaffolds for notification endpoint methods`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/services/social-compatibility.service.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/social/dto/notification-settings-compatibility.dto.ts`
+- Result summary:
+  - Notification endpoint methods now follow adapter-boundary normalization path while preserving compatibility markers.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+71. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0063 Add Wave A adapter-boundary contract command`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/contracts/wave-a/wave-a-adapter-boundaries.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/scripts/verify-wave-a-adapter-boundaries.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-wave-a-execution-plan.md`
+- Result summary:
+  - `contract:wave-a-adapters` added and passing; Gate 4 command set includes adapter-boundary verification.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+72. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0064 Record checkpoint and escalate Gate 4 closure blockers`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/risks.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/decisions.md`
+- Result summary:
+  - Gate 4 closure blockers are explicit: runnable API harness and changed-screen visual approvals.
+  - Next tasks are queued as blocked dependencies (`T-0065`..`T-0067`).
+
+73. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0065 Bootstrap runnable Wave A API parity harness`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/scripts/wave-a-api-harness.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/README.md`
+- Result summary:
+  - API package placeholder scripts were replaced with a deterministic Wave A harness command contract: `start`, `build`, `lint`, `typecheck`, `test`.
+  - Runtime-backed boundary endpoints are provided at `/healthz`, `/readyz`, and `/wave-a/runtime-boundary`.
+  - Startup smoke check captured runtime timestamp `2026-02-20T15:55:55.403Z` from `/healthz` on `127.0.0.1:4310`.
+  - Validation passed: `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/api build`, `lint`, `typecheck`, `test`; plus startup smoke on custom port with successful `curl` checks.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+74. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0066 Produce Wave A changed-screen visual approval pack`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/visual/wave-a-changed-screen-approvals.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-wave-a-visual-approvals.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-visual-approval-pack.md`
+- Result summary:
+  - Wave A changed-screen list is explicit and traceable to both UI scope states and Wave A e2e target IDs.
+  - Desktop/tablet/mobile approval status is captured for each changed screen in a deterministic approval manifest.
+  - Validation passed: `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e wave-a:targets`, `wave-a:visual-approvals`, and `visual:baseline`.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+75. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0067 Gate 4 Wave A closure checkpoint`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-wave-a-execution-plan.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/risks.md`
+- Result summary:
+  - Gate 4 checklist was re-evaluated against runtime-backed API harness evidence, Wave A e2e target checks, and changed-screen visual approvals.
+  - Runtime-backed bundle passed via `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/api test` (includes `contract:wave-a-*`, `contract:core`, `wave-a:targets`, `wave-a:visual-approvals`, `visual:baseline`, `shell:check`, root `verify`).
+  - Gate 4 recommendation updated to `COMPLETE`; autopilot stopped at phase boundary and Phase 5 queue seeded (`T-0068`..`T-0070`).
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.

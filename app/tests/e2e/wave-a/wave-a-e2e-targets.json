@@ -1,0 +1,72 @@
+{
+  "wave": "A",
+  "name": "Social Core",
+  "ownerRole": "$qa-parity-agent",
+  "targets": [
+    {
+      "id": "wave-a-wall-feed-open",
+      "route": "/:organizationName/Wall/Feed?wall/?search/?post",
+      "persona": "authenticated-user",
+      "priority": "P0"
+    },
+    {
+      "id": "wave-a-create-post",
+      "route": "/:organizationName/Wall/Feed?wall",
+      "persona": "authenticated-user",
+      "priority": "P0"
+    },
+    {
+      "id": "wave-a-comment-on-post",
+      "route": "/:organizationName/Wall/Feed?post",
+      "persona": "authenticated-user",
+      "priority": "P0"
+    },
+    {
+      "id": "wave-a-wall-members-open",
+      "route": "/:organizationName/Wall/Feed?wall",
+      "persona": "authenticated-user",
+      "priority": "P0"
+    },
+    {
+      "id": "wave-a-wall-search-results",
+      "route": "/:organizationName/Wall/Feed?search",
+      "persona": "authenticated-user",
+      "priority": "P0"
+    },
+    {
+      "id": "wave-a-post-interactions",
+      "route": "/:organizationName/Wall/Feed?post",
+      "persona": "authenticated-user",
+      "priority": "P0"
+    },
+    {
+      "id": "wave-a-notification-popup-mark-read",
+      "route": "/:organizationName/Wall",
+      "persona": "authenticated-user",
+      "priority": "P1"
+    },
+    {
+      "id": "wave-a-notification-settings-toggle",
+      "route": "/:organizationName/Settings/Notifications",
+      "persona": "authenticated-user",
+      "priority": "P1"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "Visual baseline manifest",
+      "source": "/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/visual/baseline-manifest.json",
+      "status": "unblocked"
+    },
+    {
+      "name": "Wave A UI scope file",
+      "source": "/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-social-core-ui-scope.csv",
+      "status": "unblocked"
+    },
+    {
+      "name": "Wave A changed-screen visual approval manifest",
+      "source": "/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/visual/wave-a-changed-screen-approvals.json",
+      "status": "unblocked"
+    }
+  ]
+}

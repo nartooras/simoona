@@ -9,6 +9,11 @@
     "contract:tenant-permission": "node ./scripts/verify-tenant-permission-contract.mjs",
     "contract:error-shape": "node ./scripts/verify-error-shape-contract.mjs",
     "contract:conventions": "node ./scripts/verify-compatibility-conventions-contract.mjs",
+    "contract:wave-a-scope": "node ./scripts/verify-wave-a-scope-pack.mjs",
+    "contract:wave-a-api": "node ./scripts/verify-wave-a-api-scaffold.mjs",
+    "contract:wave-a-planned": "node ./scripts/verify-wave-a-planned-responses.mjs",
+    "contract:wave-a-adapters": "node ./scripts/verify-wave-a-adapter-boundaries.mjs",
+    "contract:wave-a-realtime": "node ./scripts/verify-wave-a-realtime-fixtures.mjs",
     "contract:core": "pnpm contract:auth && pnpm contract:tenant-permission && pnpm contract:error-shape && pnpm contract:conventions"
   }
 }
