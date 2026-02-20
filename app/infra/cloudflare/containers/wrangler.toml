@@ -1,0 +1,8 @@
+name = "simoona-modern-api"
+main = "./worker.ts"
+compatibility_date = "2026-02-20"
+
+[vars]
+SIMOONA_RUNTIME = "modern"
+SIMOONA_PHASE = "R4-artifact-only"
+API_PORT = "3000"

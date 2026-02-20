@@ -83,3 +83,9 @@
 2. `D-R3-002` UI offline verification policy application
 - Decision: Promote UI matrix rows to `verified` using offline evidence triad (legacy source references + parity baseline contract + passing modern shell/visual checks).
 - Rationale: Maintains deterministic parity progress under confirmed legacy runtime unavailability.
+
+## 2026-02-20 (R4 execution)
+
+1. `D-R4-001` Artifact-only deployment gate policy
+- Decision: Complete `R4` using Cloudflare Pages/Containers deployment artifacts plus executable artifact-contract checks, while keeping publish commands deferred.
+- Rationale: Satisfies deployment-readiness objectives under explicit no-publish user constraint.

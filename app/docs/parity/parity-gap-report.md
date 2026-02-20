@@ -24,6 +24,6 @@
 
 ## 5) Recommended Next Tasks
 
-1. Prepare `R4-001` deployment artifacts (no publish execution).
-2. Prepare `R5` readiness evidence pack and rollback rehearsal references.
-3. Keep deployment/publish deferred until explicit user instruction.
+1. Execute `R5-001` release readiness checklist and gate evidence consolidation.
+2. Execute `R5-002` final verification report preparation.
+3. Keep Cloudflare publish/deploy execution deferred until explicit user instruction.

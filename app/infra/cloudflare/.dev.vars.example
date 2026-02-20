@@ -1,0 +1,6 @@
+# Cloudflare non-secret development placeholders.
+# Keep real values in local untracked `.dev.vars`.
+
+SIMOONA_RUNTIME=modern
+SIMOONA_PHASE=R4-artifact-only
+API_PORT=3000

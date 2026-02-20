@@ -19,6 +19,7 @@ const requiredDirs = [
   "tests/e2e",
   "tests/parity",
   "infra/docker",
+  "infra/cloudflare",
   "infra/ci",
   "docs/orchestration"
 ];
@@ -32,6 +33,7 @@ const requiredFiles = [
   "docs/orchestration/decisions.md",
   "docs/orchestration/evidence.md",
   "infra/docker/docker-compose.yml",
+  "infra/cloudflare/README.md",
   "infra/ci/pipeline-contract.md"
 ];
 

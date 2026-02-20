@@ -6,7 +6,7 @@ Mode: `build-first`
 
 ## Objective
 
-Keep modernization readiness moving under `/app` while deployment publish remains explicitly deferred.
+Execute release-readiness work (`R5`) while keeping Cloudflare publish/deploy execution deferred until explicit user approval.
 
 ## Hard Rules
 
@@ -17,31 +17,30 @@ Keep modernization readiness moving under `/app` while deployment publish remain
 
 ## Immediate Execution Queue
 
-1. `R4-001` (`$cloudflare-deploy` + `$platform-devops`)
+1. `R5-001` (`$qa` + `$platform-devops`)
 - In scope:
-  - Prepare Cloudflare Pages and Containers deployment manifests/scripts.
-  - Add rollback-oriented deployment runbook scaffolding.
+  - Build release readiness checklist with explicit go/no-go criteria.
+  - Link offline parity evidence and rollback references.
 - Acceptance:
-  - Deployment artifacts are present and lintable.
-  - No publish command is executed.
+  - Checklist is complete and references current orchestration evidence.
 
-2. `R5-001` (`$qa` + `$platform-devops`)
+2. `R5-002` (`$qa`)
 - In scope:
-  - Update release readiness checklist to include offline parity verification references and required QA sampling.
+  - Prepare and execute final verification command pack.
 - Acceptance:
-  - Checklist points to current parity evidence and risk mitigations.
+  - Full verification report exists with pass/fail table and residual risks.
 
-3. `R5-002` prep (`$qa`)
+3. `R5-003` prep (`$simoona-modernization-orchestrator`)
 - In scope:
-  - Prepare final verification command pack for pre-publish gate.
+  - Prepare publish-ready execution sequence without running publish.
 - Acceptance:
-  - Command pack is explicit and reproducible on macOS setup.
+  - Publish execution plan is ready pending explicit user approval.
 
 ## Success Criteria For This Stage
 
-1. `R2` and `R3` remain closed with complete parity coverage.
-2. Deployment artifacts are ready but unpublished.
-3. Release readiness evidence is prepared for explicit deployment go-ahead.
+1. `R4` remains closed with artifact-only deployment readiness evidence.
+2. `R5` deliverables are prepared for explicit publish approval decision.
+3. No publish commands are executed.
 
 ## Explicitly Deferred
 

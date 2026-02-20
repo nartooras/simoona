@@ -1,0 +1,24 @@
+{
+  "requiredFiles": [
+    "infra/cloudflare/README.md",
+    "infra/cloudflare/pages/wrangler.toml",
+    "infra/cloudflare/containers/wrangler.toml",
+    "infra/cloudflare/containers/worker.ts",
+    "infra/cloudflare/containers/Dockerfile.api",
+    "infra/cloudflare/.dev.vars.example"
+  ],
+  "fileMarkers": [
+    {
+      "path": "infra/cloudflare/pages/wrangler.toml",
+      "markers": ["pages_build_output_dir", "SIMOONA_PHASE"]
+    },
+    {
+      "path": "infra/cloudflare/containers/wrangler.toml",
+      "markers": ["main =", "API_PORT"]
+    },
+    {
+      "path": "infra/cloudflare/README.md",
+      "markers": ["No Publish", "wrangler deploy", "deferred"]
+    }
+  ]
+}

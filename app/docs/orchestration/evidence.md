@@ -388,3 +388,52 @@ Results:
 - `pnpm --dir app/web shell:check`: `PASS`
 - `pnpm --dir app/tests/e2e visual:baseline`: `PASS`
 - `pnpm --dir app/tests/parity test`: `PASS`
+
+## R4-001 Cloudflare Deployment Artifacts (No Publish)
+
+Date: `2026-02-20`
+
+### Scope
+
+- Added Cloudflare deployment artifact pack:
+  - `app/infra/cloudflare/README.md`
+  - `app/infra/cloudflare/pages/wrangler.toml`
+  - `app/infra/cloudflare/containers/wrangler.toml`
+  - `app/infra/cloudflare/containers/worker.ts`
+  - `app/infra/cloudflare/containers/Dockerfile.api`
+  - `app/infra/cloudflare/.dev.vars.example`
+- Added deploy artifact contract + verifier:
+  - `app/infra/contracts/cloudflare-deploy-contract.json`
+  - `app/infra/scripts/verify-cloudflare-deploy-contract.mjs`
+- Wired deployment artifact checks into app scripts and CI contract:
+  - `app/package.json`
+  - `app/scripts/foundation-check.mjs`
+  - `app/infra/ci/run-foundation-ci.sh`
+  - `app/infra/ci/pipeline-contract.md`
+
+### Validation Commands
+
+Executed:
+
+```bash
+pnpm --dir app deploy:cloudflare:check
+pnpm --dir app install
+pnpm --dir app lint
+pnpm --dir app typecheck
+pnpm --dir app test
+pnpm --dir app smoke
+pnpm --dir app build
+pnpm --dir app verify
+pnpm --dir app/api build
+pnpm --dir app/api lint
+pnpm --dir app/api typecheck
+pnpm --dir app/api test
+git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'
+```
+
+Results:
+
+- `pnpm --dir app deploy:cloudflare:check`: `PASS`
+- full validation set above: `PASS`
+- smoke runtime fallback: `PASS` under sandbox bind restriction (`EPERM` on `127.0.0.1:5173`)
+- `git ls-files | rg ...`: no tracked generated artifacts (`rg` exit `1` means no matches)
