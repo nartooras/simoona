@@ -218,3 +218,33 @@ Record major architecture and delivery decisions with rationale.
 - Date: `2026-02-20`
 - Decision: `Close Gate 4 after T-0066 and T-0067 pass, then stop autopilot at phase boundary and queue Phase 5 integration tasks (T-0068..T-0070)`
 - Rationale: enforces gate-first progression while preserving deterministic handoff into the next phase backlog.
+
+44. `D-044` Phase 5 integration inventory baseline policy
+- Date: `2026-02-20`
+- Decision: `Require an explicit integration inventory and credential matrix (`ready|missing|blocked`) before executing any Gate 5 smoke and QA checkpoints`
+- Rationale: creates deterministic ownership/readiness visibility for all gate-critical providers and prevents hidden credential assumptions.
+
+45. `D-045` Integration smoke gating policy
+- Date: `2026-02-20`
+- Decision: `Adopt a dual-mode integration smoke contract where baseline mode reports blockers and strict mode hard-fails Gate 5 on missing gate-critical readiness`
+- Rationale: enables safe continuous visibility during setup while preserving strict enforcement at gate checkpoints.
+
+46. `D-046` Gate 5 checkpoint remediation sequence
+- Date: `2026-02-20`
+- Decision: `After Gate 5 QA NO-GO, queue remediation in fixed order: credential provisioning (T-0071) -> failure-path checks (T-0072) -> checkpoint re-run (T-0073)`
+- Rationale: enforces dependency order so QA re-check occurs only when both readiness and failure-path evidence are available.
+
+47. `D-047` Gate 3 and Gate 4 re-open policy for live web runtime
+- Date: `2026-02-20`
+- Decision: `Re-open Gate 3 and Gate 4 until a runnable web runtime exists and Wave A UI evidence is generated from live runtime execution rather than manifest-only checks`
+- Rationale: prior closure criteria validated shell artifacts and metadata checks but did not prove a user-visible runnable modern web application.
+
+48. `D-048` Gate 3/4 re-closure and Phase 5 resume policy
+- Date: `2026-02-20`
+- Decision: `After web runtime foundation, Wave A route runtime wiring, and runtime-smoke QA checks pass, re-close Gate 3 and Gate 4 and resume Phase 5 queue from T-0071`
+- Rationale: restores phase order while preserving stronger runtime-based UI gate criteria for future closures.
+
+49. `D-049` Phase 5 re-entry sequencing
+- Date: `2026-02-20`
+- Decision: `After T-0076 completion, restore priority queue to integration sequence T-0071 -> T-0072 -> T-0073 without additional Phase 3/4 detours`
+- Rationale: keeps integration-critical execution focused now that live web runtime closure requirements are satisfied.

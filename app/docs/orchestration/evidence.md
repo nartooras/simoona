@@ -874,3 +874,111 @@ For each completed task or gate, append:
   - Runtime-backed bundle passed via `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/api test` (includes `contract:wave-a-*`, `contract:core`, `wave-a:targets`, `wave-a:visual-approvals`, `visual:baseline`, `shell:check`, root `verify`).
   - Gate 4 recommendation updated to `COMPLETE`; autopilot stopped at phase boundary and Phase 5 queue seeded (`T-0068`..`T-0070`).
   - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+76. Date: `2026-02-20`
+- Phase: `Phase 5`
+- Task: `T-0068 Build critical integration inventory and staging credential matrix`
+- Evidence type: `parity`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/integration-inventory-matrix.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/parity-gap-report.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/feature-checklist.md`
+- Result summary:
+  - Critical integration inventory published with owner, priority, target area, and parity status coverage for OAuth, SMTP, storage/media, and external-jobs.
+  - Credential matrix published with explicit `ready|missing|blocked` states and mitigation owners.
+  - Integration coverage tracking for checklist/matrix rows is complete; readiness remains `NOT_READY`.
+
+77. Date: `2026-02-20`
+- Phase: `Phase 5`
+- Task: `T-0069 Add Phase 5 integration smoke harness baseline`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/integration-smoke-contract.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/scripts/verify-integration-smoke.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/integration-smoke-runbook.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/ci/pipeline-contract.md`
+- Result summary:
+  - Added deterministic integration smoke contract with baseline and strict gate modes.
+  - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app smoke:integrations` passes and reports current blockers.
+  - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app smoke:integrations:strict` fails as expected due to missing gate-critical credentials.
+  - Runbook documents secret-safe env contract, read-only check semantics, and strict gate usage.
+
+78. Date: `2026-02-20`
+- Phase: `Phase 5`
+- Task: `T-0070 Gate 5 integration readiness checkpoint`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-5-integration-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/integration-inventory-matrix.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/integration-smoke-runbook.md`
+- Result summary:
+  - Gate 5 checklist evaluated against phase-gate criteria and current smoke evidence.
+  - QA decision recorded as `RED`; Gate 5 recommendation is `NO-GO`.
+  - Required fixes and retest plan captured; follow-up tasks queued as `T-0071`..`T-0073`.
+
+79. Date: `2026-02-20`
+- Phase: `Phase 3/4 Re-open`
+- Task: `Gate 3 and Gate 4 re-open directive for live web runtime`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-wave-a-execution-plan.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/skills/simoona-modernization-orchestrator/references/phase-gates.md`
+- Result summary:
+  - Gate 3 and Gate 4 closure criteria now require live web runtime evidence.
+  - Priority queue was resequenced to execute `T-0074`..`T-0076` before resuming Phase 5 tasks.
+  - Gate 5 progression is explicitly blocked until Gate 3 and Gate 4 are re-closed.
+
+80. Date: `2026-02-20`
+- Phase: `Phase 3/4 Re-open`
+- Task: `T-0074 Bootstrap live web runtime foundation in /app/web`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/index.html`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/vite.config.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/live-web-runtime.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/README.md`
+- Result summary:
+  - Web runtime command contract added: `dev`, `preview`, `build`.
+  - Validation passed: `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/web shell:check`.
+  - Validation passed: `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/web build`.
+  - Runtime startup validated: `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/web dev` listening on `127.0.0.1:5173`.
+
+81. Date: `2026-02-20`
+- Phase: `Phase 4 Re-open`
+- Task: `T-0075 Wire Wave A shell routes into live web runtime`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/live-web-runtime.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/auth-boundary.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/tenant-route-container.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/top-level-layout.ts`
+- Result summary:
+  - Runtime route checks passed with HTTP `200` for `/`, `/profile`, `/Wall/Feed`, `/Settings/Notifications`.
+  - Runtime payload includes shell boundary markers `legacyLoginBoundary`, `legacyTenantRouteContainer`, and layout/navigation state.
+  - Existing shell parity checks remain green.
+
+82. Date: `2026-02-20`
+- Phase: `Phase 3/4 Re-open`
+- Task: `T-0076 Re-run Gate 3 and Gate 4 with live web runtime evidence`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-wave-a-runtime-smoke.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-wave-a-execution-plan.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+- Result summary:
+  - Validation passed: `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e test` including `wave-a:runtime-smoke`.
+  - Validation passed: `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app verify`.
+  - Validation passed: `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/api test` (runtime-backed Wave A parity bundle).
+  - Gate 3 recommendation updated to `COMPLETE`.
+  - Gate 4 recommendation updated to `COMPLETE`.
+  - Phase 5 integration queue unblocked and resumed at `T-0071`.

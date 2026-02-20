@@ -4,31 +4,31 @@ Use this backlog as the task source of truth for the orchestrator.
 
 ## Priority Queue
 
-1. `T-0068` `P0` Build critical integration inventory and staging credential matrix (`READY`)
-- Owner role: `$parity-analyst-agent`
-- Phase: `Phase 5 - Integration Parity`
-- Dependencies: `Gate 4` complete
-- Acceptance:
-  - critical integration list is explicit (`auth`, `smtp`, `storage`, external jobs) with owner and environment dependency
-  - staging credential availability is mapped with `ready|missing|blocked` status and mitigation owner
-  - integration candidates are prioritized into `P0|P1` execution order for Phase 5
-
-2. `T-0069` `P1` Add Phase 5 integration smoke harness baseline (`BLOCKED`)
+1. `T-0071` `P0` Provision critical integration staging credential references (`READY`)
 - Owner role: `$platform-devops-agent`
 - Phase: `Phase 5 - Integration Parity`
-- Dependencies: `T-0068`
+- Dependencies: `T-0076` completed (Gate 3 and Gate 4 re-closed)
 - Acceptance:
-  - integration smoke harness command exists for critical providers with safe read-only checks where applicable
-  - environment contracts and secret-safe runbook are documented for local/staging
-  - no secrets are committed in tracked files
+  - secret-safe env references are provisioned for OAuth, SMTP, storage, and external-jobs integration contracts
+  - ownership and source-of-truth for external-jobs callback base URL/token are confirmed
+  - `smoke:integrations:strict` passes in staging-ready execution context or blockers are explicitly re-owned with target date
 
-3. `T-0070` `P1` Gate 5 integration readiness checkpoint (`BLOCKED`)
+2. `T-0072` `P1` Add provider failure-path integration smoke checks (`BLOCKED`)
+- Owner role: `$platform-devops-agent`
+- Phase: `Phase 5 - Integration Parity`
+- Dependencies: `T-0071`
+- Acceptance:
+  - failure-path checks exist for critical providers (timeouts/auth failures where safely testable)
+  - smoke harness report clearly differentiates config readiness and runtime failure-path results
+  - runbook includes incident and rollback-safe remediation steps for each provider
+
+3. `T-0073` `P1` Re-run Gate 5 integration readiness checkpoint (`BLOCKED`)
 - Owner role: `$qa-parity-agent`
 - Phase: `Phase 5 - Integration Parity`
-- Dependencies: `T-0068`, `T-0069`
+- Dependencies: `T-0071`, `T-0072`
 - Acceptance:
-  - Gate 5 checklist is evaluated with integration smoke evidence and credential-readiness status
-  - explicit `GO|NO-GO` recommendation is recorded with blocker callouts if not ready
+  - Gate 5 checklist is re-evaluated with strict smoke and failure-path evidence
+  - explicit `GO|NO-GO` recommendation is recorded with no unresolved P0/P1 blockers for `GO`
 
 ## Completed Archive
 
@@ -409,6 +409,50 @@ Use this backlog as the task source of truth for the orchestrator.
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/risks.md`
+
+68. `T-0068` `P0` Build critical integration inventory and staging credential matrix (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/integration-inventory-matrix.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/parity-gap-report.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/feature-checklist.md`
+
+69. `T-0069` `P0` Add Phase 5 integration smoke harness baseline (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/integration-smoke-contract.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/scripts/verify-integration-smoke.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/integration-smoke-runbook.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/ci/pipeline-contract.md`
+
+70. `T-0070` `P1` Gate 5 integration readiness checkpoint (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-5-integration-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/risks.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence.md`
+
+71. `T-0074` `P0` Bootstrap live web runtime foundation in `/app/web` (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/index.html`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/vite.config.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/live-web-runtime.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/README.md`
+
+72. `T-0075` `P0` Wire Wave A shell routes into live web runtime (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/live-web-runtime.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/top-level-layout.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/index.ts`
+
+73. `T-0076` `P1` Re-run Gate 3 and Gate 4 with live web runtime evidence (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-wave-a-execution-plan.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-wave-a-runtime-smoke.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/package.json`
 
 ## Intake Template
 

@@ -59,8 +59,12 @@ Track active modernization risks, owners, and mitigations.
 - Status: `Open`
 - Mitigation:
   - publish integration inventory + credential matrix with explicit `ready|missing|blocked` state (`T-0068`)
+  - inventory outcome: gate-critical OAuth/SMTP/storage/external-jobs credentials are `missing|blocked`; SQL clone prerequisite remains `ready`
   - implement integration smoke harness baseline with secret-safe environment contracts (`T-0069`)
+  - smoke outcome: baseline command reports blockers while strict mode fails on missing gate-critical provider readiness
   - evaluate Gate 5 readiness and escalate any missing critical staging credentials immediately (`T-0070`)
+  - Gate 5 checkpoint result: QA `RED`, recommendation `NO-GO` until credential provisioning (`T-0071`) and failure-path checks (`T-0072`) are complete
+  - Phase 5 resumed after Gate 3/4 re-closure (`T-0076`); next active mitigation is credential provisioning (`T-0071`)
 - Next review date: `2026-02-27`
 
 ## Closed Risks
@@ -75,3 +79,15 @@ Track active modernization risks, owners, and mitigations.
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/waves/wave-a-visual-approval-pack.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+
+2. `R-006` Gate 3/4 closure invalid due to missing live web runtime evidence
+- Severity: `High`
+- Area: `UI runtime parity`
+- Owner role: `$full-stack-developer` + `$qa-parity-agent`
+- Status: `Closed`
+- Closure date: `2026-02-20`
+- Closure evidence:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/live-web-runtime.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-wave-a-runtime-smoke.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`

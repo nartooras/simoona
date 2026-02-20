@@ -9,7 +9,7 @@
 
 ## Assigned Tasks
 
-- `T-0068` Build critical integration inventory and staging credential matrix (`READY`, owner: `$parity-analyst-agent`).
+- `T-0071` Provision critical integration staging credential references (`READY`, owner: `$platform-devops-agent`).
 
 ## Completed Tasks
 
@@ -89,13 +89,23 @@
 - `T-0067` completed: Gate 4 Wave A closure checkpoint passed with runtime-backed contract/e2e/visual evidence.
 - `Gate 4` closed for Wave A feature-wave scope and phase transition staged to Phase 5.
 - Autopilot stop condition reached: current phase gate completed (`Gate 4`).
+- `T-0068` completed: Phase 5 integration inventory and staging credential matrix published with owner/priority/readiness states.
+- `T-0069` completed: integration smoke harness baseline, strict gate mode, and secret-safe runbook published.
+- `T-0070` completed: Gate 5 readiness checkpoint recorded with QA `RED` and explicit `NO-GO` recommendation.
+- Phase 5 queue advanced to credential provisioning + failure-path validation follow-up tasks (`T-0071`..`T-0073`).
+- Gate 3 and Gate 4 were re-opened after identifying missing live web runtime requirements in prior closure criteria.
+- Phase 5 queue is now blocked until Gate 3 and Gate 4 are re-closed with runtime web evidence (`T-0074`..`T-0076`).
+- `T-0074` completed: live web runtime foundation added under `/app/web` with runnable `dev|build|preview` command contract.
+- `T-0075` completed: Wave A shell-critical routes wired in runtime process using existing shell boundary modules.
+- `T-0076` completed: Gate 3 and Gate 4 were re-evaluated with runtime web evidence and re-closed as `COMPLETE`.
+- Phase transitioned back to Phase 5 after Gate 3/4 re-closure.
 
 ## Blocked Tasks
 
-1. `T-0069` Add Phase 5 integration smoke harness baseline
-- Blocker: depends on `T-0068` integration inventory/credential matrix completion.
-2. `T-0070` Gate 5 integration readiness checkpoint
-- Blocker: depends on `T-0068` and `T-0069` completion.
+1. `T-0072` Add provider failure-path integration smoke checks
+- Blocker: depends on `T-0071` credential provisioning completion.
+2. `T-0073` Re-run Gate 5 integration readiness checkpoint
+- Blocker: depends on `T-0071` and `T-0072` completion.
 
 ## Open Risks
 
@@ -106,9 +116,9 @@
 
 ## Next 3 Tasks
 
-1. Execute `T-0068` via `$parity-analyst-agent` to publish critical integration inventory and staging credential matrix.
-2. Execute `T-0069` via `$platform-devops-agent` to add integration smoke harness baseline and secret-safe runbook.
-3. Execute `T-0070` via `$qa-parity-agent` to evaluate Gate 5 readiness with explicit `GO|NO-GO` recommendation.
+1. Execute `T-0071` via `$platform-devops-agent` to provision secret-safe staging credential references for gate-critical integrations.
+2. Execute `T-0072` via `$platform-devops-agent` to add provider failure-path smoke checks and remediation runbook paths.
+3. Execute `T-0073` via `$qa-parity-agent` to re-run Gate 5 checkpoint and record updated `GO|NO-GO`.
 
 ## Gate Status
 

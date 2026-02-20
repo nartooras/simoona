@@ -11,6 +11,12 @@ bash app/infra/ci/run-foundation-ci.sh
 pnpm --dir app build
 ```
 
+Phase 5 integration baseline adds a non-blocking smoke contract check:
+
+```bash
+pnpm --dir app smoke:integrations
+```
+
 ## Expected result
 
 - All commands pass on macOS M3 local environment.

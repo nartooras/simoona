@@ -1,4 +1,7 @@
-import { createLegacyShellNavItem, resolveLegacyMotionTokens } from "../../../packages/ui/src";
+import {
+  createLegacyShellNavItem,
+  resolveLegacyMotionTokens
+} from "../../../packages/ui/src/index.ts";
 
 export interface TopLevelLayoutState {
   title: string;

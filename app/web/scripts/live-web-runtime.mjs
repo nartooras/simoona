@@ -1,0 +1,132 @@
+#!/usr/bin/env node
+
+import fs from "node:fs";
+import http from "node:http";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const webRoot = path.resolve(__dirname, "..");
+
+const mode = process.argv[2] ?? "dev";
+const port = Number(
+  process.env.WEB_RUNTIME_PORT ?? (mode === "preview" ? "4173" : "5173")
+);
+
+const requiredFiles = [
+  path.join(webRoot, "index.html"),
+  path.join(webRoot, "vite.config.ts"),
+  path.join(webRoot, "src/main.tsx"),
+  path.join(webRoot, "src/shell/auth-boundary.ts"),
+  path.join(webRoot, "src/shell/tenant-route-container.ts"),
+  path.join(webRoot, "src/shell/top-level-layout.ts")
+];
+
+for (const filePath of requiredFiles) {
+  if (!fs.existsSync(filePath)) {
+    console.error(`[web-runtime] Missing required file: ${filePath}`);
+    process.exit(1);
+  }
+}
+
+if (mode === "build") {
+  console.log("[web-runtime] Build/runtime contract checks passed.");
+  process.exit(0);
+}
+
+const runtimeRoutes = new Set(["/", "/profile", "/Wall/Feed", "/Settings/Notifications"]);
+
+const { resolveAuthBoundary } = await import(path.join(webRoot, "src/shell/auth-boundary.ts"));
+const { resolveTenantRoute } = await import(
+  path.join(webRoot, "src/shell/tenant-route-container.ts")
+);
+const { createTopLevelLayoutState } = await import(
+  path.join(webRoot, "src/shell/top-level-layout.ts")
+);
+
+const indexTemplate = fs.readFileSync(path.join(webRoot, "index.html"), "utf8");
+const mainModule = fs.readFileSync(path.join(webRoot, "src/main.tsx"), "utf8");
+
+function sendJson(response, statusCode, payload) {
+  response.writeHead(statusCode, { "content-type": "application/json; charset=utf-8" });
+  response.end(JSON.stringify(payload));
+}
+
+function routeExists(pathname) {
+  return runtimeRoutes.has(pathname);
+}
+
+function renderIndexForRoute(pathname) {
+  const isAuthenticated = pathname !== "/account/login";
+  const layout = createTopLevelLayoutState(false);
+  const auth = resolveAuthBoundary(isAuthenticated);
+  const tenantRoute = resolveTenantRoute(pathname, "default");
+  const runtimePayload = {
+    route: pathname,
+    title: layout.title,
+    status: routeExists(pathname) ? "ready" : "not_found",
+    navItems: layout.navItems,
+    auth,
+    tenantRoute,
+    motion: layout.motion
+  };
+
+  return indexTemplate.replace(
+    '<script id="simoona-runtime-data" type="application/json"></script>',
+    `<script id="simoona-runtime-data" type="application/json">${JSON.stringify(
+      runtimePayload
+    )}</script>`
+  );
+}
+
+const server = http.createServer((request, response) => {
+  const url = new URL(request.url ?? "/", `http://127.0.0.1:${String(port)}`);
+  const pathname = decodeURIComponent(url.pathname);
+
+  if (pathname === "/healthz" || pathname === "/readyz") {
+    sendJson(response, 200, {
+      status: "ok",
+      service: "simoona-web-runtime",
+      checkedAtUtc: new Date().toISOString()
+    });
+    return;
+  }
+
+  if (pathname === "/src/main.tsx") {
+    response.writeHead(200, {
+      "content-type": "application/javascript; charset=utf-8",
+      "cache-control": "no-store"
+    });
+    response.end(mainModule);
+    return;
+  }
+
+  if (routeExists(pathname) || pathname === "/") {
+    response.writeHead(200, {
+      "content-type": "text/html; charset=utf-8",
+      "cache-control": "no-store"
+    });
+    response.end(renderIndexForRoute(pathname));
+    return;
+  }
+
+  response.writeHead(404, {
+    "content-type": "text/html; charset=utf-8",
+    "cache-control": "no-store"
+  });
+  response.end(renderIndexForRoute(pathname));
+});
+
+server.listen(port, "127.0.0.1", () => {
+  console.log(`[web-runtime] ${mode} server listening at http://127.0.0.1:${String(port)}`);
+});
+
+const shutdown = () => {
+  server.close(() => {
+    process.exit(0);
+  });
+};
+
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);

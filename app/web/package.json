@@ -3,12 +3,15 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
+    "dev": "node --experimental-strip-types ./scripts/live-web-runtime.mjs dev",
+    "preview": "node --experimental-strip-types ./scripts/live-web-runtime.mjs preview",
+    "runtime:build": "node --experimental-strip-types ./scripts/live-web-runtime.mjs build",
     "shell:check:foundation": "node ./scripts/verify-web-shell-foundation.mjs",
     "shell:check:routes": "node ./scripts/verify-shell-route-pack.mjs",
     "shell:check": "pnpm shell:check:foundation && pnpm shell:check:routes",
     "lint": "pnpm shell:check",
     "typecheck": "pnpm shell:check",
     "test": "pnpm shell:check",
-    "build": "pnpm shell:check"
+    "build": "pnpm shell:check && pnpm runtime:build"
   }
 }

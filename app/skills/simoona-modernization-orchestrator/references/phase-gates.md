@@ -29,13 +29,15 @@ Use this checklist to approve or reject phase completion.
 - Shell/navigation route behavior matches legacy.
 - Animation layer is subtle and respects reduced-motion.
 - Visual regression baseline approved.
+- Live web runtime exists and is runnable locally (not checklist-only).
 
 ## Gate 4: Feature Waves
 
 - Wave-scoped API contract tests are 100% passing.
-- Wave-scoped e2e tests are 100% passing.
+- Wave-scoped e2e tests are 100% passing in live web runtime execution.
 - Visual diffs are approved for changed screens.
 - No open P0/P1 defects in wave scope.
+- Wave shell-critical UI routes are verified in running web runtime process.
 
 ## Gate 5: Integrations
 

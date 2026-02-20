@@ -9,6 +9,8 @@
     "typecheck": "node ./scripts/foundation-check.mjs typecheck",
     "test": "node ./scripts/foundation-check.mjs test",
     "smoke": "node ./scripts/foundation-check.mjs smoke",
+    "smoke:integrations": "node ./infra/scripts/verify-integration-smoke.mjs",
+    "smoke:integrations:strict": "node ./infra/scripts/verify-integration-smoke.mjs --strict",
     "build": "node ./scripts/foundation-check.mjs build",
     "ci:foundation": "bash ./infra/ci/run-foundation-ci.sh",
     "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm smoke && pnpm build"

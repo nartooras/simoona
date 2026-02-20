@@ -1,0 +1,81 @@
+{
+  "version": "0.1.0",
+  "phase": "Phase 5 - Integration Parity",
+  "providers": [
+    {
+      "id": "oauth-external-auth",
+      "priority": "P0",
+      "requiredForGate": true,
+      "checks": {
+        "requiredEnv": [
+          "INTEGRATION_AUTH_CLIENT_ID",
+          "INTEGRATION_AUTH_CLIENT_SECRET_REF",
+          "INTEGRATION_AUTH_AUTHORITY_URL",
+          "INTEGRATION_AUTH_REDIRECT_URI"
+        ],
+        "urlEnv": [
+          "INTEGRATION_AUTH_AUTHORITY_URL",
+          "INTEGRATION_AUTH_REDIRECT_URI"
+        ]
+      }
+    },
+    {
+      "id": "smtp-email",
+      "priority": "P0",
+      "requiredForGate": true,
+      "checks": {
+        "requiredEnv": [
+          "INTEGRATION_SMTP_HOST",
+          "INTEGRATION_SMTP_PORT",
+          "INTEGRATION_SMTP_USER",
+          "INTEGRATION_SMTP_PASSWORD_REF",
+          "INTEGRATION_SMTP_FROM"
+        ],
+        "numericEnv": [
+          "INTEGRATION_SMTP_PORT"
+        ]
+      }
+    },
+    {
+      "id": "storage-media",
+      "priority": "P1",
+      "requiredForGate": true,
+      "checks": {
+        "requiredEnv": [
+          "INTEGRATION_STORAGE_PROVIDER",
+          "INTEGRATION_STORAGE_BUCKET",
+          "INTEGRATION_STORAGE_BASE_URL",
+          "INTEGRATION_STORAGE_ACCESS_KEY_REF",
+          "INTEGRATION_STORAGE_SECRET_KEY_REF"
+        ],
+        "urlEnv": [
+          "INTEGRATION_STORAGE_BASE_URL"
+        ]
+      }
+    },
+    {
+      "id": "external-jobs",
+      "priority": "P0",
+      "requiredForGate": true,
+      "checks": {
+        "requiredEnv": [
+          "INTEGRATION_EXTERNAL_JOBS_BASE_URL",
+          "INTEGRATION_EXTERNAL_JOBS_TOKEN_REF"
+        ],
+        "urlEnv": [
+          "INTEGRATION_EXTERNAL_JOBS_BASE_URL"
+        ]
+      }
+    },
+    {
+      "id": "staging-sql-clone",
+      "priority": "P0",
+      "requiredForGate": false,
+      "checks": {
+        "requiredFiles": [
+          "docs/orchestration/evidence/staging-clone-access.md"
+        ]
+      }
+    }
+  ]
+}
