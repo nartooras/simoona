@@ -5,12 +5,11 @@
 
 ## Current Phase
 
-- `R4 - Cloudflare Deployment` (`COMPLETE_NO_PUBLISH`)
+- `R5 - Release Readiness` (`COMPLETE_READY_FOR_PUBLISH_APPROVAL`)
 
 ## Assigned Tasks
 
-1. `R5-001` release readiness checklist and evidence-pack assembly.
-2. `R5-002` final verification pack preparation for pre-publish gate.
+1. Await explicit user approval for publish execution.
 
 ## Completed Tasks
 
@@ -31,6 +30,9 @@
 15. `R3-002`: Promoted UI route matrix to mapped+implemented coverage with explicit modern route/component mapping (`115/115`).
 16. `R3-003`: Added executable UI parity contract (`verify-ui-implementation-contract.mjs`) and promoted UI rows to `verified` under offline evidence policy (`115/115`).
 17. `R4-001`: Added Cloudflare Pages/Containers deployment artifacts and no-publish deployment contract checks.
+18. `R5-001`: Added release readiness checklist with explicit go/no-go criteria.
+19. `R5-002`: Added final verification report and executed full validation command pack.
+20. `R5-003`: Added publish execution plan (prepared-only, no publish execution).
 
 ## Blocked Tasks
 
@@ -39,14 +41,14 @@
 ## Open Risks
 
 1. `RISK-R4-CONTAINERS-BETA`: Cloudflare Containers is beta and requires rollback planning (`Medium`).
-2. `RISK-R4-PUBLISH-DEFERRED`: Publish pipeline validation is deferred until explicit user approval (`Low`).
+2. `RISK-R4-PUBLISH-DEFERRED`: Publish pipeline remains deferred until explicit user approval (`Low`).
 3. `RISK-R2-OFFLINE-VERIFICATION-CONFIDENCE`: API/UI verification used offline evidence because legacy runtime cannot be executed (`Medium`).
 
 ## Next 3 Tasks
 
-1. Execute `R5-001` release-readiness checklist updates with explicit rollback/go-no-go criteria.
-2. Prepare `R5-002` final verification command pack and evidence index.
-3. Keep deployment execution deferred until explicit user go-ahead.
+1. Obtain explicit user go-ahead for publish execution.
+2. Re-run `pnpm --dir app verify` immediately before publish.
+3. Execute publish plan and post-publish checks after approval.
 
 ## Gate Status
 
@@ -55,4 +57,4 @@
 - `R2 (API 1:1 Parity)`: `COMPLETE`
 - `R3 (UI 1:1 Parity)`: `COMPLETE`
 - `R4 (Cloudflare Deployment)`: `COMPLETE_NO_PUBLISH`
-- `R5 (Release Readiness)`: `READY_TO_START`
+- `R5 (Release Readiness)`: `COMPLETE_READY_FOR_PUBLISH_APPROVAL`

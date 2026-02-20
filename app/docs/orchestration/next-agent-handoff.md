@@ -2,48 +2,46 @@
 
 Date: `2026-02-20`
 Branch: `modernization`
-Mode: `build-first`
+Mode: `approval-gated-publish`
 
 ## Objective
 
-Execute release-readiness work (`R5`) while keeping Cloudflare publish/deploy execution deferred until explicit user approval.
+Wait for explicit user approval before any publish/deploy execution and keep readiness artifacts current.
 
 ## Hard Rules
 
 1. Work only on branch `modernization`.
 2. Do not change `/src` or `/build`.
-3. Do not execute Cloudflare publish/deploy commands yet.
+3. Do not execute Cloudflare publish/deploy commands without explicit user approval.
 4. Keep all work scoped to `/app`.
 
 ## Immediate Execution Queue
 
-1. `R5-001` (`$qa` + `$platform-devops`)
+1. `POST-R5-001` (`$simoona-modernization-orchestrator` + `$platform-devops`)
 - In scope:
-  - Build release readiness checklist with explicit go/no-go criteria.
-  - Link offline parity evidence and rollback references.
+  - Execute publish plan only after explicit approval.
 - Acceptance:
-  - Checklist is complete and references current orchestration evidence.
+  - Publish commands and post-publish evidence are captured.
 
-2. `R5-002` (`$qa`)
+2. `POST-R5-002` (`$qa`)
 - In scope:
-  - Prepare and execute final verification command pack.
+  - Run post-publish smoke/parity verification.
 - Acceptance:
-  - Full verification report exists with pass/fail table and residual risks.
+  - Post-publish report recorded with GO/NO-GO.
 
-3. `R5-003` prep (`$simoona-modernization-orchestrator`)
+3. `POST-R5-003` (`$platform-devops`)
 - In scope:
-  - Prepare publish-ready execution sequence without running publish.
+  - Run rollback rehearsal against deployed target.
 - Acceptance:
-  - Publish execution plan is ready pending explicit user approval.
+  - Rollback evidence recorded.
 
 ## Success Criteria For This Stage
 
-1. `R4` remains closed with artifact-only deployment readiness evidence.
-2. `R5` deliverables are prepared for explicit publish approval decision.
-3. No publish commands are executed.
+1. `R5` remains complete and ready for approval.
+2. No publish is executed before explicit user instruction.
+3. Readiness evidence remains reproducible.
 
 ## Explicitly Deferred
 
-1. Cloudflare publishing/deployment execution.
-2. Production DNS or traffic switching.
-3. Release cutover tasks.
+1. Cloudflare publish/deploy execution without user approval.
+2. Production DNS or traffic switching without approval.

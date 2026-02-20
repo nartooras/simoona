@@ -6,12 +6,9 @@ Use `app/docs/orchestration/next-agent-handoff.md` as the immediate execution br
 
 ## Priority Queue
 
-1. `R5-001` (`P1`, owner `$qa` + `$platform-devops`): Build release readiness checklist with offline parity verification references, rollback rehearsal pointers, and explicit go/no-go criteria.
-   - Depends on: `R4-001`
-2. `R5-002` (`P1`, owner `$qa`): Execute and document final full verification pack before any deployment approval.
-   - Depends on: `R5-001`
-3. `R5-003` (`P1`, owner `$simoona-modernization-orchestrator`): Prepare publish-ready execution plan while keeping publish commands blocked pending user approval.
-   - Depends on: `R5-002`
+1. `POST-R5-001` (`P1`, owner `$simoona-modernization-orchestrator` + `$platform-devops`): Execute publish plan only after explicit user approval.
+2. `POST-R5-002` (`P1`, owner `$qa`): Run post-publish smoke/parity verification and document rollout result.
+3. `POST-R5-003` (`P2`, owner `$platform-devops`): Complete rollback rehearsal against deployed target.
 
 ## Completed
 
@@ -30,3 +27,6 @@ Use `app/docs/orchestration/next-agent-handoff.md` as the immediate execution br
 13. `R3-002` (`P0`, owner `$full-stack-developer` + `$parity-analyst`): Promoted UI route matrix from unmapped to mapped/implemented with explicit modern route/component targets.
 14. `R3-003` (`P0`, owner `$qa` + `$parity-analyst`): Added executable UI implementation contract and promoted UI rows to `verified` under offline verification triad (`115/115`).
 15. `R4-001` (`P1`, owner `$cloudflare-deploy` + `$platform-devops`): Added Cloudflare Pages/Containers no-publish deployment artifacts and deployment contract checks.
+16. `R5-001` (`P1`, owner `$qa` + `$platform-devops`): Added release readiness checklist with explicit go/no-go criteria and risk references.
+17. `R5-002` (`P1`, owner `$qa`): Added final verification report and executed full command pack.
+18. `R5-003` (`P1`, owner `$simoona-modernization-orchestrator`): Added publish-ready execution plan while keeping publish commands deferred.

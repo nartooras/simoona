@@ -89,3 +89,9 @@
 1. `D-R4-001` Artifact-only deployment gate policy
 - Decision: Complete `R4` using Cloudflare Pages/Containers deployment artifacts plus executable artifact-contract checks, while keeping publish commands deferred.
 - Rationale: Satisfies deployment-readiness objectives under explicit no-publish user constraint.
+
+## 2026-02-20 (R5 execution)
+
+1. `D-R5-001` Readiness gate completion policy
+- Decision: Mark `R5` complete when full verification pack is green, release checklist is complete, and publish execution plan exists without running publish commands.
+- Rationale: Satisfies readiness objective while preserving explicit user-controlled publish boundary.

@@ -437,3 +437,42 @@ Results:
 - full validation set above: `PASS`
 - smoke runtime fallback: `PASS` under sandbox bind restriction (`EPERM` on `127.0.0.1:5173`)
 - `git ls-files | rg ...`: no tracked generated artifacts (`rg` exit `1` means no matches)
+
+## R5-001/R5-002/R5-003 Release Readiness Completion
+
+Date: `2026-02-20`
+
+### Scope
+
+- Added release readiness checklist:
+  - `app/docs/orchestration/release-readiness-checklist.md`
+- Added final verification report:
+  - `app/docs/orchestration/final-verification-report.md`
+- Added publish-ready execution plan (not executed):
+  - `app/docs/orchestration/publish-execution-plan.md`
+
+### Validation Commands
+
+Executed:
+
+```bash
+pnpm --dir app install
+pnpm --dir app lint
+pnpm --dir app typecheck
+pnpm --dir app test
+pnpm --dir app smoke
+pnpm --dir app build
+pnpm --dir app verify
+pnpm --dir app/api build
+pnpm --dir app/api lint
+pnpm --dir app/api typecheck
+pnpm --dir app/api test
+pnpm --dir app deploy:cloudflare:check
+git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'
+```
+
+Results:
+
+- All commands above: `PASS`
+- Runtime smoke fallback under sandbox bind restriction (`EPERM` on `127.0.0.1:5173`) remains expected and passes via fallback checks.
+- Artifact hygiene check found no tracked generated artifacts (`rg` exit `1` expected for no matches).
