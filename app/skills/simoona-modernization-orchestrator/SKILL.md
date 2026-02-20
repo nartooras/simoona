@@ -7,6 +7,11 @@ description: Orchestrate phased modernization of Simoona from legacy `/src` and 
 
 Coordinate the Simoona migration as a delivery manager and technical orchestrator.
 
+## Recommended Model and Reasoning
+
+- Model: `GPT-5`
+- Reasoning: `High`
+
 ## Load Inputs First
 
 Read these files before planning or assigning work:

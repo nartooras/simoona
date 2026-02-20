@@ -7,6 +7,11 @@ description: Design and execute database and file migration workflows for Simoon
 
 Own migration correctness, safety, and cutover readiness.
 
+## Recommended Model and Reasoning
+
+- Model: `GPT-5`
+- Reasoning: `High`
+
 ## Load Context First
 
 Read these files before migration work:

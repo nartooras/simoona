@@ -7,6 +7,11 @@ description: Implement full-stack features and fixes for Simoona modernization i
 
 Execute assigned implementation tasks with strict parity, quality, and handoff discipline.
 
+## Recommended Model and Reasoning
+
+- Model: `GPT-5`
+- Reasoning: `Medium` (use `High` for complex refactors or tricky bugs)
+
 ## Load Context First
 
 Read these files before coding:

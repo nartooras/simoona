@@ -7,6 +7,11 @@ description: Run quality assurance for Simoona modernization tasks in `/app`, ex
 
 Validate implementation work and gate releases with evidence-based decisions.
 
+## Recommended Model and Reasoning
+
+- Model: `GPT-5`
+- Reasoning: `High`
+
 ## Load Context First
 
 Read these files before running checks:

@@ -7,6 +7,11 @@ description: Review Simoona modernization code changes under `/app` to ensure qu
 
 Perform implementation-focused code reviews before QA gate execution.
 
+## Recommended Model and Reasoning
+
+- Model: `GPT-5`
+- Reasoning: `High`
+
 ## Load Context First
 
 Read these files before reviewing:

@@ -7,6 +7,11 @@ description: Build and maintain Simoona legacy-to-modern parity mapping and gap 
 
 Own parity mapping, coverage tracking, and gap reporting.
 
+## Recommended Model and Reasoning
+
+- Model: `GPT-5`
+- Reasoning: `High`
+
 ## Load Context First
 
 Read these files before analysis:

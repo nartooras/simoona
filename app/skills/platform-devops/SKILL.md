@@ -7,6 +7,11 @@ description: Build and maintain modernization platform infrastructure for Simoon
 
 Own platform reliability, delivery automation, and runtime consistency.
 
+## Recommended Model and Reasoning
+
+- Model: `GPT-5`
+- Reasoning: `Medium` (use `High` for cutover and release-critical tasks)
+
 ## Load Context First
 
 Read these files before platform work:
