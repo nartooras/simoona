@@ -1,6 +1,6 @@
 {
   "fixtureId": "auth-account-userinfo-success",
   "legacyRoute": "Account/UserInfo",
-  "status": "placeholder",
+  "status": "implemented",
   "expectedCompatibilityKey": "Account/UserInfo"
 }

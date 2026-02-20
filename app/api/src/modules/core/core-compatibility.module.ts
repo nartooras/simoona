@@ -4,6 +4,10 @@ import { PermissionCompatibilityModule } from "./permissions/permission-compatib
 import { LegacyErrorModule } from "./errors/legacy-error.module";
 import { LegacyConventionsModule } from "./conventions/legacy-conventions.module";
 import { SocialCompatibilityModule } from "./social/social-compatibility.module";
+import { SystemCompatibilityModule } from "./system/system-compatibility.module";
+import { AdminReferenceCompatibilityModule } from "./admin/admin-reference-compatibility.module";
+import { IntegrationCompatibilityModule } from "./integration/integration-compatibility.module";
+import { CatchupCompatibilityModule } from "./catchup/catchup-compatibility.module";
 
 @Module({
   imports: [
@@ -11,7 +15,11 @@ import { SocialCompatibilityModule } from "./social/social-compatibility.module"
     PermissionCompatibilityModule,
     LegacyErrorModule,
     LegacyConventionsModule,
-    SocialCompatibilityModule
+    SocialCompatibilityModule,
+    SystemCompatibilityModule,
+    AdminReferenceCompatibilityModule,
+    IntegrationCompatibilityModule,
+    CatchupCompatibilityModule
   ],
   exports: [LegacyConventionsModule]
 })

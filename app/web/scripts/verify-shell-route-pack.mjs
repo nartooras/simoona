@@ -18,7 +18,8 @@ for (const marker of [
   "legacy route",
   "/account/login",
   "legacyTenantRouteContainer",
-  "legacyLoginBoundary"
+  "legacyLoginBoundary",
+  "legacyRouteCatchupRegistry"
 ]) {
   if (!routePack.includes(marker)) {
     console.error(`[web-shell-route-pack] Missing route-pack marker '${marker}'.`);

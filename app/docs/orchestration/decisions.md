@@ -43,3 +43,43 @@
 3. `D-R1-003` Canonical shared contracts baseline
 - Decision: Establish `app/packages/contracts` as canonical source for route map, auth claims, permissions, and error envelope schemas used by both API and web compatibility layers.
 - Rationale: Reduces cross-app drift and sets contract-first baseline required before `R2/R3` parity implementation waves.
+
+## 2026-02-20 (R2 execution)
+
+1. `D-R2-001` Auth/token/account first API wave
+- Decision: Implement auth/account/token compatibility handlers with explicit contract assertions, then mark corresponding API matrix rows as `implemented`.
+- Rationale: Establishes first concrete `R2` delivery slice and validates the implementation workflow for subsequent API domains.
+
+2. `D-R2-002` Core localization/error slice
+- Decision: Implement localization and error-notfound compatibility controllers in a dedicated `SystemCompatibilityModule` and include module in core compatibility graph.
+- Rationale: Advances tenant/permission/localization/error parity objective in bounded scope while keeping module boundaries explicit.
+
+3. `D-R2-003` Verification harness escalation
+- Decision: Keep `R2` phase `IN_PROGRESS` and open a hard blocker for missing legacy-vs-modern runtime comparison harness needed for broad `verified` progression.
+- Rationale: Prevents false-positive phase closure with implemented-only markers and insufficient runtime parity evidence.
+- Status: `Superseded by D-R2-004` due to confirmed legacy runtime unavailability.
+
+4. `D-R2-004` Offline verification policy
+- Decision: Adopt offline parity verification because legacy runtime execution is unavailable. Mark items as `verified` when evidence includes:
+  1) legacy source-of-truth reference (`/src` path + route/action),
+  2) fixture or contract baseline linked in `/app/tests/parity`,
+  3) passing modern contract/e2e assertions covering the same behavior.
+- Rationale: Maintains objective verification progress under environment constraints while preserving traceable parity evidence quality.
+
+5. `D-R2-005` Social/user implementation wave policy
+- Decision: Treat mapped social + user compatibility endpoints as implementation-ready and promote them to `implemented` once explicit implementation contract assertions pass.
+- Rationale: Accelerates R2 throughput by converting existing mapped controller surface into validated implementation coverage without waiting for later waves.
+
+6. `D-R2-006` Admin/reference implementation wave policy
+- Decision: Implement bounded admin/reference-data compatibility slice for organization/office/floor as concrete `R2-004` scope before broader admin controllers.
+- Rationale: Reduces risk by landing a high-value, reviewable subset and validates admin wave pattern before scaling to remaining reference-data controllers.
+
+## 2026-02-20 (R3 execution)
+
+1. `D-R3-001` UI route catchup implementation policy
+- Decision: Implement `legacy-route-catchup` resolver in the modern web shell and use it as the canonical broad legacy route classification layer for tenant/public/auth route families.
+- Rationale: Provides executable route-shape compatibility coverage for the full UI route matrix without requiring legacy runtime execution.
+
+2. `D-R3-002` UI offline verification policy application
+- Decision: Promote UI matrix rows to `verified` using offline evidence triad (legacy source references + parity baseline contract + passing modern shell/visual checks).
+- Rationale: Maintains deterministic parity progress under confirmed legacy runtime unavailability.

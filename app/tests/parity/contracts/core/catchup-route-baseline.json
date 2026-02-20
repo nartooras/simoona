@@ -1,0 +1,564 @@
+{
+  "routes": [
+    {
+      "route": "AbstractClassifier/GetAbstractClassifierTypes",
+      "method": "GET",
+      "compatibility": "AbstractClassifier/GetAbstractClassifierTypes"
+    },
+    {
+      "route": "AbstractClassifier/GetChildrenForAutoComplete",
+      "method": "GET",
+      "compatibility": "AbstractClassifier/GetChildrenForAutoComplete"
+    },
+    {
+      "route": "AbstractClassifier/GetClassifiersWithoutMe",
+      "method": "GET",
+      "compatibility": "AbstractClassifier/GetClassifiersWithoutMe"
+    },
+    {
+      "route": "AbstractClassifier/Post",
+      "method": "POST",
+      "compatibility": "AbstractClassifier/Post"
+    },
+    {
+      "route": "AbstractClassifier/Put",
+      "method": "PUT",
+      "compatibility": "AbstractClassifier/Put"
+    },
+    {
+      "route": "Blacklist",
+      "method": "POST",
+      "compatibility": "Blacklist"
+    },
+    {
+      "route": "Blacklist/{id}/Cancel",
+      "method": "PUT",
+      "compatibility": "Blacklist/{id}/Cancel"
+    },
+    {
+      "route": "Blacklist/{id}",
+      "method": "GET",
+      "compatibility": "Blacklist/{id}"
+    },
+    {
+      "route": "Blacklist/{id}/History",
+      "method": "GET",
+      "compatibility": "Blacklist/{id}/History"
+    },
+    {
+      "route": "Blacklist",
+      "method": "PUT",
+      "compatibility": "Blacklist"
+    },
+    {
+      "route": "Certificate/Delete",
+      "method": "DELETE",
+      "compatibility": "Certificate/Delete"
+    },
+    {
+      "route": "Certificate/GetForAutocomplete",
+      "method": "GET",
+      "compatibility": "Certificate/GetForAutocomplete"
+    },
+    {
+      "route": "Certificate/Post",
+      "method": "POST",
+      "compatibility": "Certificate/Post"
+    },
+    {
+      "route": "Certificate/Put",
+      "method": "PUT",
+      "compatibility": "Certificate/Put"
+    },
+    {
+      "route": "Default/Index",
+      "method": "GET",
+      "compatibility": "Default/Index"
+    },
+    {
+      "route": "Employees",
+      "method": "GET",
+      "compatibility": "Employees"
+    },
+    {
+      "route": "Exam/Get",
+      "method": "GET",
+      "compatibility": "Exam/Get"
+    },
+    {
+      "route": "Exam/GetExamForAutoComplete",
+      "method": "GET",
+      "compatibility": "Exam/GetExamForAutoComplete"
+    },
+    {
+      "route": "Exam/GetExamForAutoCompleteByTitleAndNumber",
+      "method": "GET",
+      "compatibility": "Exam/GetExamForAutoCompleteByTitleAndNumber"
+    },
+    {
+      "route": "Exam/GetExamNumbersForAutoComplete",
+      "method": "GET",
+      "compatibility": "Exam/GetExamNumbersForAutoComplete"
+    },
+    {
+      "route": "Exam/Post",
+      "method": "POST",
+      "compatibility": "Exam/Post"
+    },
+    {
+      "route": "ExternalLink/List",
+      "method": "GET",
+      "compatibility": "ExternalLink/List"
+    },
+    {
+      "route": "ExternalLink/{id}",
+      "method": "GET",
+      "compatibility": "ExternalLink/{id}"
+    },
+    {
+      "route": "ExternalLink/Update",
+      "method": "POST",
+      "compatibility": "ExternalLink/Update"
+    },
+    {
+      "route": "FilterPreset/GetFilters",
+      "method": "GET",
+      "compatibility": "FilterPreset/GetFilters"
+    },
+    {
+      "route": "FilterPreset/GetPresetsForPage",
+      "method": "GET",
+      "compatibility": "FilterPreset/GetPresetsForPage"
+    },
+    {
+      "route": "FilterPreset/Update",
+      "method": "POST",
+      "compatibility": "FilterPreset/Update"
+    },
+    {
+      "route": "JobType/Create",
+      "method": "POST",
+      "compatibility": "JobType/Create"
+    },
+    {
+      "route": "JobType/Delete",
+      "method": "DELETE",
+      "compatibility": "JobType/Delete"
+    },
+    {
+      "route": "JobType/Get",
+      "method": "GET",
+      "compatibility": "JobType/Get"
+    },
+    {
+      "route": "JobType/Types",
+      "method": "GET",
+      "compatibility": "JobType/Types"
+    },
+    {
+      "route": "JobType/Update",
+      "method": "PUT",
+      "compatibility": "JobType/Update"
+    },
+    {
+      "route": "KudosBasket/CreateNewKudosBasket",
+      "method": "POST",
+      "compatibility": "KudosBasket/CreateNewKudosBasket"
+    },
+    {
+      "route": "KudosBasket/DeleteKudosBasket",
+      "method": "DELETE",
+      "compatibility": "KudosBasket/DeleteKudosBasket"
+    },
+    {
+      "route": "KudosBasket/EditKudosBasket",
+      "method": "PUT",
+      "compatibility": "KudosBasket/EditKudosBasket"
+    },
+    {
+      "route": "KudosBasket/GetDonations",
+      "method": "GET",
+      "compatibility": "KudosBasket/GetDonations"
+    },
+    {
+      "route": "KudosBasket/GetKudosBasket",
+      "method": "GET",
+      "compatibility": "KudosBasket/GetKudosBasket"
+    },
+    {
+      "route": "KudosBasket/GetKudosBasketWidget",
+      "method": "GET",
+      "compatibility": "KudosBasket/GetKudosBasketWidget"
+    },
+    {
+      "route": "KudosBasket/MakeDonation",
+      "method": "POST",
+      "compatibility": "KudosBasket/MakeDonation"
+    },
+    {
+      "route": "Monitor/Create",
+      "method": "POST",
+      "compatibility": "Monitor/Create"
+    },
+    {
+      "route": "Monitor/Details",
+      "method": "GET",
+      "compatibility": "Monitor/Details"
+    },
+    {
+      "route": "Monitor/List",
+      "method": "GET",
+      "compatibility": "Monitor/List"
+    },
+    {
+      "route": "Monitor/Update",
+      "method": "PUT",
+      "compatibility": "Monitor/Update"
+    },
+    {
+      "route": "Project/Delete",
+      "method": "DELETE",
+      "compatibility": "Project/Delete"
+    },
+    {
+      "route": "Project/ExpelMember",
+      "method": "DELETE",
+      "compatibility": "Project/ExpelMember"
+    },
+    {
+      "route": "Project/AutoComplete",
+      "method": "GET",
+      "compatibility": "Project/AutoComplete"
+    },
+    {
+      "route": "Project/Details",
+      "method": "GET",
+      "compatibility": "Project/Details"
+    },
+    {
+      "route": "Project/Edit",
+      "method": "GET",
+      "compatibility": "Project/Edit"
+    },
+    {
+      "route": "Project/List",
+      "method": "GET",
+      "compatibility": "Project/List"
+    },
+    {
+      "route": "Project/Create",
+      "method": "POST",
+      "compatibility": "Project/Create"
+    },
+    {
+      "route": "Project/Edit",
+      "method": "PUT",
+      "compatibility": "Project/Edit"
+    },
+    {
+      "route": "QualificationLevel/Delete",
+      "method": "DELETE",
+      "compatibility": "QualificationLevel/Delete"
+    },
+    {
+      "route": "QualificationLevel/Get",
+      "method": "GET",
+      "compatibility": "QualificationLevel/Get"
+    },
+    {
+      "route": "QualificationLevel/GetAll",
+      "method": "GET",
+      "compatibility": "QualificationLevel/GetAll"
+    },
+    {
+      "route": "QualificationLevel/GetForAutoComplete",
+      "method": "GET",
+      "compatibility": "QualificationLevel/GetForAutoComplete"
+    },
+    {
+      "route": "QualificationLevel/Post",
+      "method": "POST",
+      "compatibility": "QualificationLevel/Post"
+    },
+    {
+      "route": "QualificationLevel/Put",
+      "method": "PUT",
+      "compatibility": "QualificationLevel/Put"
+    },
+    {
+      "route": "Role/Delete",
+      "method": "DELETE",
+      "compatibility": "Role/Delete"
+    },
+    {
+      "route": "Role/Get",
+      "method": "GET",
+      "compatibility": "Role/Get"
+    },
+    {
+      "route": "Role/GetPermissionGroups",
+      "method": "GET",
+      "compatibility": "Role/GetPermissionGroups"
+    },
+    {
+      "route": "Role/GetRolesForAutocomplete",
+      "method": "GET",
+      "compatibility": "Role/GetRolesForAutocomplete"
+    },
+    {
+      "route": "Role/GetUsersForAutoComplete",
+      "method": "GET",
+      "compatibility": "Role/GetUsersForAutoComplete"
+    },
+    {
+      "route": "Role/Post",
+      "method": "POST",
+      "compatibility": "Role/Post"
+    },
+    {
+      "route": "Role/Put",
+      "method": "PUT",
+      "compatibility": "Role/Put"
+    },
+    {
+      "route": "Room/Delete",
+      "method": "DELETE",
+      "compatibility": "Room/Delete"
+    },
+    {
+      "route": "Room/Get",
+      "method": "GET",
+      "compatibility": "Room/Get"
+    },
+    {
+      "route": "Room/GetAll",
+      "method": "GET",
+      "compatibility": "Room/GetAll"
+    },
+    {
+      "route": "Room/GetByFloor",
+      "method": "GET",
+      "compatibility": "Room/GetByFloor"
+    },
+    {
+      "route": "Room/Post",
+      "method": "POST",
+      "compatibility": "Room/Post"
+    },
+    {
+      "route": "Room/Put",
+      "method": "PUT",
+      "compatibility": "Room/Put"
+    },
+    {
+      "route": "RoomType/Delete",
+      "method": "DELETE",
+      "compatibility": "RoomType/Delete"
+    },
+    {
+      "route": "RoomType/GetByFloor",
+      "method": "GET",
+      "compatibility": "RoomType/GetByFloor"
+    },
+    {
+      "route": "RoomType/Post",
+      "method": "POST",
+      "compatibility": "RoomType/Post"
+    },
+    {
+      "route": "RoomType/Put",
+      "method": "PUT",
+      "compatibility": "RoomType/Put"
+    },
+    {
+      "route": "Skill/GetForAutoComplete",
+      "method": "GET",
+      "compatibility": "Skill/GetForAutoComplete"
+    },
+    {
+      "route": "Skill/Post",
+      "method": "POST",
+      "compatibility": "Skill/Post"
+    },
+    {
+      "route": "Support/GetSupportTypes",
+      "method": "GET",
+      "compatibility": "Support/GetSupportTypes"
+    },
+    {
+      "route": "Support/SubmitTicket",
+      "method": "POST",
+      "compatibility": "Support/SubmitTicket"
+    },
+    {
+      "route": "ApplicationUser/ConfirmUser",
+      "method": "PUT",
+      "compatibility": "ApplicationUser/ConfirmUser"
+    },
+    {
+      "route": "ApplicationUser/Delete",
+      "method": "DELETE",
+      "compatibility": "ApplicationUser/Delete"
+    },
+    {
+      "route": "ApplicationUser/Get",
+      "method": "GET",
+      "compatibility": "ApplicationUser/Get"
+    },
+    {
+      "route": "ApplicationUser/GetAll",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetAll"
+    },
+    {
+      "route": "ApplicationUser/GetByFloor",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetByFloor"
+    },
+    {
+      "route": "ApplicationUser/GetByRoom",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetByRoom"
+    },
+    {
+      "route": "ApplicationUser/GetByUserName",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetByUserName"
+    },
+    {
+      "route": "ApplicationUser/GetDetails/{id}",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetDetails/{id}"
+    },
+    {
+      "route": "ApplicationUser/GetForAutoComplete",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetForAutoComplete"
+    },
+    {
+      "route": "ApplicationUser/GetProfile/Job",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetProfile/Job"
+    },
+    {
+      "route": "ApplicationUser/GetJobTitleForAutoComplete",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetJobTitleForAutoComplete"
+    },
+    {
+      "route": "ApplicationUser/GetManagersForAutoComplete",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetManagersForAutoComplete"
+    },
+    {
+      "route": "ApplicationUser/GetProfile/Office",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetProfile/Office"
+    },
+    {
+      "route": "ApplicationUser/GetPartTimeHoursOptions",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetPartTimeHoursOptions"
+    },
+    {
+      "route": "ApplicationUser/GetProfile/Personal",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetProfile/Personal"
+    },
+    {
+      "route": "ApplicationUser/GetProfile",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetProfile"
+    },
+    {
+      "route": "ApplicationUser/GetUserProfile/{id}/Job",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetUserProfile/{id}/Job"
+    },
+    {
+      "route": "ApplicationUser/GetUserProfile/{id}/Office",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetUserProfile/{id}/Office"
+    },
+    {
+      "route": "ApplicationUser/GetUserProfile/{id}/Personal",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetUserProfile/{id}/Personal"
+    },
+    {
+      "route": "ApplicationUser/GetUserProfile/{id}",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetUserProfile/{id}"
+    },
+    {
+      "route": "ApplicationUser/GetUsersAsExcel",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetUsersAsExcel"
+    },
+    {
+      "route": "ApplicationUser/GetUserProfile/{id}/Shrooms",
+      "method": "GET",
+      "compatibility": "ApplicationUser/GetUserProfile/{id}/Shrooms"
+    },
+    {
+      "route": "ApplicationUser/TutorialStatus",
+      "method": "GET",
+      "compatibility": "ApplicationUser/TutorialStatus"
+    },
+    {
+      "route": "ApplicationUser/Impersonate",
+      "method": "GET",
+      "compatibility": "ApplicationUser/Impersonate"
+    },
+    {
+      "route": "ApplicationUser/ImpersonateEnabled",
+      "method": "GET",
+      "compatibility": "ApplicationUser/ImpersonateEnabled"
+    },
+    {
+      "route": "ApplicationUser/PutExams",
+      "method": "PUT",
+      "compatibility": "ApplicationUser/PutExams"
+    },
+    {
+      "route": "ApplicationUser/PutJobInfo",
+      "method": "PUT",
+      "compatibility": "ApplicationUser/PutJobInfo"
+    },
+    {
+      "route": "ApplicationUser/PutOfficeInfo",
+      "method": "PUT",
+      "compatibility": "ApplicationUser/PutOfficeInfo"
+    },
+    {
+      "route": "ApplicationUser/PutPersonalInfo",
+      "method": "PUT",
+      "compatibility": "ApplicationUser/PutPersonalInfo"
+    },
+    {
+      "route": "ApplicationUser/PutShroomsInfo",
+      "method": "PUT",
+      "compatibility": "ApplicationUser/PutShroomsInfo"
+    },
+    {
+      "route": "ApplicationUser/RevertImpersonate",
+      "method": "GET",
+      "compatibility": "ApplicationUser/RevertImpersonate"
+    },
+    {
+      "route": "ApplicationUser/CompleteTutorial",
+      "method": "PUT",
+      "compatibility": "ApplicationUser/CompleteTutorial"
+    },
+    {
+      "route": "VacationPage/Edit",
+      "method": "PUT",
+      "compatibility": "VacationPage/Edit"
+    },
+    {
+      "route": "VacationPage/Get",
+      "method": "GET",
+      "compatibility": "VacationPage/Get"
+    }
+  ]
+}

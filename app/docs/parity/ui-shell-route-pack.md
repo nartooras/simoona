@@ -9,6 +9,7 @@ This route pack ties critical shell routes to modern shell compatibility handler
 | --- | --- | --- |
 | `/account/login` | `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/auth-boundary.ts` | `legacyLoginBoundary` |
 | `/{tenant}/...` tenant-prefixed routes | `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/tenant-route-container.ts` | `legacyTenantRouteContainer` |
+| broad legacy route compatibility fallback | `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/legacy-route-catchup.ts` | `legacyRouteCatchupRegistry` |
 | top navigation frame | `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/top-level-layout.ts` | `legacyTopNavFrame` |
 
 Validation command:

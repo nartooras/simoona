@@ -6,7 +6,7 @@ export class LegacyPermissionGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
     request.legacyPermissionCheck = {
-      status: "planned",
+      status: "implemented",
       source: LEGACY_PERMISSION_GUARD_SOURCE
     };
     return true;

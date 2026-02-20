@@ -14,6 +14,10 @@ const requiredFiles = [
     markers: ["legacyTenantRouteContainer", "tenantId"]
   },
   {
+    path: path.join(root, "src/shell/legacy-route-catchup.ts"),
+    markers: ["legacyRouteCatchupRegistry", "resolveLegacyRouteCatchup"]
+  },
+  {
     path: path.join(root, "src/shell/top-level-layout.ts"),
     markers: [
       "legacyTopLevelLayout",

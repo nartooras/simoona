@@ -6,7 +6,7 @@ Mode: `build-first`
 
 ## Objective
 
-Build a working, parity-focused application under `/app` before any publishing/deployment execution.
+Keep modernization readiness moving under `/app` while deployment publish remains explicitly deferred.
 
 ## Hard Rules
 
@@ -17,35 +17,31 @@ Build a working, parity-focused application under `/app` before any publishing/d
 
 ## Immediate Execution Queue
 
-1. `R2-001` (`$full-stack-developer`)
+1. `R4-001` (`$cloudflare-deploy` + `$platform-devops`)
 - In scope:
-  - Implement auth/token/account endpoint parity slice using canonical contracts package.
-  - Move mapped auth/account/token endpoints from `mapped` to `implemented` with fixture-backed checks.
+  - Prepare Cloudflare Pages and Containers deployment manifests/scripts.
+  - Add rollback-oriented deployment runbook scaffolding.
 - Acceptance:
-  - Endpoint handlers exist for scoped auth/account/token contracts.
-  - Contract fixtures and parity tests pass for the scoped endpoints.
-  - `app/docs/parity/api-endpoint-matrix.csv` statuses updated for implemented rows.
+  - Deployment artifacts are present and lintable.
+  - No publish command is executed.
 
-2. `R2-002` (`$full-stack-developer`)
+2. `R5-001` (`$qa` + `$platform-devops`)
 - In scope:
-  - Implement tenant/permission/localization/error compatibility slice.
-  - Ensure legacy error/permission behavior remains contract-compatible.
+  - Update release readiness checklist to include offline parity verification references and required QA sampling.
 - Acceptance:
-  - Scoped API parity tests pass and fixtures remain aligned.
-  - Permission and error compatibility contracts remain green.
+  - Checklist points to current parity evidence and risk mitigations.
 
-3. `R3-001` prep (`$parity-analyst` + `$full-stack-developer`)
+3. `R5-002` prep (`$qa`)
 - In scope:
-  - Use rebased UI matrix to define first auth shell + core route implementation slice.
-  - Prepare route-level parity verification requirements for runtime and visual checks.
+  - Prepare final verification command pack for pre-publish gate.
 - Acceptance:
-  - `R3-001` task scope lists exact routes and verification commands.
+  - Command pack is explicit and reproducible on macOS setup.
 
 ## Success Criteria For This Stage
 
-1. `R1` tasks are complete and documented in orchestration files.
-2. The app workspace runs as a coherent baseline for implementation waves.
-3. `R2-001` is the active next gate and ready for endpoint implementation execution.
+1. `R2` and `R3` remain closed with complete parity coverage.
+2. Deployment artifacts are ready but unpublished.
+3. Release readiness evidence is prepared for explicit deployment go-ahead.
 
 ## Explicitly Deferred
 

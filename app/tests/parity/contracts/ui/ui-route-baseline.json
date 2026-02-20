@@ -1,0 +1,9 @@
+{
+  "totalRoutes": 115,
+  "requiredStatus": "verified",
+  "requiredMarkers": [
+    "legacyLoginBoundary",
+    "legacyTenantRouteContainer",
+    "legacyRouteCatchupRegistry"
+  ]
+}

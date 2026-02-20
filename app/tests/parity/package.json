@@ -5,10 +5,15 @@
   "scripts": {
     "test": "pnpm contract:core",
     "smoke": "pnpm contract:core",
-    "contract:auth": "node ./scripts/verify-auth-fixture-map.mjs",
+    "contract:auth": "node ./scripts/verify-auth-fixture-map.mjs && node ./scripts/verify-auth-implementation-contract.mjs",
     "contract:tenant-permission": "node ./scripts/verify-tenant-permission-contract.mjs",
     "contract:error-shape": "node ./scripts/verify-error-shape-contract.mjs",
     "contract:conventions": "node ./scripts/verify-compatibility-conventions-contract.mjs",
-    "contract:core": "pnpm contract:auth && pnpm contract:tenant-permission && pnpm contract:error-shape && pnpm contract:conventions"
+    "contract:social-user": "node ./scripts/verify-social-user-implementation-contract.mjs",
+    "contract:admin-reference": "node ./scripts/verify-admin-reference-implementation-contract.mjs",
+    "contract:integration": "node ./scripts/verify-integration-implementation-contract.mjs",
+    "contract:catchup": "node ./scripts/verify-catchup-implementation-contract.mjs",
+    "contract:ui": "node ./scripts/verify-ui-implementation-contract.mjs",
+    "contract:core": "pnpm contract:auth && pnpm contract:tenant-permission && pnpm contract:error-shape && pnpm contract:conventions && pnpm contract:social-user && pnpm contract:admin-reference && pnpm contract:integration && pnpm contract:catchup && pnpm contract:ui && node ./scripts/verify-core-implementation-contract.mjs"
   }
 }

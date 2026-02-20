@@ -19,6 +19,7 @@ const requiredFiles = [
   path.join(webRoot, "vite.config.ts"),
   path.join(webRoot, "src/main.tsx"),
   path.join(webRoot, "src/shell/auth-boundary.ts"),
+  path.join(webRoot, "src/shell/legacy-route-catchup.ts"),
   path.join(webRoot, "src/shell/tenant-route-container.ts"),
   path.join(webRoot, "src/shell/top-level-layout.ts")
 ];
@@ -35,9 +36,10 @@ if (mode === "build") {
   process.exit(0);
 }
 
-const runtimeRoutes = new Set(["/", "/profile", "/Wall/Feed", "/Settings/Notifications"]);
-
 const { resolveAuthBoundary } = await import(path.join(webRoot, "src/shell/auth-boundary.ts"));
+const { resolveLegacyRouteCatchup } = await import(
+  path.join(webRoot, "src/shell/legacy-route-catchup.ts")
+);
 const { resolveTenantRoute } = await import(
   path.join(webRoot, "src/shell/tenant-route-container.ts")
 );
@@ -53,21 +55,19 @@ function sendJson(response, statusCode, payload) {
   response.end(JSON.stringify(payload));
 }
 
-function routeExists(pathname) {
-  return runtimeRoutes.has(pathname);
-}
-
 function renderIndexForRoute(pathname) {
   const isAuthenticated = pathname !== "/account/login";
   const layout = createTopLevelLayoutState(false);
   const auth = resolveAuthBoundary(isAuthenticated);
+  const routeMatch = resolveLegacyRouteCatchup(pathname);
   const tenantRoute = resolveTenantRoute(pathname, "default");
   const runtimePayload = {
     route: pathname,
     title: layout.title,
-    status: routeExists(pathname) ? "ready" : "not_found",
+    status: routeMatch.isKnownLegacyRoute ? "ready" : "not_found",
     navItems: layout.navItems,
     auth,
+    routeMatch,
     tenantRoute,
     motion: layout.motion
   };
@@ -102,7 +102,7 @@ const server = http.createServer((request, response) => {
     return;
   }
 
-  if (routeExists(pathname) || pathname === "/") {
+  if (resolveLegacyRouteCatchup(pathname).isKnownLegacyRoute || pathname === "/") {
     response.writeHead(200, {
       "content-type": "text/html; charset=utf-8",
       "cache-control": "no-store"

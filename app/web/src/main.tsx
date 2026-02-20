@@ -14,6 +14,11 @@ let runtimeData = {
     requiresLogin: false,
     redirectPath: "/"
   },
+  routeMatch: {
+    routeKey: "public.home",
+    normalizedPath: "/",
+    isKnownLegacyRoute: true
+  },
   tenantRoute: {
     tenantId: "default",
     normalizedPath: "/"
@@ -41,6 +46,7 @@ root.innerHTML = `
     <h1>${runtimeData.title}</h1>
     <p><strong>Route:</strong> ${runtimeData.route}</p>
     <p><strong>Status:</strong> ${runtimeData.status}</p>
+    <p><strong>Route key:</strong> ${runtimeData.routeMatch?.routeKey || "unknown"}</p>
     <p><strong>Tenant:</strong> ${runtimeData.tenantRoute?.tenantId || "default"}</p>
     <p><strong>Auth requires login:</strong> ${String(runtimeData.auth?.requiresLogin)}</p>
     <p><strong>Navigation:</strong> ${navLinks || "none"}</p>

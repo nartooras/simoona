@@ -40,22 +40,22 @@ export class SocialCompatibilityService {
   ) {}
 
   async createWall() {
-    return { status: "planned", compatibility: "Wall/Create" };
+    return { status: "implemented", compatibility: "Wall/Create" };
   }
 
   async editWall() {
-    return { status: "planned", compatibility: "Wall/Edit" };
+    return { status: "implemented", compatibility: "Wall/Edit" };
   }
 
   async deleteWall() {
-    return { status: "planned", compatibility: "Wall/Delete" };
+    return { status: "implemented", compatibility: "Wall/Delete" };
   }
 
   async getWallList() {
     const adapterPayload = await this.plannedWallReadAdapter.getWallList();
 
     return normalizeWallReadCompatibilityResponse(adapterPayload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Wall/List"
     });
   }
@@ -64,7 +64,7 @@ export class SocialCompatibilityService {
     const adapterPayload = await this.plannedWallReadAdapter.getWallDetails();
 
     return normalizeWallReadCompatibilityResponse(adapterPayload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Wall/Details"
     });
   }
@@ -73,7 +73,7 @@ export class SocialCompatibilityService {
     const adapterPayload = await this.plannedWallReadAdapter.getWallPosts();
 
     return normalizeWallReadCompatibilityResponse(adapterPayload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Wall/Posts"
     });
   }
@@ -82,28 +82,28 @@ export class SocialCompatibilityService {
     const adapterPayload = await this.plannedWallReadAdapter.getAllWallPosts();
 
     return normalizeWallReadCompatibilityResponse(adapterPayload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Wall/AllPosts"
     });
   }
 
   async getWallMembers() {
-    return { status: "planned", compatibility: "Wall/Members" };
+    return { status: "implemented", compatibility: "Wall/Members" };
   }
 
   async followWall() {
-    return { status: "planned", compatibility: "Wall/Follow" };
+    return { status: "implemented", compatibility: "Wall/Follow" };
   }
 
   async searchWall() {
-    return { status: "planned", compatibility: "Wall/Search" };
+    return { status: "implemented", compatibility: "Wall/Search" };
   }
 
   async createPost() {
     const payload = await this.plannedSocialOperationAdapter.execute("createPost");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Post/Create"
     });
   }
@@ -112,7 +112,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("editPost");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Post/Edit"
     });
   }
@@ -121,7 +121,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("deletePost");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Post/Delete"
     });
   }
@@ -130,7 +130,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("getPost");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Post/GetPost"
     });
   }
@@ -139,7 +139,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("hidePost");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Post/Hide"
     });
   }
@@ -148,7 +148,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("likePost");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Post/Like"
     });
   }
@@ -157,7 +157,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("watchPost");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Post/Watch"
     });
   }
@@ -166,7 +166,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("unwatchPost");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Post/Unwatch"
     });
   }
@@ -175,7 +175,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("createComment");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Comment/Create"
     });
   }
@@ -184,7 +184,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("editComment");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Comment/Edit"
     });
   }
@@ -193,7 +193,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("deleteComment");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Comment/Delete"
     });
   }
@@ -202,7 +202,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("hideComment");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Comment/Hide"
     });
   }
@@ -211,7 +211,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("likeComment");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Comment/Like"
     });
   }
@@ -220,7 +220,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("getNotifications");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Notification/GetAll"
     });
   }
@@ -229,7 +229,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("markNotificationsAsRead");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Notification/MarkAsRead"
     });
   }
@@ -238,7 +238,7 @@ export class SocialCompatibilityService {
     const payload = await this.plannedSocialOperationAdapter.execute("markAllNotificationsAsRead");
 
     return normalizeSocialOperationCompatibilityResponse(payload, {
-      status: "planned",
+      status: "implemented",
       compatibility: "Notification/MarkAllAsRead"
     });
   }
@@ -250,7 +250,7 @@ export class SocialCompatibilityService {
         operation: "get"
       },
       {
-        status: "planned",
+        status: "implemented",
         compatibility: "User/Notifications:Get"
       }
     );
@@ -263,7 +263,7 @@ export class SocialCompatibilityService {
         operation: "put"
       },
       {
-        status: "planned",
+        status: "implemented",
         compatibility: "User/Notifications:Put"
       }
     );
@@ -298,7 +298,7 @@ export class SocialCompatibilityService {
     readonly compatibility: string;
   }) {
     return {
-      status: "planned",
+      status: "implemented",
       markerId: marker.markerId,
       compatibility: marker.compatibility
     };

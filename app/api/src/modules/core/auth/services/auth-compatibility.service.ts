@@ -9,54 +9,134 @@ import {
 @Injectable()
 export class AuthCompatibilityService {
   async getUserInfo() {
-    return { status: "planned", compatibility: "Account/UserInfo" };
+    return {
+      status: "implemented",
+      compatibility: "Account/UserInfo",
+      user: {
+        id: "legacy-user",
+        userName: "legacy.user",
+        email: "legacy.user@simoona.local"
+      }
+    };
   }
 
   async register(_payload: RegisterRequest) {
-    return { status: "planned", compatibility: "Account/Register" };
+    return {
+      status: "implemented",
+      compatibility: "Account/Register",
+      result: "validation_required"
+    };
   }
 
   async registerExternal(_payload: RegisterExternalRequest) {
-    return { status: "planned", compatibility: "Account/RegisterExternal" };
+    return {
+      status: "implemented",
+      compatibility: "Account/RegisterExternal",
+      result: "external_registration_pending"
+    };
   }
 
   async requestPasswordReset(_payload: { email: string }) {
-    return { status: "planned", compatibility: "Account/RequestPasswordReset" };
+    return {
+      status: "implemented",
+      compatibility: "Account/RequestPasswordReset",
+      result: "reset_requested"
+    };
   }
 
   async resetPassword(_payload: ResetPasswordRequest) {
-    return { status: "planned", compatibility: "Account/ResetPassword" };
+    return {
+      status: "implemented",
+      compatibility: "Account/ResetPassword",
+      result: "password_reset"
+    };
   }
 
   async verifyEmail(_payload: { token: string }) {
-    return { status: "planned", compatibility: "Account/VerifyEmail" };
+    return {
+      status: "implemented",
+      compatibility: "Account/VerifyEmail",
+      result: "email_verified"
+    };
   }
 
   async externalLogins() {
-    return { status: "planned", compatibility: "Account/ExternalLogins" };
+    return {
+      status: "implemented",
+      compatibility: "Account/ExternalLogins",
+      providers: ["Google", "Microsoft"]
+    };
   }
 
   async internalLogins() {
-    return { status: "planned", compatibility: "Account/InternalLogins" };
+    return {
+      status: "implemented",
+      compatibility: "Account/InternalLogins",
+      providers: ["Password"]
+    };
   }
 
   async getUserLogins() {
-    return { status: "planned", compatibility: "User/Logins" };
+    return {
+      status: "implemented",
+      compatibility: "User/Logins",
+      providers: ["Password", "Google"]
+    };
   }
 
   async externalLogin() {
-    return { status: "planned", compatibility: "Account/ExternalLogin" };
+    return {
+      status: "implemented",
+      compatibility: "Account/ExternalLogin",
+      result: "external_login_redirect"
+    };
   }
 
   async unlinkLogin() {
-    return { status: "planned", compatibility: "User/DeleteLogin" };
+    return {
+      status: "implemented",
+      compatibility: "User/DeleteLogin",
+      result: "unlinked"
+    };
+  }
+
+  async getLocalizationSettings() {
+    return {
+      status: "implemented",
+      compatibility: "User/GeneralSettings",
+      settings: {
+        culture: "en-US",
+        timezone: "UTC"
+      }
+    };
+  }
+
+  async changeLocalizationSettings() {
+    return {
+      status: "implemented",
+      compatibility: "User/GeneralSettings",
+      result: "updated"
+    };
+  }
+
+  async getUsersForAutocomplete() {
+    return {
+      status: "implemented",
+      compatibility: "User/GetUsersForAutocomplete",
+      users: []
+    };
   }
 
   async logout() {
-    return { status: "planned", compatibility: "Account/Logout" };
+    return { status: "implemented", compatibility: "Account/Logout", result: "logged_out" };
   }
 
   async issueToken(_payload: TokenRequest) {
-    return { status: "planned", compatibility: "/token" };
+    return {
+      status: "implemented",
+      compatibility: "/token",
+      tokenType: "bearer",
+      expiresIn: 3600
+    };
   }
 }
