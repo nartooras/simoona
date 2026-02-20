@@ -37,6 +37,13 @@ Skill definitions are under:
 6. Run migration dry-runs and integrity checks with `$data-migration-engineer`.
 7. Maintain platform/CI/CD/deploy readiness with `$platform-devops`.
 
+Execution styles:
+
+- `Manual`: orchestrator assigns one task per cycle.
+- `Autopilot`: orchestrator chains task execution automatically until a stop condition.
+  - Default limit: `1` task per run.
+  - Optional override: specify `limit N` in the prompt.
+
 ## Gate Logic
 
 - Reviewer must return `APPROVED` before QA gate.
@@ -47,6 +54,8 @@ Skill definitions are under:
 ## Example Invocation Prompts
 
 - `Use $simoona-modernization-orchestrator to assign the next phase task with acceptance criteria.`
+- `Use $simoona-modernization-orchestrator in autopilot mode to chain execution across tasks until a stop condition is hit.`
+- `Use $simoona-modernization-orchestrator in autopilot mode with limit 3 tasks.`
 - `Use $full-stack-developer to implement this scoped task under /app with tests and parity notes.`
 - `Use $reviewer to verify scope compliance, architecture alignment, and over-engineering risks.`
 - `Use $qa to run required checks and return GREEN/YELLOW/RED with actionable feedback.`

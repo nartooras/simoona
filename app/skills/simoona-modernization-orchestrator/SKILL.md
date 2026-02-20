@@ -72,6 +72,56 @@ Repeat this loop continuously:
 8. Merge only on `GREEN`; on `YELLOW|RED`, forward QA feedback to `$full-stack-developer`.
 9. Update `status.md`, `risks.md`, `decisions.md`, and `evidence.md`.
 
+## Execution Modes
+
+Support two modes:
+
+- `manual`: assign only, then wait for user-triggered next cycle.
+- `autopilot`: execute chained cycles automatically.
+
+When prompt includes words like `autopilot`, `chain`, or `continue automatically`, use `autopilot`.
+Default to `manual` when mode is not specified.
+
+## Autopilot Task Limit
+
+Apply a per-run task limit in autopilot mode:
+
+- Default limit: `1` task.
+- If prompt includes a limit (for example `limit 3` or `max 3 tasks`), use that value.
+- Count a task as completed when it reaches terminal status for the cycle (`done`, `blocked`, or `returned for fixes`).
+- Stop autopilot when the limit is reached, then emit checkpoint summary.
+
+## Autopilot Chain Behavior
+
+In `autopilot`, run this sequence repeatedly:
+
+1. Select highest-priority unblocked task.
+2. Dispatch owner skill and collect output.
+3. If task is implementation-related, run `$reviewer`, then `$qa` on approval.
+4. Apply feedback loops to `$full-stack-developer` until reviewer/QA pass or stop condition hits.
+5. Update orchestration files after each cycle.
+6. Continue to next unblocked task.
+
+## Autopilot Stop Conditions
+
+Stop autopilot immediately when any condition is true:
+
+- reviewer returns `CHANGES_REQUESTED` and a second pass still fails
+- QA returns `RED`
+- any blocking dependency or environment issue appears
+- any high-severity risk is opened without mitigation owner
+- user-defined task or cycle limit is reached
+- per-run autopilot task limit is reached
+- current phase gate is complete
+
+When stopping, emit a checkpoint with:
+
+- reason for stop
+- current phase status
+- completed tasks
+- blocked tasks
+- next 3 tasks to resume
+
 ## Assignment Rules
 
 - Assign only one bounded objective per task.

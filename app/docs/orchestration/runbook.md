@@ -10,6 +10,21 @@ Use this prompt:
 Use $simoona-modernization-orchestrator to start execution from the modernization plan, initialize orchestration files, and assign the highest-priority unblocked task with clear acceptance criteria.
 ```
 
+For chained execution, use autopilot prompt:
+
+```text
+Use $simoona-modernization-orchestrator in autopilot mode to chain execution task-by-task: assign, run owner skill, run reviewer/qa gates when applicable, update orchestration files, and continue until a stop condition is hit.
+```
+
+Autopilot limiter:
+
+- Default: `1` task per run.
+- Override by adding a limit in prompt, for example:
+
+```text
+Use $simoona-modernization-orchestrator in autopilot mode with limit 3 tasks.
+```
+
 Expected flow after start:
 
 1. `$full-stack-developer` implements task scope.
@@ -45,6 +60,18 @@ Use this prompt:
 Use $simoona-modernization-orchestrator to resume from current status.md and backlog.md, then assign the highest-priority unblocked task.
 ```
 
+For chained resume, use:
+
+```text
+Use $simoona-modernization-orchestrator to resume in autopilot mode from status.md and backlog.md, continue chained execution, and stop only on defined stop conditions.
+```
+
+For explicit limit on resume:
+
+```text
+Use $simoona-modernization-orchestrator to resume in autopilot mode from current status.md and backlog.md with limit 2 tasks.
+```
+
 Resume checklist:
 
 1. Read `status.md`.
@@ -58,6 +85,16 @@ Resume checklist:
 - QA gate must be `GREEN` before merge.
 - If reviewer returns `CHANGES_REQUESTED`, return to `$full-stack-developer`.
 - If QA returns `YELLOW` or `RED`, return to `$full-stack-developer` with QA feedback.
+
+## 4.1) Autopilot Stop Conditions
+
+- Reviewer remains `CHANGES_REQUESTED` after second implementation pass.
+- QA returns `RED`.
+- Blocking dependency/environment issue appears.
+- High-severity risk has no mitigation owner.
+- User-defined cycle limit reached.
+- Default per-run task limit reached (`1`) or prompt-defined limit reached.
+- Phase gate reached completion.
 
 ## 5) Daily Operating Prompts
 

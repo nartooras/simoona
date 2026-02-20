@@ -5,12 +5,14 @@ Track active modernization risks, owners, and mitigations.
 ## Active Risks
 
 1. `R-001` Incomplete parity coverage in early phases
-- Severity: `High`
+- Severity: `Medium`
 - Area: `API/UI parity`
 - Owner role: `$parity-analyst`
 - Status: `Open`
 - Mitigation:
-  - maintain parity matrices weekly
+  - initial API (`189` rows) and UI (`115` rows) matrices created on `2026-02-20`
+  - critical-flow golden fixture index completed (`T-0006`)
+  - prioritize mapping and gap burn-down from `status=unmapped` inventory
   - escalate critical unmapped flows immediately
 - Next review date: `2026-02-27`
 

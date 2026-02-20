@@ -28,3 +28,18 @@ Record major architecture and delivery decisions with rationale.
 - Date: `2026-02-20`
 - Decision: `$full-stack-developer -> $reviewer -> $qa`
 - Rationale: enforce quality and scope control before merge.
+
+6. `D-006` Initial execution order
+- Date: `2026-02-20`
+- Decision: `Start with Phase 0 API endpoint parity matrix (T-0001) as highest-priority unblocked task`
+- Rationale: endpoint inventory is a hard prerequisite for contract-first compatibility work and later wave planning.
+
+7. `D-007` Autopilot execution batch limit
+- Date: `2026-02-20`
+- Decision: `Run Phase 0 tasks in bounded autopilot batches of up to 3 tasks per cycle`
+- Rationale: preserves momentum while keeping review and gate updates manageable per cycle.
+
+8. `D-008` Phase transition policy
+- Date: `2026-02-20`
+- Decision: `Stop autopilot cycle when current phase gate is complete, then hand over to next phase backlog`
+- Rationale: respects gate-based delivery and avoids mixing objectives across phases in a single run.
