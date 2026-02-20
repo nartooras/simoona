@@ -13,6 +13,10 @@
     "smoke:integrations:strict": "node ./infra/scripts/verify-integration-smoke.mjs --strict",
     "smoke:integrations:staging": "node ./infra/scripts/verify-integration-smoke.mjs --env-file ./infra/contracts/integration-staging-credential-references.env",
     "smoke:integrations:strict:staging": "node ./infra/scripts/verify-integration-smoke.mjs --strict --env-file ./infra/contracts/integration-staging-credential-references.env",
+    "migration:dry-run:001": "node ./infra/scripts/run-migration-dry-run.mjs --run-id 001 --report ./docs/orchestration/evidence/dry-run-001-integrity-report.md",
+    "migration:dry-run:002": "node ./infra/scripts/run-migration-dry-run.mjs --run-id 002 --report ./docs/orchestration/evidence/dry-run-002-integrity-report.md",
+    "migration:rollback:rehearsal": "node ./infra/scripts/run-migration-rollback-rehearsal.mjs --report ./docs/orchestration/evidence/rollback-rehearsal-001.md",
+    "migration:gate6:precheck": "node ./infra/scripts/verify-gate6-readiness.mjs --strict",
     "build": "node ./scripts/foundation-check.mjs build",
     "ci:foundation": "bash ./infra/ci/run-foundation-ci.sh",
     "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm smoke && pnpm build"

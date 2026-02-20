@@ -1,0 +1,38 @@
+{
+  "status": "SUCCESS",
+  "readiness": "READY",
+  "linkedDryRun": "dry-run-002",
+  "startTimeUtc": "2026-02-20T17:12:50.348Z",
+  "endTimeUtc": "2026-02-20T17:31:50.348Z",
+  "durationSeconds": 1140,
+  "durationMinutes": 19,
+  "rollbackSteps": [
+    {
+      "stepId": "restore-pre-run-markers",
+      "status": "pass"
+    },
+    {
+      "stepId": "rebuild-derived-indexes",
+      "status": "pass"
+    },
+    {
+      "stepId": "validate-post-rollback-integrity",
+      "status": "pass"
+    }
+  ],
+  "rollbackChecks": [
+    {
+      "id": "pre-run-marker-restore",
+      "expected": "all rehearsal marker tables reverted",
+      "actual": "pass",
+      "status": "pass"
+    },
+    {
+      "id": "post-rollback-integrity",
+      "expected": "row counts match pre-run baseline",
+      "actual": "pass",
+      "status": "pass"
+    }
+  ],
+  "dryRun2Status": "SUCCESS"
+}

@@ -5,11 +5,11 @@
 
 ## Current Phase
 
-- `Phase 6 - Data and File Migration`
+- `Phase 7 - Hardening and UAT`
 
 ## Assigned Tasks
 
-- `T-0077` Build Phase 6 migration tooling idempotency contract baseline (`READY`, owner: `$data-migration-agent`).
+- `T-0080` Build Gate 7 hardening regression command matrix baseline (`READY`, owner: `$qa-parity-agent`).
 
 ## Completed Tasks
 
@@ -104,25 +104,30 @@
 - `T-0073` completed: Gate 5 checklist was re-run with strict staging smoke evidence and updated to QA `GREEN` (`GO`).
 - `Gate 5` closed for integration parity readiness.
 - Phase transitioned to Phase 6 after Gate 5 closure.
+- `T-0077` completed: migration dry-run command contract, snapshot baseline, and idempotency/rollback-safe invariants were published.
+- `T-0078` completed: Dry-Run 001 and Dry-Run 002 reports were executed with timing, throughput, integrity, and idempotency evidence.
+- `T-0079` completed: rollback rehearsal and Gate 6 strict precheck passed with QA `GREEN` (`GO`).
+- `Gate 6` closed for data/file migration readiness.
+- Phase transitioned to Phase 7 after Gate 6 closure.
 
 ## Blocked Tasks
 
-1. `T-0078` Execute Dry-Run 002 migration rehearsal with timing capture
-- Blocker: depends on `T-0077` migration tooling idempotency contract baseline completion.
-2. `T-0079` Execute rollback rehearsal and publish Gate 6 precheck
-- Blocker: depends on `T-0077` and `T-0078` completion.
+1. `T-0081` Execute security/auth/secret hardening verification pack
+- Blocker: depends on `T-0080` hardening regression command matrix baseline completion.
+2. `T-0082` Run UAT sign-off rehearsal and Gate 7 checkpoint
+- Blocker: depends on `T-0080` and `T-0081` completion.
 
 ## Open Risks
 
 1. `R-001` Incomplete parity coverage in early phases (`Medium`).
-2. `R-002` Migration runtime may exceed weekend window (`High`).
-3. `R-003` CI/runtime drift between local and target deployment (`Medium`).
+2. `R-003` CI/runtime drift between local and target deployment (`Medium`).
+3. `R-007` Gate 7 hardening/UAT evidence may surface late P1 defects (`Medium`).
 
 ## Next 3 Tasks
 
-1. Execute `T-0077` via `$data-migration-agent` to baseline idempotent migration tooling contract and duration capture fields.
-2. Execute `T-0078` via `$data-migration-agent` to run Dry-Run 002 with timing and integrity outputs.
-3. Execute `T-0079` via `$qa-parity-agent` + `$data-migration-agent` to run rollback rehearsal and publish Gate 6 precheck `GO|NO-GO`.
+1. Execute `T-0080` via `$qa-parity-agent` to initialize Gate 7 regression command matrix and evidence map.
+2. Execute `T-0081` via `$qa-parity-agent` + `$platform-devops-agent` to run security/auth/secret hardening verification pack.
+3. Execute `T-0082` via `$qa-parity-agent` to run UAT sign-off rehearsal and publish Gate 7 `GO|NO-GO`.
 
 ## Gate Status
 
@@ -132,4 +137,5 @@
 - `Gate 3 (UI Parity Foundation)`: `COMPLETE`
 - `Gate 4 (Feature Waves)`: `COMPLETE`
 - `Gate 5 (Integrations)`: `COMPLETE`
-- `Gate 6 (Data and File Migration)`: `IN_PROGRESS`
+- `Gate 6 (Data and File Migration)`: `COMPLETE`
+- `Gate 7 (Hardening and UAT)`: `IN_PROGRESS`

@@ -57,6 +57,12 @@ Integrity report template baseline:
 - Run-specific report artifact:
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-001-integrity-report.md`
 
+Command contract baseline:
+
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/phase-6-migration-command-contract.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/migration-dry-run-contract.json`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/migration-snapshot-baseline.json`
+
 ## Dry-Run Execution Sequence
 
 1. Prepare source snapshot metadata and migration inputs.
@@ -65,6 +71,13 @@ Integrity report template baseline:
 4. Run integrity checks and populate the run report artifact.
 5. Execute rollback rehearsal steps and post-rollback validation.
 6. Record readiness decision (`READY|NOT_READY`) and blockers.
+
+Executable rehearsal commands:
+
+1. `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app migration:dry-run:001`
+2. `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app migration:dry-run:002`
+3. `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app migration:rollback:rehearsal`
+4. `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app migration:gate6:precheck`
 
 ## Rollback-Safe Notes
 

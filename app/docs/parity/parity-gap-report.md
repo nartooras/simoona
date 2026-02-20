@@ -6,7 +6,8 @@
 - UI coverage: `mapped 0%` (`0/115`), `implemented 0%`, `verified 0%`.
 - Feature coverage (tracking-level):
   - Core/Admin/Premium: baseline checklist exists, implementation/verification still in progress.
-  - Integration slice: inventory + credential matrix + failure-path smoke coverage is `100%` tracked and Gate 5 readiness is `READY`.
+  - Integration slice: inventory + credential matrix + failure-path smoke coverage is `100%` tracked and Gate 5 is `COMPLETE`.
+  - Migration slice: Dry-Run 001/002 + rollback rehearsal evidence is `100%` tracked and Gate 6 is `COMPLETE`.
 
 ## 2) Critical Gaps (P0/P1)
 
@@ -40,10 +41,10 @@
 
 ## 4) Verification Blockers
 
-- No active Phase 5 gate blockers after `T-0071`..`T-0073` completion.
+- No active Phase 6 gate blockers after `T-0077`..`T-0079` completion.
 
 ## 5) Recommended Next Tasks
 
-1. `T-0077` Run migration tooling inventory and idempotency contract baseline for Phase 6.
-2. `T-0078` Execute Dry-Run 002 migration rehearsal with timing capture.
-3. `T-0079` Execute rollback rehearsal and integrity delta report update.
+1. `T-0080` Build Gate 7 hardening regression command matrix baseline.
+2. `T-0081` Execute security/auth/secret hardening verification pack.
+3. `T-0082` Run UAT sign-off rehearsal and Gate 7 checkpoint.

@@ -29,19 +29,7 @@ Track active modernization risks, owners, and mitigations.
   - escalate critical unmapped flows immediately
 - Next review date: `2026-02-27`
 
-2. `R-002` Migration runtime may exceed weekend window
-- Severity: `High`
-- Area: `Data migration/cutover`
-- Owner role: `$data-migration-engineer`
-- Status: `Open`
-- Mitigation:
-  - stage-access prerequisite task completed (`T-0051`) with read-only connectivity evidence (`2026-02-20T14:16:41.127Z`)
-  - first dry-run planning baseline completed (`T-0005`) with bounded scope and integrity/rollback report templates
-  - run staged dry-runs early
-  - measure end-to-end timing and optimize bottlenecks
-- Next review date: `2026-02-27`
-
-3. `R-003` CI/runtime drift between local and target deployment
+2. `R-003` CI/runtime drift between local and target deployment
 - Severity: `Medium`
 - Area: `Platform/DevOps`
 - Owner role: `$platform-devops`
@@ -50,6 +38,17 @@ Track active modernization risks, owners, and mitigations.
   - baseline CI command runner and Docker Compose topology implemented in Phase 1
   - enforce reproducible environment contracts
   - validate Docker-on-VM deployment regularly
+- Next review date: `2026-02-27`
+
+3. `R-007` Gate 7 hardening/UAT evidence may surface late P1 defects
+- Severity: `Medium`
+- Area: `Hardening + UAT`
+- Owner role: `$qa-parity-agent` + `$platform-devops-agent`
+- Status: `Open`
+- Mitigation:
+  - initialize Gate 7 regression command matrix before executing hardening checks (`T-0080`)
+  - run explicit security/auth/secret handling verification pack (`T-0081`)
+  - execute UAT sign-off rehearsal and capture reproducible findings (`T-0082`)
 - Next review date: `2026-02-27`
 
 ## Closed Risks
@@ -88,3 +87,15 @@ Track active modernization risks, owners, and mitigations.
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/integration-credential-references.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-5-integration-checklist.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/integration-inventory-matrix.md`
+
+4. `R-002` Migration runtime may exceed weekend window
+- Severity: `High`
+- Area: `Data migration/cutover`
+- Owner role: `$data-migration-engineer`
+- Status: `Closed`
+- Closure date: `2026-02-20`
+- Closure evidence:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-001-integrity-report.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-002-integrity-report.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/rollback-rehearsal-001.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-6-migration-checklist.md`

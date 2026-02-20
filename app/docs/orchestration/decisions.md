@@ -258,3 +258,18 @@ Record major architecture and delivery decisions with rationale.
 - Date: `2026-02-20`
 - Decision: `After T-0071..T-0073 completion and QA GREEN, close Gate 5 and immediately reseed backlog for Phase 6 tasks (T-0077..T-0079)`
 - Rationale: preserves gate-driven progression and keeps migration-readiness workstream unblocked after integration parity closure.
+
+52. `D-052` Phase 6 executable migration rehearsal contract
+- Date: `2026-02-20`
+- Decision: `Adopt an executable Phase 6 migration contract with dry-run commands, snapshot baseline, idempotency checks, rollback rehearsal command, and strict Gate 6 precheck`
+- Rationale: converts migration readiness from planning-only artifacts into deterministic command-backed evidence.
+
+53. `D-053` Dry-run idempotency proof policy
+- Date: `2026-02-20`
+- Decision: `Use Dry-Run 001 as baseline and require Dry-Run 002 to compare snapshot identity and aggregate row totals before recommending Gate 6 GO`
+- Rationale: ensures rerun behavior is deterministic and duplicate-safe.
+
+54. `D-054` Gate 6 closure and Phase 7 transition sequencing
+- Date: `2026-02-20`
+- Decision: `After T-0077..T-0079 completion and Gate 6 GREEN, close Gate 6 and reseed backlog for Phase 7 tasks (T-0080..T-0082)`
+- Rationale: preserves gate-driven phase progression and keeps hardening/UAT work unblocked.

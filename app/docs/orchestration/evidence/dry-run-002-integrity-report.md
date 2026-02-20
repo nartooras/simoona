@@ -1,4 +1,4 @@
-# Dry-Run 001 Integrity Report
+# Dry-Run 002 Integrity Report
 
 Derived from: `/Users/arturasnikoncukas/code/repo/simoona/app/skills/data-migration-engineer/references/integrity-report-template.md`
 
@@ -6,9 +6,9 @@ Derived from: `/Users/arturasnikoncukas/code/repo/simoona/app/skills/data-migrat
 
 - Environment: `staging clone (local rehearsal harness)`
 - Dataset snapshot: `staging-clone-2026-02-20T14:16:41.127Z`
-- Start time: `2026-02-20T17:12:49.982Z`
-- End time: `2026-02-20T18:41:49.982Z`
-- Duration: `89 minutes (simulated full-run execution)`
+- Start time: `2026-02-20T17:12:50.171Z`
+- End time: `2026-02-20T18:39:50.171Z`
+- Duration: `87 minutes (simulated full-run execution)`
 
 ## 2) Migration Status
 
@@ -20,7 +20,7 @@ Derived from: `/Users/arturasnikoncukas/code/repo/simoona/app/skills/data-migrat
 
 - Throughput notes:
   - total rows validated: `348251`
-  - estimated rows per minute: `3913`
+  - estimated rows per minute: `4003`
   - projected full-run duration: `148 minutes`
 - Bottleneck capture:
   - comments-batch-transform: largest row-volume transform; mitigation=parallelize comment chunk pipeline with deterministic ordering
@@ -44,7 +44,7 @@ Derived from: `/Users/arturasnikoncukas/code/repo/simoona/app/skills/data-migrat
 ## 5) Idempotency Verification
 
 - Idempotency status: `pass`
-- Notes: baseline run establishes deterministic reference
+- Notes: rerun on identical snapshot preserved row totals and snapshot identity
 
 ## 6) Rollback Verification
 

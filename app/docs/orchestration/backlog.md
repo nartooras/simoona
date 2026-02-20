@@ -4,32 +4,32 @@ Use this backlog as the task source of truth for the orchestrator.
 
 ## Priority Queue
 
-1. `T-0077` `P0` Build Phase 6 migration tooling idempotency contract baseline (`READY`)
-- Owner role: `$data-migration-agent`
-- Phase: `Phase 6 - Data and File Migration`
-- Dependencies: `Gate 5` completed (`T-0073`)
+1. `T-0080` `P0` Build Gate 7 hardening regression command matrix baseline (`READY`)
+- Owner role: `$qa-parity-agent`
+- Phase: `Phase 7 - Hardening and UAT`
+- Dependencies: `Gate 6` completed (`T-0079`)
 - Acceptance:
-  - Phase 6 dry-run command contract is documented with idempotency and rollback-safe invariants
-  - migration integrity report template is extended with duration and bottleneck capture fields
-  - scope and prerequisites are aligned with `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/phase-6-dry-run-plan-v1.md`
+  - Gate 7 checklist is initialized with explicit command groups for parity, performance, security, and UAT sign-off
+  - command ownership and execution order are documented
+  - required evidence artifact links are pre-seeded in checklist
 
-2. `T-0078` `P1` Execute Dry-Run 002 migration rehearsal with timing capture (`BLOCKED`)
-- Owner role: `$data-migration-agent`
-- Phase: `Phase 6 - Data and File Migration`
-- Dependencies: `T-0077`
+2. `T-0081` `P1` Execute security/auth/secret hardening verification pack (`BLOCKED`)
+- Owner role: `$qa-parity-agent` + `$platform-devops-agent`
+- Phase: `Phase 7 - Hardening and UAT`
+- Dependencies: `T-0080`
 - Acceptance:
-  - Dry-Run 002 execution report includes start/end timestamps, duration, and throughput notes
-  - integrity checks include row-count and referential-consistency summaries
-  - blockers and optimization actions are explicitly assigned
+  - auth boundary, permission enforcement, and secret handling checks are executed with evidence
+  - findings include severity and reproducible commands
+  - unresolved P0/P1 findings block Gate 7 `GO`
 
-3. `T-0079` `P1` Execute rollback rehearsal and publish Gate 6 precheck (`BLOCKED`)
-- Owner role: `$qa-parity-agent` + `$data-migration-agent`
-- Phase: `Phase 6 - Data and File Migration`
-- Dependencies: `T-0077`, `T-0078`
+3. `T-0082` `P1` Run UAT sign-off rehearsal and Gate 7 checkpoint (`BLOCKED`)
+- Owner role: `$qa-parity-agent`
+- Phase: `Phase 7 - Hardening and UAT`
+- Dependencies: `T-0080`, `T-0081`
 - Acceptance:
-  - rollback rehearsal result is documented with deterministic step outcomes
-  - Gate 6 precheck status is recorded with explicit `GO|NO-GO`
-  - no unresolved P0/P1 issues remain for migration rehearsal scope when recommending `GO`
+  - UAT checklist run is documented with pass/fail status
+  - Gate 7 checklist is re-evaluated with explicit `GO|NO-GO`
+  - no unresolved P0/P1 blockers remain for recommended `GO`
 
 ## Completed Archive
 
@@ -474,6 +474,30 @@ Use this backlog as the task source of truth for the orchestrator.
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+
+77. `T-0077` `P0` Build Phase 6 migration tooling idempotency contract baseline (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/phase-6-migration-command-contract.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/migration-dry-run-contract.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/migration-snapshot-baseline.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/skills/data-migration-engineer/references/integrity-report-template.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/package.json`
+
+78. `T-0078` `P1` Execute Dry-Run 002 migration rehearsal with timing capture (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-001-integrity-report.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-002-integrity-report.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-001-integrity-report.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-002-integrity-report.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/scripts/run-migration-dry-run.mjs`
+
+79. `T-0079` `P1` Execute rollback rehearsal and publish Gate 6 precheck (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/rollback-rehearsal-001.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/rollback-rehearsal-001.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-6-migration-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/scripts/run-migration-rollback-rehearsal.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/scripts/verify-gate6-readiness.mjs`
 
 ## Intake Template
 

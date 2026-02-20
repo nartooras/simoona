@@ -1040,3 +1040,64 @@ For each completed task or gate, append:
   - Gate 5 was closed and phase transitioned to `Phase 6 - Data and File Migration`.
   - Priority queue reseeded with `T-0077`..`T-0079` and dependency order preserved.
   - `R-005` moved to closed risks with evidence references.
+
+87. Date: `2026-02-20`
+- Phase: `Phase 6`
+- Task: `T-0077 Build Phase 6 migration tooling idempotency contract baseline`
+- Evidence type: `migration`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/phase-6-migration-command-contract.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/migration-dry-run-contract.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/contracts/migration-snapshot-baseline.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/skills/data-migration-engineer/references/integrity-report-template.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/package.json`
+- Result summary:
+  - Phase 6 migration command contract is now executable with deterministic dry-run, rollback rehearsal, and strict precheck commands.
+  - Integrity template was extended with throughput, bottleneck, and idempotency capture fields.
+  - Scope and prerequisites remain aligned with `phase-6-dry-run-plan-v1.md`.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+88. Date: `2026-02-20`
+- Phase: `Phase 6`
+- Task: `T-0078 Execute Dry-Run 002 migration rehearsal with timing capture`
+- Evidence type: `migration`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-001-integrity-report.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-002-integrity-report.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-001-integrity-report.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/dry-run-002-integrity-report.json`
+- Result summary:
+  - Dry-Run 001 and Dry-Run 002 completed with `SUCCESS` status and `READY` readiness.
+  - Dry-Run 002 validated idempotency against Dry-Run 001 (`row totals + snapshot identity unchanged`).
+  - Integrity checks are green for row counts, references, critical domain checks, and file checksums.
+  - Throughput and bottleneck actions are captured with owners.
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+89. Date: `2026-02-20`
+- Phase: `Phase 6`
+- Task: `T-0079 Execute rollback rehearsal and publish Gate 6 precheck`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/rollback-rehearsal-001.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence/rollback-rehearsal-001.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-6-migration-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/scripts/verify-gate6-readiness.mjs`
+- Result summary:
+  - Rollback rehearsal completed with deterministic step outcomes and post-rollback validation pass.
+  - Strict Gate 6 precheck command passed with all required checks green.
+  - Gate 6 checklist updated to `COMPLETE` and QA decision recorded as `GREEN` (`GO`).
+  - Reviewer decision: `APPROVED`; QA decision: `GREEN`.
+
+90. Date: `2026-02-20`
+- Phase: `Phase Transition`
+- Task: `Gate 6 closure and Phase 7 queue reseed`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/risks.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/decisions.md`
+- Result summary:
+  - Gate 6 was closed and phase transitioned to `Phase 7 - Hardening and UAT`.
+  - Priority queue reseeded with `T-0080`..`T-0082` while preserving dependency order.
+  - `R-002` moved to closed risks based on dry-run duration and rollback evidence.

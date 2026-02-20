@@ -8,13 +8,24 @@
 - End time:
 - Duration:
 
-## 2) Migration Status
+## 2) Performance and Bottlenecks
+
+- Throughput notes:
+  - rows processed:
+  - rows per minute:
+  - projected full-run duration:
+- Bottleneck capture:
+  - component:
+  - observation:
+  - mitigation:
+
+## 3) Migration Status
 
 - Status: `SUCCESS|PARTIAL|FAILED`
 - Steps completed:
 - Steps failed:
 
-## 3) Integrity Checks
+## 4) Integrity Checks
 
 - Row count checks:
   - expected:
@@ -29,13 +40,18 @@
   - expected:
   - actual:
 
-## 4) Rollback Verification
+## 5) Idempotency Verification
+
+- Idempotency status: `pass|fail`
+- Idempotency notes:
+
+## 6) Rollback Verification
 
 - Rollback attempted: `yes|no`
 - Rollback status:
 - Post-rollback validation:
 
-## 5) Readiness Decision
+## 7) Readiness Decision
 
 - Readiness: `READY|NOT_READY`
 - Blockers:

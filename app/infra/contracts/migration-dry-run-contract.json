@@ -1,0 +1,70 @@
+{
+  "version": "0.1.0",
+  "phase": "Phase 6 - Data and File Migration",
+  "weekendWindowMinutes": 180,
+  "snapshotContract": "infra/contracts/migration-snapshot-baseline.json",
+  "scope": {
+    "inScopeEntityGroups": [
+      "identity-and-organization",
+      "wave-a-social-core",
+      "notifications"
+    ],
+    "outOfScopeEntityGroups": [
+      "premium-modules",
+      "external-integration-payload-stores",
+      "full-media-binary-copy"
+    ]
+  },
+  "invariants": {
+    "idempotency": [
+      "rerunning the same snapshot does not change migrated row counts",
+      "rerun step outcomes remain deterministic"
+    ],
+    "rollbackSafety": [
+      "rollback script order is deterministic",
+      "post-rollback validation confirms pre-run state markers"
+    ]
+  },
+  "steps": [
+    {
+      "id": "prepare-snapshot",
+      "description": "Load snapshot metadata and migration scope",
+      "estimatedSeconds": 240
+    },
+    {
+      "id": "run-migration-dry-mode",
+      "description": "Execute migration pipeline in dry-run mode",
+      "estimatedSeconds": 3240
+    },
+    {
+      "id": "run-integrity-checks",
+      "description": "Validate row counts, references, and file checks",
+      "estimatedSeconds": 1080
+    },
+    {
+      "id": "record-rehearsal-evidence",
+      "description": "Persist run report and command outputs",
+      "estimatedSeconds": 180
+    }
+  ],
+  "rollbackRehearsal": {
+    "steps": [
+      "restore-pre-run-markers",
+      "rebuild-derived-indexes",
+      "validate-post-rollback-integrity"
+    ]
+  },
+  "commands": {
+    "dryRun001": "pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app migration:dry-run:001",
+    "dryRun002": "pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app migration:dry-run:002",
+    "rollbackRehearsal": "pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app migration:rollback:rehearsal",
+    "gate6Precheck": "pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app migration:gate6:precheck"
+  },
+  "requiredEvidence": {
+    "stagingCloneAccess": "docs/orchestration/evidence/staging-clone-access.md",
+    "dryRun001Report": "docs/orchestration/evidence/dry-run-001-integrity-report.md",
+    "dryRun002Report": "docs/orchestration/evidence/dry-run-002-integrity-report.md",
+    "rollbackReport": "docs/orchestration/evidence/rollback-rehearsal-001.md",
+    "gateChecklist": "docs/orchestration/gate-6-migration-checklist.md"
+  }
+}
