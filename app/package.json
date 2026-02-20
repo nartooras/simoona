@@ -1,0 +1,16 @@
+{
+  "name": "@simoona/app-foundation",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "bootstrap": "node ./scripts/foundation-check.mjs bootstrap",
+    "lint": "node ./scripts/foundation-check.mjs lint",
+    "typecheck": "node ./scripts/foundation-check.mjs typecheck",
+    "test": "node ./scripts/foundation-check.mjs test",
+    "smoke": "node ./scripts/foundation-check.mjs smoke",
+    "build": "node ./scripts/foundation-check.mjs build",
+    "ci:foundation": "bash ./infra/ci/run-foundation-ci.sh",
+    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm smoke && pnpm build"
+  }
+}

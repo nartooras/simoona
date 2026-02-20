@@ -120,7 +120,61 @@ For each completed task or gate, append:
 - Task: `T-0004 phase kickoff assignment prepared`
 - Evidence type: `process`
 - Artifact paths:
-  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/task-T-0004.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0004.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
 - Result summary:
   - Next unblocked Phase 1 task is staged with explicit scope and acceptance criteria.
+
+10. Date: `2026-02-20`
+- Phase: `Phase 1`
+- Task: `T-0004 Bootstrap platform skeleton under /app`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/package.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/pnpm-workspace.yaml`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/foundation/command-contract.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/foundation/local-bootstrap.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/docker/docker-compose.yml`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/docker/README.md`
+- Result summary:
+  - Phase 1 skeleton directories and foundational command contract implemented.
+  - Validation passed for `bootstrap`, `lint`, `typecheck`, `test`, `smoke`, and `build`.
+
+11. Date: `2026-02-20`
+- Phase: `Phase 1`
+- Task: `T-0007 Add CI baseline runner script`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/ci/run-foundation-ci.sh`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/ci/pipeline-contract.md`
+- Result summary:
+  - CI baseline runner executes `lint`, `typecheck`, `test`, and `smoke` in one command sequence.
+
+12. Date: `2026-02-20`
+- Phase: `Phase 1`
+- Task: `T-0008 Record foundation ADR`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/adr/0001-phase1-foundation-baseline.md`
+- Result summary:
+  - Foundation architecture and command baseline decisions documented.
+
+13. Date: `2026-02-20`
+- Phase: `Phase 1`
+- Task: `T-0009 Produce Gate 1 checklist artifact`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-1-foundation-checklist.md`
+- Result summary:
+  - Gate 1 checklist captured with evidence links and completion recommendation.
+
+14. Date: `2026-02-20`
+- Phase: `Phase 1`
+- Task: `Gate 1 foundation closure`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-1-foundation-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/infra/ci/run-foundation-ci.sh`
+  - `/tmp/app-docker-compose-config.txt`
+- Result summary:
+  - Gate 1 criteria satisfied for empty skeleton baseline; phase advanced to Phase 2.

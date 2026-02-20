@@ -1,0 +1,27 @@
+services:
+  web:
+    image: node:22-alpine
+    working_dir: /workspace/app/web
+    command: ["sh", "-lc", "echo web placeholder service && sleep infinity"]
+    volumes:
+      - ../../..:/workspace
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+  api:
+    image: node:22-alpine
+    working_dir: /workspace/app/api
+    command: ["sh", "-lc", "echo api placeholder service && sleep infinity"]
+    volumes:
+      - ../../..:/workspace
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"

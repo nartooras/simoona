@@ -43,3 +43,13 @@ Record major architecture and delivery decisions with rationale.
 - Date: `2026-02-20`
 - Decision: `Stop autopilot cycle when current phase gate is complete, then hand over to next phase backlog`
 - Rationale: respects gate-based delivery and avoids mixing objectives across phases in a single run.
+
+9. `D-009` Foundation command contract
+- Date: `2026-02-20`
+- Decision: `Use stable root commands under /app (bootstrap, lint, typecheck, test, smoke, build) for early CI and local gates`
+- Rationale: preserves predictable automation interfaces while implementation details evolve.
+
+10. `D-010` Phase 1 container baseline
+- Date: `2026-02-20`
+- Decision: `Adopt placeholder Docker Compose services (web, api, redis) for initial runtime topology`
+- Rationale: establishes deployment shape early without blocking on full app implementation.

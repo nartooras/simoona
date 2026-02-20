@@ -1,0 +1,9 @@
+{
+  "name": "@simoona/tests-parity",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "test": "echo parity placeholder",
+    "smoke": "echo parity smoke placeholder"
+  }
+}

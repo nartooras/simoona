@@ -32,6 +32,7 @@ Track active modernization risks, owners, and mitigations.
 - Owner role: `$platform-devops`
 - Status: `Open`
 - Mitigation:
+  - baseline CI command runner and Docker Compose topology implemented in Phase 1
   - enforce reproducible environment contracts
   - validate Docker-on-VM deployment regularly
 - Next review date: `2026-02-27`
