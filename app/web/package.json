@@ -3,7 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "shell:check": "node ./scripts/verify-web-shell-foundation.mjs",
+    "shell:check:foundation": "node ./scripts/verify-web-shell-foundation.mjs",
+    "shell:check:routes": "node ./scripts/verify-shell-route-pack.mjs",
+    "shell:check": "pnpm shell:check:foundation && pnpm shell:check:routes",
     "lint": "pnpm shell:check",
     "typecheck": "pnpm shell:check",
     "test": "pnpm shell:check",

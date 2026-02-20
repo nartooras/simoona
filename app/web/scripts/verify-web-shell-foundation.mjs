@@ -15,7 +15,12 @@ const requiredFiles = [
   },
   {
     path: path.join(root, "src/shell/top-level-layout.ts"),
-    markers: ["legacyTopLevelLayout", "legacyTopNavFrame"]
+    markers: [
+      "legacyTopLevelLayout",
+      "legacyTopNavFrame",
+      "createLegacyShellNavItem",
+      "resolveLegacyMotionTokens"
+    ]
   },
   {
     path: path.join(root, "src/main.ts"),

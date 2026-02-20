@@ -1,0 +1,30 @@
+{
+  "version": "0.1.0",
+  "phase": "Phase 3",
+  "scenarios": [
+    {
+      "id": "shell-login-desktop",
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 900,
+      "path": "/account/login",
+      "snapshotPath": "visual/baselines/desktop/shell-login.png"
+    },
+    {
+      "id": "shell-home-tablet",
+      "viewport": "tablet",
+      "width": 1024,
+      "height": 768,
+      "path": "/default/home",
+      "snapshotPath": "visual/baselines/tablet/shell-home.png"
+    },
+    {
+      "id": "shell-home-mobile",
+      "viewport": "mobile",
+      "width": 390,
+      "height": 844,
+      "path": "/default/home",
+      "snapshotPath": "visual/baselines/mobile/shell-home.png"
+    }
+  ]
+}

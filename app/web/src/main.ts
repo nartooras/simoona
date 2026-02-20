@@ -8,10 +8,14 @@ export interface ShellBootstrapState {
   layout: ReturnType<typeof createTopLevelLayoutState>;
 }
 
-export function bootstrapShell(pathname: string, isAuthenticated: boolean): ShellBootstrapState {
+export function bootstrapShell(
+  pathname: string,
+  isAuthenticated: boolean,
+  prefersReducedMotion: boolean = false
+): ShellBootstrapState {
   return {
     auth: resolveAuthBoundary(isAuthenticated),
     tenantRoute: resolveTenantRoute(pathname),
-    layout: createTopLevelLayoutState()
+    layout: createTopLevelLayoutState(prefersReducedMotion)
   };
 }

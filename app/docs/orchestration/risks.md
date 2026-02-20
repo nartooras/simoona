@@ -18,6 +18,7 @@ Track active modernization risks, owners, and mitigations.
   - tenant/permission and error-shape fixture assertions now runnable and passing (`T-0020`, `T-0021`)
   - aggregate core compatibility contract command added for repeatable verification (`T-0022`)
   - conventions contract and shell baseline checks complete (`T-0025`, `T-0026`)
+  - Phase 3 shell route parity pack, shared primitives, and visual baseline scaffold complete (`T-0029`..`T-0032`)
   - escalate critical unmapped flows immediately
 - Next review date: `2026-02-27`
 

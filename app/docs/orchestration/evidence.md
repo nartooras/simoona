@@ -385,6 +385,63 @@ For each completed task or gate, append:
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
-  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/task-T-0029.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0029.md`
 - Result summary:
   - Phase 2 was closed, Phase 3 opened, and next unblocked task `T-0029` assigned.
+
+34. Date: `2026-02-20`
+- Phase: `Phase 3`
+- Task: `T-0029 Build shared UI primitives parity baseline`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/primitives/legacy-shell-button.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/primitives/legacy-shell-nav-item.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/index.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/top-level-layout.ts`
+- Result summary:
+  - Shared primitive baseline is in place and consumed by shell layout scaffolding.
+
+35. Date: `2026-02-20`
+- Phase: `Phase 3`
+- Task: `T-0030 Establish Phase 3 visual regression baseline scaffold`
+- Evidence type: `qa`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/visual/baseline-manifest.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/docs/visual-regression-workflow.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-visual-baseline.mjs`
+- Result summary:
+  - Visual baseline scaffold covers desktop/tablet/mobile shell states and verification command passes.
+
+36. Date: `2026-02-20`
+- Phase: `Phase 3`
+- Task: `T-0031 Expand shell/navigation parity route pack for Gate 3`
+- Evidence type: `parity`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/ui-shell-route-pack.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/verify-shell-route-pack.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/package.json`
+- Result summary:
+  - Route parity pack and shell route validation are explicit and executable.
+
+37. Date: `2026-02-20`
+- Phase: `Phase 3`
+- Task: `T-0032 Add reduced-motion animation baseline tokens`
+- Evidence type: `platform`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/motion/legacy-motion-tokens.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/ui-motion-baseline.md`
+- Result summary:
+  - Motion baseline documents subtle timing defaults and reduced-motion behavior with shared tokens.
+
+38. Date: `2026-02-20`
+- Phase: `Phase 4`
+- Task: `T-0033 Close Gate 3 and transition to Phase 4`
+- Evidence type: `process`
+- Artifact paths:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/task-T-0034.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+- Result summary:
+  - Gate 3 is complete, Phase 4 is active, and `T-0034` is queued as next unblocked task.

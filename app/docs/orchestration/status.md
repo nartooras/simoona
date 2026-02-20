@@ -5,13 +5,13 @@
 
 ## Current Phase
 
-- `Phase 3 - UI Parity Foundation and Design Modernization`
+- `Phase 4 - Feature Porting Waves`
 
 ## Assigned Tasks
 
-1. `T-0029` Build shared UI primitives parity baseline
-- Owner role: `$web-parity-agent`
-- Assignment file: `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/task-T-0029.md`
+1. `T-0034` Build Wave A (Social Core) scope-to-contract mapping pack
+- Owner role: `$parity-analyst-agent`
+- Assignment file: `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/task-T-0034.md`
 - Status: `READY`
 
 ## Completed Tasks
@@ -49,6 +49,12 @@
 - `T-0027` completed: Gate 2 checklist finalized with complete recommendation.
 - `T-0028` completed: phase transition checkpoint published and Gate 3 checklist initialized.
 - `Gate 2` closed for core compatibility readiness.
+- `T-0029` completed: shared UI primitives parity baseline added and wired into shell layout.
+- `T-0030` completed: visual regression baseline scaffold and command added for desktop/tablet/mobile shell states.
+- `T-0031` completed: shell/navigation route parity pack and route-check command added.
+- `T-0032` completed: reduced-motion animation token baseline added with parity documentation.
+- `T-0033` completed: Gate 3 checklist closed and phase transition to Phase 4 recorded.
+- `Gate 3` closed for UI parity foundation readiness.
 
 ## Blocked Tasks
 
@@ -63,13 +69,14 @@
 
 ## Next 3 Tasks
 
-1. Execute `T-0029` and build shared UI primitives parity baseline.
-2. Unblock `T-0030` and scaffold visual regression baseline for shell states.
-3. Expand shell/navigation parity coverage pack for Gate 3 route behavior closure.
+1. Execute `T-0034` and produce Wave A scope-to-contract mapping pack.
+2. Unblock and execute `T-0035` for Wave A Gate 4 quality checklist execution plan.
+3. Start first Wave A implementation slice once scope and checklist are approved.
 
 ## Gate Status
 
 - `Gate 0 (Baseline and Inventory)`: `COMPLETE`
 - `Gate 1 (Foundation)`: `COMPLETE`
 - `Gate 2 (Core Compatibility)`: `COMPLETE`
-- `Gate 3 (UI Parity Foundation)`: `IN_PROGRESS`
+- `Gate 3 (UI Parity Foundation)`: `COMPLETE`
+- `Gate 4 (Feature Waves)`: `IN_PROGRESS`

@@ -5,23 +5,30 @@ Phase: `Phase 3 - UI Parity Foundation and Design Modernization`
 
 ## Checklist
 
-- [ ] Shared UI primitives reproduce legacy behavior
-  - Current: pending Phase 3 kickoff task (`T-0029`)
+- [x] Shared UI primitives reproduce legacy behavior
+  - Current: shared UI primitives package baseline implemented and consumed by shell
   - Evidence:
-    - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/task-T-0029.md`
-- [ ] Shell/navigation route behavior matches legacy
-  - Current: Phase 2 baseline complete; parity expansion pending Phase 3 route packs
+    - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/index.ts`
+    - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/primitives/legacy-shell-nav-item.ts`
+    - `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/top-level-layout.ts`
+- [x] Shell/navigation route behavior matches legacy
+  - Current: shell route parity pack and route verification checks are in place
   - Evidence:
     - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/ui-shell-foundation-links.md`
-- [ ] Animation layer is subtle and respects reduced-motion
-  - Current: not started
+    - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/ui-shell-route-pack.md`
+    - `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/verify-shell-route-pack.mjs`
+- [x] Animation layer is subtle and respects reduced-motion
+  - Current: shared motion tokens include default subtle durations and reduced-motion fallback
   - Evidence:
-    - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/ai-agents-modernization-plan.md`
-- [ ] Visual regression baseline approved
-  - Current: not started
+    - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/motion/legacy-motion-tokens.ts`
+    - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/ui-motion-baseline.md`
+- [x] Visual regression baseline approved
+  - Current: baseline manifest + workflow + verification command are present and passing
   - Evidence:
-    - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e`
+    - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/visual/baseline-manifest.json`
+    - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/docs/visual-regression-workflow.md`
+    - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-visual-baseline.mjs`
 
 ## Current recommendation
 
-- Gate status recommendation: `IN_PROGRESS`
+- Gate status recommendation: `COMPLETE`

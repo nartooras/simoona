@@ -4,23 +4,23 @@ Use this backlog as the task source of truth for the orchestrator.
 
 ## Priority Queue
 
-1. `T-0029` `P0` Build shared UI primitives parity baseline (`READY`)
-- Owner role: `$web-parity-agent`
-- Phase: `Phase 3`
-- Dependencies: `Gate 2` complete
+1. `T-0034` `P0` Build Wave A (Social Core) scope-to-contract mapping pack (`READY`)
+- Owner role: `$parity-analyst-agent`
+- Phase: `Phase 4`
+- Dependencies: `Gate 3` complete
 - Acceptance:
-  - initial shared primitives baseline exists under `/app/packages/ui` with legacy behavior markers
-  - web shell references at least one shared primitive baseline
-  - shell and parity verification commands remain green
+  - Wave A API and UI scope pack is extracted from parity matrices with explicit inclusion criteria
+  - initial Wave A contract and e2e target lists are documented
+  - dependencies for first Wave A implementation slices are explicit and unblocked
 
-2. `T-0030` `P1` Establish Phase 3 visual regression baseline scaffold (`BLOCKED`)
+2. `T-0035` `P1` Draft Gate 4 quality checklist execution plan for Wave A (`BLOCKED`)
 - Owner role: `$qa-parity-agent`
-- Phase: `Phase 3`
-- Dependencies: `T-0029` complete
+- Phase: `Phase 4`
+- Dependencies: `T-0034` complete
 - Acceptance:
-  - visual baseline scaffold is defined for desktop/tablet/mobile shell states
-  - capture workflow and artifact storage path are documented
-  - initial placeholder baseline command executes without failure
+  - Gate 4 execution checklist maps Wave A tests, visual diffs, and defect gates
+  - clear pass/fail criteria defined for first Wave A release candidate
+  - command set for Wave A verification is documented
 
 3. `T-0005` `P1` Define first migration dry-run plan (`BLOCKED`)
 - Owner role: `$data-migration-engineer`
@@ -183,6 +183,42 @@ Use this backlog as the task source of truth for the orchestrator.
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
   - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
 - Assignment archive: `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0028.md`
+
+28. `T-0029` `P0` Build shared UI primitives parity baseline (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/primitives/legacy-shell-button.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/primitives/legacy-shell-nav-item.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/index.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shell/top-level-layout.ts`
+- Assignment archive: `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0029.md`
+
+29. `T-0030` `P1` Establish Phase 3 visual regression baseline scaffold (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/visual/baseline-manifest.json`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/docs/visual-regression-workflow.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/tests/e2e/scripts/verify-visual-baseline.mjs`
+- Assignment archive: `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0030.md`
+
+30. `T-0031` `P1` Expand shell/navigation parity route pack for Gate 3 (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/ui-shell-route-pack.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/verify-shell-route-pack.mjs`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/web/package.json`
+- Assignment archive: `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0031.md`
+
+31. `T-0032` `P1` Add reduced-motion animation baseline tokens (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/ui/src/motion/legacy-motion-tokens.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/ui-motion-baseline.md`
+- Assignment archive: `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0032.md`
+
+32. `T-0033` `P1` Close Gate 3 and transition to Phase 4 (`COMPLETED`)
+- Main artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-3-ui-foundation-checklist.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/backlog.md`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/gate-4-feature-waves-checklist.md`
+- Assignment archive: `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/assignments/completed/task-T-0033.md`
 
 ## Intake Template
 

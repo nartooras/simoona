@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "test": "echo e2e placeholder"
+    "visual:baseline": "node ./scripts/verify-visual-baseline.mjs",
+    "test": "pnpm visual:baseline"
   }
 }

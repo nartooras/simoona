@@ -83,3 +83,18 @@ Record major architecture and delivery decisions with rationale.
 - Date: `2026-02-20`
 - Decision: `Close Gate 2 after auth/tenant/permission/error/conventions + shell baseline checks are green, then move to Phase 3 with a new gate checklist`
 - Rationale: aligns gate progression with phased delivery boundaries and prevents cross-phase drift.
+
+17. `D-017` Phase 3 shared primitive baseline strategy
+- Date: `2026-02-20`
+- Decision: `Introduce shared shell primitives and motion tokens in /app/packages/ui and enforce them with a dedicated primitives check script`
+- Rationale: centralizes shell UI behavior contracts and creates reusable parity markers before feature waves.
+
+18. `D-018` Visual baseline-first gating for Phase 3
+- Date: `2026-02-20`
+- Decision: `Treat visual regression baseline manifest/workflow + verification as the first Gate 3 approval signal`
+- Rationale: enables controlled viewport coverage before integrating full screenshot tooling.
+
+19. `D-019` Phase 3 closure transition
+- Date: `2026-02-20`
+- Decision: `Close Gate 3 after primitives, route parity, motion reduced-motion, and visual baseline checks pass, then transition to Phase 4`
+- Rationale: keeps progression aligned with defined phase-gate criteria and avoids scope bleed.
