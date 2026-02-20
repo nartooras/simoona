@@ -1,0 +1,5 @@
+{
+  "fixtureId": "core-tenant-context-header",
+  "expectedHeader": "x-tenant-id",
+  "status": "placeholder"
+}

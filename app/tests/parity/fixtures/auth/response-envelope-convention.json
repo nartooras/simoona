@@ -1,0 +1,5 @@
+{
+  "fixtureId": "core-response-envelope-convention",
+  "expectedEnvelope": "legacyResponseEnvelopeV1",
+  "status": "placeholder"
+}

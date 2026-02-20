@@ -13,6 +13,11 @@ Track active modernization risks, owners, and mitigations.
   - initial API (`189` rows) and UI (`115` rows) matrices created on `2026-02-20`
   - critical-flow golden fixture index completed (`T-0006`)
   - prioritize mapping and gap burn-down from `status=unmapped` inventory
+  - auth/token compatibility scaffolding and initial Account endpoint mappings completed (`T-0010`)
+  - fixture-driven auth contract assertions and token row mapping completed (`T-0015`, `T-0016`, `T-0019`)
+  - tenant/permission and error-shape fixture assertions now runnable and passing (`T-0020`, `T-0021`)
+  - aggregate core compatibility contract command added for repeatable verification (`T-0022`)
+  - conventions contract and shell baseline checks complete (`T-0025`, `T-0026`)
   - escalate critical unmapped flows immediately
 - Next review date: `2026-02-27`
 

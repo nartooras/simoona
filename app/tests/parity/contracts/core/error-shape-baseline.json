@@ -1,0 +1,8 @@
+{
+  "genericLegacyError": {
+    "fixtureId": "core-error-shape-generic",
+    "expectedCodes": ["LEGACY_COMPAT_ERROR", "LEGACY_COMPAT_UNKNOWN"],
+    "mapperFile": "legacy-error.mapper.ts",
+    "filterFile": "legacy-error.filter.ts"
+  }
+}

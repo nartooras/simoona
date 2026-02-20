@@ -53,3 +53,33 @@ Record major architecture and delivery decisions with rationale.
 - Date: `2026-02-20`
 - Decision: `Adopt placeholder Docker Compose services (web, api, redis) for initial runtime topology`
 - Rationale: establishes deployment shape early without blocking on full app implementation.
+
+11. `D-011` Phase 2 auth compatibility-first sequence
+- Date: `2026-02-20`
+- Decision: `Start Gate 2 with auth/token compatibility scaffolding before tenant/permission/error hardening`
+- Rationale: auth behaviors are the highest-risk contract boundary and unblock fixture-driven contract testing.
+
+12. `D-012` Contract-assertion validation style
+- Date: `2026-02-20`
+- Decision: `Use fixture-map-driven assertions that verify both fixture integrity and compatibility markers in core service scaffolds`
+- Rationale: provides deterministic parity checks before full endpoint runtime wiring is in place.
+
+13. `D-013` Core parity command consolidation
+- Date: `2026-02-20`
+- Decision: `Add a single parity command (contract:core) that executes auth + tenant/permission + error-shape checks`
+- Rationale: reduces operator error and provides a single Gate 2 verification command.
+
+14. `D-014` Autopilot continuation target after batch completion
+- Date: `2026-02-20`
+- Decision: `After completing the 5-task batch (`T-0020`..`T-0024`), queue middleware conventions (`T-0025`) as next highest-priority unblocked Phase 2 task`
+- Rationale: middleware conventions are a direct prerequisite for web shell parity foundation and Gate 2 closure.
+
+15. `D-015` Legacy conventions validation strategy
+- Date: `2026-02-20`
+- Decision: `Add a dedicated parity contract (`contract:conventions`) for response envelope, date serialization, and pagination markers`
+- Rationale: keeps middleware/interceptor scaffold verification deterministic and repeatable in Gate 2.
+
+16. `D-016` Phase 2 closure transition
+- Date: `2026-02-20`
+- Decision: `Close Gate 2 after auth/tenant/permission/error/conventions + shell baseline checks are green, then move to Phase 3 with a new gate checklist`
+- Rationale: aligns gate progression with phased delivery boundaries and prevents cross-phase drift.

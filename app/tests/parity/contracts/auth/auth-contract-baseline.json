@@ -1,0 +1,17 @@
+{
+  "accountUserInfoSuccess": {
+    "fixtureId": "auth-account-userinfo-success",
+    "legacyRoute": "Account/UserInfo",
+    "compatibilityKey": "Account/UserInfo"
+  },
+  "accountRegisterValidation": {
+    "fixtureId": "auth-account-register-validation",
+    "legacyRoute": "Account/Register",
+    "compatibilityKey": "Account/Register"
+  },
+  "tokenIssueSuccess": {
+    "fixtureId": "auth-token-issue-success",
+    "legacyRoute": "token",
+    "compatibilityKey": "/token"
+  }
+}

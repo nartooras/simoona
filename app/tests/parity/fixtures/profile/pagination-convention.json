@@ -1,0 +1,8 @@
+{
+  "fixtureId": "core-pagination-convention",
+  "query": {
+    "page": 2,
+    "pageSize": 25
+  },
+  "expectedSource": "legacyPaginationQuery"
+}

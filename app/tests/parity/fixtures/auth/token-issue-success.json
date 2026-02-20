@@ -1,0 +1,6 @@
+{
+  "fixtureId": "auth-token-issue-success",
+  "legacyRoute": "token",
+  "status": "placeholder",
+  "expectedCompatibilityKey": "/token"
+}

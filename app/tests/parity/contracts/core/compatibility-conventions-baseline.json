@@ -1,0 +1,17 @@
+{
+  "paginationConvention": {
+    "fixtureId": "core-pagination-convention",
+    "sourceMarker": "legacyPaginationQuery",
+    "sourceFile": "legacy-pagination.middleware.ts"
+  },
+  "responseEnvelopeConvention": {
+    "fixtureId": "core-response-envelope-convention",
+    "sourceMarker": "legacyResponseEnvelopeV1",
+    "sourceFile": "legacy-response-envelope.interceptor.ts"
+  },
+  "dateSerializationConvention": {
+    "fixtureId": "core-date-serialization-convention",
+    "sourceMarker": "legacyDateISO8601Utc",
+    "sourceFile": "legacy-date-serialization.interceptor.ts"
+  }
+}

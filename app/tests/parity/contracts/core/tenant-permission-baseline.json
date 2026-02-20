@@ -1,0 +1,12 @@
+{
+  "tenantContextHeader": {
+    "fixtureId": "core-tenant-context-header",
+    "sourceMarker": "x-tenant-id",
+    "sourceFile": "tenant-context.middleware.ts"
+  },
+  "permissionGuardContext": {
+    "fixtureId": "core-permission-guard-context",
+    "sourceMarker": "legacyPermissionCheck",
+    "sourceFile": "legacy-permission.guard.ts"
+  }
+}

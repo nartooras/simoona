@@ -1,0 +1,6 @@
+{
+  "fixtureId": "auth-account-register-validation",
+  "legacyRoute": "Account/Register",
+  "status": "placeholder",
+  "expectedCompatibilityKey": "Account/Register"
+}

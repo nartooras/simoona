@@ -1,0 +1,5 @@
+{
+  "fixtureId": "core-error-shape-generic",
+  "expectedCodes": ["LEGACY_COMPAT_ERROR", "LEGACY_COMPAT_UNKNOWN"],
+  "status": "placeholder"
+}

@@ -1,0 +1,5 @@
+{
+  "fixtureId": "core-date-serialization-convention",
+  "expectedFormat": "legacyDateISO8601Utc",
+  "status": "placeholder"
+}

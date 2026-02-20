@@ -4,7 +4,7 @@
 - Owner role: `$api-compat-agent`
 - Phase: `Phase 2 - Core Compatibility Layer`
 - Priority: `P0`
-- Status: `READY`
+- Status: `COMPLETED`
 
 ## Objective
 
@@ -43,3 +43,19 @@ pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app test
 pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app build
 rg -n "^AccountController," /Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/api-endpoint-matrix.csv
 ```
+
+## Completion Notes
+
+- Completed on: `2026-02-20`
+- Key artifacts:
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/auth/auth-compatibility.module.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/auth/controllers/account-compatibility.controller.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/auth/controllers/token-compatibility.controller.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/packages/contracts/auth.ts`
+  - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/parity/api-endpoint-matrix.csv`
+- Validation summary:
+  - `pnpm --dir app lint`: pass
+  - `pnpm --dir app typecheck`: pass
+  - `pnpm --dir app test`: pass
+  - `pnpm --dir app build`: pass
+  - `AccountController` parity mappings updated: `10` rows

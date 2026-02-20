@@ -1,0 +1,4 @@
+{
+  "tenantContextHeader": "/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/fixtures/profile/tenant-context-header.json",
+  "permissionGuardContext": "/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/fixtures/admin/permission-guard-context.json"
+}

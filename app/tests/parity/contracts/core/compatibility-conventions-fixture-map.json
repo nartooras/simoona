@@ -1,0 +1,5 @@
+{
+  "paginationConvention": "/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/fixtures/profile/pagination-convention.json",
+  "responseEnvelopeConvention": "/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/fixtures/auth/response-envelope-convention.json",
+  "dateSerializationConvention": "/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/fixtures/auth/date-serialization-convention.json"
+}

@@ -6,6 +6,7 @@
     "lint": "echo api lint placeholder",
     "typecheck": "echo api typecheck placeholder",
     "test": "echo api test placeholder",
-    "build": "echo api build placeholder"
+    "build": "echo api build placeholder",
+    "start": "echo api start placeholder"
   }
 }
