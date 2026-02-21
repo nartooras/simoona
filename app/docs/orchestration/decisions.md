@@ -156,3 +156,25 @@
 4. `D-RECOV-008` R2/R3 re-closure
 - Decision: Re-close `R2` and `R3` after reaching `190/190` API runtime-verified and `115/115` UI runtime-verified coverage.
 - Rationale: Recovery objective is met under hard runtime parity gate criteria.
+
+## 2026-02-21 (UI Recovery Reopen)
+
+1. `D-RECOV-009` Visual parity truth-over-doc policy
+- Decision: Reopen `R3` as `IN_PROGRESS` despite prior matrix-ready claims when user-visible runtime does not match legacy UI behavior.
+- Rationale: Delivery readiness is determined by real runtime parity, not only matrix/document signals.
+
+2. `D-RECOV-010` Route-family-first implementation sequencing
+- Decision: Implement and verify UI parity by route families, starting with wall/feed and employee-list, then continuing profile/settings/admin families.
+- Rationale: Produces usable incremental deliverables and avoids broad but shallow placeholder coverage.
+
+3. `D-RECOV-011` Profile/Settings route-family recovery completion
+- Decision: Mark `RECOV-R3-007` complete after implementing profile/details+edit and settings/general+notifications+providers runtime views with browser-level evidence.
+- Rationale: Expands real UI parity beyond wall/feed and employee-list using legacy source-driven route-family delivery.
+
+4. `D-RECOV-012` Admin route-family recovery completion
+- Decision: Mark `RECOV-R3-008` complete after implementing admin route-family runtime views (users, roles, room types, offices/floors/rooms, customization, lotteries, kudos basket) with browser-level evidence.
+- Rationale: Extends parity recovery into major administration flows and unblocks matrix re-verification for admin routes.
+
+5. `D-RECOV-013` Auth/Public/Utility route-family recovery completion
+- Decision: Mark `RECOV-R3-010` complete after implementing and runtime-verifying auth/public/utility routes (`/`, `/Login`, tenant auth routes, redirect, and utility/system routes).
+- Rationale: Replaces generic placeholder pages for core login/system flows and raises evidence-backed UI coverage before advancing to remaining client feature families.

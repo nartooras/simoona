@@ -6,6 +6,10 @@
     "visual:baseline": "node ./scripts/verify-visual-baseline.mjs",
     "runtime:smoke": "node ./scripts/verify-runtime-smoke.mjs",
     "runtime:wall-feed": "node ./scripts/run-wall-feed-runtime-evidence.mjs",
+    "runtime:employee-list": "node ./scripts/run-employee-list-runtime-evidence.mjs",
+    "runtime:profile-settings": "node ./scripts/run-profile-settings-runtime-evidence.mjs",
+    "runtime:auth-utility": "node ./scripts/run-auth-utility-runtime-evidence.mjs",
+    "runtime:admin": "node ./scripts/run-admin-runtime-evidence.mjs",
     "runtime:ui:matrix": "node ./scripts/run-ui-route-matrix-runtime-evidence.mjs",
     "test": "pnpm visual:baseline && pnpm runtime:smoke"
   },

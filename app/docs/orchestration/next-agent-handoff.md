@@ -2,11 +2,17 @@
 
 Date: `2026-02-21`
 Branch: `modernization`
-Mode: `release-readiness-re-gate`
+Mode: `ui-parity-recovery`
 
 ## Objective
 
-Execute `R5` re-gate after runtime parity recovery completion and keep publish execution deferred until explicit user approval.
+Continue real UI parity implementation from current working baseline:
+- wall/feed route family is implemented with legacy-like shell and interactions,
+- employee-list route family is implemented with filter/sort/pagination,
+- profile/settings route families are implemented with route-specific views and interactions,
+- admin route family is implemented with route-specific list/form behaviors and runtime evidence,
+- auth/public/utility route family is implemented with route-specific auth/system views and runtime evidence,
+- remaining route families still require parity implementation.
 
 ## Hard Rules
 
@@ -14,37 +20,52 @@ Execute `R5` re-gate after runtime parity recovery completion and keep publish e
 2. Do not change `/src` or `/build`.
 3. Do not execute Cloudflare publish/deploy commands without explicit user approval.
 4. Keep all work scoped to `/app`.
-5. Keep parity rows `verified` only when backed by executable runtime evidence.
+5. Do not mark UI matrix rows `verified` without route-family runtime evidence.
 
 ## Immediate Execution Queue
 
-1. `RECOV-R5-001` (`$qa` + `$reviewer`)
+1. `RECOV-R3-011` (`$full-stack-developer`)
 - In scope:
-  - Re-run release readiness checklist against runtime-backed parity evidence.
+  - Implement next remaining client route-family parity wave:
+    - `events`, `kudos`, `books`, `projects`, `service requests`, `vacation`,
+    - `committees`, `office`, `organizational structure`, `submit ticket`,
+    - remaining wall sub-routes (`create/edit/list/members`).
 - Acceptance:
-  - Gate decision includes explicit GO/NO-GO reasoning and command evidence.
+  - Legacy URLs unchanged.
+  - Route-family runtime evidence captured for implemented scope.
 
-2. `RECOV-R5-002` (`$qa`)
+2. `RECOV-R3-012` (`$qa` + `$parity-analyst`)
 - In scope:
-  - Refresh final verification report with runtime API/UI matrix outcomes.
+  - Add dedicated runtime evidence harness for `RECOV-R3-011` scope and promote only covered matrix rows.
 - Acceptance:
-  - Report references runtime evidence artifacts and distinguishes sandbox fallback vs unrestricted execution checks.
+  - No blanket `verified` promotion without route-family runtime evidence.
 
-3. `RECOV-R5-003` (`$platform-devops`)
+3. `RECOV-R4-PLAN-HOLD` (`$platform-devops`)
 - In scope:
-  - Keep publish execution blocked while preparing decision-ready publish recommendation.
+  - Keep publish/deploy path deferred until `R3` completion.
 - Acceptance:
-  - No publish commands executed; recommendation is ready for user approval decision.
+  - No publish commands executed.
 
-## Success Criteria For This Stage
+## Current Working Evidence
 
-1. `R2` and `R3` remain re-closed with runtime-backed parity evidence.
-   - Current checkpoint: API `190/190` verified, UI `115/115` verified.
-2. `R5` re-gate outputs updated readiness decision artifacts.
-3. No publish is executed before explicit user instruction.
+- Wall/feed runtime evidence:
+  - `pnpm --dir app/tests/e2e runtime:wall-feed` (`PASS` in unrestricted mode)
+- Employee-list runtime evidence:
+  - `pnpm --dir app/tests/e2e runtime:employee-list` (`PASS` in unrestricted mode)
+- Profile/settings runtime evidence:
+  - `pnpm --dir app/tests/e2e runtime:profile-settings` (`PASS` in unrestricted mode)
+- Admin runtime evidence:
+  - `pnpm --dir app/tests/e2e runtime:admin` (`PASS` in unrestricted mode)
+- Auth/Public/Utility runtime evidence:
+  - `pnpm --dir app/tests/e2e runtime:auth-utility` (`PASS` in unrestricted mode)
+- Foundation verification:
+  - `pnpm --dir app verify` (`PASS`, with expected sandbox runtime smoke fallback)
+- UI matrix state:
+  - `81/115` rows `verified`
+  - `34/115` rows `implemented` (pending runtime evidence)
 
 ## Explicitly Deferred
 
-1. Cloudflare publish/deploy execution without user approval.
-2. Production DNS or traffic switching without approval.
-3. Any gate closure based on offline-only verification.
+1. Cloudflare publish/deploy execution.
+2. Final release-readiness (`R5`) gate.
+3. Any claim that UI parity is complete across all `115` routes.

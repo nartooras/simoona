@@ -678,3 +678,231 @@ Results:
 - Full required command pack: `PASS` (runtime-sensitive steps fall back in sandbox where loopback bind is restricted).
 - Runtime-specific matrix commands pass in unrestricted execution mode.
 - Artifact hygiene check: no tracked generated artifacts (`rg` exit `1` indicates no matches).
+
+## RECOV-R3-005 Wall/Feed Runtime UI Implementation
+
+Date: `2026-02-21`
+
+### Scope
+
+- Replaced debug fallback rendering on wall-family routes with legacy-styled shell:
+  - left sidebar groups,
+  - center feed cards,
+  - right kudos/widgets column,
+  - like/reply interactions.
+- Mapped `/` and tenant-home route shapes to wall/feed rendering instead of debug card.
+
+### Validation
+
+Executed:
+
+```bash
+pnpm --dir app/web build
+pnpm --dir app/tests/e2e runtime:wall-feed
+```
+
+Results:
+
+- `pnpm --dir app/web build`: `PASS`
+- `pnpm --dir app/tests/e2e runtime:wall-feed`: `PASS` (unrestricted execution required for localhost bind)
+
+## RECOV-R3-006 Employee List Runtime UI Implementation
+
+Date: `2026-02-21`
+
+### Scope
+
+- Added legacy-styled employee list runtime page with:
+  - header + filter control,
+  - sortable columns,
+  - selectable rows,
+  - pagination controls.
+- Added dedicated employee-list runtime evidence scripts and screenshots.
+
+### Validation
+
+Executed:
+
+```bash
+pnpm --dir app/tests/e2e runtime:employee-list
+pnpm --dir app verify
+```
+
+Results:
+
+- `pnpm --dir app/tests/e2e runtime:employee-list`: `PASS` (unrestricted execution required for localhost bind)
+- `pnpm --dir app verify`: `PASS` (expected sandbox runtime smoke fallback path for localhost bind)
+
+## RECOV-R3-007 Profile/Settings Runtime UI Implementation
+
+Date: `2026-02-21`
+
+### Scope
+
+- Implemented Profile route-family runtime views:
+  - Profile details view (`/:organizationName/Profiles/:id`) with legacy-style panel layout and data rows.
+  - Profile edit view (`/:organizationName/Profiles/:id/Edit/:tab`) with `personal/job/office/blacklist` tabs and save-state behavior.
+- Implemented Settings route-family runtime views:
+  - Settings shell tabs (`General`, `Notifications`, `Providers`).
+  - General tab with language/time zone save-state behavior.
+  - Notifications tab with checkbox matrix and save enablement behavior.
+  - Providers tab with link/unlink runtime behavior.
+- Added dedicated runtime Playwright evidence harness for profile/settings route family.
+
+### Validation
+
+Executed:
+
+```bash
+pnpm --dir app/web build
+pnpm --dir app/tests/e2e runtime:profile-settings
+pnpm --dir app/tests/e2e runtime:wall-feed
+pnpm --dir app/tests/e2e runtime:employee-list
+pnpm --dir app verify
+```
+
+Results:
+
+- `pnpm --dir app/web build`: `PASS`
+- `pnpm --dir app/tests/e2e runtime:profile-settings`: `PASS` (unrestricted execution required for localhost bind)
+- `pnpm --dir app/tests/e2e runtime:wall-feed`: `PASS` (regression check)
+- `pnpm --dir app/tests/e2e runtime:employee-list`: `PASS` (regression check)
+- `pnpm --dir app verify`: `PASS` (expected sandbox runtime smoke fallback path for localhost bind)
+
+## RECOV-R3-008 Admin Route-Family Runtime UI Implementation
+
+Date: `2026-02-21`
+
+### Scope
+
+- Implemented runtime admin route-family rendering in modern web runtime for legacy-compatible admin URLs:
+  - `/:organizationName/Admin`
+  - `/:organizationName/Admin/Users`
+  - `/:organizationName/Admin/Roles` + `Create/Edit`
+  - `/:organizationName/Admin/RoomTypes` + `Create/Edit`
+  - `/:organizationName/Admin/Offices` + `Create/Edit/Floors/Rooms`
+  - `/:organizationName/Admin/Customization` + nested list/create/edit routes
+  - `/:organizationName/Admin/Lotteries` + `List/Create/Edit/Refunding`
+  - `/:organizationName/Admin/KudosBasket`
+- Added runtime interactions for admin list filtering/sorting/pagination and admin form save/refund actions.
+- Added dedicated runtime Playwright evidence harness and screenshots.
+
+### Changed Files
+
+- `app/web/scripts/live-web-runtime.mjs`
+- `app/web/src/main.tsx`
+- `app/tests/e2e/scripts/admin-runtime.spec.js`
+- `app/tests/e2e/scripts/run-admin-runtime-evidence.mjs`
+- `app/tests/e2e/package.json`
+- `app/tests/e2e/visual/baselines/desktop/admin-runtime.png`
+- `app/tests/e2e/visual/baselines/tablet/admin-runtime.png`
+- `app/tests/e2e/visual/baselines/mobile/admin-runtime.png`
+
+### Validation Commands
+
+Executed:
+
+```bash
+pnpm --dir app/web build
+pnpm --dir app/tests/e2e runtime:admin
+pnpm --dir app/tests/e2e runtime:wall-feed
+pnpm --dir app/tests/e2e runtime:employee-list
+pnpm --dir app/tests/e2e runtime:profile-settings
+pnpm --dir app verify
+```
+
+Results:
+
+- `pnpm --dir app/web build`: `PASS`
+- `pnpm --dir app/tests/e2e runtime:admin`: `PASS` (unrestricted execution required due sandbox bind `EPERM` on `127.0.0.1:5173`)
+- `pnpm --dir app/tests/e2e runtime:wall-feed`: `PASS` (regression)
+- `pnpm --dir app/tests/e2e runtime:employee-list`: `PASS` (regression)
+- `pnpm --dir app/tests/e2e runtime:profile-settings`: `PASS` (regression)
+- `pnpm --dir app verify`: `PASS` (expected smoke fallback under sandbox runtime-port restriction)
+
+## RECOV-R3-009 Matrix Re-Baselining (Evidence-Backed Verification Only)
+
+Date: `2026-02-21`
+
+### Scope
+
+- Re-ran runtime evidence for implemented route families.
+- Demoted non-evidenced `verified` matrix rows back to `implemented`.
+- Kept `verified` only for route families with explicit runtime evidence and screenshots.
+
+### Validation Commands
+
+Executed:
+
+```bash
+pnpm --dir app/tests/e2e runtime:wall-feed
+pnpm --dir app/tests/e2e runtime:employee-list
+pnpm --dir app/tests/e2e runtime:profile-settings
+pnpm --dir app/tests/e2e runtime:admin
+pnpm --dir app/tests/parity contract:ui
+pnpm --dir app verify
+```
+
+Results:
+
+- `pnpm --dir app/tests/e2e runtime:wall-feed`: `PASS` (unrestricted execution)
+- `pnpm --dir app/tests/e2e runtime:employee-list`: `PASS` (unrestricted execution)
+- `pnpm --dir app/tests/e2e runtime:profile-settings`: `PASS` (unrestricted execution)
+- `pnpm --dir app/tests/e2e runtime:admin`: `PASS` (unrestricted execution)
+- `pnpm --dir app/tests/parity contract:ui`: `PASS`
+- `pnpm --dir app verify`: `PASS` (expected sandbox smoke fallback for localhost bind restrictions)
+
+## RECOV-R3-010 Auth/Public/Utility Runtime UI Implementation
+
+Date: `2026-02-21`
+
+### Scope
+
+- Implemented auth/public/utility runtime route-family views in modern web runtime:
+  - public auth: `/`, `/Login`
+  - tenant auth: `/:organizationName`, `/:organizationName/Login`, `/:organizationName/Register`, `/:organizationName/Forgot`, `/:organizationName/Reset`, `/:organizationName/Verify`, `/:organizationName/LogOff`
+  - utility/system: `/redirectTo/:state`, `/:organizationName/AccessDenied`, `/:organizationName/PageNotFound`, `/:organizationName/Error/:errorCode`
+- Added `auth` shell mode with dedicated form/system page rendering and interaction states.
+- Added dedicated Playwright runtime evidence harness for this route family.
+- Promoted matching matrix domains to `verified` with timestamped parity notes.
+
+### Changed Files
+
+- `app/web/scripts/live-web-runtime.mjs`
+- `app/web/src/main.tsx`
+- `app/tests/e2e/scripts/auth-utility-runtime.spec.js`
+- `app/tests/e2e/scripts/run-auth-utility-runtime-evidence.mjs`
+- `app/tests/e2e/package.json`
+- `app/docs/parity/ui-route-matrix.csv`
+- `app/tests/e2e/visual/baselines/desktop/auth-utility-runtime.png`
+- `app/tests/e2e/visual/baselines/tablet/auth-utility-runtime.png`
+- `app/tests/e2e/visual/baselines/mobile/auth-utility-runtime.png`
+
+### Validation Commands
+
+Executed:
+
+```bash
+pnpm --dir app/tests/e2e runtime:auth-utility
+pnpm --dir app/tests/e2e runtime:wall-feed
+pnpm --dir app/tests/e2e runtime:employee-list
+pnpm --dir app/tests/e2e runtime:profile-settings
+pnpm --dir app/tests/e2e runtime:admin
+pnpm --dir app/tests/parity contract:ui
+pnpm --dir app verify
+```
+
+Results:
+
+- `pnpm --dir app/tests/e2e runtime:auth-utility`: `PASS` (unrestricted execution)
+- `pnpm --dir app/tests/e2e runtime:wall-feed`: `PASS` (regression)
+- `pnpm --dir app/tests/e2e runtime:employee-list`: `PASS` (regression)
+- `pnpm --dir app/tests/e2e runtime:profile-settings`: `PASS` (regression)
+- `pnpm --dir app/tests/e2e runtime:admin`: `PASS` (regression)
+- `pnpm --dir app/tests/parity contract:ui`: `PASS`
+- `pnpm --dir app verify`: `PASS` (expected sandbox smoke fallback for localhost bind restrictions)
+
+### Coverage Snapshot
+
+- UI matrix now: `81/115 verified`, `34/115 implemented`.
+- Verified domains include: `public`, `redirect`, `root`, `client.root`, `tenant.root`, `tenant.login`, `tenant.register`, `tenant.forgot`, `tenant.reset`, `tenant.verify`, `tenant.logoff`, `tenant.accessdenied`, `tenant.pagenotfound`, `tenant.error`, plus previously verified families.
