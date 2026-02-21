@@ -20,6 +20,7 @@
 5. `RECOV-R5-RECERTIFY`: release-readiness documents re-certified against latest runtime evidence and gate model.
 6. `RECOV-R5-PUBLISH-READY`: pre-publish command pack and rollback-oriented publish sequence refreshed (publish still unexecuted).
 7. `RECOV-R4-PLAN-HOLD` continuation checkpoint: re-ran readiness verification (`pnpm --dir app verify` + `pnpm --dir app deploy:cloudflare:check`) without executing any publish commands.
+8. `RECOV-R4-002`: added executable Cloudflare publish wrapper contracts (`deploy:cloudflare:plan*`, `deploy:cloudflare:publish*`) with explicit no-execute default and auth precheck.
 
 ## Blocked Tasks
 
@@ -31,6 +32,7 @@
 2. `RISK-RUNTIME-PORT-SANDBOX`: Runtime bind/connect inside sandbox is blocked (`EPERM`); browser/runtime verification requires unrestricted execution (`High`).
 3. `RISK-R4-CONTAINERS-BETA`: Cloudflare Containers runtime remains beta (`Medium`).
 4. `RISK-R4-PUBLISH-DEFERRED`: Publish remains intentionally deferred pending explicit user approval (`Low`).
+5. `RISK-R4-CLOUDFLARE-AUTH-SESSION`: Wrangler is not authenticated in this environment; publish commands require login/token before execution (`Medium`).
 
 ## Next 3 Tasks
 

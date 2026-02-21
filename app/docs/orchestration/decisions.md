@@ -196,3 +196,7 @@
 2. `D-RECOV-017` Publish approval hard hold remains active
 - Decision: Keep `RECOV-R4-PLAN-HOLD` active as the only open task and block all Cloudflare publish commands until explicit user approval.
 - Rationale: Preserves release control boundary while keeping the deploy command pack ready for immediate execution when approved.
+
+3. `D-RECOV-018` Cloudflare publish command-contract hardening
+- Decision: Introduce explicit Cloudflare wrapper commands for plan-only and execute modes (`deploy:cloudflare:plan*`, `deploy:cloudflare:publish*`) while keeping default behavior non-executing unless `--execute` is passed.
+- Rationale: Reduces operator ambiguity at release time and preserves publish hold policy until explicit approval.

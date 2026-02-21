@@ -5,7 +5,8 @@
     "infra/cloudflare/containers/wrangler.toml",
     "infra/cloudflare/containers/worker.ts",
     "infra/cloudflare/containers/Dockerfile.api",
-    "infra/cloudflare/.dev.vars.example"
+    "infra/cloudflare/.dev.vars.example",
+    "infra/scripts/cloudflare-publish.mjs"
   ],
   "fileMarkers": [
     {
@@ -18,7 +19,11 @@
     },
     {
       "path": "infra/cloudflare/README.md",
-      "markers": ["No Publish", "wrangler deploy", "deferred"]
+      "markers": ["No Publish", "wrangler deploy", "deferred", "deploy:cloudflare:plan", "deploy:cloudflare:publish"]
+    },
+    {
+      "path": "infra/scripts/cloudflare-publish.mjs",
+      "markers": ["--execute", "wrangler whoami", "wrangler pages deploy", "wrangler deploy"]
     }
   ]
 }

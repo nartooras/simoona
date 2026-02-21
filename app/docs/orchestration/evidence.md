@@ -1073,3 +1073,73 @@ Results:
 
 - `pnpm --dir app verify`: `PASS` (expected sandbox smoke fallback for localhost bind restrictions)
 - `pnpm --dir app deploy:cloudflare:check`: `PASS`
+
+## RECOV-R4-002 Cloudflare Publish Command-Contract Hardening
+
+Date: `2026-02-21`
+
+### Scope
+
+- Added Cloudflare deployment wrapper script with explicit plan-only mode and execute mode:
+  - default mode prints commands only,
+  - execute mode requires `--execute` and runs `wrangler whoami` precheck before deploy commands.
+- Added root command contracts for preview/staging/production plan and publish paths.
+- Updated Cloudflare artifact contract to require publish wrapper script markers.
+- Updated Cloudflare deployment README and publish execution plan to use the new command contracts.
+
+### Changed Files
+
+- `app/infra/scripts/cloudflare-publish.mjs`
+- `app/package.json`
+- `app/infra/contracts/cloudflare-deploy-contract.json`
+- `app/infra/cloudflare/README.md`
+- `app/docs/orchestration/publish-execution-plan.md`
+- `app/docs/orchestration/backlog.md`
+- `app/docs/orchestration/status.md`
+- `app/docs/orchestration/decisions.md`
+- `app/docs/orchestration/next-agent-handoff.md`
+
+### Validation Commands
+
+Executed:
+
+```bash
+pnpm --dir app deploy:cloudflare:plan
+pnpm --dir app deploy:cloudflare:plan:staging
+pnpm --dir app deploy:cloudflare:plan:production
+pnpm --dir app deploy:cloudflare:check
+npx wrangler whoami
+```
+
+Results:
+
+- `pnpm --dir app deploy:cloudflare:plan`: `PASS` (plan printed; no publish executed)
+- `pnpm --dir app deploy:cloudflare:plan:staging`: `PASS` (plan printed; no publish executed)
+- `pnpm --dir app deploy:cloudflare:plan:production`: `PASS` (plan printed; no publish executed)
+- `pnpm --dir app deploy:cloudflare:check`: `PASS`
+- `npx wrangler whoami`: `FAIL` (`Not logged in`, expected until publish auth is configured)
+
+### AGENTS Validation Pack Snapshot
+
+Executed:
+
+```bash
+pnpm --dir app install --force
+pnpm --dir app lint
+pnpm --dir app typecheck
+pnpm --dir app test
+pnpm --dir app smoke
+pnpm --dir app build
+pnpm --dir app verify
+pnpm --dir app/api build
+pnpm --dir app/api lint
+pnpm --dir app/api typecheck
+pnpm --dir app/api test
+git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'
+```
+
+Results:
+
+- `pnpm --dir app install --force`: `FAIL` (environment DNS restriction: `ENOTFOUND registry.npmjs.org`)
+- Remaining commands: `PASS` (smoke uses expected sandbox fallback for localhost bind restrictions)
+- `git ls-files | rg ...`: no tracked generated artifacts found (`rg` exit `1` indicates no matches)

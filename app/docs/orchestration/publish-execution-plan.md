@@ -19,8 +19,14 @@ Status: `READY_PENDING_USER_APPROVAL`
    - `pnpm --dir app verify`
 3. Verify API-specific health:
    - `pnpm --dir app/api test`
-4. Execute Cloudflare Pages publish (deferred, run only after explicit approval).
-5. Execute Cloudflare Containers publish (deferred, run only after explicit approval).
+4. Print publish plan for selected target environment:
+   - `pnpm --dir app deploy:cloudflare:plan`
+   - `pnpm --dir app deploy:cloudflare:plan:staging`
+   - `pnpm --dir app deploy:cloudflare:plan:production`
+5. Execute Cloudflare Pages + Containers publish via wrapper (deferred, run only after explicit approval):
+   - `pnpm --dir app deploy:cloudflare:publish`
+   - `pnpm --dir app deploy:cloudflare:publish:staging`
+   - `pnpm --dir app deploy:cloudflare:publish:production`
 6. Run post-publish smoke and parity checks.
 7. Record release evidence and rollback status.
 
@@ -30,6 +36,7 @@ Status: `READY_PENDING_USER_APPROVAL`
 pnpm --dir app deploy:cloudflare:check
 pnpm --dir app verify
 pnpm --dir app/api test
+pnpm --dir app deploy:cloudflare:plan
 ```
 
 Expected: all commands `PASS` immediately before any publish step.

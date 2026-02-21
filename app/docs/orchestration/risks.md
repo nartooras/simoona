@@ -34,6 +34,14 @@
 - Owner: `$platform-devops` + `$qa`
 - Status: `Open`
 
+5. `RISK-R4-CLOUDFLARE-AUTH-SESSION`
+- Severity: `Medium`
+- Description: Current environment is not authenticated in Wrangler (`npx wrangler whoami` returns `Not logged in`).
+- Impact: Publish commands cannot execute until login/token is configured.
+- Mitigation: Authenticate with `wrangler login` (interactive) or provide `CLOUDFLARE_API_TOKEN` in publish environment before running `deploy:cloudflare:publish*`.
+- Owner: `$platform-devops`
+- Status: `Open`
+
 ## Resolved
 
 1. `RISK-R0-STALE-ORCHESTRATION`

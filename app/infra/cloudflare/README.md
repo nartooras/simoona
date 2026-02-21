@@ -8,7 +8,7 @@ Scope for this phase:
 - document env var contracts and rollback-ready execution path
 - validate artifact completeness without running any publish command
 
-Explicitly out of scope:
+Explicitly out of scope in this hold mode:
 
 - `wrangler deploy`
 - `wrangler pages deploy`
@@ -28,6 +28,34 @@ Run from repository root:
 
 ```bash
 pnpm --dir app deploy:cloudflare:check
+```
+
+## Publish Plan Commands (Prepared, Not Executed)
+
+Run from repository root:
+
+```bash
+pnpm --dir app deploy:cloudflare:plan
+pnpm --dir app deploy:cloudflare:plan:staging
+pnpm --dir app deploy:cloudflare:plan:production
+```
+
+These commands print the exact publish commands that would run (`wrangler pages deploy` and `wrangler deploy`) but execute nothing.
+
+## Publish Commands (Approval Required)
+
+Run only after explicit user approval and authenticated Wrangler session:
+
+```bash
+pnpm --dir app deploy:cloudflare:publish
+pnpm --dir app deploy:cloudflare:publish:staging
+pnpm --dir app deploy:cloudflare:publish:production
+```
+
+Auth precheck:
+
+```bash
+npx wrangler whoami
 ```
 
 ## Publish (Deferred)

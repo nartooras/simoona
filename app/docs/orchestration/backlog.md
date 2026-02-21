@@ -29,3 +29,4 @@ Use `app/docs/orchestration/next-agent-handoff.md` as the immediate execution br
 15. `RECOV-R3-012` (`P0`, owner `$qa` + `$parity-analyst`): Add dedicated runtime evidence harness for `RECOV-R3-011` and promote UI matrix to `115/115 verified`.
 16. `RECOV-R5-RECERTIFY` (`P1`, owner `$qa` + `$parity-analyst`): Reconfirmed release-readiness docs and gates against latest runtime parity evidence (`R2 190/190`, `R3 115/115`).
 17. `RECOV-R5-PUBLISH-READY` (`P1`, owner `$platform-devops`): Refreshed final pre-publish command pack and rollback-oriented publish sequence; publish remains unexecuted until explicit approval.
+18. `RECOV-R4-002` (`P1`, owner `$platform-devops`): Added Cloudflare publish wrapper command contracts (`plan` and `publish`) so Pages+Containers release can run as a single explicit command path after approval.

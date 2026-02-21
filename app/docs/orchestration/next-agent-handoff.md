@@ -47,6 +47,9 @@ Hold publish execution until explicit user approval while preserving fully re-ce
 - Latest hold-phase verification refresh:
   - `pnpm --dir app verify` (`PASS`, expected sandbox smoke fallback)
   - `pnpm --dir app deploy:cloudflare:check` (`PASS`)
+- Cloudflare publish command contracts:
+  - `pnpm --dir app deploy:cloudflare:plan*` (prints exact commands, no execution)
+  - `pnpm --dir app deploy:cloudflare:publish*` (executes only after explicit approval)
 - UI matrix state:
   - `115/115` rows `verified`
 - API matrix state:
@@ -57,3 +60,8 @@ Hold publish execution until explicit user approval while preserving fully re-ce
 1. Cloudflare publish/deploy execution.
 2. DNS cutover or production traffic switching.
 3. Any rollback drill that mutates live traffic targets.
+
+## Known Immediate Blocker For Publish Execution
+
+- `npx wrangler whoami` currently returns `Not logged in` in this environment.
+- Publish commands are prepared but require auth via `wrangler login` or `CLOUDFLARE_API_TOKEN`.
