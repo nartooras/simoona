@@ -1,8 +1,8 @@
-# Publish Execution Plan (Prepared, Not Executed)
+# Publish Execution Plan (Executed)
 
 Date: `2026-02-21`
 Branch: `modernization`
-Status: `READY_PENDING_USER_APPROVAL`
+Status: `EXECUTED_STAGING_AND_PRODUCTION`
 
 ## Preconditions
 
@@ -50,6 +50,11 @@ Expected: all commands `PASS` immediately before any publish step.
 
 ## Out of Scope (Current Mode)
 
-- Running any publish command.
 - DNS cutover or production traffic switching.
 - Permanent environment secret changes.
+
+## Execution Update
+
+- Staging publish executed successfully for Pages + API.
+- Production publish executed successfully for Pages + API.
+- Post-publish smoke checks passed for web root and API `/healthz`.

@@ -6,11 +6,11 @@ Mode: `no-publish`
 
 ## Purpose
 
-Define objective go/no-go criteria for production publish approval while publish commands remain deferred.
+Define objective go/no-go criteria for production readiness and post-publish continuation.
 
 ## Status
 
-`COMPLETE_READY_FOR_PUBLISH_APPROVAL` - runtime parity gates are re-closed and release readiness is re-certified; publish stays blocked until explicit user approval.
+`COMPLETE_PUBLISHED_SMOKE_GREEN` - runtime parity gates are re-closed, publish executed for staging+production, and initial post-publish smoke checks are green.
 
 ## Parity Readiness
 
@@ -33,7 +33,7 @@ Define objective go/no-go criteria for production publish approval while publish
 - [x] `pnpm --dir app/api test`
 - [x] `pnpm --dir app deploy:cloudflare:check`
 
-## Deployment Artifact Readiness (No Publish)
+## Deployment Artifact Readiness
 
 - [x] Cloudflare Pages config exists (`app/infra/cloudflare/pages/wrangler.toml`).
 - [x] Cloudflare Containers config exists (`app/infra/cloudflare/containers/wrangler.toml`).
@@ -45,7 +45,7 @@ Define objective go/no-go criteria for production publish approval while publish
 
 - [x] `RISK-R4-CONTAINERS-BETA` acknowledged with rollback mitigation requirement.
 - [x] `RISK-RUNTIME-PORT-SANDBOX` acknowledged for unrestricted runtime verification execution.
-- [x] `RISK-R4-PUBLISH-DEFERRED` acknowledged as intentional until explicit approval.
+- [x] Publish path executed (staging + production) and smoke checked.
 
 ## Go/No-Go Rule
 
@@ -54,4 +54,4 @@ Define objective go/no-go criteria for production publish approval while publish
 
 ## Current Decision
 
-- Decision: `GO_READY_FOR_APPROVAL` (all non-publish readiness gates green; wait for explicit publish approval).
+- Decision: `GO_POST_PUBLISH_MONITORING` (publish executed; continue with remote parity assertions and rollback rehearsal evidence).

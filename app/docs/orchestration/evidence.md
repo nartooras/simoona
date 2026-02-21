@@ -1143,3 +1143,43 @@ Results:
 - `pnpm --dir app install --force`: `FAIL` (environment DNS restriction: `ENOTFOUND registry.npmjs.org`)
 - Remaining commands: `PASS` (smoke uses expected sandbox fallback for localhost bind restrictions)
 - `git ls-files | rg ...`: no tracked generated artifacts found (`rg` exit `1` indicates no matches)
+
+## RECOV-R4 Publish Execution (Staging + Production)
+
+Date: `2026-02-21`
+
+### Scope
+
+- Executed publish flow after auth and artifact blockers were resolved:
+  - refreshed Wrangler OAuth scopes (`containers/cloudchamber/connectivity`),
+  - created missing Pages project (`simoona-modern-web`),
+  - exported web static bundle to `app/web/dist` during build mode.
+- Published staging and production targets for web and API.
+- Ran post-publish smoke checks for web root and API health endpoint.
+
+### Commands Executed
+
+```bash
+npx wrangler login
+npx -y wrangler@4.67.0 login
+npx wrangler pages project create simoona-modern-web --production-branch main
+pnpm --dir app verify
+pnpm --dir app deploy:cloudflare:publish:staging
+pnpm --dir app deploy:cloudflare:publish:production
+curl -sS https://staging.simoona-modern-web.pages.dev
+curl -sS https://simoona-modern-api-staging.arturas-nikoncukas.workers.dev/healthz
+curl -sS https://simoona-modern-web.pages.dev
+curl -sS https://simoona-modern-api.arturas-nikoncukas.workers.dev/healthz
+```
+
+### Results
+
+- Staging Pages deployment: `https://staging.simoona-modern-web.pages.dev`
+- Staging API deployment: `https://simoona-modern-api-staging.arturas-nikoncukas.workers.dev`
+- Production Pages deployment: `https://simoona-modern-web.pages.dev`
+- Production API deployment: `https://simoona-modern-api.arturas-nikoncukas.workers.dev`
+- Smoke checks:
+  - staging web: `HTTP 200`
+  - staging API `/healthz`: `HTTP 200`
+  - production web: `HTTP 200`
+  - production API `/healthz`: `HTTP 200`

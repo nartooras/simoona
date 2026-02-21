@@ -2,31 +2,36 @@
 
 Date: `2026-02-21`
 Branch: `modernization`
-Mode: `publish-approval-hold`
+Mode: `post-publish-hardening`
 
 ## Objective
 
-Hold publish execution until explicit user approval while preserving fully re-certified readiness state:
-- API parity matrix is runtime-verified at `190/190`,
-- UI parity matrix is runtime-verified at `115/115`,
-- `R5` is `COMPLETE_READY_FOR_PUBLISH_APPROVAL`,
-- Cloudflare publish commands remain intentionally unexecuted.
+Continue post-publish hardening from deployed state:
+- staging and production publish commands executed,
+- staging and production smoke checks are green,
+- next target is remote parity assertions + rollback rehearsal evidence.
 
 ## Hard Rules
 
 1. Work only on branch `modernization`.
 2. Do not change `/src` or `/build`.
-3. Do not execute Cloudflare publish/deploy commands without explicit user approval.
+3. Any further publish/rollback commands must capture evidence and deployed version IDs.
 4. Keep all work scoped to `/app`.
 5. Any new parity claim must keep runtime evidence standard (no offline-only promotion).
 
 ## Immediate Execution Queue
 
-1. `RECOV-R4-PLAN-HOLD` (`$platform-devops`)
+1. `POST-R5-001` (`$qa`)
 - In scope:
-  - Keep publish/deploy path deferred until explicit user approval.
+  - Run route-family parity checks against deployed staging + production URLs.
 - Acceptance:
-  - No publish commands executed.
+  - Remote runtime assertions evidence is added to orchestration docs.
+
+2. `POST-R5-002` (`$platform-devops`)
+- In scope:
+  - Execute rollback rehearsal for Pages + API deploys and capture timings.
+- Acceptance:
+  - Rollback evidence recorded with command transcript + restored target versions.
 
 ## Current Working Evidence
 
@@ -47,9 +52,12 @@ Hold publish execution until explicit user approval while preserving fully re-ce
 - Latest hold-phase verification refresh:
   - `pnpm --dir app verify` (`PASS`, expected sandbox smoke fallback)
   - `pnpm --dir app deploy:cloudflare:check` (`PASS`)
-- Cloudflare publish command contracts:
-  - `pnpm --dir app deploy:cloudflare:plan*` (prints exact commands, no execution)
-  - `pnpm --dir app deploy:cloudflare:publish*` (executes only after explicit approval)
+- Staging deploys:
+  - `https://staging.simoona-modern-web.pages.dev`
+  - `https://simoona-modern-api-staging.arturas-nikoncukas.workers.dev`
+- Production deploys:
+  - `https://simoona-modern-web.pages.dev`
+  - `https://simoona-modern-api.arturas-nikoncukas.workers.dev`
 - UI matrix state:
   - `115/115` rows `verified`
 - API matrix state:
@@ -57,11 +65,5 @@ Hold publish execution until explicit user approval while preserving fully re-ce
 
 ## Explicitly Deferred
 
-1. Cloudflare publish/deploy execution.
-2. DNS cutover or production traffic switching.
-3. Any rollback drill that mutates live traffic targets.
-
-## Known Immediate Blocker For Publish Execution
-
-- `npx wrangler whoami` currently returns `Not logged in` in this environment.
-- Publish commands are prepared but require auth via `wrangler login` or `CLOUDFLARE_API_TOKEN`.
+1. DNS custom-domain traffic switching (outside current execution scope).
+2. Data migrations.

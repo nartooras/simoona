@@ -1,4 +1,4 @@
-# Cloudflare Deployment Artifacts (No Publish)
+# Cloudflare Deployment Artifacts and Publish Commands
 
 This directory contains Cloudflare deployment-ready artifacts for phase `R4`.
 
@@ -8,7 +8,7 @@ Scope for this phase:
 - document env var contracts and rollback-ready execution path
 - validate artifact completeness without running any publish command
 
-Explicitly out of scope in this hold mode:
+Explicitly out of scope in this repository mode:
 
 - `wrangler deploy`
 - `wrangler pages deploy`
@@ -60,4 +60,4 @@ npx wrangler whoami
 
 ## Publish (Deferred)
 
-Publishing is intentionally deferred by orchestration policy and must be triggered only after explicit user approval.
+Publish commands are available via `deploy:cloudflare:publish*` and should be executed only with explicit approval and evidence capture.

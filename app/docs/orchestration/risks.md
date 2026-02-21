@@ -10,15 +10,7 @@
 - Owner: `$platform-devops`
 - Status: `Open`
 
-2. `RISK-R4-PUBLISH-DEFERRED`
-- Severity: `Low`
-- Description: Publishing execution is intentionally deferred until explicit user approval.
-- Impact: Late discovery of deployment-specific integration issues is possible.
-- Mitigation: Prepare deployment artifacts now and run full staging publish rehearsal before production publish.
-- Owner: `$platform-devops`
-- Status: `Open`
-
-3. `RISK-R3-VISUAL-REFERENCE-COVERAGE`
+2. `RISK-R3-VISUAL-REFERENCE-COVERAGE`
 - Severity: `Medium`
 - Description: Runtime parity screenshots now cover all route families, but direct legacy production screenshot coverage is still limited for some historical pages.
 - Impact: Some visual confidence still relies on legacy source interpretation rather than side-by-side production captures.
@@ -26,7 +18,7 @@
 - Owner: `$parity-analyst` + `$qa`
 - Status: `Open`
 
-4. `RISK-RUNTIME-PORT-SANDBOX`
+3. `RISK-RUNTIME-PORT-SANDBOX`
 - Severity: `High`
 - Description: Local runtime bind/connect is blocked inside sandbox (`EPERM` on `127.0.0.1:*`), so runtime verification requires unrestricted execution.
 - Impact: Hard-gate runtime evidence commands cannot run in default sandbox mode.
@@ -34,12 +26,12 @@
 - Owner: `$platform-devops` + `$qa`
 - Status: `Open`
 
-5. `RISK-R4-CLOUDFLARE-AUTH-SESSION`
+4. `RISK-R5-REMOTE-UI-PARITY-UNVERIFIED`
 - Severity: `Medium`
-- Description: Current environment is not authenticated in Wrangler (`npx wrangler whoami` returns `Not logged in`).
-- Impact: Publish commands cannot execute until login/token is configured.
-- Mitigation: Authenticate with `wrangler login` (interactive) or provide `CLOUDFLARE_API_TOKEN` in publish environment before running `deploy:cloudflare:publish*`.
-- Owner: `$platform-devops`
+- Description: Remote web smoke checks are green, but full route-family UI parity suite has not yet been executed against deployed staging/production URLs.
+- Impact: Deployment could still hide route-level regressions not visible via health/basic smoke checks.
+- Mitigation: Run remote runtime route-family pack and capture evidence before final GO-LIVE declaration.
+- Owner: `$qa`
 - Status: `Open`
 
 ## Resolved
@@ -71,3 +63,11 @@
 7. `RISK-R3-PARTIAL-UI-PARITY`
 - Resolution date: `2026-02-21`
 - Outcome: UI parity matrix is re-closed at `115/115 verified` with route-family runtime evidence and screenshots.
+
+8. `RISK-R4-CLOUDFLARE-AUTH-SESSION`
+- Resolution date: `2026-02-21`
+- Outcome: Wrangler OAuth session refreshed with required Pages + Containers scopes and publish commands now execute.
+
+9. `RISK-R4-PUBLISH-DEFERRED`
+- Resolution date: `2026-02-21`
+- Outcome: Deferred publish risk retired after successful staging + production deploy execution and smoke checks.

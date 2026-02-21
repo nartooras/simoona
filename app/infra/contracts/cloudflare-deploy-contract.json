@@ -19,7 +19,7 @@
     },
     {
       "path": "infra/cloudflare/README.md",
-      "markers": ["No Publish", "wrangler deploy", "deferred", "deploy:cloudflare:plan", "deploy:cloudflare:publish"]
+      "markers": ["wrangler deploy", "deploy:cloudflare:plan", "deploy:cloudflare:publish", "explicit user approval"]
     },
     {
       "path": "infra/scripts/cloudflare-publish.mjs",

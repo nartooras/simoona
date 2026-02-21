@@ -200,3 +200,7 @@
 3. `D-RECOV-018` Cloudflare publish command-contract hardening
 - Decision: Introduce explicit Cloudflare wrapper commands for plan-only and execute modes (`deploy:cloudflare:plan*`, `deploy:cloudflare:publish*`) while keeping default behavior non-executing unless `--execute` is passed.
 - Rationale: Reduces operator ambiguity at release time and preserves publish hold policy until explicit approval.
+
+4. `D-RECOV-019` Execute publish transition
+- Decision: Move from publish-hold into staged+production publish execution after successful pre-publish verify and refreshed Wrangler OAuth scopes.
+- Rationale: User requested continuation; gates were green and deployment blockers were resolved in-sequence (auth scopes, Pages project existence, web dist artifact generation).

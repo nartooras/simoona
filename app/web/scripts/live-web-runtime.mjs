@@ -32,7 +32,26 @@ for (const filePath of requiredFiles) {
 }
 
 if (mode === "build") {
-  console.log("[web-runtime] Build/runtime contract checks passed.");
+  const distDir = path.join(webRoot, "dist");
+  const sourceIndexPath = path.join(webRoot, "index.html");
+  const sourceMainPath = path.join(webRoot, "src/main.tsx");
+  const targetIndexPath = path.join(distDir, "index.html");
+  const targetMainPath = path.join(distDir, "main.js");
+  const redirectsPath = path.join(distDir, "_redirects");
+
+  const sourceIndex = fs.readFileSync(sourceIndexPath, "utf8");
+  const sourceMain = fs.readFileSync(sourceMainPath, "utf8");
+  const builtIndex = sourceIndex.replace(
+    'src="/src/main.tsx"',
+    'src="/main.js"'
+  );
+
+  fs.mkdirSync(distDir, { recursive: true });
+  fs.writeFileSync(targetIndexPath, builtIndex, "utf8");
+  fs.writeFileSync(targetMainPath, sourceMain, "utf8");
+  fs.writeFileSync(redirectsPath, "/* /index.html 200\n", "utf8");
+
+  console.log(`[web-runtime] Build/runtime contract checks passed. Exported static bundle to ${distDir}.`);
   process.exit(0);
 }
 

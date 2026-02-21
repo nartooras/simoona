@@ -69,7 +69,6 @@ function buildCommands({ target, env }) {
   const pagesProjectName = process.env.CF_PAGES_PROJECT_NAME ?? "simoona-modern-web";
   const pagesBranch =
     env === "production" ? "main" : env === "staging" ? "staging" : "preview";
-  const pagesConfig = path.posix.join("infra", "cloudflare", "pages", "wrangler.toml");
   const containersConfig = path.posix.join(
     "infra",
     "cloudflare",
@@ -91,9 +90,7 @@ function buildCommands({ target, env }) {
         "--project-name",
         pagesProjectName,
         "--branch",
-        pagesBranch,
-        "--config",
-        pagesConfig
+        pagesBranch
       ]
     });
   }

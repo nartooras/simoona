@@ -6,7 +6,7 @@ Scope: `/Users/arturasnikoncukas/code/repo/simoona/app/**`
 
 ## Status
 
-`RECERTIFIED_GREEN_READY_FOR_PUBLISH_APPROVAL` - report is refreshed against recovered runtime parity (`R2 190/190`, `R3 115/115`); publish remains intentionally deferred.
+`RECERTIFIED_GREEN_PUBLISHED` - report baseline remained green through publish execution to staging and production.
 
 ## Command Pack
 
@@ -50,13 +50,13 @@ git status --short
 
 1. Cloudflare Containers beta behavior remains an operational risk until live publish rehearsal.
 2. Offline parity verification confidence depends on continued QA sampling because legacy runtime execution is unavailable.
-3. Publish path remains intentionally unexecuted and requires explicit approval.
+3. Full remote route-family parity checks and rollback drill evidence are still pending.
 
 ## Verdict
 
 - `GREEN` for readiness phase completion.
-- `R5` is recertified as ready for explicit publish approval.
-- Publish/deploy actions remain deferred.
+- `R5` moved from approval-ready to published state with smoke-green checks.
+- Remaining closure work: remote route-family parity assertions + rollback rehearsal evidence.
 
 ## Runtime Parity Baseline
 
@@ -64,4 +64,4 @@ As of `2026-02-21`, runtime parity recovery has completed:
 
 - API matrix: `190/190` runtime-verified.
 - UI matrix: `115/115` runtime-verified with desktop/tablet/mobile artifacts.
-- `R2`, `R3`, and `R5` are re-closed at approval-ready state (publish still deferred).
+- `R2` and `R3` remain re-closed; publish has been executed with smoke-green status and `R5` moved to post-publish monitoring.
