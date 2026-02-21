@@ -178,3 +178,21 @@
 5. `D-RECOV-013` Auth/Public/Utility route-family recovery completion
 - Decision: Mark `RECOV-R3-010` complete after implementing and runtime-verifying auth/public/utility routes (`/`, `/Login`, tenant auth routes, redirect, and utility/system routes).
 - Rationale: Replaces generic placeholder pages for core login/system flows and raises evidence-backed UI coverage before advancing to remaining client feature families.
+
+6. `D-RECOV-014` Remaining client route-family recovery completion
+- Decision: Mark `RECOV-R3-011` complete after implementing remaining client route families (`events`, `kudos`, `books`, `projects`, `service requests`, `vacation`, `committees`, `office`, `organizational structure`, `submit ticket`, and wall sub-routes).
+- Rationale: Removes last placeholder-heavy UI areas and delivers full mapped client feature coverage in runtime.
+
+7. `D-RECOV-015` UI parity re-closure after full runtime evidence
+- Decision: Mark `RECOV-R3-012` complete and re-close `R3` once UI matrix reaches `115/115 verified` with route-family runtime evidence and screenshots.
+- Rationale: Meets hard runtime parity gate criteria and restores publish-readiness progression with evidence-backed confidence.
+
+## 2026-02-21 (R5 Recertification)
+
+1. `D-RECOV-016` R5 recertification closure
+- Decision: Close `RECOV-R5-RECERTIFY` and set `R5` to `COMPLETE_READY_FOR_PUBLISH_APPROVAL` after reconciling readiness docs with latest runtime parity evidence (`R2 190/190`, `R3 115/115`).
+- Rationale: Removes stale contradictory phase messaging and aligns orchestration control files to the current verified runtime baseline.
+
+2. `D-RECOV-017` Publish approval hard hold remains active
+- Decision: Keep `RECOV-R4-PLAN-HOLD` active as the only open task and block all Cloudflare publish commands until explicit user approval.
+- Rationale: Preserves release control boundary while keeping the deploy command pack ready for immediate execution when approved.

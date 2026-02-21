@@ -6,7 +6,7 @@ Scope: `/Users/arturasnikoncukas/code/repo/simoona/app/**`
 
 ## Status
 
-`PENDING_R5_REFRESH` - this report is retained for historical command-pack evidence; runtime parity has now been recovered and a refreshed `R5` verdict is required.
+`RECERTIFIED_GREEN_READY_FOR_PUBLISH_APPROVAL` - report is refreshed against recovered runtime parity (`R2 190/190`, `R3 115/115`); publish remains intentionally deferred.
 
 ## Command Pack
 
@@ -44,7 +44,7 @@ git status --short
 | `pnpm --dir app/api test` | PASS | API + parity contract chain passed. |
 | `pnpm --dir app deploy:cloudflare:check` | PASS | Cloudflare artifact contract passed. |
 | `git ls-files \| rg ...` | PASS | No tracked generated artifacts (`rg` exit `1` expected for no matches). |
-| `git status --short` | PASS | Clean after commits in this cycle. |
+| `git status --short` | PASS | Working tree contains expected in-progress modernization updates prior to commit. |
 
 ## Residual Risks
 
@@ -55,12 +55,13 @@ git status --short
 ## Verdict
 
 - `GREEN` for readiness phase completion.
+- `R5` is recertified as ready for explicit publish approval.
 - Publish/deploy actions remain deferred.
 
-## Recovery Update
+## Runtime Parity Baseline
 
 As of `2026-02-21`, runtime parity recovery has completed:
 
 - API matrix: `190/190` runtime-verified.
 - UI matrix: `115/115` runtime-verified with desktop/tablet/mobile artifacts.
-- `R2` and `R3` re-closed; `R5` is ready for final re-gate decision refresh.
+- `R2`, `R3`, and `R5` are re-closed at approval-ready state (publish still deferred).

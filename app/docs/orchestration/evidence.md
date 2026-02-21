@@ -906,3 +906,146 @@ Results:
 
 - UI matrix now: `81/115 verified`, `34/115 implemented`.
 - Verified domains include: `public`, `redirect`, `root`, `client.root`, `tenant.root`, `tenant.login`, `tenant.register`, `tenant.forgot`, `tenant.reset`, `tenant.verify`, `tenant.logoff`, `tenant.accessdenied`, `tenant.pagenotfound`, `tenant.error`, plus previously verified families.
+
+## RECOV-R3-011 Remaining Client Route-Family Runtime UI Implementation
+
+Date: `2026-02-21`
+
+### Scope
+
+- Implemented route-specific runtime views for remaining client route families:
+  - `wall` sub-routes: `List/Create/Edit/Members`
+  - `events`: list/filter, create/edit, content, report list/details
+  - `kudos`: dashboard, achievement board, log list, user information
+  - `books`: list, add, edit
+  - `projects`: list, create, edit, details
+  - `service requests`: list
+  - `vacation`: list
+  - `committees`: list
+  - `office`: map/details + occupancy table
+  - `organizational structure`: hierarchy details + team table
+  - `submit ticket`: ticket submission form
+- Added shared client-feature renderer and interactions in web runtime for table/filter/sort/pagination and form save-state behavior.
+
+### Changed Files
+
+- `app/web/scripts/live-web-runtime.mjs`
+- `app/web/src/main.tsx`
+
+### Validation Commands
+
+Executed:
+
+```bash
+pnpm --dir app/web build
+pnpm --dir app/tests/e2e runtime:client-features
+```
+
+Results:
+
+- `pnpm --dir app/web build`: `PASS`
+- `pnpm --dir app/tests/e2e runtime:client-features`: `PASS` (unrestricted execution)
+
+## RECOV-R3-012 Remaining Client Route-Family Runtime Evidence + R3 Re-Closure
+
+Date: `2026-02-21`
+
+### Scope
+
+- Added dedicated runtime evidence harness for the `RECOV-R3-011` route-family implementation:
+  - `app/tests/e2e/scripts/client-features-runtime.spec.js`
+  - `app/tests/e2e/scripts/run-client-features-runtime-evidence.mjs`
+- Added npm script entry:
+  - `app/tests/e2e/package.json` -> `runtime:client-features`
+- Re-ran regression evidence for previously completed route families (`wall-feed`, `employee-list`, `profile-settings`, `auth-utility`, `admin`).
+- Promoted remaining UI matrix domains to `verified` and recalculated counters.
+
+### Changed Files
+
+- `app/tests/e2e/scripts/client-features-runtime.spec.js`
+- `app/tests/e2e/scripts/run-client-features-runtime-evidence.mjs`
+- `app/tests/e2e/package.json`
+- `app/docs/parity/ui-route-matrix.csv`
+- `app/tests/e2e/visual/baselines/desktop/client-features-runtime.png`
+- `app/tests/e2e/visual/baselines/tablet/client-features-runtime.png`
+- `app/tests/e2e/visual/baselines/mobile/client-features-runtime.png`
+
+### Validation Commands
+
+Executed:
+
+```bash
+pnpm --dir app/tests/e2e runtime:client-features
+pnpm --dir app/tests/e2e runtime:wall-feed
+pnpm --dir app/tests/e2e runtime:employee-list
+pnpm --dir app/tests/e2e runtime:profile-settings
+pnpm --dir app/tests/e2e runtime:auth-utility
+pnpm --dir app/tests/e2e runtime:admin
+pnpm --dir app/tests/parity contract:ui
+pnpm --dir app verify
+```
+
+Results:
+
+- `pnpm --dir app/tests/e2e runtime:client-features`: `PASS` (unrestricted execution)
+- `pnpm --dir app/tests/e2e runtime:wall-feed`: `PASS` (regression)
+- `pnpm --dir app/tests/e2e runtime:employee-list`: `PASS` (regression)
+- `pnpm --dir app/tests/e2e runtime:profile-settings`: `PASS` (regression)
+- `pnpm --dir app/tests/e2e runtime:auth-utility`: `PASS` (regression)
+- `pnpm --dir app/tests/e2e runtime:admin`: `PASS` (regression)
+- `pnpm --dir app/tests/parity contract:ui`: `PASS`
+- `pnpm --dir app verify`: `PASS` (expected sandbox smoke fallback for localhost bind restrictions)
+
+### Coverage Snapshot
+
+- UI matrix now: `115/115 verified`.
+- `R3` gate condition met and re-closed using runtime evidence.
+
+## RECOV-R5-RECERTIFY Release Readiness Re-Certification
+
+Date: `2026-02-21`
+
+### Scope
+
+- Reconciled orchestration control files and readiness artifacts with the recovered runtime parity baseline:
+  - API parity matrix: `190/190 verified`
+  - UI parity matrix: `115/115 verified`
+- Removed stale re-open messaging and set `R5` verdict to approval-ready while preserving publish hold.
+
+### Changed Files
+
+- `app/docs/orchestration/status.md`
+- `app/docs/orchestration/backlog.md`
+- `app/docs/orchestration/next-agent-handoff.md`
+- `app/docs/orchestration/release-readiness-checklist.md`
+- `app/docs/orchestration/final-verification-report.md`
+- `app/docs/orchestration/decisions.md`
+
+## RECOV-R5-PUBLISH-READY Final Pre-Publish Plan Refresh
+
+Date: `2026-02-21`
+
+### Scope
+
+- Refreshed publish execution plan with explicit pre-publish command pack and approval boundary wording.
+- Kept all publish/deploy commands unexecuted.
+
+### Changed Files
+
+- `app/docs/orchestration/publish-execution-plan.md`
+
+### Validation Commands
+
+Executed:
+
+```bash
+pnpm --dir app verify
+pnpm --dir app deploy:cloudflare:check
+git status --short
+```
+
+Results:
+
+- `pnpm --dir app verify`: `PASS` (expected sandbox smoke fallback for localhost bind restrictions)
+- `pnpm --dir app deploy:cloudflare:check`: `PASS`
+- `git status --short`: `PASS` (expected tracked/untracked modernization changes for current branch work)

@@ -1,6 +1,6 @@
 # Publish Execution Plan (Prepared, Not Executed)
 
-Date: `2026-02-20`
+Date: `2026-02-21`
 Branch: `modernization`
 Status: `READY_PENDING_USER_APPROVAL`
 
@@ -19,10 +19,20 @@ Status: `READY_PENDING_USER_APPROVAL`
    - `pnpm --dir app verify`
 3. Verify API-specific health:
    - `pnpm --dir app/api test`
-4. Execute Cloudflare Pages publish (deferred).
-5. Execute Cloudflare Containers publish (deferred).
+4. Execute Cloudflare Pages publish (deferred, run only after explicit approval).
+5. Execute Cloudflare Containers publish (deferred, run only after explicit approval).
 6. Run post-publish smoke and parity checks.
 7. Record release evidence and rollback status.
+
+## Pre-Publish Command Pack
+
+```bash
+pnpm --dir app deploy:cloudflare:check
+pnpm --dir app verify
+pnpm --dir app/api test
+```
+
+Expected: all commands `PASS` immediately before any publish step.
 
 ## Rollback-Oriented Controls
 

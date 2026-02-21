@@ -2,17 +2,15 @@
 
 Date: `2026-02-21`
 Branch: `modernization`
-Mode: `ui-parity-recovery`
+Mode: `publish-approval-hold`
 
 ## Objective
 
-Continue real UI parity implementation from current working baseline:
-- wall/feed route family is implemented with legacy-like shell and interactions,
-- employee-list route family is implemented with filter/sort/pagination,
-- profile/settings route families are implemented with route-specific views and interactions,
-- admin route family is implemented with route-specific list/form behaviors and runtime evidence,
-- auth/public/utility route family is implemented with route-specific auth/system views and runtime evidence,
-- remaining route families still require parity implementation.
+Hold publish execution until explicit user approval while preserving fully re-certified readiness state:
+- API parity matrix is runtime-verified at `190/190`,
+- UI parity matrix is runtime-verified at `115/115`,
+- `R5` is `COMPLETE_READY_FOR_PUBLISH_APPROVAL`,
+- Cloudflare publish commands remain intentionally unexecuted.
 
 ## Hard Rules
 
@@ -20,29 +18,13 @@ Continue real UI parity implementation from current working baseline:
 2. Do not change `/src` or `/build`.
 3. Do not execute Cloudflare publish/deploy commands without explicit user approval.
 4. Keep all work scoped to `/app`.
-5. Do not mark UI matrix rows `verified` without route-family runtime evidence.
+5. Any new parity claim must keep runtime evidence standard (no offline-only promotion).
 
 ## Immediate Execution Queue
 
-1. `RECOV-R3-011` (`$full-stack-developer`)
+1. `RECOV-R4-PLAN-HOLD` (`$platform-devops`)
 - In scope:
-  - Implement next remaining client route-family parity wave:
-    - `events`, `kudos`, `books`, `projects`, `service requests`, `vacation`,
-    - `committees`, `office`, `organizational structure`, `submit ticket`,
-    - remaining wall sub-routes (`create/edit/list/members`).
-- Acceptance:
-  - Legacy URLs unchanged.
-  - Route-family runtime evidence captured for implemented scope.
-
-2. `RECOV-R3-012` (`$qa` + `$parity-analyst`)
-- In scope:
-  - Add dedicated runtime evidence harness for `RECOV-R3-011` scope and promote only covered matrix rows.
-- Acceptance:
-  - No blanket `verified` promotion without route-family runtime evidence.
-
-3. `RECOV-R4-PLAN-HOLD` (`$platform-devops`)
-- In scope:
-  - Keep publish/deploy path deferred until `R3` completion.
+  - Keep publish/deploy path deferred until explicit user approval.
 - Acceptance:
   - No publish commands executed.
 
@@ -58,14 +40,17 @@ Continue real UI parity implementation from current working baseline:
   - `pnpm --dir app/tests/e2e runtime:admin` (`PASS` in unrestricted mode)
 - Auth/Public/Utility runtime evidence:
   - `pnpm --dir app/tests/e2e runtime:auth-utility` (`PASS` in unrestricted mode)
+- Client features runtime evidence:
+  - `pnpm --dir app/tests/e2e runtime:client-features` (`PASS` in unrestricted mode)
 - Foundation verification:
   - `pnpm --dir app verify` (`PASS`, with expected sandbox runtime smoke fallback)
 - UI matrix state:
-  - `81/115` rows `verified`
-  - `34/115` rows `implemented` (pending runtime evidence)
+  - `115/115` rows `verified`
+- API matrix state:
+  - `190/190` rows `verified`
 
 ## Explicitly Deferred
 
 1. Cloudflare publish/deploy execution.
-2. Final release-readiness (`R5`) gate.
-3. Any claim that UI parity is complete across all `115` routes.
+2. DNS cutover or production traffic switching.
+3. Any rollback drill that mutates live traffic targets.

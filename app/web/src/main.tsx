@@ -40,6 +40,7 @@ let runtimeData = {
   employeeList: null,
   profilePage: null,
   settingsPage: null,
+  clientFeaturePage: null,
   adminPage: null,
   authUtilityPage: null,
   shellMode: "app"
@@ -754,6 +755,216 @@ function renderAdminPage() {
   `;
 }
 
+function renderClientFeatureNavigation(clientPage) {
+  const navigation = Array.isArray(clientPage?.navigation) ? clientPage.navigation : [];
+  if (!navigation.length) {
+    return "";
+  }
+
+  return navigation
+    .map(
+      (item) =>
+        `<a class="client-nav-link${isPathActive(item.path, runtimeData.route) ? " is-active" : ""}" href="${escapeHtml(item.path)}">${escapeHtml(item.label)}</a>`
+    )
+    .join("");
+}
+
+function renderClientFeatureCards(clientPage) {
+  const cards = Array.isArray(clientPage?.cards) ? clientPage.cards : [];
+  if (!cards.length) {
+    return "";
+  }
+
+  return `
+    <section class="client-card-grid">
+      ${cards
+        .map(
+          (card) => `
+        <article class="client-card-item">
+          <strong>${escapeHtml(card.title || "")}</strong>
+          <p>${escapeHtml(card.subtitle || "")}</p>
+        </article>
+      `
+        )
+        .join("")}
+    </section>
+  `;
+}
+
+function renderClientFeatureTableFrame(clientPage) {
+  const table = clientPage?.table;
+  if (!table || !Array.isArray(table.columns)) {
+    return "";
+  }
+
+  const filterMarkup = clientPage.filterPlaceholder
+    ? `
+      <div class="client-toolbar">
+        <input
+          id="client-list-filter"
+          type="search"
+          placeholder="${escapeHtml(clientPage.filterPlaceholder)}"
+          aria-label="Client feature filter"
+        />
+      </div>
+    `
+    : "";
+
+  const primaryActionMarkup = clientPage.primaryAction
+    ? clientPage.primaryAction.path
+      ? `<a class="btn-primary" href="${escapeHtml(clientPage.primaryAction.path)}">${escapeHtml(clientPage.primaryAction.label || "Action")}</a>`
+      : `<button class="btn-primary" type="button" id="${escapeHtml(clientPage.primaryAction.id || "client-primary-action")}">${escapeHtml(clientPage.primaryAction.label || "Action")}</button>`
+    : "";
+
+  return `
+    ${filterMarkup}
+    <div class="client-table-actions">${primaryActionMarkup}</div>
+    <table class="client-table">
+      <thead>
+        <tr>
+          ${table.columns
+            .map((column) => {
+              if (column.sortable) {
+                return `<th><button class="client-sort-link" type="button" data-client-sort-key="${escapeHtml(column.key)}">${escapeHtml(column.label)}</button></th>`;
+              }
+              return `<th>${escapeHtml(column.label)}</th>`;
+            })
+            .join("")}
+        </tr>
+      </thead>
+      <tbody id="client-list-rows"></tbody>
+    </table>
+    <nav class="employee-pagination" id="client-list-pagination" aria-label="Client list pages"></nav>
+  `;
+}
+
+function renderClientFeatureForm(clientPage) {
+  const form = clientPage?.form;
+  if (!form || !Array.isArray(form.fields)) {
+    return "";
+  }
+
+  const fieldsMarkup = form.fields
+    .map((field) => {
+      if (field.type === "checkbox") {
+        return `
+          <label class="client-checkbox-row">
+            <input type="checkbox" id="${escapeHtml(field.id)}" ${field.checked ? "checked" : ""} />
+            <span>${escapeHtml(field.label)}</span>
+          </label>
+        `;
+      }
+
+      if (field.type === "select") {
+        return `
+          <label class="client-form-field">
+            <span>${escapeHtml(field.label)}${field.required ? ' <span class="text-danger">*</span>' : ""}</span>
+            <select id="${escapeHtml(field.id)}">
+              ${(field.options || [])
+                .map(
+                  (option) =>
+                    `<option value="${escapeHtml(option.value)}"${option.value === field.value ? " selected" : ""}>${escapeHtml(option.label)}</option>`
+                )
+                .join("")}
+            </select>
+          </label>
+        `;
+      }
+
+      if (field.type === "textarea") {
+        return `
+          <label class="client-form-field">
+            <span>${escapeHtml(field.label)}${field.required ? ' <span class="text-danger">*</span>' : ""}</span>
+            <textarea id="${escapeHtml(field.id)}">${escapeHtml(field.value || "")}</textarea>
+          </label>
+        `;
+      }
+
+      return `
+        <label class="client-form-field">
+          <span>${escapeHtml(field.label)}${field.required ? ' <span class="text-danger">*</span>' : ""}</span>
+          <input id="${escapeHtml(field.id)}" type="${escapeHtml(field.type || "text")}" value="${escapeHtml(field.value || "")}" />
+        </label>
+      `;
+    })
+    .join("");
+
+  const formId = escapeHtml(form.id || "client-form");
+
+  return `
+    <form id="${formId}" class="client-form">
+      ${fieldsMarkup}
+      <div class="client-form-actions">
+        <button id="${formId}-save" type="submit" class="btn-primary" disabled>${escapeHtml(form.saveLabel || "Save")}</button>
+        ${form.cancelPath ? `<a class="btn-secondary" href="${escapeHtml(form.cancelPath)}">Cancel</a>` : ""}
+      </div>
+      <div id="${formId}-feedback" class="profile-feedback" hidden>Information saved.</div>
+    </form>
+  `;
+}
+
+function renderClientFeatureDetails(clientPage) {
+  const sections = Array.isArray(clientPage?.details?.sections) ? clientPage.details.sections : [];
+  if (!sections.length) {
+    return "";
+  }
+
+  return `
+    <section class="client-details">
+      ${sections
+        .map(
+          (item) => `
+        <div class="client-details-row">
+          <span>${escapeHtml(item.label || "")}</span>
+          <strong>${escapeHtml(item.value || "")}</strong>
+        </div>
+      `
+        )
+        .join("")}
+    </section>
+  `;
+}
+
+function renderClientFeatureLinks(clientPage) {
+  const links = Array.isArray(clientPage?.links) ? clientPage.links : [];
+  if (!links.length) {
+    return "";
+  }
+
+  return `
+    <div class="client-link-row">
+      ${links
+        .map((link) => {
+          const className = link.kind === "primary" ? "btn-primary" : "btn-secondary";
+          return `<a class="${className}" href="${escapeHtml(link.path)}">${escapeHtml(link.label)}</a>`;
+        })
+        .join("")}
+    </div>
+  `;
+}
+
+function renderClientFeaturePage() {
+  const clientPage = runtimeData.clientFeaturePage;
+  if (!clientPage) {
+    return "";
+  }
+
+  return `
+    <section class="client-feature-panel" data-ui="legacy-client-feature" data-client-view="${escapeHtml(clientPage.view || "unknown")}">
+      <header class="client-feature-header">
+        <h1>${escapeHtml(clientPage.title || "Feature")}</h1>
+        ${clientPage.subtitle ? `<p>${escapeHtml(clientPage.subtitle)}</p>` : ""}
+      </header>
+      <nav class="client-nav">${renderClientFeatureNavigation(clientPage)}</nav>
+      ${renderClientFeatureCards(clientPage)}
+      ${renderClientFeatureDetails(clientPage)}
+      ${renderClientFeatureTableFrame(clientPage)}
+      ${renderClientFeatureForm(clientPage)}
+      ${renderClientFeatureLinks(clientPage)}
+    </section>
+  `;
+}
+
 function renderAuthUtilityPage() {
   const authPage = runtimeData.authUtilityPage;
   if (!authPage) {
@@ -862,6 +1073,8 @@ const hasWallFeed = runtimeData.wallFeed && Array.isArray(runtimeData.wallFeed.p
 const hasEmployeeList = runtimeData.employeeList && Array.isArray(runtimeData.employeeList.rows);
 const hasProfilePage = runtimeData.profilePage && typeof runtimeData.profilePage.mode === "string";
 const hasSettingsPage = runtimeData.settingsPage && typeof runtimeData.settingsPage.activeTab === "string";
+const hasClientFeaturePage =
+  runtimeData.clientFeaturePage && typeof runtimeData.clientFeaturePage.view === "string";
 const hasAdminPage = runtimeData.adminPage && typeof runtimeData.adminPage.view === "string";
 const hasAuthUtilityPage =
   runtimeData.authUtilityPage && typeof runtimeData.authUtilityPage.view === "string";
@@ -870,6 +1083,8 @@ const isAuthShell = runtimeData.shellMode === "auth";
 let mainContentMarkup = renderFallback();
 if (hasAuthUtilityPage) {
   mainContentMarkup = renderAuthUtilityPage();
+} else if (hasClientFeaturePage) {
+  mainContentMarkup = renderClientFeaturePage();
 } else if (hasEmployeeList) {
   mainContentMarkup = renderEmployeeList();
 } else if (hasAdminPage) {
@@ -1931,6 +2146,214 @@ root.innerHTML = `
       color: #35516a;
       font-size: 13px;
     }
+    .client-feature-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 12px;
+      max-width: 1200px;
+    }
+    .client-feature-header h1 {
+      margin: 2px 0 4px;
+      font-size: 34px;
+      color: #2f3438;
+      font-weight: 600;
+    }
+    .client-feature-header p {
+      margin: 0 0 8px;
+      color: #5b6876;
+      font-size: 13px;
+    }
+    .client-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #dde3e9;
+      padding-bottom: 8px;
+    }
+    .client-nav-link {
+      text-decoration: none;
+      color: #2c678f;
+      background: #f1f5f8;
+      border: 1px solid #d2dde7;
+      border-radius: 3px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .client-nav-link.is-active {
+      background: #2b84c4;
+      border-color: #2b84c4;
+      color: #fff;
+    }
+    .client-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .client-card-item {
+      border: 1px solid #d8e0e8;
+      background: #f8fbfe;
+      border-radius: 4px;
+      padding: 10px;
+      display: grid;
+      gap: 3px;
+    }
+    .client-card-item strong {
+      color: #27658f;
+      font-size: 14px;
+    }
+    .client-card-item p {
+      margin: 0;
+      color: #586574;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+    .client-details {
+      border: 1px solid #d8e1ea;
+      background: #fafcff;
+      margin-bottom: 10px;
+    }
+    .client-details-row {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      padding: 7px 10px;
+      border-top: 1px solid #e7edf3;
+    }
+    .client-details-row:first-child {
+      border-top: 0;
+    }
+    .client-details-row span {
+      color: #4c5b69;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .client-details-row strong {
+      color: #2f3942;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .client-toolbar {
+      max-width: 760px;
+      margin-bottom: 10px;
+    }
+    #client-list-filter {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid #c9d0d8;
+      background: #fbfdff;
+      padding: 0 10px;
+      color: #2f3438;
+      font-size: 13px;
+    }
+    .client-table-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+    .client-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #d3dae2;
+      background: #fff;
+    }
+    .client-table th,
+    .client-table td {
+      border: 1px solid #dbe1e8;
+      padding: 8px 10px;
+      font-size: 13px;
+      vertical-align: top;
+    }
+    .client-table th {
+      background: #f4f7fa;
+      color: #33597d;
+      font-weight: 600;
+      text-align: left;
+    }
+    .client-sort-link {
+      border: 0;
+      background: transparent;
+      color: #2c76af;
+      font-size: 13px;
+      padding: 0;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .client-form {
+      display: grid;
+      gap: 10px;
+      max-width: 760px;
+      margin-top: 6px;
+    }
+    .client-form-field {
+      display: grid;
+      gap: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #3f4b56;
+    }
+    .client-form-field input,
+    .client-form-field textarea,
+    .client-form-field select {
+      width: 100%;
+      border: 1px solid #c8d1d9;
+      background: #fff;
+      min-height: 36px;
+      padding: 6px 8px;
+      color: #2f3438;
+      font-size: 13px;
+    }
+    .client-form-field textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    .client-checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #3f4b56;
+      font-weight: 600;
+    }
+    .client-form-actions,
+    .client-link-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .client-link-row {
+      margin-top: 10px;
+    }
+    .client-table-actions-cell {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .client-status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 38px;
+      padding: 2px 8px;
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #ebf5ff;
+      color: #2c79b6;
+    }
+    .client-status-badge.is-positive {
+      background: #e7f6eb;
+      color: #2a7e49;
+    }
+    .client-status-badge.is-negative {
+      background: #f8ecec;
+      color: #9f3a3a;
+    }
     .route-placeholder {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -2096,6 +2519,12 @@ root.innerHTML = `
         grid-template-columns: 1fr;
       }
       .admin-card-grid {
+        grid-template-columns: 1fr;
+      }
+      .client-card-grid {
+        grid-template-columns: 1fr;
+      }
+      .client-details-row {
         grid-template-columns: 1fr;
       }
     }
@@ -2561,6 +2990,215 @@ function setupAuthUtilityInteractions() {
   }
 }
 
+function setupClientFeatureInteractions() {
+  const clientPage = runtimeData.clientFeaturePage;
+  if (!clientPage) {
+    return;
+  }
+
+  const tableConfig = clientPage.table;
+  const rowsContainer = root.querySelector("#client-list-rows");
+  const filterInput = root.querySelector("#client-list-filter");
+  const pagination = root.querySelector("#client-list-pagination");
+  const sortButtons = root.querySelectorAll(".client-sort-link");
+
+  if (tableConfig && rowsContainer && pagination) {
+    const columns = Array.isArray(tableConfig.columns) ? tableConfig.columns : [];
+    const sourceRows = Array.isArray(tableConfig.rows) ? tableConfig.rows : [];
+    const pageSize = Number(tableConfig.pageSize) > 0 ? Number(tableConfig.pageSize) : 8;
+    const firstSortable = columns.find((column) => column.sortable)?.key || columns[0]?.key || "";
+    const state = {
+      page: 1,
+      search: "",
+      sortKey: tableConfig.defaultSort?.key || firstSortable,
+      sortDirection: tableConfig.defaultSort?.direction === "desc" ? "desc" : "asc"
+    };
+
+    function compareValues(leftValue, rightValue) {
+      const left = String(leftValue ?? "").toLowerCase();
+      const right = String(rightValue ?? "").toLowerCase();
+      if (left === right) {
+        return 0;
+      }
+      return left < right ? -1 : 1;
+    }
+
+    function getVisibleRows() {
+      const searchTerm = state.search.trim().toLowerCase();
+      const filteredRows = sourceRows.filter((row) => {
+        if (!searchTerm) {
+          return true;
+        }
+
+        const lookup = columns
+          .filter((column) => column.key !== "actions")
+          .map((column) => String(row[column.key] || ""))
+          .join(" ")
+          .toLowerCase();
+        return lookup.includes(searchTerm);
+      });
+
+      if (!state.sortKey) {
+        return filteredRows;
+      }
+
+      const sortedRows = [...filteredRows].sort((leftRow, rightRow) => {
+        const compare = compareValues(leftRow[state.sortKey], rightRow[state.sortKey]);
+        return state.sortDirection === "asc" ? compare : compare * -1;
+      });
+
+      return sortedRows;
+    }
+
+    function renderPager(totalPages) {
+      const prevDisabled = state.page <= 1;
+      const nextDisabled = state.page >= totalPages;
+      const pageButtons = [];
+
+      for (let page = 1; page <= totalPages; page += 1) {
+        pageButtons.push(
+          `<button type="button" class="pager-btn${page === state.page ? " is-current" : ""}" data-client-page="${String(page)}">${String(page)}</button>`
+        );
+      }
+
+      pagination.innerHTML = `
+        <button type="button" class="pager-btn" data-client-page-nav="first" ${prevDisabled ? "disabled" : ""}>«</button>
+        <button type="button" class="pager-btn" data-client-page-nav="prev" ${prevDisabled ? "disabled" : ""}>‹</button>
+        ${pageButtons.join("")}
+        <button type="button" class="pager-btn" data-client-page-nav="next" ${nextDisabled ? "disabled" : ""}>›</button>
+        <button type="button" class="pager-btn" data-client-page-nav="last" ${nextDisabled ? "disabled" : ""}>»</button>
+      `;
+
+      for (const pageButton of pagination.querySelectorAll("[data-client-page]")) {
+        pageButton.addEventListener("click", () => {
+          state.page = Number(pageButton.getAttribute("data-client-page") || "1");
+          render();
+        });
+      }
+
+      pagination.querySelector('[data-client-page-nav="first"]')?.addEventListener("click", () => {
+        state.page = 1;
+        render();
+      });
+      pagination.querySelector('[data-client-page-nav="prev"]')?.addEventListener("click", () => {
+        state.page = Math.max(1, state.page - 1);
+        render();
+      });
+      pagination.querySelector('[data-client-page-nav="next"]')?.addEventListener("click", () => {
+        state.page = Math.min(totalPages, state.page + 1);
+        render();
+      });
+      pagination.querySelector('[data-client-page-nav="last"]')?.addEventListener("click", () => {
+        state.page = totalPages;
+        render();
+      });
+    }
+
+    function renderCell(row, column) {
+      if (column.key === "actions") {
+        return `<div class="client-table-actions-cell">${renderAdminActionButtons(row.actions)}</div>`;
+      }
+
+      const value = row[column.key];
+      if (column.badge) {
+        const normalized = String(value || "").trim().toLowerCase();
+        const positiveTokens = ["open", "active", "approved", "available", "yes", "in progress", "started"];
+        const negativeTokens = ["full", "on hold", "ended", "pending", "no", "closed"];
+        let badgeClass = "";
+        if (positiveTokens.includes(normalized)) {
+          badgeClass = " is-positive";
+        } else if (negativeTokens.includes(normalized)) {
+          badgeClass = " is-negative";
+        }
+        return `<span class="client-status-badge${badgeClass}">${escapeHtml(value || "")}</span>`;
+      }
+
+      if (column.link) {
+        const pathValue = row[`${column.key}Path`] || "";
+        if (pathValue) {
+          return `<a class="admin-cell-link" href="${escapeHtml(pathValue)}">${escapeHtml(value || "")}</a>`;
+        }
+      }
+
+      return escapeHtml(value || "");
+    }
+
+    function render() {
+      const visibleRows = getVisibleRows();
+      const totalPages = Math.max(1, Math.ceil(visibleRows.length / pageSize));
+      if (state.page > totalPages) {
+        state.page = totalPages;
+      }
+
+      const startIndex = (state.page - 1) * pageSize;
+      const pagedRows = visibleRows.slice(startIndex, startIndex + pageSize);
+      rowsContainer.innerHTML = pagedRows
+        .map(
+          (row) => `
+            <tr data-client-row-id="${escapeHtml(row.id || "")}">
+              ${columns.map((column) => `<td>${renderCell(row, column)}</td>`).join("")}
+            </tr>
+          `
+        )
+        .join("");
+
+      renderPager(totalPages);
+    }
+
+    for (const sortButton of sortButtons) {
+      sortButton.addEventListener("click", () => {
+        const sortKey = sortButton.getAttribute("data-client-sort-key");
+        if (!sortKey) {
+          return;
+        }
+        if (state.sortKey === sortKey) {
+          state.sortDirection = state.sortDirection === "asc" ? "desc" : "asc";
+        } else {
+          state.sortKey = sortKey;
+          state.sortDirection = "asc";
+        }
+        state.page = 1;
+        render();
+      });
+    }
+
+    if (filterInput) {
+      filterInput.addEventListener("input", () => {
+        state.search = filterInput.value;
+        state.page = 1;
+        render();
+      });
+    }
+
+    render();
+  }
+
+  const formId = clientPage.form?.id;
+  if (formId) {
+    const form = root.querySelector(`#${formId}`);
+    const saveButton = root.querySelector(`#${formId}-save`);
+    const feedback = root.querySelector(`#${formId}-feedback`);
+    if (form && saveButton && feedback) {
+      for (const field of form.querySelectorAll("input, textarea, select")) {
+        field.addEventListener("input", () => {
+          saveButton.removeAttribute("disabled");
+          feedback.setAttribute("hidden", "");
+        });
+        field.addEventListener("change", () => {
+          saveButton.removeAttribute("disabled");
+          feedback.setAttribute("hidden", "");
+        });
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        saveButton.setAttribute("disabled", "");
+        feedback.removeAttribute("hidden");
+      });
+    }
+  }
+}
+
 function setupAdminPageInteractions() {
   const adminPage = runtimeData.adminPage;
   if (!adminPage) {
@@ -2787,4 +3425,5 @@ setupEmployeeListInteractions();
 setupProfilePageInteractions();
 setupSettingsPageInteractions();
 setupAuthUtilityInteractions();
+setupClientFeatureInteractions();
 setupAdminPageInteractions();

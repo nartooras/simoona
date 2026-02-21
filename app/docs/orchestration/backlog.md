@@ -6,14 +6,7 @@ Use `app/docs/orchestration/next-agent-handoff.md` as the immediate execution br
 
 ## Priority Queue
 
-1. `RECOV-R3-011` (`P0`, owner `$full-stack-developer`): Implement next remaining client UI parity wave (`events`, `kudos`, `books`, `projects`, `service requests`, `vacation`, `committees`, `office`, `organizational structure`, `submit ticket`, and remaining wall sub-routes).
-   - Acceptance:
-     - Legacy URLs stay backward compatible.
-     - Runtime route-family evidence is added before any matrix promotion.
-2. `RECOV-R3-012` (`P0`, owner `$qa` + `$parity-analyst`): Re-run UI runtime evidence for `RECOV-R3-011` and promote only covered matrix rows.
-   - Acceptance:
-     - No blanket `verified` promotion without route-family runtime evidence.
-3. `RECOV-R4-PLAN-HOLD` (`P1`, owner `$platform-devops`): Keep publish/deploy execution deferred until `R3` gate is truly complete.
+1. `RECOV-R4-PLAN-HOLD` (`P0`, owner `$platform-devops`): Keep publish/deploy execution deferred until explicit user approval.
    - Acceptance:
      - No publish command execution.
 
@@ -32,3 +25,7 @@ Use `app/docs/orchestration/next-agent-handoff.md` as the immediate execution br
 11. `RECOV-R3-008` (`P0`, owner `$full-stack-developer` + `$qa`): Admin route-family runtime implementation with list/form interactions and runtime evidence harness.
 12. `RECOV-R3-009` (`P0`, owner `$qa` + `$parity-analyst`): Re-run implemented-family runtime evidence and re-baseline matrix rows to evidence-backed verification only.
 13. `RECOV-R3-010` (`P0`, owner `$full-stack-developer` + `$qa`): Implement Auth/Public/Utility route-family runtime views + dedicated runtime evidence harness.
+14. `RECOV-R3-011` (`P0`, owner `$full-stack-developer`): Implement remaining client route-family runtime views (`events`, `kudos`, `books`, `projects`, `service requests`, `vacation`, `committees`, `office`, `organizational structure`, `submit ticket`, and wall sub-routes).
+15. `RECOV-R3-012` (`P0`, owner `$qa` + `$parity-analyst`): Add dedicated runtime evidence harness for `RECOV-R3-011` and promote UI matrix to `115/115 verified`.
+16. `RECOV-R5-RECERTIFY` (`P1`, owner `$qa` + `$parity-analyst`): Reconfirmed release-readiness docs and gates against latest runtime parity evidence (`R2 190/190`, `R3 115/115`).
+17. `RECOV-R5-PUBLISH-READY` (`P1`, owner `$platform-devops`): Refreshed final pre-publish command pack and rollback-oriented publish sequence; publish remains unexecuted until explicit approval.

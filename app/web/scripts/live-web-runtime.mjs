@@ -725,6 +725,79 @@ const kudosBasketDonations = [
   { id: "don-3", fullName: "Jona Jonaite", amount: "3", date: "2026-02-12, 09:24" }
 ];
 
+const clientFeatureNavigationTemplate = [
+  { id: "wall", label: "Walls", path: "/default/Wall/List" },
+  { id: "events", label: "Events", path: "/default/Events/List" },
+  { id: "kudos", label: "Kudos", path: "/default/Kudos" },
+  { id: "books", label: "Books", path: "/default/Books/List" },
+  { id: "projects", label: "Projects", path: "/default/Projects/List" },
+  { id: "requests", label: "Service Requests", path: "/default/ServiceRequests/List" },
+  { id: "vacation", label: "Vacation", path: "/default/Vacation/List" },
+  { id: "committees", label: "Committees", path: "/default/Committees/List" },
+  { id: "office", label: "Office Map", path: "/default/Office" },
+  { id: "structure", label: "Org Structure", path: "/default/OrganizationalStructure" },
+  { id: "ticket", label: "Submit Ticket", path: "/default/SubmitTicket" }
+];
+
+const wallDiscoverRows = [
+  { id: "wall-1", name: "Official", members: "459", posts: "1612", privacy: "Public", actions: [{ label: "Follow" }, { label: "Open", path: "/default/Wall/Feed?wall=official" }] },
+  { id: "wall-2", name: "Techies", members: "312", posts: "918", privacy: "Public", actions: [{ label: "Follow" }, { label: "Open", path: "/default/Wall/Feed?wall=techies" }] },
+  { id: "wall-3", name: "Vilnius Geeks", members: "227", posts: "604", privacy: "Public", actions: [{ label: "Follow" }, { label: "Open", path: "/default/Wall/Feed?wall=vilnius-geeks" }] },
+  { id: "wall-4", name: "DANK MEMES", members: "178", posts: "1240", privacy: "Public", actions: [{ label: "Follow" }, { label: "Open", path: "/default/Wall/Feed?wall=dank-memes" }] },
+  { id: "wall-5", name: "Private Leadership", members: "12", posts: "188", privacy: "Private", actions: [{ label: "Request invite" }] }
+];
+
+const wallMembersRows = [
+  { id: "wm-1", fullName: "Arturas Nikoncukas", fullNamePath: "/default/Profiles/1", role: "Owner", joined: "2024-01-10", actions: [{ label: "Profile", path: "/default/Profiles/1" }] },
+  { id: "wm-2", fullName: "Jona Jonaite", fullNamePath: "/default/Profiles/9", role: "Moderator", joined: "2024-02-11", actions: [{ label: "Profile", path: "/default/Profiles/9" }] },
+  { id: "wm-3", fullName: "Rytis Kvedaras", fullNamePath: "/default/Profiles/6", role: "Member", joined: "2024-06-08", actions: [{ label: "Profile", path: "/default/Profiles/6" }] }
+];
+
+const eventRows = [
+  { id: "event-1", title: "FPV drone workshop", type: "Leisure", office: "Vilnius", startDate: "2026-02-25 17:30", actions: [{ label: "Open", path: "/default/Events/EventContent/event-1" }, { label: "Edit", path: "/default/Events/Edit/event-1" }] },
+  { id: "event-2", title: "ISTQB Advanced hub", type: "Hub", office: "Vilnius", startDate: "2026-02-26 12:00", actions: [{ label: "Open", path: "/default/Events/EventContent/event-2" }, { label: "Edit", path: "/default/Events/Edit/event-2" }] },
+  { id: "event-3", title: "Kids celebration", type: "Leisure", office: "Kaunas", startDate: "2026-05-16 10:00", actions: [{ label: "Open", path: "/default/Events/EventContent/event-3" }, { label: "Edit", path: "/default/Events/Edit/event-3" }] }
+];
+
+const eventReportRows = [
+  { id: "report-1", eventTitle: "FPV drone workshop", participants: "46", attendance: "39", completion: "85%", actions: [{ label: "Open report", path: "/default/Events/Report/Report/Event/event-1" }] },
+  { id: "report-2", eventTitle: "ISTQB Advanced hub", participants: "31", attendance: "27", completion: "87%", actions: [{ label: "Open report", path: "/default/Events/Report/Report/Event/event-2" }] }
+];
+
+const kudosLogRows = [
+  { id: "kudos-log-1", date: "2026-02-18", from: "Jona Jonaite", to: "Arturas Nikoncukas", amount: "+3", reason: "Great mentoring" },
+  { id: "kudos-log-2", date: "2026-02-14", from: "Vardenis Pavardenis", to: "Arturas Nikoncukas", amount: "+2", reason: "Documentation help" },
+  { id: "kudos-log-3", date: "2026-02-09", from: "Monika Radzeviciute", to: "Arturas Nikoncukas", amount: "+1", reason: "Interview support" }
+];
+
+const booksRows = [
+  { id: "book-1", title: "Domain-Driven Design", author: "Eric Evans", office: "Vilnius", status: "Available", actions: [{ label: "Edit", path: "/default/Books/Edit/book-1/office-1" }] },
+  { id: "book-2", title: "Clean Architecture", author: "Robert C. Martin", office: "Kaunas", status: "Borrowed", actions: [{ label: "Edit", path: "/default/Books/Edit/book-2/office-2" }] },
+  { id: "book-3", title: "Refactoring", author: "Martin Fowler", office: "Vilnius", status: "Available", actions: [{ label: "Edit", path: "/default/Books/Edit/book-3/office-1" }] }
+];
+
+const projectRows = [
+  { id: "project-1", name: "Simoona modernization", owner: "Arturas Nikoncukas", state: "Active", dueDate: "2026-06-30", actions: [{ label: "Details", path: "/default/Projects/Details/project-1" }, { label: "Edit", path: "/default/Projects/Edit/project-1" }] },
+  { id: "project-2", name: "Office map redesign", owner: "Jona Jonaite", state: "Planning", dueDate: "2026-05-15", actions: [{ label: "Details", path: "/default/Projects/Details/project-2" }, { label: "Edit", path: "/default/Projects/Edit/project-2" }] },
+  { id: "project-3", name: "Kudos campaigns", owner: "Monika Radzeviciute", state: "On hold", dueDate: "2026-08-01", actions: [{ label: "Details", path: "/default/Projects/Details/project-3" }, { label: "Edit", path: "/default/Projects/Edit/project-3" }] }
+];
+
+const serviceRequestRows = [
+  { id: "sr-1001", type: "IT support", priority: "High", status: "In progress", created: "2026-02-18", assignee: "Rytis Kvedaras" },
+  { id: "sr-1002", type: "Office access", priority: "Medium", status: "Open", created: "2026-02-17", assignee: "Jona Jonaite" },
+  { id: "sr-1003", type: "Equipment", priority: "Low", status: "Resolved", created: "2026-02-12", assignee: "Ausris Kiela" }
+];
+
+const vacationRows = [
+  { id: "vac-1", period: "2026-07-01 - 2026-07-10", days: "8", status: "Approved", approver: "Vardenis Pavardenis" },
+  { id: "vac-2", period: "2026-08-14 - 2026-08-21", days: "6", status: "Pending", approver: "Vardenis Pavardenis" }
+];
+
+const committeeRows = [
+  { id: "com-1", name: "Kudos Committee", members: "9", lead: "Jona Jonaite", nextMeeting: "2026-02-28" },
+  { id: "com-2", name: "Culture Committee", members: "7", lead: "Monika Radzeviciute", nextMeeting: "2026-03-03" }
+];
+
 function sendJson(response, statusCode, payload) {
   response.writeHead(statusCode, { "content-type": "application/json; charset=utf-8" });
   response.end(JSON.stringify(payload));
@@ -1155,6 +1228,656 @@ function buildAuthUtilityPagePayload(pathname, routeMatch) {
         message: "The requested operation failed."
       },
       links: [{ label: "Back to wall feed", path: `${tenantAuthBase}/Wall/Feed`, kind: "secondary" }]
+    };
+  }
+
+  return null;
+}
+
+function withTenantPath(path, tenantSegment) {
+  if (!path) {
+    return path;
+  }
+
+  return path.replace(/^\/default(?=\/|$)/, `/${tenantSegment}`);
+}
+
+function withTenantNavigation(tenantSegment) {
+  return clientFeatureNavigationTemplate.map((item) => ({
+    ...item,
+    path: withTenantPath(item.path, tenantSegment)
+  }));
+}
+
+function withTenantActions(actions, tenantSegment) {
+  if (!Array.isArray(actions)) {
+    return [];
+  }
+
+  return actions.map((action) => ({
+    ...action,
+    path: withTenantPath(action.path, tenantSegment)
+  }));
+}
+
+function withTenantRows(rows, tenantSegment) {
+  if (!Array.isArray(rows)) {
+    return [];
+  }
+
+  return rows.map((row) => {
+    const next = { ...row };
+    if (row.actions) {
+      next.actions = withTenantActions(row.actions, tenantSegment);
+    }
+    for (const key of Object.keys(next)) {
+      if (key.endsWith("Path") && typeof next[key] === "string") {
+        next[key] = withTenantPath(next[key], tenantSegment);
+      }
+    }
+    return next;
+  });
+}
+
+function buildClientFeaturePagePayload(pathname) {
+  const segments = getPathSegments(pathname);
+  if (segments.length < 2) {
+    return null;
+  }
+
+  const tenantSegment = segments[0] || "default";
+  const basePath = `/${tenantSegment}`;
+  const section = (segments[1] || "").toLowerCase();
+  const subSection = (segments[2] || "").toLowerCase();
+  const defaults = {
+    shellMode: "app",
+    navigation: withTenantNavigation(tenantSegment)
+  };
+
+  if (section === "wall") {
+    if (subSection === "create" || (subSection === "edit" && segments[3])) {
+      return {
+        ...defaults,
+        domain: "wall",
+        view: "wall-manage",
+        title: "Discover walls",
+        subtitle: subSection === "create" ? "Create wall" : `Edit wall ${segments[3]}`,
+        form: {
+          id: "client-wall-form",
+          saveLabel: "Save",
+          cancelPath: `${basePath}/Wall/List`,
+          fields: [
+            { id: "wall-name", label: "Wall name", type: "text", required: true, value: subSection === "create" ? "" : "Techies" },
+            { id: "wall-description", label: "Description", type: "textarea", value: "Sharing engineering knowledge and community updates." },
+            { id: "wall-privacy", label: "Private wall", type: "checkbox", checked: subSection !== "create" }
+          ]
+        }
+      };
+    }
+
+    if (subSection === "members") {
+      return {
+        ...defaults,
+        domain: "wall",
+        view: "wall-members",
+        title: "Wall members",
+        subtitle: "Manage wall membership and visibility.",
+        filterPlaceholder: "Type to filter members...",
+        table: {
+          columns: [
+            { key: "fullName", label: "Name", sortable: true, link: true },
+            { key: "role", label: "Role", sortable: true },
+            { key: "joined", label: "Joined", sortable: true },
+            { key: "actions", label: "Actions" }
+          ],
+          rows: withTenantRows(wallMembersRows, tenantSegment),
+          pageSize: 8,
+          defaultSort: { key: "fullName", direction: "asc" }
+        }
+      };
+    }
+
+    if (subSection === "list") {
+      return {
+        ...defaults,
+        domain: "wall",
+        view: "wall-list",
+        title: "Discover walls",
+        subtitle: "Browse, follow, and manage walls.",
+        filterPlaceholder: "Type to filter walls...",
+        primaryAction: { label: "Create new", path: `${basePath}/Wall/Create` },
+        table: {
+          columns: [
+            { key: "name", label: "Wall", sortable: true },
+            { key: "members", label: "Members", sortable: true },
+            { key: "posts", label: "Posts", sortable: true },
+            { key: "privacy", label: "Privacy", sortable: true },
+            { key: "actions", label: "Actions" }
+          ],
+          rows: withTenantRows(wallDiscoverRows, tenantSegment),
+          pageSize: 8,
+          defaultSort: { key: "name", direction: "asc" }
+        }
+      };
+    }
+  }
+
+  if (section === "events") {
+    if (subSection === "addevent" || (subSection === "edit" && segments[3])) {
+      return {
+        ...defaults,
+        domain: "events",
+        view: "events-manage",
+        title: "Events",
+        subtitle: subSection === "addevent" ? "Create event" : `Edit event ${segments[3]}`,
+        form: {
+          id: "client-events-form",
+          saveLabel: subSection === "addevent" ? "Create" : "Update",
+          cancelPath: `${basePath}/Events/List`,
+          fields: [
+            { id: "event-title", label: "Title", type: "text", required: true, value: subSection === "addevent" ? "" : "FPV drone workshop" },
+            {
+              id: "event-type",
+              label: "Type",
+              type: "select",
+              value: "Leisure",
+              options: [
+                { value: "Leisure", label: "Leisure" },
+                { value: "Hub", label: "Hub" },
+                { value: "Training", label: "Training" }
+              ]
+            },
+            { id: "event-start-date", label: "Start date", type: "date", required: true, value: "2026-02-25" },
+            { id: "event-start-time", label: "Start time", type: "time", required: true, value: "17:30" },
+            { id: "event-description", label: "Description", type: "textarea", value: "Event details and participation conditions." }
+          ]
+        }
+      };
+    }
+
+    if (subSection === "eventcontent" && segments[3]) {
+      return {
+        ...defaults,
+        domain: "events",
+        view: "events-content",
+        title: "Event details",
+        subtitle: `Event id: ${segments[3]}`,
+        details: {
+          sections: [
+            { label: "Title", value: "FPV drone workshop" },
+            { label: "Type", value: "Leisure" },
+            { label: "Office", value: "Vilnius" },
+            { label: "Date", value: "2026-02-25 17:30" },
+            { label: "Description", value: "Hands-on workshop for FPV drone assembly and flying basics." }
+          ]
+        },
+        links: [
+          { label: "Edit event", path: `${basePath}/Events/Edit/${segments[3]}`, kind: "primary" },
+          { label: "Back to list", path: `${basePath}/Events/List`, kind: "secondary" }
+        ]
+      };
+    }
+
+    if (subSection === "report" && (segments[3] || "").toLowerCase() === "report") {
+      return {
+        ...defaults,
+        domain: "events",
+        view: "events-report-details",
+        title: "Event report",
+        subtitle: `Event id: ${segments[5] || "event-1"}`,
+        details: {
+          sections: [
+            { label: "Participants", value: "46" },
+            { label: "Attendance", value: "39" },
+            { label: "Completion", value: "85%" },
+            { label: "Feedback", value: "Most participants rated workshop as very useful." }
+          ]
+        },
+        links: [{ label: "Back to reports", path: `${basePath}/Events/Report`, kind: "secondary" }]
+      };
+    }
+
+    if (subSection === "report") {
+      return {
+        ...defaults,
+        domain: "events",
+        view: "events-report-list",
+        title: "Event reports",
+        subtitle: "Participation and attendance summaries.",
+        filterPlaceholder: "Type to filter reports...",
+        table: {
+          columns: [
+            { key: "eventTitle", label: "Event", sortable: true },
+            { key: "participants", label: "Participants", sortable: true },
+            { key: "attendance", label: "Attendance", sortable: true },
+            { key: "completion", label: "Completion", sortable: true },
+            { key: "actions", label: "Actions" }
+          ],
+          rows: withTenantRows(eventReportRows, tenantSegment),
+          pageSize: 8,
+          defaultSort: { key: "eventTitle", direction: "asc" }
+        }
+      };
+    }
+
+    const filteredType = subSection === "list" ? segments[3] : "";
+    const filteredOffice = (segments[4] || "").toLowerCase() === "office" ? segments[5] : "";
+    const filteredRows = eventRows.filter((row) => {
+      const typeOk = filteredType ? row.type.toLowerCase() === String(filteredType).toLowerCase() : true;
+      const officeOk = filteredOffice ? row.office.toLowerCase() === String(filteredOffice).toLowerCase() : true;
+      return typeOk && officeOk;
+    });
+
+    return {
+      ...defaults,
+      domain: "events",
+      view: filteredType || filteredOffice ? "events-list-filtered" : "events-list",
+      title: "Events",
+      subtitle:
+        filteredType || filteredOffice
+          ? `Filtered view${filteredType ? `: ${filteredType}` : ""}${filteredOffice ? ` / ${filteredOffice}` : ""}`
+          : "Browse all events.",
+      filterPlaceholder: "Type to filter events...",
+      primaryAction: { label: "Create new", path: `${basePath}/Events/AddEvent` },
+      table: {
+        columns: [
+          { key: "title", label: "Title", sortable: true },
+          { key: "type", label: "Type", sortable: true },
+          { key: "office", label: "Office", sortable: true },
+          { key: "startDate", label: "Start date", sortable: true },
+          { key: "actions", label: "Actions" }
+        ],
+        rows: withTenantRows(filteredRows.length ? filteredRows : eventRows, tenantSegment),
+        pageSize: 8,
+        defaultSort: { key: "title", direction: "asc" }
+      }
+    };
+  }
+
+  if (section === "kudos") {
+    if (subSection === "kudosachievementboard") {
+      return {
+        ...defaults,
+        domain: "kudos",
+        view: "kudos-achievement-board",
+        title: "Kudos achievement board",
+        subtitle: "Top recognition this quarter.",
+        table: {
+          columns: [
+            { key: "user", label: "User", sortable: true },
+            { key: "points", label: "Points", sortable: true },
+            { key: "badge", label: "Badge", sortable: true }
+          ],
+          rows: [
+            { id: "kb-1", user: "Arturas Nikoncukas", points: "100", badge: "Legend" },
+            { id: "kb-2", user: "Jokubas Rimasovskis", points: "85", badge: "Champion" },
+            { id: "kb-3", user: "Anglius Stanislovaitis", points: "74", badge: "Contributor" }
+          ],
+          pageSize: 8,
+          defaultSort: { key: "points", direction: "desc" }
+        }
+      };
+    }
+
+    if (subSection === "kudosloglist") {
+      return {
+        ...defaults,
+        domain: "kudos",
+        view: "kudos-log-list",
+        title: "Kudos log",
+        subtitle: `History${segments[3] ? ` for user ${segments[3]}` : ""}.`,
+        filterPlaceholder: "Type to filter logs...",
+        table: {
+          columns: [
+            { key: "date", label: "Date", sortable: true },
+            { key: "from", label: "From", sortable: true },
+            { key: "to", label: "To", sortable: true },
+            { key: "amount", label: "Kudos", sortable: true },
+            { key: "reason", label: "Reason", sortable: true }
+          ],
+          rows: kudosLogRows,
+          pageSize: 8,
+          defaultSort: { key: "date", direction: "desc" }
+        }
+      };
+    }
+
+    if (subSection === "kudosuserinformation") {
+      return {
+        ...defaults,
+        domain: "kudos",
+        view: "kudos-user-information",
+        title: "Kudos user information",
+        subtitle: `User${segments[3] ? ` id: ${segments[3]}` : ""}`,
+        details: {
+          sections: [
+            { label: "User", value: "Arturas Nikoncukas" },
+            { label: "Current balance", value: "742" },
+            { label: "Received this month", value: "31" },
+            { label: "Given this month", value: "18" },
+            { label: "Most common badge", value: "Team player" }
+          ]
+        },
+        links: [
+          { label: "Open kudos log", path: `${basePath}/Kudos/KudosLogList/${segments[3] || "1"}`, kind: "secondary" }
+        ]
+      };
+    }
+
+    return {
+      ...defaults,
+      domain: "kudos",
+      view: "kudos-dashboard",
+      title: "Kudos",
+      subtitle: "Recognition feed and shortcuts.",
+      cards: [
+        { id: "dashboard-points", title: "Your points", subtitle: "742" },
+        { id: "dashboard-given", title: "Given this month", subtitle: "18" },
+        { id: "dashboard-received", title: "Received this month", subtitle: "31" }
+      ],
+      links: [
+        { label: "Achievement board", path: `${basePath}/Kudos/KudosAchievementBoard`, kind: "primary" },
+        { label: "Kudos log", path: `${basePath}/Kudos/KudosLogList`, kind: "secondary" }
+      ]
+    };
+  }
+
+  if (section === "books") {
+    if (subSection === "add" || (subSection === "edit" && segments[3])) {
+      return {
+        ...defaults,
+        domain: "books",
+        view: "books-manage",
+        title: "Books",
+        subtitle: subSection === "add" ? "Add book" : `Edit book ${segments[3]}`,
+        form: {
+          id: "client-books-form",
+          saveLabel: "Save",
+          cancelPath: `${basePath}/Books/List`,
+          fields: [
+            { id: "book-title", label: "Title", type: "text", required: true, value: subSection === "add" ? "" : "Domain-Driven Design" },
+            { id: "book-author", label: "Author", type: "text", required: true, value: subSection === "add" ? "" : "Eric Evans" },
+            {
+              id: "book-office",
+              label: "Office",
+              type: "select",
+              value: "office-1",
+              options: [
+                { value: "office-1", label: "Vilnius" },
+                { value: "office-2", label: "Kaunas" }
+              ]
+            },
+            { id: "book-notes", label: "Notes", type: "textarea", value: "Available in office library." }
+          ]
+        }
+      };
+    }
+
+    return {
+      ...defaults,
+      domain: "books",
+      view: "books-list",
+      title: "Books",
+      subtitle: "Office library catalog.",
+      filterPlaceholder: "Type to filter books...",
+      primaryAction: { label: "Add new", path: `${basePath}/Books/Add` },
+      table: {
+        columns: [
+          { key: "title", label: "Title", sortable: true },
+          { key: "author", label: "Author", sortable: true },
+          { key: "office", label: "Office", sortable: true },
+          { key: "status", label: "Status", sortable: true, badge: true },
+          { key: "actions", label: "Actions" }
+        ],
+        rows: withTenantRows(booksRows, tenantSegment),
+        pageSize: 8,
+        defaultSort: { key: "title", direction: "asc" }
+      }
+    };
+  }
+
+  if (section === "projects") {
+    if (subSection === "create" || (subSection === "edit" && segments[3])) {
+      return {
+        ...defaults,
+        domain: "projects",
+        view: "projects-manage",
+        title: "Projects",
+        subtitle: subSection === "create" ? "Create project" : `Edit project ${segments[3]}`,
+        form: {
+          id: "client-projects-form",
+          saveLabel: "Save",
+          cancelPath: `${basePath}/Projects/List`,
+          fields: [
+            { id: "project-name", label: "Project name", type: "text", required: true, value: subSection === "create" ? "" : "Simoona modernization" },
+            { id: "project-owner", label: "Owner", type: "text", required: true, value: "Arturas Nikoncukas" },
+            {
+              id: "project-state",
+              label: "State",
+              type: "select",
+              value: "Active",
+              options: [
+                { value: "Active", label: "Active" },
+                { value: "Planning", label: "Planning" },
+                { value: "On hold", label: "On hold" }
+              ]
+            },
+            { id: "project-due", label: "Due date", type: "date", value: "2026-06-30" },
+            { id: "project-description", label: "Description", type: "textarea", value: "Parity implementation and release preparation." }
+          ]
+        }
+      };
+    }
+
+    if (subSection === "details" && segments[3]) {
+      return {
+        ...defaults,
+        domain: "projects",
+        view: "projects-details",
+        title: "Project details",
+        subtitle: `Project id: ${segments[3]}`,
+        details: {
+          sections: [
+            { label: "Name", value: "Simoona modernization" },
+            { label: "Owner", value: "Arturas Nikoncukas" },
+            { label: "State", value: "Active" },
+            { label: "Due date", value: "2026-06-30" },
+            { label: "Summary", value: "Deliver 1:1 parity across API and web with deploy readiness." }
+          ]
+        },
+        links: [
+          { label: "Edit project", path: `${basePath}/Projects/Edit/${segments[3]}`, kind: "primary" },
+          { label: "Back to list", path: `${basePath}/Projects/List`, kind: "secondary" }
+        ]
+      };
+    }
+
+    return {
+      ...defaults,
+      domain: "projects",
+      view: "projects-list",
+      title: "Projects",
+      subtitle: "Track cross-team project progress.",
+      filterPlaceholder: "Type to filter projects...",
+      primaryAction: { label: "Create new", path: `${basePath}/Projects/Create` },
+      table: {
+        columns: [
+          { key: "name", label: "Name", sortable: true },
+          { key: "owner", label: "Owner", sortable: true },
+          { key: "state", label: "State", sortable: true, badge: true },
+          { key: "dueDate", label: "Due date", sortable: true },
+          { key: "actions", label: "Actions" }
+        ],
+        rows: withTenantRows(projectRows, tenantSegment),
+        pageSize: 8,
+        defaultSort: { key: "name", direction: "asc" }
+      }
+    };
+  }
+
+  if (section === "servicerequests") {
+    return {
+      ...defaults,
+      domain: "service-requests",
+      view: "service-requests-list",
+      title: "Service requests",
+      subtitle: "Track internal support requests and SLA states.",
+      filterPlaceholder: "Type to filter service requests...",
+      table: {
+        columns: [
+          { key: "id", label: "Ticket", sortable: true },
+          { key: "type", label: "Type", sortable: true },
+          { key: "priority", label: "Priority", sortable: true, badge: true },
+          { key: "status", label: "Status", sortable: true, badge: true },
+          { key: "created", label: "Created", sortable: true },
+          { key: "assignee", label: "Assignee", sortable: true }
+        ],
+        rows: serviceRequestRows,
+        pageSize: 8,
+        defaultSort: { key: "created", direction: "desc" }
+      }
+    };
+  }
+
+  if (section === "vacation") {
+    return {
+      ...defaults,
+      domain: "vacation",
+      view: "vacation-list",
+      title: "Vacation requests",
+      subtitle: "Planned and approved vacation periods.",
+      filterPlaceholder: "Type to filter vacations...",
+      primaryAction: { label: "Request vacation", path: `${basePath}/Vacation/List` },
+      table: {
+        columns: [
+          { key: "period", label: "Period", sortable: true },
+          { key: "days", label: "Days", sortable: true },
+          { key: "status", label: "Status", sortable: true, badge: true },
+          { key: "approver", label: "Approver", sortable: true }
+        ],
+        rows: vacationRows,
+        pageSize: 8,
+        defaultSort: { key: "period", direction: "desc" }
+      }
+    };
+  }
+
+  if (section === "committees") {
+    return {
+      ...defaults,
+      domain: "committees",
+      view: "committees-list",
+      title: "Committees",
+      subtitle: "Committee ownership and upcoming meetings.",
+      filterPlaceholder: "Type to filter committees...",
+      table: {
+        columns: [
+          { key: "name", label: "Committee", sortable: true },
+          { key: "members", label: "Members", sortable: true },
+          { key: "lead", label: "Lead", sortable: true },
+          { key: "nextMeeting", label: "Next meeting", sortable: true }
+        ],
+        rows: committeeRows,
+        pageSize: 8,
+        defaultSort: { key: "name", direction: "asc" }
+      }
+    };
+  }
+
+  if (section === "office") {
+    return {
+      ...defaults,
+      domain: "office",
+      view: "office-map",
+      title: "Office map",
+      subtitle: "Room occupancy and floor selection.",
+      details: {
+        sections: [
+          { label: "Office", value: "Vilnius HQ" },
+          { label: "Floor", value: "2" },
+          { label: "Room", value: "214" },
+          { label: "Coordinates", value: "x: 143 / y: 212" },
+          { label: "Selected user", value: "Arturas Nikoncukas" }
+        ]
+      },
+      table: {
+        columns: [
+          { key: "room", label: "Room", sortable: true },
+          { key: "capacity", label: "Capacity", sortable: true },
+          { key: "occupied", label: "Occupied", sortable: true },
+          { key: "status", label: "Status", sortable: true, badge: true }
+        ],
+        rows: [
+          { id: "rm-1", room: "214", capacity: "12", occupied: "8", status: "Open" },
+          { id: "rm-2", room: "215", capacity: "8", occupied: "8", status: "Full" },
+          { id: "rm-3", room: "220", capacity: "10", occupied: "3", status: "Open" }
+        ],
+        pageSize: 8,
+        defaultSort: { key: "room", direction: "asc" }
+      }
+    };
+  }
+
+  if (section === "organizationalstructure") {
+    return {
+      ...defaults,
+      domain: "organizational-structure",
+      view: "organizational-structure",
+      title: "Organizational structure",
+      subtitle: "Reporting hierarchy and team composition.",
+      details: {
+        sections: [
+          { label: "CEO", value: "Vardenis Pavardenis" },
+          { label: "Technology", value: "Engineering, QA, Infrastructure" },
+          { label: "Operations", value: "Finance, Office Management, Support" },
+          { label: "People", value: "HR, Recruitment, Culture Committee" }
+        ]
+      },
+      table: {
+        columns: [
+          { key: "team", label: "Team", sortable: true },
+          { key: "lead", label: "Lead", sortable: true },
+          { key: "members", label: "Members", sortable: true }
+        ],
+        rows: [
+          { id: "team-1", team: "Engineering", lead: "Arturas Nikoncukas", members: "24" },
+          { id: "team-2", team: "QA", lead: "Margarita Morke", members: "8" },
+          { id: "team-3", team: "Support", lead: "Nikolajus Rimka", members: "12" }
+        ],
+        pageSize: 8,
+        defaultSort: { key: "team", direction: "asc" }
+      }
+    };
+  }
+
+  if (section === "submitticket") {
+    return {
+      ...defaults,
+      domain: "submit-ticket",
+      view: "submit-ticket",
+      title: "Submit ticket",
+      subtitle: "Create support request for internal teams.",
+      form: {
+        id: "client-submit-ticket-form",
+        saveLabel: "Submit",
+        cancelPath: `${basePath}/Wall/Feed`,
+        fields: [
+          {
+            id: "ticket-type",
+            label: "Type",
+            type: "select",
+            value: "IT support",
+            options: [
+              { value: "IT support", label: "IT support" },
+              { value: "Office access", label: "Office access" },
+              { value: "Equipment", label: "Equipment" }
+            ]
+          },
+          { id: "ticket-subject", label: "Subject", type: "text", required: true, value: "" },
+          { id: "ticket-description", label: "Description", type: "textarea", required: true, value: "" },
+          { id: "ticket-priority", label: "High priority", type: "checkbox", checked: false }
+        ]
+      }
     };
   }
 
@@ -1750,6 +2473,7 @@ function renderIndexForRoute(pathname) {
   const employeeList = buildEmployeeListPayload(pathname);
   const profilePage = buildProfilePagePayload(pathname);
   const settingsPage = buildSettingsPagePayload(pathname);
+  const clientFeaturePage = buildClientFeaturePagePayload(pathname);
   const adminPage = buildAdminPagePayload(pathname);
   const authUtilityPage = buildAuthUtilityPagePayload(pathname, routeMatch);
   const shellMode = authUtilityPage?.shellMode || "app";
@@ -1775,6 +2499,7 @@ function renderIndexForRoute(pathname) {
     employeeList,
     profilePage,
     settingsPage,
+    clientFeaturePage,
     adminPage,
     authUtilityPage
   };

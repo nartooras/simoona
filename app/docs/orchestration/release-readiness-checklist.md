@@ -10,7 +10,7 @@ Define objective go/no-go criteria for production publish approval while publish
 
 ## Status
 
-`REOPENED_READY_FOR_RE_GATE` - `R2` and `R3` are re-closed with runtime-backed evidence; final `R5` gate decision must now be re-run from this updated baseline.
+`COMPLETE_READY_FOR_PUBLISH_APPROVAL` - runtime parity gates are re-closed and release readiness is re-certified; publish stays blocked until explicit user approval.
 
 ## Parity Readiness
 
@@ -54,4 +54,4 @@ Define objective go/no-go criteria for production publish approval while publish
 
 ## Current Decision
 
-- Decision: `PENDING_RE_GATE` (execute final `R5` QA/reviewer decision cycle using updated runtime parity evidence).
+- Decision: `GO_READY_FOR_APPROVAL` (all non-publish readiness gates green; wait for explicit publish approval).

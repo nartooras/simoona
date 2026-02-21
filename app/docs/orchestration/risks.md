@@ -2,15 +2,7 @@
 
 ## Active
 
-1. `RISK-R3-PARTIAL-UI-PARITY`
-- Severity: `High`
-- Description: Wall/feed, employee-list, profile/settings, admin, and auth/public/utility route families are implemented with runtime evidence; remaining client route families still need true parity implementation.
-- Impact: Releasing now would create visible regressions and missing behavior across major feature areas.
-- Mitigation: Continue route-family implementation waves and only promote matrix rows with route-family runtime evidence.
-- Owner: `$full-stack-developer` + `$qa` + `$parity-analyst`
-- Status: `Open`
-
-2. `RISK-R4-CONTAINERS-BETA`
+1. `RISK-R4-CONTAINERS-BETA`
 - Severity: `Medium`
 - Description: Cloudflare Containers runtime remains beta and requires explicit rollback discipline.
 - Impact: Deployment stability and change safety can degrade without hardened rollback controls.
@@ -18,7 +10,7 @@
 - Owner: `$platform-devops`
 - Status: `Open`
 
-3. `RISK-R4-PUBLISH-DEFERRED`
+2. `RISK-R4-PUBLISH-DEFERRED`
 - Severity: `Low`
 - Description: Publishing execution is intentionally deferred until explicit user approval.
 - Impact: Late discovery of deployment-specific integration issues is possible.
@@ -26,15 +18,15 @@
 - Owner: `$platform-devops`
 - Status: `Open`
 
-4. `RISK-R3-VISUAL-REFERENCE-COVERAGE`
+3. `RISK-R3-VISUAL-REFERENCE-COVERAGE`
 - Severity: `Medium`
-- Description: Visual baseline now includes wall/feed, employee-list, profile/settings, and admin runtime screens, but other route families remain uncovered by direct legacy visual references.
-- Impact: Partial visual parity despite passing route-level checks.
-- Mitigation: Continue adding screenshot/GIF reference docs per major UI area (profile/admin/settings/etc.) before final `R5` readiness sign-off.
+- Description: Runtime parity screenshots now cover all route families, but direct legacy production screenshot coverage is still limited for some historical pages.
+- Impact: Some visual confidence still relies on legacy source interpretation rather than side-by-side production captures.
+- Mitigation: Continue collecting legacy reference captures where available and attach to parity docs before final publish.
 - Owner: `$parity-analyst` + `$qa`
 - Status: `Open`
 
-5. `RISK-RUNTIME-PORT-SANDBOX`
+4. `RISK-RUNTIME-PORT-SANDBOX`
 - Severity: `High`
 - Description: Local runtime bind/connect is blocked inside sandbox (`EPERM` on `127.0.0.1:*`), so runtime verification requires unrestricted execution.
 - Impact: Hard-gate runtime evidence commands cannot run in default sandbox mode.
@@ -67,3 +59,7 @@
 6. `RISK-R3-PLAYWRIGHT-INSTALL-DNS`
 - Resolution date: `2026-02-21`
 - Outcome: Approved unrestricted install path stabilized local Playwright runner for browser interaction assertions.
+
+7. `RISK-R3-PARTIAL-UI-PARITY`
+- Resolution date: `2026-02-21`
+- Outcome: UI parity matrix is re-closed at `115/115 verified` with route-family runtime evidence and screenshots.
