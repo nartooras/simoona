@@ -44,6 +44,9 @@ Hold publish execution until explicit user approval while preserving fully re-ce
   - `pnpm --dir app/tests/e2e runtime:client-features` (`PASS` in unrestricted mode)
 - Foundation verification:
   - `pnpm --dir app verify` (`PASS`, with expected sandbox runtime smoke fallback)
+- Latest hold-phase verification refresh:
+  - `pnpm --dir app verify` (`PASS`, expected sandbox smoke fallback)
+  - `pnpm --dir app deploy:cloudflare:check` (`PASS`)
 - UI matrix state:
   - `115/115` rows `verified`
 - API matrix state:

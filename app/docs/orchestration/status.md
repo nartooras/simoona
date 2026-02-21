@@ -19,6 +19,7 @@
 4. `RECOV-R3-005` to `RECOV-R3-012`: UI recovery route families implemented and runtime-verified; UI matrix promoted to `115/115 verified`.
 5. `RECOV-R5-RECERTIFY`: release-readiness documents re-certified against latest runtime evidence and gate model.
 6. `RECOV-R5-PUBLISH-READY`: pre-publish command pack and rollback-oriented publish sequence refreshed (publish still unexecuted).
+7. `RECOV-R4-PLAN-HOLD` continuation checkpoint: re-ran readiness verification (`pnpm --dir app verify` + `pnpm --dir app deploy:cloudflare:check`) without executing any publish commands.
 
 ## Blocked Tasks
 
