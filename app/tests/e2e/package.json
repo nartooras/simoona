@@ -5,6 +5,12 @@
   "scripts": {
     "visual:baseline": "node ./scripts/verify-visual-baseline.mjs",
     "runtime:smoke": "node ./scripts/verify-runtime-smoke.mjs",
+    "runtime:wall-feed": "node ./scripts/run-wall-feed-runtime-evidence.mjs",
+    "runtime:ui:matrix": "node ./scripts/run-ui-route-matrix-runtime-evidence.mjs",
     "test": "pnpm visual:baseline && pnpm runtime:smoke"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.52.0",
+    "playwright": "1.52.0"
   }
 }

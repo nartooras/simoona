@@ -18,12 +18,20 @@
 - Owner: `$platform-devops`
 - Status: `Open`
 
-3. `RISK-R2-OFFLINE-VERIFICATION-CONFIDENCE`
+3. `RISK-R3-VISUAL-REFERENCE-COVERAGE`
 - Severity: `Medium`
-- Description: Legacy runtime cannot be executed, so API/UI verification relies on offline evidence instead of live runtime comparison.
-- Impact: Some behavioral differences may be detected later than with dual-runtime replay.
-- Mitigation: Enforce offline verification triad for each `verified` item (legacy source reference + parity fixture/baseline + passing modern contract/e2e assertion), and require QA sign-off.
-- Owner: `$qa` + `$parity-analyst`
+- Description: Visual baseline now includes wall/feed and employee-list screens, but other major UI areas remain uncovered by direct legacy visual references.
+- Impact: Partial visual parity despite passing route-level checks.
+- Mitigation: Continue adding screenshot/GIF reference docs per major UI area (profile/admin/settings/etc.) before final `R5` readiness sign-off.
+- Owner: `$parity-analyst` + `$qa`
+- Status: `Open`
+
+4. `RISK-RUNTIME-PORT-SANDBOX`
+- Severity: `High`
+- Description: Local runtime bind/connect is blocked inside sandbox (`EPERM` on `127.0.0.1:*`), so runtime verification requires unrestricted execution.
+- Impact: Hard-gate runtime evidence commands cannot run in default sandbox mode.
+- Mitigation: Run runtime parity evidence commands in unrestricted mode and keep fallback contracts for constrained environments.
+- Owner: `$platform-devops` + `$qa`
 - Status: `Open`
 
 ## Resolved
@@ -39,3 +47,15 @@
 3. `RISK-R3-UI-COVERAGE`
 - Resolution date: `2026-02-20`
 - Outcome: UI route matrix promoted to `verified` coverage (`115/115`) under offline verification policy with executable UI contract assertions.
+
+4. `RISK-R2-OFFLINE-VERIFICATION-CONFIDENCE`
+- Resolution date: `2026-02-21`
+- Outcome: API/UI offline-only verification has been replaced by runtime-backed matrix assertions and visual evidence (`R2 190/190`, `R3 115/115` verified).
+
+5. `RISK-CORR-FALSE_READY_STATE`
+- Resolution date: `2026-02-21`
+- Outcome: `R2` and `R3` were re-opened and re-closed using hard runtime parity evidence, removing false-ready gate status.
+
+6. `RISK-R3-PLAYWRIGHT-INSTALL-DNS`
+- Resolution date: `2026-02-21`
+- Outcome: Approved unrestricted install path stabilized local Playwright runner for browser interaction assertions.

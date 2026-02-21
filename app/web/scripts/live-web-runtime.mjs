@@ -55,12 +55,70 @@ function sendJson(response, statusCode, payload) {
   response.end(JSON.stringify(payload));
 }
 
+function buildWallFeedPayload(pathname) {
+  const isWallFeedRoute =
+    pathname.toLowerCase().includes("/wall/feed") ||
+    pathname.toLowerCase().endsWith("/wall") ||
+    pathname.toLowerCase().endsWith("/wall/all");
+
+  if (!isWallFeedRoute) {
+    return null;
+  }
+
+  return {
+    sections: {
+      leftNav: {
+        groups: [
+          {
+            title: "Walls",
+            items: ["Main feed", "My walls", "Following", "Discover walls"]
+          },
+          {
+            title: "Activities",
+            items: ["Kudos", "Events", "Birthdays", "Lotteries"]
+          },
+          {
+            title: "Company",
+            items: ["Users", "Organizational chart", "Offices"]
+          }
+        ]
+      },
+      rightSidebar: [
+        { title: "Upcoming events", items: ["Monthly standup", "Release retro", "Town hall"] },
+        { title: "Kudos leaderboard", items: ["Anna", "Mantas", "Greta"] },
+        { title: "Birthdays", items: ["Jonas", "Ieva"] }
+      ]
+    },
+    posts: [
+      {
+        id: "post-1",
+        author: "Asta V.",
+        timestamp: "Today 08:42",
+        content:
+          "Wall/feed recovery baseline is now tied to runtime evidence and visual snapshots for desktop, tablet, and mobile.",
+        likeCount: 4,
+        commentCount: 2
+      },
+      {
+        id: "post-2",
+        author: "Mindaugas P.",
+        timestamp: "Today 07:15",
+        content:
+          "This card intentionally mirrors legacy density: compact meta rows, subtle dividers, and inline interaction controls.",
+        likeCount: 2,
+        commentCount: 1
+      }
+    ]
+  };
+}
+
 function renderIndexForRoute(pathname) {
   const isAuthenticated = pathname !== "/account/login";
   const layout = createTopLevelLayoutState(false);
   const auth = resolveAuthBoundary(isAuthenticated);
   const routeMatch = resolveLegacyRouteCatchup(pathname);
   const tenantRoute = resolveTenantRoute(pathname, "default");
+  const wallFeed = buildWallFeedPayload(pathname);
   const runtimePayload = {
     route: pathname,
     title: layout.title,
@@ -69,7 +127,8 @@ function renderIndexForRoute(pathname) {
     auth,
     routeMatch,
     tenantRoute,
-    motion: layout.motion
+    motion: layout.motion,
+    wallFeed
   };
 
   return indexTemplate.replace(

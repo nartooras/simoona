@@ -1,12 +1,12 @@
 # Next Agent Handoff Plan
 
-Date: `2026-02-20`
+Date: `2026-02-21`
 Branch: `modernization`
-Mode: `approval-gated-publish`
+Mode: `release-readiness-re-gate`
 
 ## Objective
 
-Wait for explicit user approval before any publish/deploy execution and keep readiness artifacts current.
+Execute `R5` re-gate after runtime parity recovery completion and keep publish execution deferred until explicit user approval.
 
 ## Hard Rules
 
@@ -14,34 +14,37 @@ Wait for explicit user approval before any publish/deploy execution and keep rea
 2. Do not change `/src` or `/build`.
 3. Do not execute Cloudflare publish/deploy commands without explicit user approval.
 4. Keep all work scoped to `/app`.
+5. Keep parity rows `verified` only when backed by executable runtime evidence.
 
 ## Immediate Execution Queue
 
-1. `POST-R5-001` (`$simoona-modernization-orchestrator` + `$platform-devops`)
+1. `RECOV-R5-001` (`$qa` + `$reviewer`)
 - In scope:
-  - Execute publish plan only after explicit approval.
+  - Re-run release readiness checklist against runtime-backed parity evidence.
 - Acceptance:
-  - Publish commands and post-publish evidence are captured.
+  - Gate decision includes explicit GO/NO-GO reasoning and command evidence.
 
-2. `POST-R5-002` (`$qa`)
+2. `RECOV-R5-002` (`$qa`)
 - In scope:
-  - Run post-publish smoke/parity verification.
+  - Refresh final verification report with runtime API/UI matrix outcomes.
 - Acceptance:
-  - Post-publish report recorded with GO/NO-GO.
+  - Report references runtime evidence artifacts and distinguishes sandbox fallback vs unrestricted execution checks.
 
-3. `POST-R5-003` (`$platform-devops`)
+3. `RECOV-R5-003` (`$platform-devops`)
 - In scope:
-  - Run rollback rehearsal against deployed target.
+  - Keep publish execution blocked while preparing decision-ready publish recommendation.
 - Acceptance:
-  - Rollback evidence recorded.
+  - No publish commands executed; recommendation is ready for user approval decision.
 
 ## Success Criteria For This Stage
 
-1. `R5` remains complete and ready for approval.
-2. No publish is executed before explicit user instruction.
-3. Readiness evidence remains reproducible.
+1. `R2` and `R3` remain re-closed with runtime-backed parity evidence.
+   - Current checkpoint: API `190/190` verified, UI `115/115` verified.
+2. `R5` re-gate outputs updated readiness decision artifacts.
+3. No publish is executed before explicit user instruction.
 
 ## Explicitly Deferred
 
 1. Cloudflare publish/deploy execution without user approval.
 2. Production DNS or traffic switching without approval.
+3. Any gate closure based on offline-only verification.

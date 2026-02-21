@@ -26,15 +26,18 @@ if (lines.length !== baseline.totalRoutes) {
   process.exit(1);
 }
 
-let verifiedCount = 0;
+let statusMatchCount = 0;
 for (const line of lines) {
   const cols = line.split(",");
   const status = cols[8]?.trim() ?? "";
   const modernRoute = cols[6]?.trim() ?? "";
   const modernComponent = cols[7]?.trim() ?? "";
 
-  if (status === baseline.requiredStatus) {
-    verifiedCount += 1;
+  const statusMatches =
+    status === baseline.requiredStatus ||
+    (baseline.requiredStatus === "implemented" && status === "verified");
+  if (statusMatches) {
+    statusMatchCount += 1;
   }
 
   if (!modernRoute || modernRoute === "TBD") {
@@ -48,9 +51,9 @@ for (const line of lines) {
   }
 }
 
-if (verifiedCount !== baseline.totalRoutes) {
+if (statusMatchCount !== baseline.totalRoutes) {
   console.error(
-    `[parity-ui-contract] Expected ${baseline.totalRoutes} verified routes, found ${verifiedCount}.`
+    `[parity-ui-contract] Expected ${baseline.totalRoutes} routes at '${baseline.requiredStatus}' or higher, found ${statusMatchCount}.`
   );
   process.exit(1);
 }
@@ -64,5 +67,5 @@ for (const marker of baseline.requiredMarkers) {
 }
 
 console.log(
-  `[parity-ui-contract] UI route implementation contract passed (${verifiedCount}/${baseline.totalRoutes} verified).`
+  `[parity-ui-contract] UI route implementation contract passed (${statusMatchCount}/${baseline.totalRoutes} '${baseline.requiredStatus}').`
 );

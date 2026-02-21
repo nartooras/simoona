@@ -1,8 +1,12 @@
 # Final Verification Report (R5-002)
 
-Date: `2026-02-20`
+Date: `2026-02-21`
 Branch: `modernization`
 Scope: `/Users/arturasnikoncukas/code/repo/simoona/app/**`
+
+## Status
+
+`PENDING_R5_REFRESH` - this report is retained for historical command-pack evidence; runtime parity has now been recovered and a refreshed `R5` verdict is required.
 
 ## Command Pack
 
@@ -52,3 +56,11 @@ git status --short
 
 - `GREEN` for readiness phase completion.
 - Publish/deploy actions remain deferred.
+
+## Recovery Update
+
+As of `2026-02-21`, runtime parity recovery has completed:
+
+- API matrix: `190/190` runtime-verified.
+- UI matrix: `115/115` runtime-verified with desktop/tablet/mobile artifacts.
+- `R2` and `R3` re-closed; `R5` is ready for final re-gate decision refresh.

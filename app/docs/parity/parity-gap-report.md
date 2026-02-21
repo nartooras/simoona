@@ -4,7 +4,7 @@
 
 - API coverage: mapped 100.00% (190/190), implemented 100.00% (190/190), verified 100.00% (190/190).
 - UI coverage: mapped 100.00% (115/115), implemented 100.00% (115/115), verified 100.00% (115/115).
-- Verification note: legacy runtime is unavailable; parity verification uses offline evidence triad (legacy source reference + parity baseline/fixture + passing modern assertion).
+- Verification note: all current `verified` rows are backed by executable runtime assertions; UI evidence includes multi-viewport screenshot artifacts.
 
 ## 2) Critical Gaps (P0/P1)
 
@@ -12,18 +12,17 @@
 
 ## 3) Medium/Low Gaps (P2/P3)
 
-1. Offline verification confidence requires ongoing QA sampling
-   - Area: parity evidence confidence
-   - Impact: residual behavioral drift risk remains without executable legacy runtime.
-   - Recommended owner: `$qa` + `$parity-analyst`
+1. Runtime evidence commands require unrestricted loopback execution in this environment.
+   - Area: local execution environment
+   - Impact: default sandbox execution falls back from live runtime checks.
+   - Recommended owner: `$platform-devops` + `$qa`
 
 ## 4) Verification Blockers
 
 - No active parity blockers.
-- Legacy runtime remains unavailable; continue offline verification triad until runtime comparators become executable.
 
 ## 5) Recommended Next Tasks
 
-1. Execute `R5-001` release readiness checklist and gate evidence consolidation.
-2. Execute `R5-002` final verification report preparation.
-3. Keep Cloudflare publish/deploy execution deferred until explicit user instruction.
+1. Execute `RECOV-R5-001` release-readiness re-gate using updated runtime parity evidence.
+2. Keep runtime matrix verification commands in QA regression pack for ongoing confidence.
+3. Continue adding legacy screenshot reference docs for non-wall feature areas for qualitative review context.

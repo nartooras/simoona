@@ -30,6 +30,13 @@ for (const scenario of manifest.scenarios) {
     console.error(`[visual-baseline] Scenario '${scenario.id}' is missing required fields.`);
     process.exit(1);
   }
+  const snapshotAbsolutePath = path.join(root, scenario.snapshotPath);
+  if (!fs.existsSync(snapshotAbsolutePath)) {
+    console.error(
+      `[visual-baseline] Missing runtime screenshot artifact for '${scenario.id}': ${snapshotAbsolutePath}`
+    );
+    process.exit(1);
+  }
 }
 
 if (requiredViewports.size) {

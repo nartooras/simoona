@@ -6,9 +6,16 @@ Use `app/docs/orchestration/next-agent-handoff.md` as the immediate execution br
 
 ## Priority Queue
 
-1. `POST-R5-001` (`P1`, owner `$simoona-modernization-orchestrator` + `$platform-devops`): Execute publish plan only after explicit user approval.
-2. `POST-R5-002` (`P1`, owner `$qa`): Run post-publish smoke/parity verification and document rollout result.
-3. `POST-R5-003` (`P2`, owner `$platform-devops`): Complete rollback rehearsal against deployed target.
+1. `RECOV-R5-001` (`P0`, owner `$qa` + `$reviewer`): Re-run release readiness gate with runtime-backed parity evidence now that `R2` and `R3` are re-closed.
+   - Acceptance:
+     - Runtime evidence artifacts are linked and accepted for API/UI parity.
+     - Gate recommendation is `GREEN` or explicit actionable defects are listed.
+2. `RECOV-R5-002` (`P1`, owner `$qa`): Refresh final verification report with runtime matrix assertion and visual evidence results.
+   - Acceptance:
+     - Report reflects runtime-backed evidence (not offline-only artifacts).
+3. `RECOV-R5-003` (`P1`, owner `$platform-devops`): Keep publish execution deferred and prepare decision-ready publish recommendation.
+   - Acceptance:
+     - No publish command is executed without explicit user approval.
 
 ## Completed
 
@@ -30,3 +37,12 @@ Use `app/docs/orchestration/next-agent-handoff.md` as the immediate execution br
 16. `R5-001` (`P1`, owner `$qa` + `$platform-devops`): Added release readiness checklist with explicit go/no-go criteria and risk references.
 17. `R5-002` (`P1`, owner `$qa`): Added final verification report and executed full command pack.
 18. `R5-003` (`P1`, owner `$simoona-modernization-orchestrator`): Added publish-ready execution plan while keeping publish commands deferred.
+19. `CORR-001` (`P0`, owner `$simoona-modernization-orchestrator`): Reopened `R2`, `R3`, and `R5` after detecting false readiness from offline-only verification.
+20. `RECOV-R3-000` (`P0`, owner `$parity-analyst` + `$full-stack-developer`): Bound wall/feed recovery to the mandatory screenshot baseline in `app/docs/parity/ui-visual-target-reference.md`.
+21. `RECOV-R2-001` (`P0`, owner `$parity-analyst` + `$qa`): Demoted offline-only API `verified` rows and reset runtime verification requirement.
+22. `RECOV-R3-001` (`P0`, owner `$parity-analyst` + `$qa`): Demoted offline-only UI `verified` rows and reset runtime verification requirement.
+23. `RECOV-R2-002-A` (`P0`, owner `$full-stack-developer` + `$qa`): Delivered first runtime API parity wave for wall/feed endpoints with assertion evidence.
+24. `RECOV-R3-002-A` (`P0`, owner `$full-stack-developer` + `$qa`): Delivered first runtime UI wall/feed evidence slice with desktop/tablet/mobile screenshot artifacts.
+25. `RECOV-R3-004` (`P1`, owner `$platform-devops` + `$qa`): Stabilized local Playwright runner installation and enabled browser-level wall/feed interaction assertions.
+26. `RECOV-R2-003` (`P0`, owner `$full-stack-developer` + `$qa`): Executed full runtime API matrix verification (`190` endpoints, including auth-negative assertions) and promoted API matrix to `190/190 verified`.
+27. `RECOV-R3-003` (`P0`, owner `$full-stack-developer` + `$qa`): Executed full runtime UI matrix verification (`115` routes x desktop/tablet/mobile) and promoted UI matrix to `115/115 verified`.

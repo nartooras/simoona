@@ -37,8 +37,12 @@ for (const route of routes) {
     console.error(`[runtime-smoke] ${route} returned ${String(response.statusCode)}.`);
     process.exit(1);
   }
-  if (!response.body.includes("<main data-app=\"simoona-modern-web-runtime\">")) {
-    console.error(`[runtime-smoke] ${route} did not include runtime app marker.`);
+  if (!response.body.includes('id="simoona-runtime-data"')) {
+    console.error(`[runtime-smoke] ${route} did not include runtime payload marker.`);
+    process.exit(1);
+  }
+  if (!response.body.includes('src="/src/main.tsx"')) {
+    console.error(`[runtime-smoke] ${route} did not include runtime client module reference.`);
     process.exit(1);
   }
 }

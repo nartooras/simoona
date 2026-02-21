@@ -1,0 +1,2077 @@
+{
+  "generatedAtUtc": "2026-02-21T08:33:55.895Z",
+  "baseUrl": "http://127.0.0.1:5173",
+  "totalRoutes": 115,
+  "routes": [
+    {
+      "viewport": "desktop",
+      "legacyState": "RedirectTo",
+      "routePath": "/redirectTo/home/",
+      "screenshotPath": "visual/routes/desktop/001-redirectto.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root",
+      "routePath": "/",
+      "screenshotPath": "visual/routes/desktop/002-root.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg",
+      "routePath": "/default",
+      "screenshotPath": "visual/routes/desktop/003-root-withorg.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.AccessDenied",
+      "routePath": "/default/AccessDenied",
+      "screenshotPath": "visual/routes/desktop/004-root-withorg-accessdenied.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin",
+      "routePath": "/default/Admin",
+      "screenshotPath": "visual/routes/desktop/005-root-withorg-admin.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.ApplicationUsers",
+      "routePath": "/default/Admin/Users?roomId%26sort%26dir%26page%26s%26filter=roomId%26sort%26dir%26page%26s%26filter-sample",
+      "screenshotPath": "visual/routes/desktop/006-root-withorg-admin-applicationusers.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization",
+      "routePath": "/default/Admin/Customization",
+      "screenshotPath": "visual/routes/desktop/007-root-withorg-admin-customization.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes",
+      "routePath": "/default/Admin/Customization/EventTypes",
+      "screenshotPath": "visual/routes/desktop/008-root-withorg-admin-customization-eventtypes.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes.Create",
+      "routePath": "/default/Admin/Customization/EventTypes/Create",
+      "screenshotPath": "visual/routes/desktop/009-root-withorg-admin-customization-eventtypes-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes.Edit",
+      "routePath": "/default/Admin/Customization/EventTypes/Edit/1",
+      "screenshotPath": "visual/routes/desktop/010-root-withorg-admin-customization-eventtypes-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes.List",
+      "routePath": "/default/Admin/Customization/EventTypes",
+      "screenshotPath": "visual/routes/desktop/011-root-withorg-admin-customization-eventtypes-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.ExternalLinks",
+      "routePath": "/default/Admin/Customization/ExternalLinks",
+      "screenshotPath": "visual/routes/desktop/012-root-withorg-admin-customization-externallinks.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles",
+      "routePath": "/default/Admin/Customization/JobTitles",
+      "screenshotPath": "visual/routes/desktop/013-root-withorg-admin-customization-jobtitles.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles.Create",
+      "routePath": "/default/Admin/Customization/JobTitles/Create",
+      "screenshotPath": "visual/routes/desktop/014-root-withorg-admin-customization-jobtitles-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles.Edit",
+      "routePath": "/default/Admin/Customization/JobTitles/Edit/1",
+      "screenshotPath": "visual/routes/desktop/015-root-withorg-admin-customization-jobtitles-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles.List",
+      "routePath": "/default/Admin/Customization/JobTitles",
+      "screenshotPath": "visual/routes/desktop/016-root-withorg-admin-customization-jobtitles-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop",
+      "routePath": "/default/Admin/Customization/KudosShop",
+      "screenshotPath": "visual/routes/desktop/017-root-withorg-admin-customization-kudosshop.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop.Create",
+      "routePath": "/default/Admin/Customization/KudosShop/Create",
+      "screenshotPath": "visual/routes/desktop/018-root-withorg-admin-customization-kudosshop-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop.Edit",
+      "routePath": "/default/Admin/Customization/KudosShop/Edit/1",
+      "screenshotPath": "visual/routes/desktop/019-root-withorg-admin-customization-kudosshop-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop.List",
+      "routePath": "/default/Admin/Customization/KudosShop",
+      "screenshotPath": "visual/routes/desktop/020-root-withorg-admin-customization-kudosshop-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes",
+      "routePath": "/default/Admin/Customization/KudosTypes",
+      "screenshotPath": "visual/routes/desktop/021-root-withorg-admin-customization-kudostypes.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes.Create",
+      "routePath": "/default/Admin/Customization/KudosTypes/Create",
+      "screenshotPath": "visual/routes/desktop/022-root-withorg-admin-customization-kudostypes-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes.Edit",
+      "routePath": "/default/Admin/Customization/KudosTypes/Edit/1",
+      "screenshotPath": "visual/routes/desktop/023-root-withorg-admin-customization-kudostypes-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes.List",
+      "routePath": "/default/Admin/Customization/KudosTypes",
+      "screenshotPath": "visual/routes/desktop/024-root-withorg-admin-customization-kudostypes-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.List",
+      "routePath": "/default/Admin/Customization",
+      "screenshotPath": "visual/routes/desktop/025-root-withorg-admin-customization-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.OrganizationSettings",
+      "routePath": "/default/Admin/Customization/OrganizationSettings",
+      "screenshotPath": "visual/routes/desktop/026-root-withorg-admin-customization-organizationsettings.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes",
+      "screenshotPath": "visual/routes/desktop/027-root-withorg-admin-customization-servicerequeststypes.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes.Create",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes/Create",
+      "screenshotPath": "visual/routes/desktop/028-root-withorg-admin-customization-servicerequeststypes-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes.Edit",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes/Edit/1",
+      "screenshotPath": "visual/routes/desktop/029-root-withorg-admin-customization-servicerequeststypes-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes.List",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes",
+      "screenshotPath": "visual/routes/desktop/030-root-withorg-admin-customization-servicerequeststypes-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.KudosBasket",
+      "routePath": "/default/Admin/KudosBasket",
+      "screenshotPath": "visual/routes/desktop/031-root-withorg-admin-kudosbasket.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Lotteries",
+      "routePath": "/default/Admin/Lotteries",
+      "screenshotPath": "visual/routes/desktop/032-root-withorg-admin-lotteries.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.Create",
+      "routePath": "/default/Admin/Lotteries/Create",
+      "screenshotPath": "visual/routes/desktop/033-root-withorg-admin-lotteries-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.Edit",
+      "routePath": "/default/Admin/Lotteries/sample/Edit",
+      "screenshotPath": "visual/routes/desktop/034-root-withorg-admin-lotteries-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.List",
+      "routePath": "/default/Admin/Lotteries/List",
+      "screenshotPath": "visual/routes/desktop/035-root-withorg-admin-lotteries-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.Refund",
+      "routePath": "/default/Admin/Lotteries/sample/Refunding",
+      "screenshotPath": "visual/routes/desktop/036-root-withorg-admin-lotteries-refund.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Offices",
+      "routePath": "/default/Admin/Offices",
+      "screenshotPath": "visual/routes/desktop/037-root-withorg-admin-offices.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Offices.Create",
+      "routePath": "/default/Admin/Offices/Create",
+      "screenshotPath": "visual/routes/desktop/038-root-withorg-admin-offices-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Offices.Edit",
+      "routePath": "/default/Admin/Offices/1/Edit",
+      "screenshotPath": "visual/routes/desktop/039-root-withorg-admin-offices-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors",
+      "routePath": "/default/Admin/Offices/sample/Floors",
+      "screenshotPath": "visual/routes/desktop/040-root-withorg-admin-offices-floors.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Create",
+      "routePath": "/default/Admin/Offices/sample/Floors/Create",
+      "screenshotPath": "visual/routes/desktop/041-root-withorg-admin-offices-floors-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Edit",
+      "routePath": "/default/Admin/Offices/sample/Floors/1/Edit",
+      "screenshotPath": "visual/routes/desktop/042-root-withorg-admin-offices-floors-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.List",
+      "routePath": "/default/Admin/Offices/sample/Floors/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/desktop/043-root-withorg-admin-offices-floors-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Rooms",
+      "routePath": "/default/Admin/Offices/sample/Floors/sample/Rooms",
+      "screenshotPath": "visual/routes/desktop/044-root-withorg-admin-offices-floors-rooms.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Rooms.List",
+      "routePath": "/default/Admin/Offices/sample/Floors/sample/Rooms/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/desktop/045-root-withorg-admin-offices-floors-rooms-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Offices.List",
+      "routePath": "/default/Admin/Offices/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/desktop/046-root-withorg-admin-offices-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Roles",
+      "routePath": "/default/Admin/Roles",
+      "screenshotPath": "visual/routes/desktop/047-root-withorg-admin-roles.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Roles.Create",
+      "routePath": "/default/Admin/Roles/Create",
+      "screenshotPath": "visual/routes/desktop/048-root-withorg-admin-roles-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Roles.Edit",
+      "routePath": "/default/Admin/Roles/sample/Edit",
+      "screenshotPath": "visual/routes/desktop/049-root-withorg-admin-roles-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.Roles.List",
+      "routePath": "/default/Admin/Roles/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/desktop/050-root-withorg-admin-roles-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes",
+      "routePath": "/default/Admin/RoomTypes",
+      "screenshotPath": "visual/routes/desktop/051-root-withorg-admin-roomtypes.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes.Create",
+      "routePath": "/default/Admin/RoomTypes/Create",
+      "screenshotPath": "visual/routes/desktop/052-root-withorg-admin-roomtypes-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes.Edit",
+      "routePath": "/default/Admin/RoomTypes/1/Edit",
+      "screenshotPath": "visual/routes/desktop/053-root-withorg-admin-roomtypes-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes.List",
+      "routePath": "/default/Admin/RoomTypes/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/desktop/054-root-withorg-admin-roomtypes-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client",
+      "routePath": "/default",
+      "screenshotPath": "visual/routes/desktop/055-root-withorg-client.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Books",
+      "routePath": "/default/Books",
+      "screenshotPath": "visual/routes/desktop/056-root-withorg-client-books.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Books.Add",
+      "routePath": "/default/Books/Add",
+      "screenshotPath": "visual/routes/desktop/057-root-withorg-client-books-add.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Books.Edit",
+      "routePath": "/default/Books/Edit/1/sample",
+      "screenshotPath": "visual/routes/desktop/058-root-withorg-client-books-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Books.List",
+      "routePath": "/default/Books/List",
+      "screenshotPath": "visual/routes/desktop/059-root-withorg-client-books-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Committees",
+      "routePath": "/default/Committees",
+      "screenshotPath": "visual/routes/desktop/060-root-withorg-client-committees.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Committees.List",
+      "routePath": "/default/Committees/List",
+      "screenshotPath": "visual/routes/desktop/061-root-withorg-client-committees-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Employee",
+      "routePath": "/default/Employee",
+      "screenshotPath": "visual/routes/desktop/062-root-withorg-client-employee.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Employee.List",
+      "routePath": "/default/Employee/List",
+      "screenshotPath": "visual/routes/desktop/063-root-withorg-client-employee-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Events",
+      "routePath": "/default/Events",
+      "screenshotPath": "visual/routes/desktop/064-root-withorg-client-events.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Events.AddEvents",
+      "routePath": "/default/Events/AddEvent",
+      "screenshotPath": "visual/routes/desktop/065-root-withorg-client-events-addevents.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Events.EditEvent",
+      "routePath": "/default/Events/Edit/1",
+      "screenshotPath": "visual/routes/desktop/066-root-withorg-client-events-editevent.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Events.EventContent",
+      "routePath": "/default/Events/EventContent/1",
+      "screenshotPath": "visual/routes/desktop/067-root-withorg-client-events-eventcontent.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Events.List",
+      "routePath": "/default/Events/List",
+      "screenshotPath": "visual/routes/desktop/068-root-withorg-client-events-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Events.List.Type",
+      "routePath": "/default/Events/List/sample/office/sample",
+      "screenshotPath": "visual/routes/desktop/069-root-withorg-client-events-list-type.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Events.Report",
+      "routePath": "/default/Events/Report",
+      "screenshotPath": "visual/routes/desktop/070-root-withorg-client-events-report.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Events.Report.Event",
+      "routePath": "/default/Events/Report/Report/Event/1",
+      "screenshotPath": "visual/routes/desktop/071-root-withorg-client-events-report-event.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Kudos",
+      "routePath": "/default/Kudos",
+      "screenshotPath": "visual/routes/desktop/072-root-withorg-client-kudos.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Kudos.KudosAchievementBoard",
+      "routePath": "/default/Kudos/KudosAchievementBoard",
+      "screenshotPath": "visual/routes/desktop/073-root-withorg-client-kudos-kudosachievementboard.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Kudos.KudosLogList",
+      "routePath": "/default/Kudos/KudosLogList/sample",
+      "screenshotPath": "visual/routes/desktop/074-root-withorg-client-kudos-kudosloglist.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Kudos.KudosUserInformation",
+      "routePath": "/default/Kudos/KudosUserInformation/sample",
+      "screenshotPath": "visual/routes/desktop/075-root-withorg-client-kudos-kudosuserinformation.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Office",
+      "routePath": "/default/Office?floorId%26roomId%26coords%26user=floorId%26roomId%26coords%26user-sample",
+      "screenshotPath": "visual/routes/desktop/076-root-withorg-client-office.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.OrganizationalStructure",
+      "routePath": "/default/OrganizationalStructure",
+      "screenshotPath": "visual/routes/desktop/077-root-withorg-client-organizationalstructure.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Profiles",
+      "routePath": "/default/Profiles",
+      "screenshotPath": "visual/routes/desktop/078-root-withorg-client-profiles.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Profiles.Details",
+      "routePath": "/default/Profiles/1",
+      "screenshotPath": "visual/routes/desktop/079-root-withorg-client-profiles-details.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Profiles.Edit",
+      "routePath": "/default/Profiles/1/Edit/sample",
+      "screenshotPath": "visual/routes/desktop/080-root-withorg-client-profiles-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Profiles.List",
+      "routePath": "/default/Profiles",
+      "screenshotPath": "visual/routes/desktop/081-root-withorg-client-profiles-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Projects",
+      "routePath": "/default/Projects",
+      "screenshotPath": "visual/routes/desktop/082-root-withorg-client-projects.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Projects.Create",
+      "routePath": "/default/Projects/Create",
+      "screenshotPath": "visual/routes/desktop/083-root-withorg-client-projects-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Projects.Edit",
+      "routePath": "/default/Projects/Edit/1",
+      "screenshotPath": "visual/routes/desktop/084-root-withorg-client-projects-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Projects.List",
+      "routePath": "/default/Projects/List",
+      "screenshotPath": "visual/routes/desktop/085-root-withorg-client-projects-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Projects.ProjectContent",
+      "routePath": "/default/Projects/Details/1",
+      "screenshotPath": "visual/routes/desktop/086-root-withorg-client-projects-projectcontent.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.ServiceRequests",
+      "routePath": "/default/ServiceRequests",
+      "screenshotPath": "visual/routes/desktop/087-root-withorg-client-servicerequests.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.ServiceRequests.List",
+      "routePath": "/default/ServiceRequests/List?Id=Id-sample",
+      "screenshotPath": "visual/routes/desktop/088-root-withorg-client-servicerequests-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Settings",
+      "routePath": "/default/Settings",
+      "screenshotPath": "visual/routes/desktop/089-root-withorg-client-settings.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Settings.General",
+      "routePath": "/default/Settings/General",
+      "screenshotPath": "visual/routes/desktop/090-root-withorg-client-settings-general.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Settings.Notifications",
+      "routePath": "/default/Settings/Notifications",
+      "screenshotPath": "visual/routes/desktop/091-root-withorg-client-settings-notifications.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Settings.Providers",
+      "routePath": "/default/Settings/Providers",
+      "screenshotPath": "visual/routes/desktop/092-root-withorg-client-settings-providers.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.SubmitTicket",
+      "routePath": "/default/SubmitTicket",
+      "screenshotPath": "visual/routes/desktop/093-root-withorg-client-submitticket.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Vacations",
+      "routePath": "/default/Vacation",
+      "screenshotPath": "visual/routes/desktop/094-root-withorg-client-vacations.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Vacations.List",
+      "routePath": "/default/Vacation/List",
+      "screenshotPath": "visual/routes/desktop/095-root-withorg-client-vacations-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Wall",
+      "routePath": "/default/Wall",
+      "screenshotPath": "visual/routes/desktop/096-root-withorg-client-wall.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Wall.All",
+      "routePath": "/default/Wall/All",
+      "screenshotPath": "visual/routes/desktop/097-root-withorg-client-wall-all.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Wall.Create",
+      "routePath": "/default/Wall/Create",
+      "screenshotPath": "visual/routes/desktop/098-root-withorg-client-wall-create.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Wall.Edit",
+      "routePath": "/default/Wall/Edit/1",
+      "screenshotPath": "visual/routes/desktop/099-root-withorg-client-wall-edit.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Wall.Item",
+      "routePath": "/default/Wall",
+      "screenshotPath": "visual/routes/desktop/100-root-withorg-client-wall-item.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Wall.Item.Feed",
+      "routePath": "/default/Wall/Feed?wall%2F=wall%2F-sample",
+      "screenshotPath": "visual/routes/desktop/101-root-withorg-client-wall-item-feed.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Wall.Item.Members",
+      "routePath": "/default/Wall/Members?wall=wall-sample",
+      "screenshotPath": "visual/routes/desktop/102-root-withorg-client-wall-item-members.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Client.Wall.List",
+      "routePath": "/default/Wall/List",
+      "screenshotPath": "visual/routes/desktop/103-root-withorg-client-wall-list.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Error",
+      "routePath": "/default/Error/sample",
+      "screenshotPath": "visual/routes/desktop/104-root-withorg-error.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Forgot",
+      "routePath": "/default/Forgot",
+      "screenshotPath": "visual/routes/desktop/105-root-withorg-forgot.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Home",
+      "routePath": "/default",
+      "screenshotPath": "visual/routes/desktop/106-root-withorg-home.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Login",
+      "routePath": "/default/Login",
+      "screenshotPath": "visual/routes/desktop/107-root-withorg-login.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.LogOff",
+      "routePath": "/default/LogOff",
+      "screenshotPath": "visual/routes/desktop/108-root-withorg-logoff.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.PageNotFound",
+      "routePath": "/default/PageNotFound",
+      "screenshotPath": "visual/routes/desktop/109-root-withorg-pagenotfound.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Register",
+      "routePath": "/default/Register",
+      "screenshotPath": "visual/routes/desktop/110-root-withorg-register.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Reset",
+      "routePath": "/default/Reset",
+      "screenshotPath": "visual/routes/desktop/111-root-withorg-reset.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithOrg.Verify",
+      "routePath": "/default/Verify",
+      "screenshotPath": "visual/routes/desktop/112-root-withorg-verify.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithoutOrg",
+      "routePath": "/Login",
+      "screenshotPath": "visual/routes/desktop/113-root-withoutorg.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithoutOrg.Home",
+      "routePath": "/",
+      "screenshotPath": "visual/routes/desktop/114-root-withoutorg-home.jpg"
+    },
+    {
+      "viewport": "desktop",
+      "legacyState": "Root.WithoutOrg.Login",
+      "routePath": "/Login",
+      "screenshotPath": "visual/routes/desktop/115-root-withoutorg-login.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "RedirectTo",
+      "routePath": "/redirectTo/home/",
+      "screenshotPath": "visual/routes/tablet/001-redirectto.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root",
+      "routePath": "/",
+      "screenshotPath": "visual/routes/tablet/002-root.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg",
+      "routePath": "/default",
+      "screenshotPath": "visual/routes/tablet/003-root-withorg.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.AccessDenied",
+      "routePath": "/default/AccessDenied",
+      "screenshotPath": "visual/routes/tablet/004-root-withorg-accessdenied.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin",
+      "routePath": "/default/Admin",
+      "screenshotPath": "visual/routes/tablet/005-root-withorg-admin.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.ApplicationUsers",
+      "routePath": "/default/Admin/Users?roomId%26sort%26dir%26page%26s%26filter=roomId%26sort%26dir%26page%26s%26filter-sample",
+      "screenshotPath": "visual/routes/tablet/006-root-withorg-admin-applicationusers.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization",
+      "routePath": "/default/Admin/Customization",
+      "screenshotPath": "visual/routes/tablet/007-root-withorg-admin-customization.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes",
+      "routePath": "/default/Admin/Customization/EventTypes",
+      "screenshotPath": "visual/routes/tablet/008-root-withorg-admin-customization-eventtypes.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes.Create",
+      "routePath": "/default/Admin/Customization/EventTypes/Create",
+      "screenshotPath": "visual/routes/tablet/009-root-withorg-admin-customization-eventtypes-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes.Edit",
+      "routePath": "/default/Admin/Customization/EventTypes/Edit/1",
+      "screenshotPath": "visual/routes/tablet/010-root-withorg-admin-customization-eventtypes-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes.List",
+      "routePath": "/default/Admin/Customization/EventTypes",
+      "screenshotPath": "visual/routes/tablet/011-root-withorg-admin-customization-eventtypes-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.ExternalLinks",
+      "routePath": "/default/Admin/Customization/ExternalLinks",
+      "screenshotPath": "visual/routes/tablet/012-root-withorg-admin-customization-externallinks.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles",
+      "routePath": "/default/Admin/Customization/JobTitles",
+      "screenshotPath": "visual/routes/tablet/013-root-withorg-admin-customization-jobtitles.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles.Create",
+      "routePath": "/default/Admin/Customization/JobTitles/Create",
+      "screenshotPath": "visual/routes/tablet/014-root-withorg-admin-customization-jobtitles-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles.Edit",
+      "routePath": "/default/Admin/Customization/JobTitles/Edit/1",
+      "screenshotPath": "visual/routes/tablet/015-root-withorg-admin-customization-jobtitles-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles.List",
+      "routePath": "/default/Admin/Customization/JobTitles",
+      "screenshotPath": "visual/routes/tablet/016-root-withorg-admin-customization-jobtitles-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop",
+      "routePath": "/default/Admin/Customization/KudosShop",
+      "screenshotPath": "visual/routes/tablet/017-root-withorg-admin-customization-kudosshop.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop.Create",
+      "routePath": "/default/Admin/Customization/KudosShop/Create",
+      "screenshotPath": "visual/routes/tablet/018-root-withorg-admin-customization-kudosshop-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop.Edit",
+      "routePath": "/default/Admin/Customization/KudosShop/Edit/1",
+      "screenshotPath": "visual/routes/tablet/019-root-withorg-admin-customization-kudosshop-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop.List",
+      "routePath": "/default/Admin/Customization/KudosShop",
+      "screenshotPath": "visual/routes/tablet/020-root-withorg-admin-customization-kudosshop-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes",
+      "routePath": "/default/Admin/Customization/KudosTypes",
+      "screenshotPath": "visual/routes/tablet/021-root-withorg-admin-customization-kudostypes.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes.Create",
+      "routePath": "/default/Admin/Customization/KudosTypes/Create",
+      "screenshotPath": "visual/routes/tablet/022-root-withorg-admin-customization-kudostypes-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes.Edit",
+      "routePath": "/default/Admin/Customization/KudosTypes/Edit/1",
+      "screenshotPath": "visual/routes/tablet/023-root-withorg-admin-customization-kudostypes-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes.List",
+      "routePath": "/default/Admin/Customization/KudosTypes",
+      "screenshotPath": "visual/routes/tablet/024-root-withorg-admin-customization-kudostypes-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.List",
+      "routePath": "/default/Admin/Customization",
+      "screenshotPath": "visual/routes/tablet/025-root-withorg-admin-customization-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.OrganizationSettings",
+      "routePath": "/default/Admin/Customization/OrganizationSettings",
+      "screenshotPath": "visual/routes/tablet/026-root-withorg-admin-customization-organizationsettings.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes",
+      "screenshotPath": "visual/routes/tablet/027-root-withorg-admin-customization-servicerequeststypes.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes.Create",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes/Create",
+      "screenshotPath": "visual/routes/tablet/028-root-withorg-admin-customization-servicerequeststypes-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes.Edit",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes/Edit/1",
+      "screenshotPath": "visual/routes/tablet/029-root-withorg-admin-customization-servicerequeststypes-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes.List",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes",
+      "screenshotPath": "visual/routes/tablet/030-root-withorg-admin-customization-servicerequeststypes-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.KudosBasket",
+      "routePath": "/default/Admin/KudosBasket",
+      "screenshotPath": "visual/routes/tablet/031-root-withorg-admin-kudosbasket.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Lotteries",
+      "routePath": "/default/Admin/Lotteries",
+      "screenshotPath": "visual/routes/tablet/032-root-withorg-admin-lotteries.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.Create",
+      "routePath": "/default/Admin/Lotteries/Create",
+      "screenshotPath": "visual/routes/tablet/033-root-withorg-admin-lotteries-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.Edit",
+      "routePath": "/default/Admin/Lotteries/sample/Edit",
+      "screenshotPath": "visual/routes/tablet/034-root-withorg-admin-lotteries-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.List",
+      "routePath": "/default/Admin/Lotteries/List",
+      "screenshotPath": "visual/routes/tablet/035-root-withorg-admin-lotteries-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.Refund",
+      "routePath": "/default/Admin/Lotteries/sample/Refunding",
+      "screenshotPath": "visual/routes/tablet/036-root-withorg-admin-lotteries-refund.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Offices",
+      "routePath": "/default/Admin/Offices",
+      "screenshotPath": "visual/routes/tablet/037-root-withorg-admin-offices.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Offices.Create",
+      "routePath": "/default/Admin/Offices/Create",
+      "screenshotPath": "visual/routes/tablet/038-root-withorg-admin-offices-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Offices.Edit",
+      "routePath": "/default/Admin/Offices/1/Edit",
+      "screenshotPath": "visual/routes/tablet/039-root-withorg-admin-offices-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors",
+      "routePath": "/default/Admin/Offices/sample/Floors",
+      "screenshotPath": "visual/routes/tablet/040-root-withorg-admin-offices-floors.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Create",
+      "routePath": "/default/Admin/Offices/sample/Floors/Create",
+      "screenshotPath": "visual/routes/tablet/041-root-withorg-admin-offices-floors-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Edit",
+      "routePath": "/default/Admin/Offices/sample/Floors/1/Edit",
+      "screenshotPath": "visual/routes/tablet/042-root-withorg-admin-offices-floors-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.List",
+      "routePath": "/default/Admin/Offices/sample/Floors/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/tablet/043-root-withorg-admin-offices-floors-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Rooms",
+      "routePath": "/default/Admin/Offices/sample/Floors/sample/Rooms",
+      "screenshotPath": "visual/routes/tablet/044-root-withorg-admin-offices-floors-rooms.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Rooms.List",
+      "routePath": "/default/Admin/Offices/sample/Floors/sample/Rooms/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/tablet/045-root-withorg-admin-offices-floors-rooms-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Offices.List",
+      "routePath": "/default/Admin/Offices/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/tablet/046-root-withorg-admin-offices-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Roles",
+      "routePath": "/default/Admin/Roles",
+      "screenshotPath": "visual/routes/tablet/047-root-withorg-admin-roles.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Roles.Create",
+      "routePath": "/default/Admin/Roles/Create",
+      "screenshotPath": "visual/routes/tablet/048-root-withorg-admin-roles-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Roles.Edit",
+      "routePath": "/default/Admin/Roles/sample/Edit",
+      "screenshotPath": "visual/routes/tablet/049-root-withorg-admin-roles-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.Roles.List",
+      "routePath": "/default/Admin/Roles/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/tablet/050-root-withorg-admin-roles-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes",
+      "routePath": "/default/Admin/RoomTypes",
+      "screenshotPath": "visual/routes/tablet/051-root-withorg-admin-roomtypes.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes.Create",
+      "routePath": "/default/Admin/RoomTypes/Create",
+      "screenshotPath": "visual/routes/tablet/052-root-withorg-admin-roomtypes-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes.Edit",
+      "routePath": "/default/Admin/RoomTypes/1/Edit",
+      "screenshotPath": "visual/routes/tablet/053-root-withorg-admin-roomtypes-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes.List",
+      "routePath": "/default/Admin/RoomTypes/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/tablet/054-root-withorg-admin-roomtypes-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client",
+      "routePath": "/default",
+      "screenshotPath": "visual/routes/tablet/055-root-withorg-client.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Books",
+      "routePath": "/default/Books",
+      "screenshotPath": "visual/routes/tablet/056-root-withorg-client-books.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Books.Add",
+      "routePath": "/default/Books/Add",
+      "screenshotPath": "visual/routes/tablet/057-root-withorg-client-books-add.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Books.Edit",
+      "routePath": "/default/Books/Edit/1/sample",
+      "screenshotPath": "visual/routes/tablet/058-root-withorg-client-books-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Books.List",
+      "routePath": "/default/Books/List",
+      "screenshotPath": "visual/routes/tablet/059-root-withorg-client-books-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Committees",
+      "routePath": "/default/Committees",
+      "screenshotPath": "visual/routes/tablet/060-root-withorg-client-committees.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Committees.List",
+      "routePath": "/default/Committees/List",
+      "screenshotPath": "visual/routes/tablet/061-root-withorg-client-committees-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Employee",
+      "routePath": "/default/Employee",
+      "screenshotPath": "visual/routes/tablet/062-root-withorg-client-employee.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Employee.List",
+      "routePath": "/default/Employee/List",
+      "screenshotPath": "visual/routes/tablet/063-root-withorg-client-employee-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Events",
+      "routePath": "/default/Events",
+      "screenshotPath": "visual/routes/tablet/064-root-withorg-client-events.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Events.AddEvents",
+      "routePath": "/default/Events/AddEvent",
+      "screenshotPath": "visual/routes/tablet/065-root-withorg-client-events-addevents.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Events.EditEvent",
+      "routePath": "/default/Events/Edit/1",
+      "screenshotPath": "visual/routes/tablet/066-root-withorg-client-events-editevent.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Events.EventContent",
+      "routePath": "/default/Events/EventContent/1",
+      "screenshotPath": "visual/routes/tablet/067-root-withorg-client-events-eventcontent.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Events.List",
+      "routePath": "/default/Events/List",
+      "screenshotPath": "visual/routes/tablet/068-root-withorg-client-events-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Events.List.Type",
+      "routePath": "/default/Events/List/sample/office/sample",
+      "screenshotPath": "visual/routes/tablet/069-root-withorg-client-events-list-type.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Events.Report",
+      "routePath": "/default/Events/Report",
+      "screenshotPath": "visual/routes/tablet/070-root-withorg-client-events-report.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Events.Report.Event",
+      "routePath": "/default/Events/Report/Report/Event/1",
+      "screenshotPath": "visual/routes/tablet/071-root-withorg-client-events-report-event.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Kudos",
+      "routePath": "/default/Kudos",
+      "screenshotPath": "visual/routes/tablet/072-root-withorg-client-kudos.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Kudos.KudosAchievementBoard",
+      "routePath": "/default/Kudos/KudosAchievementBoard",
+      "screenshotPath": "visual/routes/tablet/073-root-withorg-client-kudos-kudosachievementboard.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Kudos.KudosLogList",
+      "routePath": "/default/Kudos/KudosLogList/sample",
+      "screenshotPath": "visual/routes/tablet/074-root-withorg-client-kudos-kudosloglist.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Kudos.KudosUserInformation",
+      "routePath": "/default/Kudos/KudosUserInformation/sample",
+      "screenshotPath": "visual/routes/tablet/075-root-withorg-client-kudos-kudosuserinformation.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Office",
+      "routePath": "/default/Office?floorId%26roomId%26coords%26user=floorId%26roomId%26coords%26user-sample",
+      "screenshotPath": "visual/routes/tablet/076-root-withorg-client-office.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.OrganizationalStructure",
+      "routePath": "/default/OrganizationalStructure",
+      "screenshotPath": "visual/routes/tablet/077-root-withorg-client-organizationalstructure.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Profiles",
+      "routePath": "/default/Profiles",
+      "screenshotPath": "visual/routes/tablet/078-root-withorg-client-profiles.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Profiles.Details",
+      "routePath": "/default/Profiles/1",
+      "screenshotPath": "visual/routes/tablet/079-root-withorg-client-profiles-details.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Profiles.Edit",
+      "routePath": "/default/Profiles/1/Edit/sample",
+      "screenshotPath": "visual/routes/tablet/080-root-withorg-client-profiles-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Profiles.List",
+      "routePath": "/default/Profiles",
+      "screenshotPath": "visual/routes/tablet/081-root-withorg-client-profiles-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Projects",
+      "routePath": "/default/Projects",
+      "screenshotPath": "visual/routes/tablet/082-root-withorg-client-projects.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Projects.Create",
+      "routePath": "/default/Projects/Create",
+      "screenshotPath": "visual/routes/tablet/083-root-withorg-client-projects-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Projects.Edit",
+      "routePath": "/default/Projects/Edit/1",
+      "screenshotPath": "visual/routes/tablet/084-root-withorg-client-projects-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Projects.List",
+      "routePath": "/default/Projects/List",
+      "screenshotPath": "visual/routes/tablet/085-root-withorg-client-projects-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Projects.ProjectContent",
+      "routePath": "/default/Projects/Details/1",
+      "screenshotPath": "visual/routes/tablet/086-root-withorg-client-projects-projectcontent.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.ServiceRequests",
+      "routePath": "/default/ServiceRequests",
+      "screenshotPath": "visual/routes/tablet/087-root-withorg-client-servicerequests.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.ServiceRequests.List",
+      "routePath": "/default/ServiceRequests/List?Id=Id-sample",
+      "screenshotPath": "visual/routes/tablet/088-root-withorg-client-servicerequests-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Settings",
+      "routePath": "/default/Settings",
+      "screenshotPath": "visual/routes/tablet/089-root-withorg-client-settings.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Settings.General",
+      "routePath": "/default/Settings/General",
+      "screenshotPath": "visual/routes/tablet/090-root-withorg-client-settings-general.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Settings.Notifications",
+      "routePath": "/default/Settings/Notifications",
+      "screenshotPath": "visual/routes/tablet/091-root-withorg-client-settings-notifications.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Settings.Providers",
+      "routePath": "/default/Settings/Providers",
+      "screenshotPath": "visual/routes/tablet/092-root-withorg-client-settings-providers.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.SubmitTicket",
+      "routePath": "/default/SubmitTicket",
+      "screenshotPath": "visual/routes/tablet/093-root-withorg-client-submitticket.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Vacations",
+      "routePath": "/default/Vacation",
+      "screenshotPath": "visual/routes/tablet/094-root-withorg-client-vacations.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Vacations.List",
+      "routePath": "/default/Vacation/List",
+      "screenshotPath": "visual/routes/tablet/095-root-withorg-client-vacations-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Wall",
+      "routePath": "/default/Wall",
+      "screenshotPath": "visual/routes/tablet/096-root-withorg-client-wall.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Wall.All",
+      "routePath": "/default/Wall/All",
+      "screenshotPath": "visual/routes/tablet/097-root-withorg-client-wall-all.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Wall.Create",
+      "routePath": "/default/Wall/Create",
+      "screenshotPath": "visual/routes/tablet/098-root-withorg-client-wall-create.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Wall.Edit",
+      "routePath": "/default/Wall/Edit/1",
+      "screenshotPath": "visual/routes/tablet/099-root-withorg-client-wall-edit.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Wall.Item",
+      "routePath": "/default/Wall",
+      "screenshotPath": "visual/routes/tablet/100-root-withorg-client-wall-item.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Wall.Item.Feed",
+      "routePath": "/default/Wall/Feed?wall%2F=wall%2F-sample",
+      "screenshotPath": "visual/routes/tablet/101-root-withorg-client-wall-item-feed.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Wall.Item.Members",
+      "routePath": "/default/Wall/Members?wall=wall-sample",
+      "screenshotPath": "visual/routes/tablet/102-root-withorg-client-wall-item-members.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Client.Wall.List",
+      "routePath": "/default/Wall/List",
+      "screenshotPath": "visual/routes/tablet/103-root-withorg-client-wall-list.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Error",
+      "routePath": "/default/Error/sample",
+      "screenshotPath": "visual/routes/tablet/104-root-withorg-error.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Forgot",
+      "routePath": "/default/Forgot",
+      "screenshotPath": "visual/routes/tablet/105-root-withorg-forgot.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Home",
+      "routePath": "/default",
+      "screenshotPath": "visual/routes/tablet/106-root-withorg-home.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Login",
+      "routePath": "/default/Login",
+      "screenshotPath": "visual/routes/tablet/107-root-withorg-login.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.LogOff",
+      "routePath": "/default/LogOff",
+      "screenshotPath": "visual/routes/tablet/108-root-withorg-logoff.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.PageNotFound",
+      "routePath": "/default/PageNotFound",
+      "screenshotPath": "visual/routes/tablet/109-root-withorg-pagenotfound.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Register",
+      "routePath": "/default/Register",
+      "screenshotPath": "visual/routes/tablet/110-root-withorg-register.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Reset",
+      "routePath": "/default/Reset",
+      "screenshotPath": "visual/routes/tablet/111-root-withorg-reset.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithOrg.Verify",
+      "routePath": "/default/Verify",
+      "screenshotPath": "visual/routes/tablet/112-root-withorg-verify.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithoutOrg",
+      "routePath": "/Login",
+      "screenshotPath": "visual/routes/tablet/113-root-withoutorg.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithoutOrg.Home",
+      "routePath": "/",
+      "screenshotPath": "visual/routes/tablet/114-root-withoutorg-home.jpg"
+    },
+    {
+      "viewport": "tablet",
+      "legacyState": "Root.WithoutOrg.Login",
+      "routePath": "/Login",
+      "screenshotPath": "visual/routes/tablet/115-root-withoutorg-login.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "RedirectTo",
+      "routePath": "/redirectTo/home/",
+      "screenshotPath": "visual/routes/mobile/001-redirectto.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root",
+      "routePath": "/",
+      "screenshotPath": "visual/routes/mobile/002-root.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg",
+      "routePath": "/default",
+      "screenshotPath": "visual/routes/mobile/003-root-withorg.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.AccessDenied",
+      "routePath": "/default/AccessDenied",
+      "screenshotPath": "visual/routes/mobile/004-root-withorg-accessdenied.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin",
+      "routePath": "/default/Admin",
+      "screenshotPath": "visual/routes/mobile/005-root-withorg-admin.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.ApplicationUsers",
+      "routePath": "/default/Admin/Users?roomId%26sort%26dir%26page%26s%26filter=roomId%26sort%26dir%26page%26s%26filter-sample",
+      "screenshotPath": "visual/routes/mobile/006-root-withorg-admin-applicationusers.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization",
+      "routePath": "/default/Admin/Customization",
+      "screenshotPath": "visual/routes/mobile/007-root-withorg-admin-customization.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes",
+      "routePath": "/default/Admin/Customization/EventTypes",
+      "screenshotPath": "visual/routes/mobile/008-root-withorg-admin-customization-eventtypes.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes.Create",
+      "routePath": "/default/Admin/Customization/EventTypes/Create",
+      "screenshotPath": "visual/routes/mobile/009-root-withorg-admin-customization-eventtypes-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes.Edit",
+      "routePath": "/default/Admin/Customization/EventTypes/Edit/1",
+      "screenshotPath": "visual/routes/mobile/010-root-withorg-admin-customization-eventtypes-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.EventTypes.List",
+      "routePath": "/default/Admin/Customization/EventTypes",
+      "screenshotPath": "visual/routes/mobile/011-root-withorg-admin-customization-eventtypes-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.ExternalLinks",
+      "routePath": "/default/Admin/Customization/ExternalLinks",
+      "screenshotPath": "visual/routes/mobile/012-root-withorg-admin-customization-externallinks.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles",
+      "routePath": "/default/Admin/Customization/JobTitles",
+      "screenshotPath": "visual/routes/mobile/013-root-withorg-admin-customization-jobtitles.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles.Create",
+      "routePath": "/default/Admin/Customization/JobTitles/Create",
+      "screenshotPath": "visual/routes/mobile/014-root-withorg-admin-customization-jobtitles-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles.Edit",
+      "routePath": "/default/Admin/Customization/JobTitles/Edit/1",
+      "screenshotPath": "visual/routes/mobile/015-root-withorg-admin-customization-jobtitles-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.JobTitles.List",
+      "routePath": "/default/Admin/Customization/JobTitles",
+      "screenshotPath": "visual/routes/mobile/016-root-withorg-admin-customization-jobtitles-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop",
+      "routePath": "/default/Admin/Customization/KudosShop",
+      "screenshotPath": "visual/routes/mobile/017-root-withorg-admin-customization-kudosshop.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop.Create",
+      "routePath": "/default/Admin/Customization/KudosShop/Create",
+      "screenshotPath": "visual/routes/mobile/018-root-withorg-admin-customization-kudosshop-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop.Edit",
+      "routePath": "/default/Admin/Customization/KudosShop/Edit/1",
+      "screenshotPath": "visual/routes/mobile/019-root-withorg-admin-customization-kudosshop-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosShop.List",
+      "routePath": "/default/Admin/Customization/KudosShop",
+      "screenshotPath": "visual/routes/mobile/020-root-withorg-admin-customization-kudosshop-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes",
+      "routePath": "/default/Admin/Customization/KudosTypes",
+      "screenshotPath": "visual/routes/mobile/021-root-withorg-admin-customization-kudostypes.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes.Create",
+      "routePath": "/default/Admin/Customization/KudosTypes/Create",
+      "screenshotPath": "visual/routes/mobile/022-root-withorg-admin-customization-kudostypes-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes.Edit",
+      "routePath": "/default/Admin/Customization/KudosTypes/Edit/1",
+      "screenshotPath": "visual/routes/mobile/023-root-withorg-admin-customization-kudostypes-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.KudosTypes.List",
+      "routePath": "/default/Admin/Customization/KudosTypes",
+      "screenshotPath": "visual/routes/mobile/024-root-withorg-admin-customization-kudostypes-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.List",
+      "routePath": "/default/Admin/Customization",
+      "screenshotPath": "visual/routes/mobile/025-root-withorg-admin-customization-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.OrganizationSettings",
+      "routePath": "/default/Admin/Customization/OrganizationSettings",
+      "screenshotPath": "visual/routes/mobile/026-root-withorg-admin-customization-organizationsettings.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes",
+      "screenshotPath": "visual/routes/mobile/027-root-withorg-admin-customization-servicerequeststypes.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes.Create",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes/Create",
+      "screenshotPath": "visual/routes/mobile/028-root-withorg-admin-customization-servicerequeststypes-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes.Edit",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes/Edit/1",
+      "screenshotPath": "visual/routes/mobile/029-root-withorg-admin-customization-servicerequeststypes-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Customization.ServiceRequestsTypes.List",
+      "routePath": "/default/Admin/Customization/ServiceRequestsTypes",
+      "screenshotPath": "visual/routes/mobile/030-root-withorg-admin-customization-servicerequeststypes-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.KudosBasket",
+      "routePath": "/default/Admin/KudosBasket",
+      "screenshotPath": "visual/routes/mobile/031-root-withorg-admin-kudosbasket.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Lotteries",
+      "routePath": "/default/Admin/Lotteries",
+      "screenshotPath": "visual/routes/mobile/032-root-withorg-admin-lotteries.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.Create",
+      "routePath": "/default/Admin/Lotteries/Create",
+      "screenshotPath": "visual/routes/mobile/033-root-withorg-admin-lotteries-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.Edit",
+      "routePath": "/default/Admin/Lotteries/sample/Edit",
+      "screenshotPath": "visual/routes/mobile/034-root-withorg-admin-lotteries-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.List",
+      "routePath": "/default/Admin/Lotteries/List",
+      "screenshotPath": "visual/routes/mobile/035-root-withorg-admin-lotteries-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Lotteries.Refund",
+      "routePath": "/default/Admin/Lotteries/sample/Refunding",
+      "screenshotPath": "visual/routes/mobile/036-root-withorg-admin-lotteries-refund.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Offices",
+      "routePath": "/default/Admin/Offices",
+      "screenshotPath": "visual/routes/mobile/037-root-withorg-admin-offices.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Offices.Create",
+      "routePath": "/default/Admin/Offices/Create",
+      "screenshotPath": "visual/routes/mobile/038-root-withorg-admin-offices-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Offices.Edit",
+      "routePath": "/default/Admin/Offices/1/Edit",
+      "screenshotPath": "visual/routes/mobile/039-root-withorg-admin-offices-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors",
+      "routePath": "/default/Admin/Offices/sample/Floors",
+      "screenshotPath": "visual/routes/mobile/040-root-withorg-admin-offices-floors.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Create",
+      "routePath": "/default/Admin/Offices/sample/Floors/Create",
+      "screenshotPath": "visual/routes/mobile/041-root-withorg-admin-offices-floors-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Edit",
+      "routePath": "/default/Admin/Offices/sample/Floors/1/Edit",
+      "screenshotPath": "visual/routes/mobile/042-root-withorg-admin-offices-floors-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.List",
+      "routePath": "/default/Admin/Offices/sample/Floors/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/mobile/043-root-withorg-admin-offices-floors-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Rooms",
+      "routePath": "/default/Admin/Offices/sample/Floors/sample/Rooms",
+      "screenshotPath": "visual/routes/mobile/044-root-withorg-admin-offices-floors-rooms.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Offices.Floors.Rooms.List",
+      "routePath": "/default/Admin/Offices/sample/Floors/sample/Rooms/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/mobile/045-root-withorg-admin-offices-floors-rooms-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Offices.List",
+      "routePath": "/default/Admin/Offices/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/mobile/046-root-withorg-admin-offices-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Roles",
+      "routePath": "/default/Admin/Roles",
+      "screenshotPath": "visual/routes/mobile/047-root-withorg-admin-roles.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Roles.Create",
+      "routePath": "/default/Admin/Roles/Create",
+      "screenshotPath": "visual/routes/mobile/048-root-withorg-admin-roles-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Roles.Edit",
+      "routePath": "/default/Admin/Roles/sample/Edit",
+      "screenshotPath": "visual/routes/mobile/049-root-withorg-admin-roles-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.Roles.List",
+      "routePath": "/default/Admin/Roles/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/mobile/050-root-withorg-admin-roles-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes",
+      "routePath": "/default/Admin/RoomTypes",
+      "screenshotPath": "visual/routes/mobile/051-root-withorg-admin-roomtypes.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes.Create",
+      "routePath": "/default/Admin/RoomTypes/Create",
+      "screenshotPath": "visual/routes/mobile/052-root-withorg-admin-roomtypes-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes.Edit",
+      "routePath": "/default/Admin/RoomTypes/1/Edit",
+      "screenshotPath": "visual/routes/mobile/053-root-withorg-admin-roomtypes-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Admin.RoomTypes.List",
+      "routePath": "/default/Admin/RoomTypes/?sort%26dir%26page%26s=sort%26dir%26page%26s-sample",
+      "screenshotPath": "visual/routes/mobile/054-root-withorg-admin-roomtypes-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client",
+      "routePath": "/default",
+      "screenshotPath": "visual/routes/mobile/055-root-withorg-client.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Books",
+      "routePath": "/default/Books",
+      "screenshotPath": "visual/routes/mobile/056-root-withorg-client-books.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Books.Add",
+      "routePath": "/default/Books/Add",
+      "screenshotPath": "visual/routes/mobile/057-root-withorg-client-books-add.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Books.Edit",
+      "routePath": "/default/Books/Edit/1/sample",
+      "screenshotPath": "visual/routes/mobile/058-root-withorg-client-books-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Books.List",
+      "routePath": "/default/Books/List",
+      "screenshotPath": "visual/routes/mobile/059-root-withorg-client-books-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Committees",
+      "routePath": "/default/Committees",
+      "screenshotPath": "visual/routes/mobile/060-root-withorg-client-committees.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Committees.List",
+      "routePath": "/default/Committees/List",
+      "screenshotPath": "visual/routes/mobile/061-root-withorg-client-committees-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Employee",
+      "routePath": "/default/Employee",
+      "screenshotPath": "visual/routes/mobile/062-root-withorg-client-employee.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Employee.List",
+      "routePath": "/default/Employee/List",
+      "screenshotPath": "visual/routes/mobile/063-root-withorg-client-employee-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Events",
+      "routePath": "/default/Events",
+      "screenshotPath": "visual/routes/mobile/064-root-withorg-client-events.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Events.AddEvents",
+      "routePath": "/default/Events/AddEvent",
+      "screenshotPath": "visual/routes/mobile/065-root-withorg-client-events-addevents.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Events.EditEvent",
+      "routePath": "/default/Events/Edit/1",
+      "screenshotPath": "visual/routes/mobile/066-root-withorg-client-events-editevent.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Events.EventContent",
+      "routePath": "/default/Events/EventContent/1",
+      "screenshotPath": "visual/routes/mobile/067-root-withorg-client-events-eventcontent.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Events.List",
+      "routePath": "/default/Events/List",
+      "screenshotPath": "visual/routes/mobile/068-root-withorg-client-events-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Events.List.Type",
+      "routePath": "/default/Events/List/sample/office/sample",
+      "screenshotPath": "visual/routes/mobile/069-root-withorg-client-events-list-type.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Events.Report",
+      "routePath": "/default/Events/Report",
+      "screenshotPath": "visual/routes/mobile/070-root-withorg-client-events-report.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Events.Report.Event",
+      "routePath": "/default/Events/Report/Report/Event/1",
+      "screenshotPath": "visual/routes/mobile/071-root-withorg-client-events-report-event.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Kudos",
+      "routePath": "/default/Kudos",
+      "screenshotPath": "visual/routes/mobile/072-root-withorg-client-kudos.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Kudos.KudosAchievementBoard",
+      "routePath": "/default/Kudos/KudosAchievementBoard",
+      "screenshotPath": "visual/routes/mobile/073-root-withorg-client-kudos-kudosachievementboard.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Kudos.KudosLogList",
+      "routePath": "/default/Kudos/KudosLogList/sample",
+      "screenshotPath": "visual/routes/mobile/074-root-withorg-client-kudos-kudosloglist.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Kudos.KudosUserInformation",
+      "routePath": "/default/Kudos/KudosUserInformation/sample",
+      "screenshotPath": "visual/routes/mobile/075-root-withorg-client-kudos-kudosuserinformation.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Office",
+      "routePath": "/default/Office?floorId%26roomId%26coords%26user=floorId%26roomId%26coords%26user-sample",
+      "screenshotPath": "visual/routes/mobile/076-root-withorg-client-office.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.OrganizationalStructure",
+      "routePath": "/default/OrganizationalStructure",
+      "screenshotPath": "visual/routes/mobile/077-root-withorg-client-organizationalstructure.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Profiles",
+      "routePath": "/default/Profiles",
+      "screenshotPath": "visual/routes/mobile/078-root-withorg-client-profiles.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Profiles.Details",
+      "routePath": "/default/Profiles/1",
+      "screenshotPath": "visual/routes/mobile/079-root-withorg-client-profiles-details.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Profiles.Edit",
+      "routePath": "/default/Profiles/1/Edit/sample",
+      "screenshotPath": "visual/routes/mobile/080-root-withorg-client-profiles-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Profiles.List",
+      "routePath": "/default/Profiles",
+      "screenshotPath": "visual/routes/mobile/081-root-withorg-client-profiles-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Projects",
+      "routePath": "/default/Projects",
+      "screenshotPath": "visual/routes/mobile/082-root-withorg-client-projects.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Projects.Create",
+      "routePath": "/default/Projects/Create",
+      "screenshotPath": "visual/routes/mobile/083-root-withorg-client-projects-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Projects.Edit",
+      "routePath": "/default/Projects/Edit/1",
+      "screenshotPath": "visual/routes/mobile/084-root-withorg-client-projects-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Projects.List",
+      "routePath": "/default/Projects/List",
+      "screenshotPath": "visual/routes/mobile/085-root-withorg-client-projects-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Projects.ProjectContent",
+      "routePath": "/default/Projects/Details/1",
+      "screenshotPath": "visual/routes/mobile/086-root-withorg-client-projects-projectcontent.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.ServiceRequests",
+      "routePath": "/default/ServiceRequests",
+      "screenshotPath": "visual/routes/mobile/087-root-withorg-client-servicerequests.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.ServiceRequests.List",
+      "routePath": "/default/ServiceRequests/List?Id=Id-sample",
+      "screenshotPath": "visual/routes/mobile/088-root-withorg-client-servicerequests-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Settings",
+      "routePath": "/default/Settings",
+      "screenshotPath": "visual/routes/mobile/089-root-withorg-client-settings.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Settings.General",
+      "routePath": "/default/Settings/General",
+      "screenshotPath": "visual/routes/mobile/090-root-withorg-client-settings-general.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Settings.Notifications",
+      "routePath": "/default/Settings/Notifications",
+      "screenshotPath": "visual/routes/mobile/091-root-withorg-client-settings-notifications.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Settings.Providers",
+      "routePath": "/default/Settings/Providers",
+      "screenshotPath": "visual/routes/mobile/092-root-withorg-client-settings-providers.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.SubmitTicket",
+      "routePath": "/default/SubmitTicket",
+      "screenshotPath": "visual/routes/mobile/093-root-withorg-client-submitticket.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Vacations",
+      "routePath": "/default/Vacation",
+      "screenshotPath": "visual/routes/mobile/094-root-withorg-client-vacations.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Vacations.List",
+      "routePath": "/default/Vacation/List",
+      "screenshotPath": "visual/routes/mobile/095-root-withorg-client-vacations-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Wall",
+      "routePath": "/default/Wall",
+      "screenshotPath": "visual/routes/mobile/096-root-withorg-client-wall.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Wall.All",
+      "routePath": "/default/Wall/All",
+      "screenshotPath": "visual/routes/mobile/097-root-withorg-client-wall-all.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Wall.Create",
+      "routePath": "/default/Wall/Create",
+      "screenshotPath": "visual/routes/mobile/098-root-withorg-client-wall-create.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Wall.Edit",
+      "routePath": "/default/Wall/Edit/1",
+      "screenshotPath": "visual/routes/mobile/099-root-withorg-client-wall-edit.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Wall.Item",
+      "routePath": "/default/Wall",
+      "screenshotPath": "visual/routes/mobile/100-root-withorg-client-wall-item.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Wall.Item.Feed",
+      "routePath": "/default/Wall/Feed?wall%2F=wall%2F-sample",
+      "screenshotPath": "visual/routes/mobile/101-root-withorg-client-wall-item-feed.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Wall.Item.Members",
+      "routePath": "/default/Wall/Members?wall=wall-sample",
+      "screenshotPath": "visual/routes/mobile/102-root-withorg-client-wall-item-members.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Client.Wall.List",
+      "routePath": "/default/Wall/List",
+      "screenshotPath": "visual/routes/mobile/103-root-withorg-client-wall-list.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Error",
+      "routePath": "/default/Error/sample",
+      "screenshotPath": "visual/routes/mobile/104-root-withorg-error.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Forgot",
+      "routePath": "/default/Forgot",
+      "screenshotPath": "visual/routes/mobile/105-root-withorg-forgot.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Home",
+      "routePath": "/default",
+      "screenshotPath": "visual/routes/mobile/106-root-withorg-home.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Login",
+      "routePath": "/default/Login",
+      "screenshotPath": "visual/routes/mobile/107-root-withorg-login.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.LogOff",
+      "routePath": "/default/LogOff",
+      "screenshotPath": "visual/routes/mobile/108-root-withorg-logoff.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.PageNotFound",
+      "routePath": "/default/PageNotFound",
+      "screenshotPath": "visual/routes/mobile/109-root-withorg-pagenotfound.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Register",
+      "routePath": "/default/Register",
+      "screenshotPath": "visual/routes/mobile/110-root-withorg-register.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Reset",
+      "routePath": "/default/Reset",
+      "screenshotPath": "visual/routes/mobile/111-root-withorg-reset.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithOrg.Verify",
+      "routePath": "/default/Verify",
+      "screenshotPath": "visual/routes/mobile/112-root-withorg-verify.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithoutOrg",
+      "routePath": "/Login",
+      "screenshotPath": "visual/routes/mobile/113-root-withoutorg.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithoutOrg.Home",
+      "routePath": "/",
+      "screenshotPath": "visual/routes/mobile/114-root-withoutorg-home.jpg"
+    },
+    {
+      "viewport": "mobile",
+      "legacyState": "Root.WithoutOrg.Login",
+      "routePath": "/Login",
+      "screenshotPath": "visual/routes/mobile/115-root-withoutorg-login.jpg"
+    }
+  ]
+}

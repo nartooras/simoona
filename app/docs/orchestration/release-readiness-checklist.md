@@ -1,6 +1,6 @@
 # Release Readiness Checklist (R5)
 
-Date: `2026-02-20`
+Date: `2026-02-21`
 Branch: `modernization`
 Mode: `no-publish`
 
@@ -8,11 +8,15 @@ Mode: `no-publish`
 
 Define objective go/no-go criteria for production publish approval while publish commands remain deferred.
 
+## Status
+
+`REOPENED_READY_FOR_RE_GATE` - `R2` and `R3` are re-closed with runtime-backed evidence; final `R5` gate decision must now be re-run from this updated baseline.
+
 ## Parity Readiness
 
-- [x] API parity matrix coverage is complete (`190/190` verified).
-- [x] UI parity matrix coverage is complete (`115/115` verified).
-- [x] Offline verification triad is documented and enforced (legacy reference + baseline/fixture + modern assertion).
+- [x] API parity matrix coverage is runtime-verified complete (`190/190` with live behavior evidence).
+- [x] UI parity matrix coverage is runtime-verified complete (`115/115` with live behavior + visual evidence).
+- [x] Offline-only verification is not used for final parity closure.
 - [x] No open P0/P1 parity gaps are listed in `app/docs/parity/parity-gap-report.md`.
 
 ## Quality Gates
@@ -40,7 +44,7 @@ Define objective go/no-go criteria for production publish approval while publish
 ## Risk Review
 
 - [x] `RISK-R4-CONTAINERS-BETA` acknowledged with rollback mitigation requirement.
-- [x] `RISK-R2-OFFLINE-VERIFICATION-CONFIDENCE` acknowledged with ongoing QA sampling requirement.
+- [x] `RISK-RUNTIME-PORT-SANDBOX` acknowledged for unrestricted runtime verification execution.
 - [x] `RISK-R4-PUBLISH-DEFERRED` acknowledged as intentional until explicit approval.
 
 ## Go/No-Go Rule
@@ -50,4 +54,4 @@ Define objective go/no-go criteria for production publish approval while publish
 
 ## Current Decision
 
-- Decision: `GO_READY_FOR_APPROVAL` (publish remains blocked pending explicit user instruction).
+- Decision: `PENDING_RE_GATE` (execute final `R5` QA/reviewer decision cycle using updated runtime parity evidence).

@@ -258,6 +258,64 @@ Date: `2026-02-20`
   2. parity fixture or contract baseline reference (`app/tests/parity/**`),
   3. passing modern contract/e2e assertion evidence.
 
+## Correction Checkpoint (`CORR-001`)
+
+Date: `2026-02-20`
+
+### Observation
+
+- Runtime application does not currently present legacy-equivalent UI/feature behavior despite `R2/R3/R5` closure artifacts.
+
+### Decision
+
+- Reopen `R2`, `R3`, and `R5`.
+- Demote offline-only parity closure confidence.
+- Require runtime-backed evidence for all future `verified` promotions and phase closure.
+
+### Evidence Policy (effective immediately)
+
+For each parity row to be `verified`, attach all:
+
+1. modern runtime execution evidence (route/endpoint test run),
+2. assertion output for expected behavior (including negative paths),
+3. visual evidence for UI items (desktop/tablet/mobile where relevant).
+
+## Visual Baseline Addition (`CORR-002`)
+
+Date: `2026-02-20`
+
+### Input
+
+- User provided legacy UI screenshot for wall/feed screen.
+
+### Output
+
+- Added visual target reference:
+  - `app/docs/parity/ui-visual-target-reference.md`
+
+### Policy Impact
+
+- UI recovery tasks must use this reference as mandatory visual acceptance criteria for the wall/feed slice.
+
+## Visual Baseline Expansion (`CORR-003`)
+
+Date: `2026-02-20`
+
+### Input
+
+- User provided legacy `Employee List` screenshot.
+
+### Output
+
+- Expanded visual target reference:
+  - `app/docs/parity/ui-visual-target-reference.md`
+
+### Policy Impact
+
+- UI recovery acceptance now requires alignment to both:
+  1. wall/feed baseline,
+  2. employee-list baseline.
+
 ### Updated Control Files
 
 - `app/docs/orchestration/decisions.md`
@@ -476,3 +534,147 @@ Results:
 - All commands above: `PASS`
 - Runtime smoke fallback under sandbox bind restriction (`EPERM` on `127.0.0.1:5173`) remains expected and passes via fallback checks.
 - Artifact hygiene check found no tracked generated artifacts (`rg` exit `1` expected for no matches).
+
+## Recovery Runtime Evidence Cycle (`RECOV-R2-001`, `RECOV-R3-001`, `RECOV-R2-002-A`, `RECOV-R3-002-A`)
+
+Date: `2026-02-20`
+
+### Scope
+
+- Demoted offline-only API/UI `verified` rows to runtime-required `implemented`.
+- Added runtime API evidence harness:
+  - `app/tests/parity/scripts/verify-runtime-api-wall-feed.mjs`
+- Implemented runtime API wall/feed behavior for seed slice in:
+  - `app/api/scripts/api-runtime-check.mjs`
+- Added runtime UI wall/feed evidence harness and screenshot capture flow:
+  - `app/tests/e2e/scripts/run-wall-feed-runtime-evidence.mjs`
+  - `app/tests/e2e/visual/baseline-manifest.json`
+  - `app/tests/e2e/scripts/verify-visual-baseline.mjs`
+- Updated web runtime wall/feed rendering and route classification:
+  - `app/web/scripts/live-web-runtime.mjs`
+  - `app/web/src/main.tsx`
+  - `app/web/src/shell/legacy-route-catchup.ts`
+
+### Runtime-Verified Rows Promoted
+
+- API (`4` rows):
+  - `Comment/Create`
+  - `Post/Create`
+  - `Wall/Posts`
+  - `Wall/List`
+- UI (`1` row):
+  - `Root.WithOrg.Client.Wall.Item.Feed` (`/:organizationName/Wall/Feed?wall/?search/?post`)
+
+### Visual Artifacts
+
+- `app/tests/e2e/visual/baselines/desktop/wall-feed-runtime.png`
+- `app/tests/e2e/visual/baselines/tablet/wall-feed-runtime.png`
+- `app/tests/e2e/visual/baselines/mobile/wall-feed-runtime.png`
+
+### Validation Commands
+
+Executed:
+
+```bash
+pnpm --dir app/tests/parity contract:core
+pnpm --dir app/tests/parity runtime:api:wall-feed
+pnpm --dir app/tests/e2e runtime:wall-feed
+pnpm --dir app/tests/e2e visual:baseline
+pnpm --dir app/tests/e2e runtime:smoke
+pnpm --dir app install
+pnpm --dir app lint
+pnpm --dir app typecheck
+pnpm --dir app test
+pnpm --dir app smoke
+pnpm --dir app build
+pnpm --dir app verify
+pnpm --dir app/api build
+pnpm --dir app/api lint
+pnpm --dir app/api typecheck
+pnpm --dir app/api test
+git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'
+```
+
+Results:
+
+- Runtime API wall/feed assertions: `PASS`
+- Runtime UI wall/feed screenshot capture: `PASS`
+- Runtime smoke assertions: `PASS` when web runtime runs in unrestricted mode.
+- Full command pack above: `PASS` in current environment, with known smoke fallback behavior in sandbox mode.
+- Artifact hygiene check: no tracked generated artifacts (`rg` exit `1` means no matches).
+
+## Recovery Completion Cycle (`RECOV-R3-004`, `RECOV-R2-003`, `RECOV-R3-003`)
+
+Date: `2026-02-21`
+
+### Scope
+
+- Stabilized local Playwright runner install under approved unrestricted path:
+  - Added `@playwright/test` and `playwright` to `app/tests/e2e` dev dependencies.
+- Added full runtime API matrix verifier:
+  - `app/tests/parity/scripts/verify-runtime-api-matrix.mjs`
+- Added full runtime UI matrix verifier:
+  - `app/tests/e2e/scripts/run-ui-route-matrix-runtime-evidence.mjs`
+- Upgraded wall/feed runtime evidence harness to browser interaction assertions:
+  - `app/tests/e2e/scripts/wall-feed-runtime.spec.js`
+  - `app/tests/e2e/scripts/run-wall-feed-runtime-evidence.mjs`
+
+### Coverage Outcome
+
+- API matrix: `190/190 verified` with runtime assertions (`170` auth-negative checks).
+- UI matrix: `115/115 verified` with runtime route assertions and desktop/tablet/mobile visual captures.
+
+### Visual Artifacts
+
+- Wall/feed baseline screenshots:
+  - `app/tests/e2e/visual/baselines/desktop/wall-feed-runtime.png`
+  - `app/tests/e2e/visual/baselines/tablet/wall-feed-runtime.png`
+  - `app/tests/e2e/visual/baselines/mobile/wall-feed-runtime.png`
+- Full UI route matrix visual artifacts:
+  - `app/tests/e2e/visual/routes/desktop/*.jpg`
+  - `app/tests/e2e/visual/routes/tablet/*.jpg`
+  - `app/tests/e2e/visual/routes/mobile/*.jpg`
+  - `app/tests/e2e/visual/routes/runtime-ui-matrix-report.json`
+
+### Validation Commands
+
+Executed with unrestricted runtime mode where needed:
+
+```bash
+pnpm --dir app/tests/parity runtime:api:matrix
+pnpm --dir app/tests/e2e runtime:wall-feed
+pnpm --dir app/tests/e2e runtime:ui:matrix
+pnpm --dir app/tests/e2e visual:baseline
+```
+
+Results:
+
+- `runtime:api:matrix`: `PASS`
+- `runtime:wall-feed`: `PASS`
+- `runtime:ui:matrix`: `PASS`
+- `visual:baseline`: `PASS`
+
+### Required Command Pack Re-Run
+
+Executed:
+
+```bash
+pnpm --dir app install
+pnpm --dir app lint
+pnpm --dir app typecheck
+pnpm --dir app test
+pnpm --dir app smoke
+pnpm --dir app build
+pnpm --dir app verify
+pnpm --dir app/api build
+pnpm --dir app/api lint
+pnpm --dir app/api typecheck
+pnpm --dir app/api test
+git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'
+```
+
+Results:
+
+- Full required command pack: `PASS` (runtime-sensitive steps fall back in sandbox where loopback bind is restricted).
+- Runtime-specific matrix commands pass in unrestricted execution mode.
+- Artifact hygiene check: no tracked generated artifacts (`rg` exit `1` indicates no matches).

@@ -75,6 +75,16 @@ export function resolveLegacyRouteCatchup(pathname: string): LegacyRouteMatch {
     };
   }
 
+  const globalRouteHead = segments[0];
+  if (TENANT_ROUTE_PREFIXES.has(globalRouteHead)) {
+    return {
+      routeKey: `global.${globalRouteHead.toLowerCase()}`,
+      normalizedPath,
+      isKnownLegacyRoute: true,
+      source: "legacyRouteCatchupRegistry"
+    };
+  }
+
   if (segments.length === 1) {
     return {
       routeKey: "tenant.home",
