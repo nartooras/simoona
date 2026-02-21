@@ -206,6 +206,7 @@ build/local-setup/tools/*
 build/node_modules/
 build/generator-simoona/node_modules
 node_modules
+app/web/dist/
 
 src/webapp/coverage/
 src/webapp/bower_components
