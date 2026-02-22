@@ -4,13 +4,13 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 
 ## Priority Queue
 
-1. `R4-INTEGRATION-PARITY-001` (`P0`, owner `$platform-devops` + `$full-stack-developer`)
+1. `R4-INTEGRATION-PARITY-001` (`P0`, owner `$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`)
 - Scope:
   - Integration parity for OAuth, SMTP, storage/media, external callbacks, localization, background jobs.
 - Acceptance:
   - Failure-path coverage and runtime evidence captured.
 
-2. `R3-FEATURE-WAVE-D` (`P0`, owner `$full-stack-developer`)
+2. `R3-FEATURE-WAVE-D` (`P0`, owner `$react-frontend-developer` + `$full-stack-developer`)
 - Scope:
   - Full parity for features domains previously treated as gated scope:
     events, kudos, lotteries, vacations, service requests, books, projects, committees, office map, organizational structure, submit ticket, widgets.

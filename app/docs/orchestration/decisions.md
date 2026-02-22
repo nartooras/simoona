@@ -77,3 +77,7 @@
 19. `D-2026-02-22-019` Middleware-backed parity payload serving
 - Decision: keep parity harness compatibility by injecting route payload (`simoona-runtime-data`) and exposing `/healthz` via Vite middleware rather than a custom standalone runtime server.
 - Rationale: preserves existing parity evidence scripts while eliminating duplicate runtime logic drift.
+
+20. `D-2026-02-22-020` Dedicated React frontend skill routing
+- Decision: frontend/web implementation tasks must default to `$react-frontend-developer`, while backend/full-stack implementation tasks stay with `$full-stack-developer`.
+- Rationale: enforces React best-practice ownership for web work and reduces role ambiguity in orchestration.

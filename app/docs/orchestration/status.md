@@ -62,8 +62,8 @@
 
 ## Assigned Tasks
 
-1. `R4-INTEGRATION-PARITY-001` (`$platform-devops` + `$full-stack-developer`): run integration failure-path parity wave.
-2. `R3-FEATURE-WAVE-D` (`$full-stack-developer`): execute runtime parity for features domains.
+1. `R4-INTEGRATION-PARITY-001` (`$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`): run integration failure-path parity wave.
+2. `R3-FEATURE-WAVE-D` (`$react-frontend-developer` + `$full-stack-developer`): execute runtime parity for features domains.
 3. `R6-REVIEW-QA-ENFORCEMENT-001` (`$reviewer` + `$qa`): continue recording review/QA artifacts for each completed parity slice.
 
 ## Blocked Tasks

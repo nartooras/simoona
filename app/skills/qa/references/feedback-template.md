@@ -1,6 +1,6 @@
 # Developer Feedback Template
 
-Use this template for feedback to `$full-stack-developer`.
+Use this template for feedback to the responsible implementation developer (`$react-frontend-developer` for frontend/web scope, `$full-stack-developer` for backend/full-stack scope).
 
 ## Summary
 

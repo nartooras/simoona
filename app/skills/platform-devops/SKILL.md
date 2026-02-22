@@ -49,7 +49,7 @@ If present, also read:
 3. Validate with `references/validation-checklist.md`.
 4. Update platform documentation/runbooks if behavior changed.
 5. Report readiness and residual risks to orchestrator.
-6. Route app-code defects to `$full-stack-developer` when needed.
+6. Route app-code defects to the responsible implementation skill (`$react-frontend-developer` for frontend/web scope, `$full-stack-developer` for backend/full-stack scope) when needed.
 
 ## Reliability Policy
 

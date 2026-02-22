@@ -54,7 +54,7 @@ Repository instructions for AI agent threads working on modernization.
 
 - If a relevant skill exists or a user names a skill, the agent must load and follow that `SKILL.md` before planning or implementation.
 - Minimum modernization flow:
-  1. implementation via `$full-stack-developer` (or relevant specialist skill)
+  1. implementation via `$react-frontend-developer` for frontend/web scope, and `$full-stack-developer` for backend/full-stack scope (or relevant specialist skill)
   2. review via `$reviewer`
   3. QA via `$qa`
 - Implementation completion requires:

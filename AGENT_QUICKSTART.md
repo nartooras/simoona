@@ -40,7 +40,7 @@ Fast orientation guide for AI agents and contributors.
 
 - If a relevant skill exists, load and follow its `SKILL.md` first.
 - Minimum execution sequence for implementation threads:
-  1. implementation (`$full-stack-developer` or relevant specialist)
+  1. implementation (`$react-frontend-developer` for frontend/web scope, `$full-stack-developer` for backend/full-stack scope, or another relevant specialist)
   2. review (`$reviewer`) with `APPROVED`
   3. QA (`$qa`) with `GREEN`
 - No phase can be marked complete from docs/contracts only.

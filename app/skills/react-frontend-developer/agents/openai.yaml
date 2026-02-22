@@ -1,0 +1,7 @@
+interface:
+  display_name: "React Frontend Developer"
+  short_description: "Implement scoped React web modernization tasks"
+  default_prompt: "Use $react-frontend-developer to implement a scoped frontend modernization task under /app/web with tests and parity notes."
+
+policy:
+  allow_implicit_invocation: true

@@ -16,6 +16,11 @@ Scope: baseline root + modernization markdown synchronization snapshot (`58` fil
   - `app/docs/qa/2026-02-22-r2-auth-real-001-qa.md`
   - `app/docs/reviews/2026-02-22-r2-auth-real-001b-review.md`
   - `app/docs/qa/2026-02-22-r2-auth-real-001b-qa.md`
+- Skill-routing synchronization update (`2026-02-22`) added frontend-specialist skill artifacts:
+  - `app/skills/react-frontend-developer/SKILL.md`
+  - `app/skills/react-frontend-developer/agents/openai.yaml`
+  - `app/skills/react-frontend-developer/references/implementation-standards.md`
+  - `app/skills/react-frontend-developer/references/handoff-template.md`
 - These post-baseline files are managed through orchestration evidence updates and do not invalidate the original 58/58 synchronization closure.
 
 ## Disposition

@@ -44,8 +44,8 @@ Maintain these files under `/Users/arturasnikoncukas/code/repo/simoona/app/docs/
 
 Run with 2-3 implementation agents plus reviewer coverage:
 
-- `api-compat-agent`: NestJS modules, SQL behavior parity, auth/permission parity.
-- `web-parity-agent`: React route parity, UI behavior parity, subtle animation layer.
+- `api-compat-agent`: NestJS modules, SQL behavior parity, auth/permission parity via `$full-stack-developer`.
+- `web-parity-agent`: React route parity, UI behavior parity, subtle animation layer via `$react-frontend-developer`.
 - `parity-analyst-agent`: parity matrix ownership and gap reporting via `$parity-analyst`.
 - `data-migration-agent`: DB/file migration tooling and rehearsals via `$data-migration-engineer`.
 - `platform-devops-agent`: runtime/CI/CD/deployment readiness via `$platform-devops`.
@@ -67,9 +67,9 @@ Repeat this loop continuously:
    - known risks
    - parity impact
 5. Invoke `$reviewer` to return `APPROVED|CHANGES_REQUESTED`.
-6. If `CHANGES_REQUESTED`, forward reviewer feedback to `$full-stack-developer`.
+6. If `CHANGES_REQUESTED`, forward reviewer feedback to the responsible implementation skill (`$react-frontend-developer` for frontend/web scope, `$full-stack-developer` for backend/full-stack scope).
 7. If `APPROVED`, invoke `$qa` to run gate checks and return `GREEN|YELLOW|RED`.
-8. Merge only on `GREEN`; on `YELLOW|RED`, forward QA feedback to `$full-stack-developer`.
+8. Merge only on `GREEN`; on `YELLOW|RED`, forward QA feedback to the responsible implementation skill (`$react-frontend-developer` for frontend/web scope, `$full-stack-developer` for backend/full-stack scope).
 9. Update `status.md`, `risks.md`, `decisions.md`, and `evidence.md`.
 
 ## Execution Modes
@@ -98,7 +98,7 @@ In `autopilot`, run this sequence repeatedly:
 1. Select highest-priority unblocked task.
 2. Dispatch owner skill and collect output.
 3. If task is implementation-related, run `$reviewer`, then `$qa` on approval.
-4. Apply feedback loops to `$full-stack-developer` until reviewer/QA pass or stop condition hits.
+4. Apply feedback loops to the responsible implementation skill (`$react-frontend-developer` for frontend/web scope, `$full-stack-developer` for backend/full-stack scope) until reviewer/QA pass or stop condition hits.
 5. Update orchestration files after each cycle.
 6. Continue to next unblocked task.
 
@@ -129,7 +129,8 @@ When stopping, emit a checkpoint with:
 - Include exact commands for verification.
 - Require rollback-safe behavior for migration and cutover tasks.
 - Prefer contract-first implementation when touching API-facing behavior.
-- Invoke `$full-stack-developer` for implementation tasks that require writing code.
+- Invoke `$react-frontend-developer` for frontend/web implementation tasks (React UI routes, components, styling, client-side state/interaction behavior).
+- Invoke `$full-stack-developer` for backend/full-stack implementation tasks (API/domain contracts, auth/session server behavior, cross-layer integration).
 - Invoke `$parity-analyst` to maintain parity matrices and gap reports.
 - Invoke `$data-migration-engineer` for migration dry-runs and cutover readiness.
 - Invoke `$platform-devops` for platform, CI/CD, and deployment readiness tasks.

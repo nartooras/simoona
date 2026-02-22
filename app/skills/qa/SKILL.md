@@ -1,6 +1,6 @@
 ---
 name: qa
-description: Run quality assurance for Simoona modernization tasks in `/app`, execute required tests, verify parity evidence, provide GO/NO-GO (green light) decisions to the orchestrator, and send actionable defect feedback to full-stack developers.
+description: Run quality assurance for Simoona modernization tasks in `/app`, execute required tests, verify parity evidence, provide GO/NO-GO (green light) decisions to the orchestrator, and send actionable defect feedback to implementation developers.
 ---
 
 # QA
@@ -26,6 +26,7 @@ If present, also read:
 - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/status.md`
 - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/orchestration/evidence.md`
 - `/Users/arturasnikoncukas/code/repo/simoona/app/skills/simoona-modernization-orchestrator/references/phase-gates.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/skills/react-frontend-developer/references/handoff-template.md`
 - `/Users/arturasnikoncukas/code/repo/simoona/app/skills/full-stack-developer/references/handoff-template.md`
 
 ## Non-Negotiable Constraints
@@ -37,14 +38,14 @@ If present, also read:
 
 ## QA Workflow
 
-1. Read task handoff from the full-stack developer.
+1. Read task handoff from the responsible implementation developer (`$react-frontend-developer` for frontend/web scope, `$full-stack-developer` for backend/full-stack scope).
 2. Confirm reviewer decision is `APPROVED` before running final gate QA.
 3. Confirm required acceptance criteria and phase gate criteria.
 4. Run required commands from assignment; if missing, derive from `references/test-strategy.md`.
 5. Collect outputs, failures, warnings, and parity deviations.
 6. Decide status using `references/decision-rules.md`.
 7. Report to orchestrator using `references/qa-report-template.md`.
-8. If not green, send defect feedback to full-stack developer using `references/feedback-template.md`.
+8. If not green, send defect feedback to the responsible implementation developer (`$react-frontend-developer` for frontend/web scope, `$full-stack-developer` for backend/full-stack scope) using `references/feedback-template.md`.
 
 ## Green-Light Policy
 

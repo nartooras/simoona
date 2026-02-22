@@ -52,7 +52,7 @@ Use required formats from `references/matrix-spec.md` and `references/parity-gap
 3. Mark status: `unmapped|mapped|implemented|verified`.
 4. Identify parity gaps with severity and ownership.
 5. Update parity artifacts and summarize coverage deltas.
-6. Send findings to orchestrator; send implementation gaps to `$full-stack-developer`.
+6. Send findings to orchestrator; send implementation gaps to the responsible implementation skill (`$react-frontend-developer` for frontend/web scope, `$full-stack-developer` for backend/full-stack scope).
 
 ## Gate Policy
 

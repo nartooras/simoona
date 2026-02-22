@@ -19,6 +19,7 @@
 `If a required skill is missing/unreadable, agent must report and use documented fallback.`
 2. Update `/Users/arturasnikoncukas/code/repo/simoona/AGENT_QUICKSTART.md` to remove branch-policy conflict and align to `modernization` branch only for this repo.
 3. Update `/Users/arturasnikoncukas/code/repo/simoona/README.md` and `/Users/arturasnikoncukas/code/repo/simoona/LocalSetup.md` with current modernization truth and parity policy.
+4. Frontend implementation routing policy: use `$react-frontend-developer` for frontend/web tasks and `$full-stack-developer` for backend/full-stack tasks.
 
 ## Workstream 2: Full Markdown Sync (58 Files, Week 0-1)
 1. Audit and update all in-scope markdown files:

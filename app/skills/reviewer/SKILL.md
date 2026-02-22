@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: Review Simoona modernization code changes under `/app` to ensure quality, no over-engineering, strict scope adherence, architecture compliance, and best-practice implementation. Use when the orchestrator needs code review decisions and actionable feedback for full-stack developers before QA gating.
+description: Review Simoona modernization code changes under `/app` to ensure quality, no over-engineering, strict scope adherence, architecture compliance, and best-practice implementation. Use when the orchestrator needs code review decisions and actionable feedback for implementation developers before QA gating.
 ---
 
 # Reviewer
@@ -19,6 +19,7 @@ Read these files before reviewing:
 - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/ai-agents-modernization-plan.md`
 - `/Users/arturasnikoncukas/code/repo/simoona/AGENTS.md`
 - `/Users/arturasnikoncukas/code/repo/simoona/AGENT_QUICKSTART.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/skills/react-frontend-developer/SKILL.md`
 - `/Users/arturasnikoncukas/code/repo/simoona/app/skills/full-stack-developer/SKILL.md`
 
 If present, also read:

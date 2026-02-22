@@ -6,6 +6,7 @@ Use these templates for consistent task dispatch.
 
 ```text
 Role: api-compat-agent
+Skill: use $full-stack-developer
 Objective: <single objective>
 Phase: <phase id>
 Scope in: <explicit files/modules>
@@ -30,6 +31,7 @@ Output format:
 
 ```text
 Role: web-parity-agent
+Skill: use $react-frontend-developer
 Objective: <single objective>
 Phase: <phase id>
 Scope in: <routes/components>
