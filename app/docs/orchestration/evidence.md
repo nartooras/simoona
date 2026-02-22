@@ -237,6 +237,8 @@
 - `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shared/styles/legacy-runtime.css`
 - `/Users/arturasnikoncukas/code/repo/simoona/app/web/tsconfig.json`
 - `/Users/arturasnikoncukas/code/repo/simoona/app/web/README.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/reviews/2026-02-22-r3-web-structure-002-review.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/qa/2026-02-22-r3-web-structure-002-qa.md`
 
 ### `R3-WEB-STRUCTURE-002` command evidence (pass/fail)
 

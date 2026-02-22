@@ -83,6 +83,9 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 17. `R3-WEB-STRUCTURE-002`
 - Outcome: `App.tsx` reduced to orchestration-only entry, feature view logic extracted to `src/features/core/CoreFeatureViews.tsx` and `src/features/extended/ExtendedFeatureViews.tsx`, runtime data split to `src/runtime/data/{contracts,fixtures,resolver}.ts` with facade retained at `src/app/runtime-data.ts`, dead compatibility runtime/render files removed, active web runtime migrated to TypeScript-only source (`allowJs: false`), and legacy style payload moved to `src/shared/styles/legacy-runtime.css`.
 
+18. `R6-REVIEW-QA-ENFORCEMENT-001G`
+- Outcome: reviewer (`APPROVED`) and QA (`GREEN`) artifacts published for `R3-WEB-STRUCTURE-002`.
+
 ## Validation Notes
 
 1. `pnpm --dir app install` passes in unrestricted mode; constrained sandbox mode can still fail with DNS/network limits (`ENOTFOUND registry.npmjs.org`).
