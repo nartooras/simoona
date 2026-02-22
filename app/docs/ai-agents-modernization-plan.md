@@ -47,6 +47,80 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
 2. Frontend restructure from monolith to feature modules; decompose `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx`.
 3. Remove duplicated runtime logic drift between `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx` and `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/live-web-runtime.mjs`.
 
+### Workstream 3 Target Web Folder Structure (End State)
+
+```text
+/Users/arturasnikoncukas/code/repo/simoona/app/web/
+  README.md
+  package.json
+  vite.config.ts
+  index.html
+  scripts/
+    live-web-runtime.mjs
+    verify-web-syntax.mjs
+    verify-web-shell-foundation.mjs
+    verify-shell-route-pack.mjs
+  src/
+    main.tsx
+    app/
+      bootstrap.ts
+      runtime-payload.ts
+      route-resolver.ts
+    shell/
+      auth-boundary.ts
+      tenant-route-container.ts
+      top-level-layout.ts
+      legacy-route-catchup.ts
+    features/
+      wall-feed/
+        render.ts
+        interactions.ts
+        model.ts
+      employee-list/
+        render.ts
+        interactions.ts
+        model.ts
+      profile/
+        render.ts
+        interactions.ts
+        model.ts
+      settings/
+        render.ts
+        interactions.ts
+        model.ts
+      admin/
+        render.ts
+        interactions.ts
+        model.ts
+      auth-utility/
+        render.ts
+        interactions.ts
+        model.ts
+      features-domain/
+        events/
+        kudos/
+        lotteries/
+        vacations/
+        service-requests/
+        books/
+        projects/
+        committees/
+        office-map/
+        organizational-structure/
+        submit-ticket/
+        widgets/
+    shared/
+      html/
+      dom/
+      types/
+      runtime/
+    styles/
+      tokens.css
+      base.css
+      shell.css
+      features/
+```
+
 ## Workstream 4: Real Auth and Permission Enforcement (Week 2-3)
 1. Implement real modern auth using existing SQL schema.
 2. Enforce token/session checks for protected routes and APIs.
