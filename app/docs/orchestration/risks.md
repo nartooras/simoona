@@ -18,23 +18,7 @@
 - Owner: `$simoona-modernization-orchestrator` + `$reviewer` + `$qa`
 - Status: `Open`
 
-3. `RISK-R3-MONOLITHIC-WEB`
-- Severity: `Medium`
-- Description: `main.tsx` has been decomposed, but extracted runtime modules remain large and complex.
-- Impact: ongoing regression risk and slower review velocity.
-- Mitigation: continue domain-level extraction for wall, employee, profile/settings, admin, and auth utility runtime paths.
-- Owner: `$full-stack-developer`
-- Status: `Open`
-
-4. `RISK-R3-RUNTIME-DRIFT`
-- Severity: `Medium`
-- Description: runtime drift risk decreased after shared runtime model and decomposition, but full domain isolation is incomplete.
-- Impact: local/runtime evidence may diverge from deployed behavior in later waves.
-- Mitigation: keep shared runtime models centralized and complete domain-level module extraction.
-- Owner: `$full-stack-developer`
-- Status: `Open`
-
-5. `RISK-RUNTIME-PORT-SANDBOX`
+3. `RISK-RUNTIME-PORT-SANDBOX`
 - Severity: `Medium`
 - Description: local runtime bind/connect can fail in sandbox mode.
 - Impact: browser runtime checks may require unrestricted execution.
@@ -42,7 +26,7 @@
 - Owner: `$platform-devops`
 - Status: `Open`
 
-6. `RISK-DEPENDENCY-NETWORK-SANDBOX`
+4. `RISK-DEPENDENCY-NETWORK-SANDBOX`
 - Severity: `Medium`
 - Description: dependency installation can fail in sandbox due DNS/network restrictions.
 - Impact: full reinstall validation is blocked even when code-level validation succeeds.
@@ -50,7 +34,7 @@
 - Owner: `$platform-devops`
 - Status: `Open`
 
-7. `RISK-NODE-SQLITE-EXPERIMENTAL`
+5. `RISK-NODE-SQLITE-EXPERIMENTAL`
 - Severity: `Low`
 - Description: auth runtime now uses `node:sqlite`, which emits an experimental feature warning on Node 22.
 - Impact: warning noise and potential future runtime API changes.
@@ -83,3 +67,11 @@
 6. `RISK-R2-LEGACY-HEADER-FALLBACK`
 - Resolution date: `2026-02-22`
 - Outcome: unresolved `x-legacy-user-id` values no longer synthesize authenticated users; requests are now rejected as unauthorized.
+
+7. `RISK-R3-MONOLITHIC-WEB`
+- Resolution date: `2026-02-22`
+- Outcome: `main.tsx` and runtime orchestrators were reduced to thin composition layers with feature render/interaction modules split under `app/web/src/features/**`.
+
+8. `RISK-R3-RUNTIME-DRIFT`
+- Resolution date: `2026-02-22`
+- Outcome: shared runtime payload normalization moved to `app/web/src/app/runtime-payload.js` and is now consumed by both browser/runtime server paths.

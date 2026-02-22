@@ -18,6 +18,7 @@ const requiredFiles = [
   path.join(webRoot, "index.html"),
   path.join(webRoot, "vite.config.ts"),
   path.join(webRoot, "src/main.tsx"),
+  path.join(webRoot, "src/app/runtime-payload.js"),
   path.join(webRoot, "src/runtime/runtime-shared.js"),
   path.join(webRoot, "src/shell/auth-boundary.ts"),
   path.join(webRoot, "src/shell/legacy-route-catchup.ts"),
@@ -104,6 +105,12 @@ const {
   employeeRows,
   normalizePath
 } = runtimeSharedModule;
+const runtimePayloadModule = await import(path.join(webRoot, "src/app/runtime-payload.js"));
+const {
+  createDefaultWallFeedPayload,
+  createDefaultEmployeeListPayload,
+  ensureClientRuntimePayload
+} = runtimePayloadModule;
 
 const profileDetailsModel = {
   id: "1",
@@ -719,49 +726,7 @@ function buildWallFeedPayload(pathname) {
     return null;
   }
 
-  return {
-    posts: wallFeedPosts,
-    rightSidebar: {
-      quickActions: [
-        { id: "create-post", symbol: "+", title: "Create post" },
-        { id: "apps", symbol: "\u25a6", title: "Apps" },
-        { id: "basket", symbol: "\u{1F6D2}", title: "Kudos basket" }
-      ],
-      kudosFeed: [
-        { score: "+2", date: "02-18", fullName: "Vardenis Pavardenis", reason: "Saldainiai" },
-        { score: "+1", date: "02-17", fullName: "Vardenis Pavardenis 2", reason: "Sokoladas" },
-        { score: "+3", date: "02-17", fullName: "Vardenis Pavardenis 3", reason: "Lauktuves" },
-        { score: "+5", date: "02-13", fullName: "Vardenis Pavardenis 4", reason: "Naminis tinginys" },
-        { score: "+1", date: "02-13", fullName: "Vardenis Pavardenis", reason: "Sausainiai" }
-      ],
-      widgets: [
-        {
-          title: "Upcoming events",
-          items: [
-            "FPV dronu surinkimo workshop'as Nr1 (Leisure)",
-            "ISTQB Advanced hub (Hub)",
-            "Vaiku Svente 2026 (Leisure)"
-          ]
-        },
-        {
-          title: "Most Kudos in 3 months",
-          items: ["Vardenis Pavardenis (459)", "Vardenis Pavardenis (250)", "Jona Jonaite (195)"]
-        },
-        {
-          title: "Most Kudos in 12 months",
-          items: [
-            "Vardenis Pavardenis (741)",
-            "Reda Redaitiene (719)",
-            "Rytienis Pavardenis (489)"
-          ]
-        },
-        {
-          title: "Birthdays",
-          items: ["Vanesa - 2026-02-18 (Wednesday)"]
-        }
-      ]
-    }
-  };
+  return createDefaultWallFeedPayload(wallFeedPosts);
 }
 
 function buildEmployeeListPayload(pathname) {
@@ -769,11 +734,7 @@ function buildEmployeeListPayload(pathname) {
     return null;
   }
 
-  return {
-    title: "Employee List",
-    pageSize: 10,
-    rows: employeeRows
-  };
+  return createDefaultEmployeeListPayload(employeeRows);
 }
 
 function buildProfilePagePayload(pathname) {
@@ -2369,6 +2330,12 @@ function renderIndexForRoute(pathname) {
     adminPage,
     authUtilityPage
   };
+  ensureClientRuntimePayload(runtimePayload, {
+    browserPath: pathname,
+    defaultLeftMenuGroups: legacyLeftMenuGroups,
+    defaultWallFeedPosts: wallFeedPosts,
+    defaultEmployeeRows: employeeRows
+  });
 
   return indexTemplate.replace(
     '<script id="simoona-runtime-data" type="application/json"></script>',

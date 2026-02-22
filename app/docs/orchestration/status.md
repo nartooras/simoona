@@ -7,6 +7,12 @@
 
 - `R3 - UI Parity Foundation` (`IN_PROGRESS`)
 
+## Workstream Progress
+
+1. `Workstream 1 (Governance Reset)`: `COMPLETE`
+2. `Workstream 2 (Full Markdown Sync)`: `COMPLETE`
+3. `Workstream 3 (Real Engineering Baseline)`: `COMPLETE`
+
 ## Completed Tasks
 
 1. `R0-DOC-SYNC-001` (`$simoona-modernization-orchestrator` + `$parity-analyst`)
@@ -42,12 +48,17 @@
 11. `R6-REVIEW-QA-ENFORCEMENT-001D` (`$reviewer` + `$qa`)
 - Outcome: reviewer `APPROVED` and QA `GREEN` reports captured for `R3-WEB-REFACTOR-001B`.
 
+12. `R3-WEB-REFACTOR-001C` (`$full-stack-developer`)
+- Outcome: split rendering/interactions into feature modules under `app/web/src/features/**`, reduced runtime orchestrators (`main.tsx`, `runtime-views.js`, `runtime-interactions.js`), and added shared payload normalization (`app/web/src/app/runtime-payload.js`) consumed by both browser/runtime server paths.
+
+13. `R6-REVIEW-QA-ENFORCEMENT-001E` (`$reviewer` + `$qa`)
+- Outcome: reviewer `APPROVED` and QA `GREEN` reports captured for `R3-WEB-REFACTOR-001C`.
+
 ## Assigned Tasks
 
 1. `R4-INTEGRATION-PARITY-001` (`$platform-devops` + `$full-stack-developer`): run integration failure-path parity wave.
 2. `R3-FEATURE-WAVE-D` (`$full-stack-developer`): execute runtime parity for features domains.
-3. `R3-WEB-REFACTOR-001C` (`$full-stack-developer`): continue slicing `runtime-views.js` and `runtime-interactions.js` into domain modules.
-4. `R6-REVIEW-QA-ENFORCEMENT-001` (`$reviewer` + `$qa`): continue recording review/QA artifacts for each completed parity slice.
+3. `R6-REVIEW-QA-ENFORCEMENT-001` (`$reviewer` + `$qa`): continue recording review/QA artifacts for each completed parity slice.
 
 ## Blocked Tasks
 
@@ -55,18 +66,16 @@
 
 ## Open Risks
 
-1. `RISK-R3-MONOLITHIC-WEB`: `main.tsx` is now decomposed, but extracted runtime modules are still large and increase review surface (`Medium`).
-2. `RISK-R3-RUNTIME-DRIFT`: reduced by shared runtime model and decomposition, but parity drift risk remains until domain modules are fully isolated (`Medium`).
-3. `RISK-R4-INTEGRATION-COVERAGE`: integration parity mapped but not fully behavior-verified (`High`).
-4. `RISK-RUNTIME-PORT-SANDBOX`: runtime smoke bind/connect can fail under sandbox restrictions (`Medium`).
-5. `RISK-DEPENDENCY-NETWORK-SANDBOX`: dependency install can fail in sandbox due DNS/network restrictions (`Medium`).
-6. `RISK-NODE-SQLITE-EXPERIMENTAL`: runtime auth now uses `node:sqlite`, which currently emits experimental warnings on Node 22 (`Low`).
+1. `RISK-R4-INTEGRATION-COVERAGE`: integration parity mapped but not fully behavior-verified (`High`).
+2. `RISK-RUNTIME-PORT-SANDBOX`: runtime smoke bind/connect can fail under sandbox restrictions (`Medium`).
+3. `RISK-DEPENDENCY-NETWORK-SANDBOX`: dependency install can fail in sandbox due DNS/network restrictions (`Medium`).
+4. `RISK-NODE-SQLITE-EXPERIMENTAL`: runtime auth now uses `node:sqlite`, which currently emits experimental warnings on Node 22 (`Low`).
 
 ## Next 3 Tasks
 
 1. Execute `R4-INTEGRATION-PARITY-001` failure-path evidence pack.
-2. Start `R3-FEATURE-WAVE-D` runtime parity checks for features domains.
-3. Land `R3-WEB-REFACTOR-001C` by splitting runtime view/interaction modules by domain.
+2. Execute `R3-FEATURE-WAVE-D` runtime parity checks for features domains.
+3. Continue `R6-REVIEW-QA-ENFORCEMENT-001` artifacts for each completed parity slice.
 
 ## Gate Status
 

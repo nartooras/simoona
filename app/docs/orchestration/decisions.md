@@ -61,3 +61,11 @@
 15. `D-2026-02-22-015` Web runtime decomposition boundary
 - Decision: keep `main.tsx` as a runtime orchestrator and move styles, rendering, and interaction logic into dedicated runtime modules.
 - Rationale: improves readability and supports parity-safe incremental extraction without changing route payload contracts.
+
+16. `D-2026-02-22-016` Feature module extraction for runtime web slices
+- Decision: split runtime render/interaction logic into domain feature modules under `app/web/src/features/**` while keeping orchestrators thin.
+- Rationale: reduces monolith risk and makes parity behavior changes reviewable per domain.
+
+17. `D-2026-02-22-017` Shared runtime payload normalization
+- Decision: centralize client/runtime payload fallback behavior in `app/web/src/app/runtime-payload.js` and consume it from both `main.tsx` and `live-web-runtime.mjs`.
+- Rationale: prevents route/payload drift between browser rendering and runtime server payload generation.

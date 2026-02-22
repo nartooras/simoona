@@ -6,7 +6,7 @@ Mode: `full-parity-recovery`
 
 ## Objective
 
-Continue from completed governance/doc sync, baseline hardening, completed `R2` auth parity, and completed `R3-WEB-REFACTOR-001B` toward features and integration parity waves.
+Continue from completed governance/doc sync, completed Workstream 3 baseline, and completed `R2` auth parity toward remaining feature and integration parity waves.
 
 ## Hard Rules
 
@@ -28,12 +28,7 @@ Continue from completed governance/doc sync, baseline hardening, completed `R2` 
 - Acceptance:
   - runtime parity coverage for features domains previously treated as gated scope.
 
-3. `R3-WEB-REFACTOR-001C`
-- Owner: `$full-stack-developer`
-- Acceptance:
-  - split `runtime-views.js` and `runtime-interactions.js` into domain modules while preserving route-pack parity checks.
-
-4. `R6-REVIEW-QA-ENFORCEMENT-001`
+3. `R6-REVIEW-QA-ENFORCEMENT-001`
 - Owner: `$reviewer` then `$qa`
 - Acceptance:
   - review report (`APPROVED`) and QA report (`GREEN`) for each completed slice.

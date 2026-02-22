@@ -92,10 +92,49 @@
 - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/reviews/2026-02-22-r3-web-refactor-001b-review.md`
 - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/qa/2026-02-22-r3-web-refactor-001b-qa.md`
 
-### `R3-WEB-REFACTOR-001B` command evidence (pass/fail)
+## 2026-02-22 `R3-WEB-REFACTOR-001C` Evidence
+
+### Scope delivered in this checkpoint
+
+1. Render and interaction logic was split into domain modules under `app/web/src/features/**`.
+2. Runtime orchestrator files were reduced in size:
+   - `main.tsx`: `55` lines
+   - `runtime-views.js`: `114` lines
+   - `runtime-interactions.js`: `19` lines
+3. Shared runtime payload normalization moved to `app/web/src/app/runtime-payload.js`.
+4. `live-web-runtime.mjs` now consumes shared payload defaults/normalization for wall feed, employee list, and fallback route payload behavior.
+5. Reviewer/QA hard gate artifacts were published for this slice.
+
+### Key artifacts updated
+
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/runtime/runtime-views.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/runtime/runtime-interactions.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/runtime-payload.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/wall-feed/render.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/wall-feed/interactions.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/employee-list/render.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/employee-list/interactions.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/profile/render.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/profile/interactions.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/settings/render.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/settings/interactions.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/admin/render.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/admin/interactions.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/client-feature/render.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/client-feature/interactions.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/auth-utility/render.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/auth-utility/interactions.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/fallback/render.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/live-web-runtime.mjs`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/reviews/2026-02-22-r3-web-refactor-001c-review.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/qa/2026-02-22-r3-web-refactor-001c-qa.md`
+
+### `R3-WEB-REFACTOR-001C` command evidence (pass/fail)
 
 - `pnpm --dir app install`: `FAIL` (`ENOTFOUND registry.npmjs.org` in sandbox).
 - `pnpm --dir app/web lint`: `PASS`.
+- `pnpm --dir app/web build`: `PASS`.
 - `pnpm --dir app lint`: `PASS`.
 - `pnpm --dir app typecheck`: `PASS`.
 - `pnpm --dir app test`: `PASS`.

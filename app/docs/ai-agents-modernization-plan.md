@@ -46,6 +46,8 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
 1. Replace marker-only gates with real quality gates for web/api lint/typecheck/test.
 2. Frontend restructure from monolith to feature modules; decompose `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx`.
 3. Remove duplicated runtime logic drift between `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx` and `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/live-web-runtime.mjs`.
+4. Completion checkpoint (`2026-02-22`): `COMPLETE`.
+- Evidence: `main.tsx` and runtime orchestrators are thin, feature modules exist under `app/web/src/features/**`, and shared payload normalization is centralized in `app/web/src/app/runtime-payload.js` and reused by browser/runtime server paths.
 
 ### Workstream 3 Target Web Folder Structure (End State)
 
@@ -63,9 +65,7 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
   src/
     main.tsx
     app/
-      bootstrap.ts
-      runtime-payload.ts
-      route-resolver.ts
+      runtime-payload.js
     shell/
       auth-boundary.ts
       tenant-route-container.ts
@@ -73,52 +73,33 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
       legacy-route-catchup.ts
     features/
       wall-feed/
-        render.ts
-        interactions.ts
-        model.ts
+        render.js
+        interactions.js
       employee-list/
-        render.ts
-        interactions.ts
-        model.ts
+        render.js
+        interactions.js
       profile/
-        render.ts
-        interactions.ts
-        model.ts
+        render.js
+        interactions.js
       settings/
-        render.ts
-        interactions.ts
-        model.ts
+        render.js
+        interactions.js
       admin/
-        render.ts
-        interactions.ts
-        model.ts
+        render.js
+        interactions.js
       auth-utility/
-        render.ts
-        interactions.ts
-        model.ts
-      features-domain/
-        events/
-        kudos/
-        lotteries/
-        vacations/
-        service-requests/
-        books/
-        projects/
-        committees/
-        office-map/
-        organizational-structure/
-        submit-ticket/
-        widgets/
-    shared/
-      html/
-      dom/
-      types/
-      runtime/
-    styles/
-      tokens.css
-      base.css
-      shell.css
-      features/
+        render.js
+        interactions.js
+      client-feature/
+        render.js
+        interactions.js
+      fallback/
+        render.js
+    runtime/
+      runtime-shared.js
+      runtime-views.js
+      runtime-interactions.js
+      legacy-runtime-styles.js
 ```
 
 ## Workstream 4: Real Auth and Permission Enforcement (Week 2-3)

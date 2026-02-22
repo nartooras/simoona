@@ -17,21 +17,14 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 - Acceptance:
   - Runtime behavior parity and tests pass for all domains.
 
-3. `R3-WEB-REFACTOR-001C` (`P1`, owner `$full-stack-developer`)
-- Scope:
-  - Continue decomposing extracted runtime modules by feature domain.
-  - Reduce large-file risk in `runtime-views.js` and `runtime-interactions.js`.
-- Acceptance:
-  - Domain-level runtime modules introduced for wall, employee, profile/settings, admin, and auth utility slices with parity checks still green.
-
-4. `R6-REVIEW-QA-ENFORCEMENT-001` (`P0`, owner `$reviewer` + `$qa`)
+3. `R6-REVIEW-QA-ENFORCEMENT-001` (`P0`, owner `$reviewer` + `$qa`)
 - Scope:
   - Produce review and QA reports for each implementation slice before closure.
 - Acceptance:
   - Reviewer decision `APPROVED` exists before QA.
   - QA decision `GREEN` exists before merge/closure.
 
-5. `R5-RELEASE-UNFREEZE-001` (`P0`, owner `$qa` + `$reviewer` + `$simoona-modernization-orchestrator`)
+4. `R5-RELEASE-UNFREEZE-001` (`P0`, owner `$qa` + `$reviewer` + `$simoona-modernization-orchestrator`)
 - Scope:
   - Final GO/NO-GO decision for production unfreeze.
 - Acceptance:
@@ -71,6 +64,15 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 
 11. `R6-REVIEW-QA-ENFORCEMENT-001D`
 - Outcome: reviewer (`APPROVED`) and QA (`GREEN`) artifacts published for `R3-WEB-REFACTOR-001B`.
+
+12. `R3-WEB-REFACTOR-001C`
+- Outcome: feature-level render and interaction modules introduced under `app/web/src/features/**`; runtime orchestrators reduced and shared payload normalization unified between `main.tsx` and `live-web-runtime.mjs`.
+
+13. `R6-REVIEW-QA-ENFORCEMENT-001E`
+- Outcome: reviewer (`APPROVED`) and QA (`GREEN`) artifacts published for `R3-WEB-REFACTOR-001C`.
+
+14. `WORKSTREAM-3-ENGINEERING-BASELINE`
+- Outcome: all Workstream 3 objectives complete (real gates, frontend refactor to feature modules, drift reduction between browser/runtime server paths).
 
 ## Validation Notes
 
