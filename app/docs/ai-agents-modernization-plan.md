@@ -47,7 +47,7 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
 2. Frontend restructure from monolith to feature modules; decompose `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx`.
 3. Remove duplicated runtime logic drift between `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx` and `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/live-web-runtime.mjs`.
 4. Completion checkpoint (`2026-02-22`): `COMPLETE`.
-- Evidence: `main.tsx` and runtime orchestrators are thin, feature modules exist under `app/web/src/features/**`, and shared payload normalization is centralized in `app/web/src/app/runtime-payload.js` and reused by browser/runtime server paths.
+- Evidence: `/app/web` now runs as a real React + Vite application (`react`, `react-dom`, `@vitejs/plugin-react`) with JSX component rendering (`app/web/src/app/App.tsx`) and shared route payload resolution (`app/web/src/app/runtime-data.ts`) consumed by both browser runtime and Vite middleware injection paths.
 
 ### Workstream 3 Target Web Folder Structure (End State)
 
@@ -55,6 +55,7 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
 /Users/arturasnikoncukas/code/repo/simoona/app/web/
   README.md
   package.json
+  tsconfig.json
   vite.config.ts
   index.html
   scripts/
@@ -64,42 +65,29 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
     verify-shell-route-pack.mjs
   src/
     main.tsx
+    vite-env.d.ts
+    main.ts
     app/
+      App.tsx
+      runtime-data.ts
       runtime-payload.js
     shell/
       auth-boundary.ts
       tenant-route-container.ts
       top-level-layout.ts
       legacy-route-catchup.ts
-    features/
-      wall-feed/
-        render.js
-        interactions.js
-      employee-list/
-        render.js
-        interactions.js
-      profile/
-        render.js
-        interactions.js
-      settings/
-        render.js
-        interactions.js
-      admin/
-        render.js
-        interactions.js
-      auth-utility/
-        render.js
-        interactions.js
-      client-feature/
-        render.js
-        interactions.js
-      fallback/
-        render.js
     runtime/
       runtime-shared.js
-      runtime-views.js
-      runtime-interactions.js
       legacy-runtime-styles.js
+    features/  (legacy compatibility modules retained until cleanup wave)
+      wall-feed/
+      employee-list/
+      profile/
+      settings/
+      admin/
+      auth-utility/
+      client-feature/
+      fallback/
 ```
 
 ## Workstream 4: Real Auth and Permission Enforcement (Week 2-3)

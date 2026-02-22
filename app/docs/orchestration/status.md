@@ -54,6 +54,12 @@
 13. `R6-REVIEW-QA-ENFORCEMENT-001E` (`$reviewer` + `$qa`)
 - Outcome: reviewer `APPROVED` and QA `GREEN` reports captured for `R3-WEB-REFACTOR-001C`.
 
+14. `R3-WEB-REACT-001` (`$full-stack-developer`)
+- Outcome: `/app/web` now runs as a real React + Vite application with component rendering, route payload resolver, middleware-driven runtime payload injection, and parity smoke/e2e runtime evidence checks passing.
+
+15. `R6-REVIEW-QA-ENFORCEMENT-001F` (`$reviewer` + `$qa`)
+- Outcome: reviewer `APPROVED` and QA `GREEN` reports captured for `R3-WEB-REACT-001`.
+
 ## Assigned Tasks
 
 1. `R4-INTEGRATION-PARITY-001` (`$platform-devops` + `$full-stack-developer`): run integration failure-path parity wave.
@@ -62,7 +68,7 @@
 
 ## Blocked Tasks
 
-1. `R1-INSTALL-OFFLINE-BLOCK`: `pnpm --dir app install` cannot complete in sandbox due `ENOTFOUND registry.npmjs.org`.
+1. none
 
 ## Open Risks
 

@@ -74,8 +74,14 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 14. `WORKSTREAM-3-ENGINEERING-BASELINE`
 - Outcome: all Workstream 3 objectives complete (real gates, frontend refactor to feature modules, drift reduction between browser/runtime server paths).
 
+15. `R3-WEB-REACT-001`
+- Outcome: migrated `/app/web` from imperative runtime rendering to React/Vite runtime with component-based UI, strict TypeScript checks, and middleware-backed route payload/health endpoints for parity harnesses.
+
+16. `R6-REVIEW-QA-ENFORCEMENT-001F`
+- Outcome: reviewer (`APPROVED`) and QA (`GREEN`) artifacts published for `R3-WEB-REACT-001`.
+
 ## Validation Notes
 
-1. `pnpm --dir app install` currently fails in sandbox (`ENOTFOUND registry.npmjs.org`), but remaining validation gates run successfully.
+1. `pnpm --dir app install` passes in unrestricted mode; constrained sandbox mode can still fail with DNS/network limits (`ENOTFOUND registry.npmjs.org`).
 2. Runtime smoke uses fallback route checks when sandbox blocks port binding (`EPERM 127.0.0.1:5173`).
 3. `pnpm --dir app/tests/parity runtime:api:auth`, `runtime:api:wall-feed`, and `runtime:api:matrix` require unrestricted execution in this environment due localhost bind restrictions (`EPERM` in sandbox).

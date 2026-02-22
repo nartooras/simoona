@@ -1,55 +1,22 @@
-import {
-  employeeRows,
-  legacyLeftMenuGroups,
-  wallFeedPosts
-} from "./runtime/runtime-shared.js";
-import { legacyRuntimeStyles } from "./runtime/legacy-runtime-styles.js";
-import { renderRuntimeShell } from "./runtime/runtime-views.js";
-import { attachRuntimeInteractions } from "./runtime/runtime-interactions.js";
-import { createBaseRuntimeData, ensureClientRuntimePayload } from "./app/runtime-payload.js";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { App } from "./app/App";
+import { readRuntimeDataFromDocument } from "./app/runtime-data";
 
-const root = document.getElementById("app");
-const runtimeDataElement = document.getElementById("simoona-runtime-data");
+const rootElement = document.getElementById("app");
 
-if (!(root instanceof HTMLElement) || !(runtimeDataElement instanceof HTMLScriptElement)) {
-  throw new Error("Missing runtime root elements.");
+if (!(rootElement instanceof HTMLElement)) {
+  throw new Error("Missing #app root element.");
 }
 
-let runtimeData = createBaseRuntimeData();
+const runtimeData = readRuntimeDataFromDocument(
+  `${window.location.pathname}${window.location.search}`
+);
 
-try {
-  const parsed = JSON.parse(runtimeDataElement.textContent || "{}");
-  runtimeData = { ...runtimeData, ...parsed };
-} catch (error) {
-  console.error("[web-runtime] Failed to parse runtime payload:", error);
-}
+window.__SIMOONA_RUNTIME_DATA__ = runtimeData;
 
-const defaultLeftMenuGroups = legacyLeftMenuGroups;
-const defaultWallFeedPosts = wallFeedPosts;
-const defaultEmployeeRows = employeeRows;
-
-ensureClientRuntimePayload(runtimeData, {
-  browserPath: window.location.pathname || runtimeData.route || "/",
-  defaultLeftMenuGroups,
-  defaultWallFeedPosts,
-  defaultEmployeeRows
-});
-
-const leftMenuGroups = Array.isArray(runtimeData.leftMenu?.groups) &&
-  runtimeData.leftMenu.groups.length > 0
-  ? runtimeData.leftMenu.groups
-  : defaultLeftMenuGroups;
-
-const appShellMarkup = renderRuntimeShell({
-  runtimeData,
-  leftMenuGroups
-});
-
-root.innerHTML = `
-  <style>
-${legacyRuntimeStyles}
-  </style>
-${appShellMarkup}
-`;
-
-attachRuntimeInteractions({ root, runtimeData });
+createRoot(rootElement).render(
+  <StrictMode>
+    <App initialData={runtimeData} />
+  </StrictMode>
+);

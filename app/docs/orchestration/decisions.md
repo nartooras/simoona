@@ -69,3 +69,11 @@
 17. `D-2026-02-22-017` Shared runtime payload normalization
 - Decision: centralize client/runtime payload fallback behavior in `app/web/src/app/runtime-payload.js` and consume it from both `main.tsx` and `live-web-runtime.mjs`.
 - Rationale: prevents route/payload drift between browser rendering and runtime server payload generation.
+
+18. `D-2026-02-22-018` React/Vite web baseline pivot
+- Decision: migrate `/app/web` to a real React + Vite runtime (`react`, `react-dom`, `@vitejs/plugin-react`) and render via component tree/state instead of string-template DOM assembly.
+- Rationale: aligns modernization frontend with required best practices and improves maintainability/readability.
+
+19. `D-2026-02-22-019` Middleware-backed parity payload serving
+- Decision: keep parity harness compatibility by injecting route payload (`simoona-runtime-data`) and exposing `/healthz` via Vite middleware rather than a custom standalone runtime server.
+- Rationale: preserves existing parity evidence scripts while eliminating duplicate runtime logic drift.

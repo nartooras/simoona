@@ -147,6 +147,56 @@
 - `pnpm --dir app/api test`: `PASS`.
 - `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'`: `PASS` (no matches; command exit `1` by design).
 
+## 2026-02-22 `R3-WEB-REACT-001` Evidence
+
+### Scope delivered in this checkpoint
+
+1. Replaced imperative DOM runtime mount with real React bootstrap in `app/web/src/main.tsx` using `createRoot`.
+2. Introduced component-based runtime UI composition in `app/web/src/app/App.tsx` for wall feed, employee list, profile, settings, auth utility, client features, and admin screens.
+3. Added shared route payload resolver in `app/web/src/app/runtime-data.ts` used by both browser runtime and Vite middleware server path.
+4. Replaced custom static runtime server behavior with Vite plugin middleware in `app/web/vite.config.ts` for:
+   - route payload injection (`simoona-runtime-data`)
+   - `/healthz` and `/readyz` responses
+   - legacy unknown-route `404` parity behavior
+5. Updated `live-web-runtime.mjs` to a thin Vite wrapper with signal-safe child shutdown to reduce process drift.
+6. Added TypeScript/Vite web tooling baseline (`app/web/tsconfig.json`, `app/web/src/vite-env.d.ts`, React/Vite dependencies).
+
+### Key artifacts updated
+
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/App.tsx`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/runtime-data.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/vite.config.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/live-web-runtime.mjs`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/scripts/verify-web-syntax.mjs`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/package.json`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/tsconfig.json`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/vite-env.d.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/README.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/reviews/2026-02-22-r3-web-react-001-review.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/qa/2026-02-22-r3-web-react-001-qa.md`
+
+### `R3-WEB-REACT-001` command evidence (pass/fail)
+
+- `pnpm --dir app install`: `PASS` (unrestricted mode; workspace deps installed)
+- `pnpm --dir app lint`: `PASS`
+- `pnpm --dir app typecheck`: `PASS`
+- `pnpm --dir app test`: `PASS`
+- `pnpm --dir app smoke`: `PASS` (constrained fallback + unrestricted runtime path both validated)
+- `pnpm --dir app build`: `PASS`
+- `pnpm --dir app verify`: `PASS` (unrestricted mode)
+- `pnpm --dir app/api build`: `PASS`
+- `pnpm --dir app/api lint`: `PASS`
+- `pnpm --dir app/api typecheck`: `PASS`
+- `pnpm --dir app/api test`: `PASS`
+- `pnpm --dir app/tests/e2e runtime:wall-feed`: `PASS`
+- `pnpm --dir app/tests/e2e runtime:employee-list`: `PASS`
+- `pnpm --dir app/tests/e2e runtime:profile-settings`: `PASS`
+- `pnpm --dir app/tests/e2e runtime:auth-utility`: `PASS`
+- `pnpm --dir app/tests/e2e runtime:client-features`: `PASS`
+- `pnpm --dir app/tests/e2e runtime:admin`: `PASS`
+- `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'`: `PASS` (no matches; command exit `1` by design)
+
 ### Remaining evidence needed before release
 
 1. Feature-domain runtime parity evidence wave (`R3-FEATURE-WAVE-D`).

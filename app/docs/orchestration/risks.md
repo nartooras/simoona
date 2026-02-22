@@ -75,3 +75,11 @@
 8. `RISK-R3-RUNTIME-DRIFT`
 - Resolution date: `2026-02-22`
 - Outcome: shared runtime payload normalization moved to `app/web/src/app/runtime-payload.js` and is now consumed by both browser/runtime server paths.
+
+9. `RISK-R3-NOT-REACT-IMPLEMENTATION`
+- Resolution date: `2026-02-22`
+- Outcome: `app/web` now runs on React + Vite with component rendering in `app/web/src/app/App.tsx` and `createRoot` bootstrap in `app/web/src/main.tsx`.
+
+10. `RISK-R3-WEB-RUNTIME-SERVER-DRIFT`
+- Resolution date: `2026-02-22`
+- Outcome: custom runtime-server logic was replaced by Vite middleware payload injection with shared route resolver, reducing duplicate behavior paths.
