@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { isPathActive } from "../../runtime/runtime-shared.js";
+import { isPathActive } from "../../runtime/runtime-shared";
 import type { RuntimeData } from "../runtime-data";
 
 interface AppShellProps {

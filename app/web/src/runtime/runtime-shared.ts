@@ -1,4 +1,4 @@
-export function escapeHtml(value) {
+export function escapeHtml(value: unknown): string {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -7,7 +7,7 @@ export function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-export function normalizePath(pathname) {
+export function normalizePath(pathname: unknown): string {
   const value = String(pathname || "/").trim();
   const collapsed = value.replace(/\/{2,}/g, "/");
   if (collapsed === "/") {
@@ -16,8 +16,8 @@ export function normalizePath(pathname) {
   return collapsed.endsWith("/") ? collapsed.slice(0, -1) : collapsed;
 }
 
-export function isPathActive(itemPath, routePath) {
-  if (!itemPath || itemPath.startsWith("http")) {
+export function isPathActive(itemPath: unknown, routePath: unknown): boolean {
+  if (typeof itemPath !== "string" || !itemPath || itemPath.startsWith("http")) {
     return false;
   }
 

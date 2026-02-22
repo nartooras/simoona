@@ -1,4 +1,30 @@
-import { normalizePath } from "../runtime/runtime-shared.js";
+import { normalizePath } from "../runtime/runtime-shared";
+
+interface MinimalRuntimeData {
+  route: string;
+  navItems?: Array<{ id: string; title: string; path: string }>;
+  leftMenu?: { groups?: unknown[] };
+  wallFeed?: unknown;
+  employeeList?: unknown;
+  profilePage?: unknown;
+  settingsPage?: unknown;
+  clientFeaturePage?: unknown;
+  adminPage?: unknown;
+  authUtilityPage?: unknown;
+  routeMatch?: {
+    routeKey?: string;
+    normalizedPath?: string;
+    isKnownLegacyRoute?: boolean;
+  };
+  shellMode?: "app" | "auth";
+}
+
+interface RuntimePayloadOptions {
+  browserPath?: string;
+  defaultLeftMenuGroups: unknown[];
+  defaultEmployeeRows: Array<Record<string, unknown>>;
+  defaultWallFeedPosts: Array<Record<string, unknown>>;
+}
 
 export function createBaseRuntimeData() {
   return {
@@ -43,7 +69,9 @@ export function createBaseRuntimeData() {
   };
 }
 
-export function createDefaultWallFeedPayload(defaultWallFeedPosts) {
+export function createDefaultWallFeedPayload(
+  defaultWallFeedPosts: Array<Record<string, unknown>>
+) {
   return {
     posts: defaultWallFeedPosts,
     rightSidebar: {
@@ -89,7 +117,9 @@ export function createDefaultWallFeedPayload(defaultWallFeedPosts) {
   };
 }
 
-export function createDefaultEmployeeListPayload(defaultEmployeeRows) {
+export function createDefaultEmployeeListPayload(
+  defaultEmployeeRows: Array<Record<string, unknown>>
+) {
   return {
     title: "Employee List",
     pageSize: 10,
@@ -115,7 +145,7 @@ export function createDefaultTenantLoginPayload() {
   };
 }
 
-function hasAnyExplicitView(runtimeData) {
+function hasAnyExplicitView(runtimeData: MinimalRuntimeData): boolean {
   return Boolean(
     runtimeData.wallFeed ||
       runtimeData.employeeList ||
@@ -127,7 +157,10 @@ function hasAnyExplicitView(runtimeData) {
   );
 }
 
-export function ensureClientRuntimePayload(runtimeData, options) {
+export function ensureClientRuntimePayload(
+  runtimeData: MinimalRuntimeData,
+  options: RuntimePayloadOptions
+) {
   const browserPath = normalizePath(options.browserPath || runtimeData.route || "/");
   runtimeData.route = browserPath === "/" ? "/default/Wall/Feed" : browserPath;
 

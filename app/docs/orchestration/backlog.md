@@ -4,39 +4,27 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 
 ## Priority Queue
 
-1. `R3-WEB-STRUCTURE-002` (`P0`, owner `$react-frontend-developer`)
-- Scope:
-  - Break down `app/web/src/app/App.tsx` monolith into app layout/router/feature modules.
-  - Split `app/web/src/app/runtime-data.ts` into runtime contracts/resolvers/fixtures modules.
-  - Remove dead runtime rendering chain (`runtime-views.js`, `runtime-interactions.js`, and unused legacy feature render/interactions files) after parity checks.
-  - Migrate active frontend runtime code from `.js` to `.ts/.tsx` and phase out `allowJs`.
-  - Move large inline legacy style payload to maintainable CSS files.
-- Acceptance:
-  - React runtime behavior unchanged for covered routes and parity checks remain green.
-  - `App.tsx` reduced to orchestration-focused entry.
-  - Clear evidence for removed dead modules and updated structure.
-
-2. `R4-INTEGRATION-PARITY-001` (`P0`, owner `$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`)
+1. `R4-INTEGRATION-PARITY-001` (`P0`, owner `$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`)
 - Scope:
   - Integration parity for OAuth, SMTP, storage/media, external callbacks, localization, background jobs.
 - Acceptance:
   - Failure-path coverage and runtime evidence captured.
 
-3. `R3-FEATURE-WAVE-D` (`P0`, owner `$react-frontend-developer` + `$full-stack-developer`)
+2. `R3-FEATURE-WAVE-D` (`P0`, owner `$react-frontend-developer` + `$full-stack-developer`)
 - Scope:
   - Full parity for features domains previously treated as gated scope:
     events, kudos, lotteries, vacations, service requests, books, projects, committees, office map, organizational structure, submit ticket, widgets.
 - Acceptance:
   - Runtime behavior parity and tests pass for all domains.
 
-4. `R6-REVIEW-QA-ENFORCEMENT-001` (`P0`, owner `$reviewer` + `$qa`)
+3. `R6-REVIEW-QA-ENFORCEMENT-001` (`P0`, owner `$reviewer` + `$qa`)
 - Scope:
   - Produce review and QA reports for each implementation slice before closure.
 - Acceptance:
   - Reviewer decision `APPROVED` exists before QA.
   - QA decision `GREEN` exists before merge/closure.
 
-5. `R5-RELEASE-UNFREEZE-001` (`P0`, owner `$qa` + `$reviewer` + `$simoona-modernization-orchestrator`)
+4. `R5-RELEASE-UNFREEZE-001` (`P0`, owner `$qa` + `$reviewer` + `$simoona-modernization-orchestrator`)
 - Scope:
   - Final GO/NO-GO decision for production unfreeze.
 - Acceptance:
@@ -91,6 +79,9 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 
 16. `R6-REVIEW-QA-ENFORCEMENT-001F`
 - Outcome: reviewer (`APPROVED`) and QA (`GREEN`) artifacts published for `R3-WEB-REACT-001`.
+
+17. `R3-WEB-STRUCTURE-002`
+- Outcome: `App.tsx` reduced to orchestration-only entry, feature view logic extracted to `src/features/core/CoreFeatureViews.tsx` and `src/features/extended/ExtendedFeatureViews.tsx`, runtime data split to `src/runtime/data/{contracts,fixtures,resolver}.ts` with facade retained at `src/app/runtime-data.ts`, dead compatibility runtime/render files removed, active web runtime migrated to TypeScript-only source (`allowJs: false`), and legacy style payload moved to `src/shared/styles/legacy-runtime.css`.
 
 ## Validation Notes
 

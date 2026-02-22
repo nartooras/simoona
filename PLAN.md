@@ -71,24 +71,33 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
     app/
       App.tsx
       runtime-data.ts
-      runtime-payload.js
+      hooks/
+        useInteractiveTable.ts
+      lib/
+        normalize-text.ts
+      layout/
+        AppShell.tsx
     shell/
       auth-boundary.ts
       tenant-route-container.ts
       top-level-layout.ts
       legacy-route-catchup.ts
     runtime/
-      runtime-shared.js
-      legacy-runtime-styles.js
-    features/  (legacy compatibility modules retained until cleanup wave)
-      wall-feed/
-      employee-list/
-      profile/
-      settings/
-      admin/
-      auth-utility/
-      client-feature/
+      runtime-shared.ts
+      data/
+        contracts.ts
+        fixtures.ts
+        resolver.ts
+    shared/
+      styles/
+        legacy-runtime.css
+    features/
+      core/
+        CoreFeatureViews.tsx
+      extended/
+        ExtendedFeatureViews.tsx
       fallback/
+        FallbackView.tsx
 ```
 
 ## Workstream 3B: Web Structure Recovery (Week 2-4)
@@ -97,9 +106,9 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
 2. Split `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/runtime-data.ts` into focused runtime data modules.
 - Target modules:
   - `src/runtime/data/contracts.ts`
-  - `src/runtime/data/resolvers/*`
-  - `src/runtime/data/fixtures/*`
-  - `src/runtime/data/payload.ts`
+  - `src/runtime/data/resolver.ts`
+  - `src/runtime/data/fixtures.ts`
+  - `src/app/runtime-data.ts` as compatibility facade.
 3. Remove dead compatibility rendering chain once parity checks confirm no runtime dependency.
 - Candidate removals:
   - `src/runtime/runtime-views.js`
@@ -107,12 +116,12 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
   - legacy `src/features/**/render.js` and `src/features/**/interactions.js` files that are no longer imported by active React runtime.
 4. Migrate active frontend runtime modules from `.js` to `.ts/.tsx` and tighten compiler settings.
 - Target: `allowJs: false` after migration and strict type checks pass.
-5. Move large inline style payload out of `legacy-runtime-styles.js` into maintainable CSS modules/files.
+5. Move large inline style payload out of `legacy-runtime-styles` into maintainable CSS files.
 - Target:
-  - `src/shared/styles/tokens.css`
-  - `src/shared/styles/globals.css`
-  - feature-specific style files as needed.
+  - `src/shared/styles/legacy-runtime.css`
 6. Implement in safe slices under `R3-WEB-STRUCTURE-002A..E`, each with reviewer `APPROVED` and QA `GREEN`.
+7. Completion checkpoint (`2026-02-22`): `COMPLETE`.
+- Evidence: `app/web/src/app/App.tsx` reduced to orchestration-only entry, runtime data split to `src/runtime/data/*`, dead compatibility runtime/render files removed, active web runtime migrated to TypeScript modules with `allowJs: false`, and legacy style payload moved to CSS import path.
 
 ## Workstream 4: Real Auth and Permission Enforcement (Week 2-3)
 1. Implement real modern auth using existing SQL schema.

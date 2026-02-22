@@ -18,22 +18,17 @@ Continue from completed governance/doc sync, completed Workstream 3 baseline, an
 
 ## Immediate Execution Queue
 
-1. `R3-WEB-STRUCTURE-002`
-- Owner: `$react-frontend-developer`
-- Acceptance:
-  - first structural slices land with no runtime parity regression: App shell extraction, runtime data decomposition start, and dead compatibility path cleanup plan.
-
-2. `R4-INTEGRATION-PARITY-001`
+1. `R4-INTEGRATION-PARITY-001`
 - Owner: `$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`
 - Acceptance:
   - integration failure-path parity evidence (OAuth/SMTP/storage/jobs/callbacks/localization).
 
-3. `R3-FEATURE-WAVE-D`
+2. `R3-FEATURE-WAVE-D`
 - Owner: `$react-frontend-developer` + `$full-stack-developer`
 - Acceptance:
   - runtime parity coverage for features domains previously treated as gated scope.
 
-4. `R6-REVIEW-QA-ENFORCEMENT-001`
+3. `R6-REVIEW-QA-ENFORCEMENT-001`
 - Owner: `$reviewer` then `$qa`
 - Acceptance:
   - review report (`APPROVED`) and QA report (`GREEN`) for each completed slice.

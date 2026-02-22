@@ -197,6 +197,53 @@
 - `pnpm --dir app/tests/e2e runtime:admin`: `PASS`
 - `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'`: `PASS` (no matches; command exit `1` by design)
 
+## 2026-02-22 `R3-WEB-STRUCTURE-002` Evidence
+
+### Scope delivered in this checkpoint
+
+1. Reduced `app/web/src/app/App.tsx` to orchestration-only runtime route selection and shell composition.
+2. Extracted feature view logic into dedicated modules:
+   - `app/web/src/features/core/CoreFeatureViews.tsx`
+   - `app/web/src/features/extended/ExtendedFeatureViews.tsx`
+   - `app/web/src/features/fallback/FallbackView.tsx`
+3. Extracted shared frontend utilities:
+   - `app/web/src/app/hooks/useInteractiveTable.ts`
+   - `app/web/src/app/lib/normalize-text.ts`
+   - `app/web/src/app/layout/AppShell.tsx`
+4. Split runtime data monolith into modular runtime data files:
+   - `app/web/src/runtime/data/contracts.ts`
+   - `app/web/src/runtime/data/fixtures.ts`
+   - `app/web/src/runtime/data/resolver.ts`
+   - kept compatibility facade in `app/web/src/app/runtime-data.ts`.
+5. Removed dead compatibility runtime rendering chain and orphaned legacy feature render/interactions files.
+6. Migrated active web runtime source to TypeScript-only modules and set `allowJs: false` in `app/web/tsconfig.json`.
+7. Moved large inline style payload from runtime string module to CSS import path (`app/web/src/shared/styles/legacy-runtime.css`).
+
+### Key artifacts updated
+
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/App.tsx`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/layout/AppShell.tsx`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/hooks/useInteractiveTable.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/lib/normalize-text.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/core/CoreFeatureViews.tsx`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/extended/ExtendedFeatureViews.tsx`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/features/fallback/FallbackView.tsx`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/runtime/data/contracts.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/runtime/data/fixtures.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/runtime/data/resolver.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/runtime-data.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/runtime/runtime-shared.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/runtime-payload.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/shared/styles/legacy-runtime.css`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/tsconfig.json`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/README.md`
+
+### `R3-WEB-STRUCTURE-002` command evidence (pass/fail)
+
+- `pnpm --dir app/web lint`: `PASS`
+- `pnpm --dir app verify`: `PASS`
+- `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'`: `PASS` (no matches; command exit `1` by design)
+
 ### Remaining evidence needed before release
 
 1. Feature-domain runtime parity evidence wave (`R3-FEATURE-WAVE-D`).

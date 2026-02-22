@@ -85,3 +85,7 @@
 21. `D-2026-02-22-021` Web structure recovery execution track
 - Decision: run a dedicated `R3-WEB-STRUCTURE-002` track to decompose `App.tsx`, split runtime data modules, remove dead compatibility runtime files, migrate active web runtime code to TypeScript-first modules, and move inline style payload to maintainable CSS.
 - Rationale: current React runtime works, but structural complexity and dead compatibility paths increase maintenance risk and reduce frontend delivery velocity.
+
+22. `D-2026-02-22-022` Web structure recovery closure criteria met
+- Decision: mark `R3-WEB-STRUCTURE-002` complete after achieving orchestration-only `App.tsx`, runtime-data module split (`contracts/fixtures/resolver` + facade), dead compatibility runtime/render file removal, TypeScript-only active source (`allowJs: false`), and CSS-based legacy style loading.
+- Rationale: structural maintainability targets for R3 UI foundation are now satisfied without regression in runtime parity validation gates.
