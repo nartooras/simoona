@@ -54,6 +54,38 @@
 - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/reviews/2026-02-22-r2-auth-real-001-review.md`
 - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/qa/2026-02-22-r2-auth-real-001-qa.md`
 
+## 2026-02-22 `R2-AUTH-REAL-001B` Evidence
+
+### Scope delivered in this checkpoint
+
+1. Auth/session state moved to SQL-backed compatibility tables (`node:sqlite`) in `auth-session-store.ts`.
+2. Runtime parity server auth/session store moved from in-memory maps to SQL-backed compatibility tables.
+3. Unresolved `x-legacy-user-id` values no longer synthesize authenticated identities.
+4. Runtime parity scripts aligned to authenticated known identities and token route payload semantics.
+
+### Key artifacts updated
+
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/auth/services/auth-session-store.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/scripts/api-runtime-check.mjs`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/scripts/verify-runtime-api-wall-feed.mjs`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/scripts/verify-runtime-api-matrix.mjs`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/scripts/verify-runtime-auth-lifecycle.mjs`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/reviews/2026-02-22-r2-auth-real-001b-review.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/qa/2026-02-22-r2-auth-real-001b-qa.md`
+
+### `R2-AUTH-REAL-001A` command evidence (pass/fail)
+
+- `PNPM_FETCH_RETRIES=0 PNPM_FETCH_RETRY_MINTIMEOUT=1 PNPM_FETCH_RETRY_MAXTIMEOUT=1 pnpm --dir app install`: `FAIL` (`ENOTFOUND registry.npmjs.org` in sandbox; fetch retries still attempted by pnpm before termination).
+- `pnpm --dir app/api lint`: `PASS`.
+- `pnpm --dir app/api typecheck`: `PASS`.
+- `pnpm --dir app/api build`: `PASS`.
+- `pnpm --dir app/api test`: `PASS`.
+- `pnpm --dir app/tests/parity runtime:api:auth`: `PASS` (unrestricted mode required in this environment).
+- `pnpm --dir app/tests/parity runtime:api:wall-feed`: `PASS` (unrestricted mode required in this environment).
+- `pnpm --dir app/tests/parity runtime:api:matrix`: `PASS` (unrestricted mode required in this environment).
+- `pnpm --dir app verify`: `PASS`.
+- `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'`: `PASS` (no matches; command exit `1` by design).
+
 ### Command evidence (pass/fail)
 
 - `pnpm --dir app install`: `FAIL` (`ENOTFOUND registry.npmjs.org` in sandbox).
@@ -72,7 +104,6 @@
 
 ### Remaining evidence needed before release
 
-1. SQL-backed auth/session parity closure (`R2-AUTH-REAL-001B`).
-2. Full web module decomposition evidence (`R3-WEB-REFACTOR-001B`).
-3. Integration failure-path parity evidence (`R4-INTEGRATION-PARITY-001`).
-4. Reviewer `APPROVED` and QA `GREEN` artifacts per completed wave.
+1. Full web module decomposition evidence (`R3-WEB-REFACTOR-001B`).
+2. Integration failure-path parity evidence (`R4-INTEGRATION-PARITY-001`).
+3. Reviewer `APPROVED` and QA `GREEN` artifacts per completed wave.

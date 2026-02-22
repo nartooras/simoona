@@ -6,7 +6,7 @@ Mode: `full-parity-recovery`
 
 ## Objective
 
-Continue from completed governance/doc sync, baseline hardening, and `R2-AUTH-REAL-001A` toward SQL-backed auth parity and web/runtime parity waves.
+Continue from completed governance/doc sync, baseline hardening, and completed `R2` auth parity toward web/runtime parity waves.
 
 ## Hard Rules
 
@@ -18,21 +18,20 @@ Continue from completed governance/doc sync, baseline hardening, and `R2-AUTH-RE
 
 ## Immediate Execution Queue
 
-1. `R2-AUTH-REAL-001B`
-- Owner: `$full-stack-developer`
-- Acceptance:
-  - SQL-backed identity/session source for protected auth flows.
-  - unresolved user headers do not silently authenticate.
-
-2. `R3-WEB-REFACTOR-001B`
+1. `R3-WEB-REFACTOR-001B`
 - Owner: `$full-stack-developer`
 - Acceptance:
   - further decomposition of `app/web/src/main.tsx` into feature modules.
 
-3. `R4-INTEGRATION-PARITY-001`
+2. `R4-INTEGRATION-PARITY-001`
 - Owner: `$platform-devops` + `$full-stack-developer`
 - Acceptance:
   - integration failure-path parity evidence (OAuth/SMTP/storage/jobs/callbacks/localization).
+
+3. `R3-FEATURE-WAVE-D`
+- Owner: `$full-stack-developer`
+- Acceptance:
+  - runtime parity coverage for features domains previously treated as gated scope.
 
 4. `R6-REVIEW-QA-ENFORCEMENT-001`
 - Owner: `$reviewer` then `$qa`

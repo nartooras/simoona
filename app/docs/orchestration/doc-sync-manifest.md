@@ -14,6 +14,8 @@ Scope: baseline root + modernization markdown synchronization snapshot (`58` fil
 - Additional markdown artifacts were intentionally added after this baseline synchronization closure as part of ongoing gate evidence:
   - `app/docs/reviews/2026-02-22-r2-auth-real-001-review.md`
   - `app/docs/qa/2026-02-22-r2-auth-real-001-qa.md`
+  - `app/docs/reviews/2026-02-22-r2-auth-real-001b-review.md`
+  - `app/docs/qa/2026-02-22-r2-auth-real-001b-qa.md`
 - These post-baseline files are managed through orchestration evidence updates and do not invalidate the original 58/58 synchronization closure.
 
 ## Disposition

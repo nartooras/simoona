@@ -118,6 +118,14 @@ async function runAssertions() {
     "UserInfo without auth should return UNAUTHORIZED."
   );
 
+  const unresolvedHeaderUserInfo = await request("GET", "/Account/UserInfo", undefined, {
+    "x-legacy-user-id": "unknown-runtime-user"
+  });
+  assert(
+    unresolvedHeaderUserInfo.statusCode === 401,
+    "UserInfo with unresolved legacy header user should return 401."
+  );
+
   const userInfoResponse = await request("GET", "/Account/UserInfo", undefined, {
     authorization: `Bearer ${accessToken}`
   });

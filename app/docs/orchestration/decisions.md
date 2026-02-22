@@ -49,3 +49,11 @@
 12. `D-2026-02-22-012` Runtime auth lifecycle gate
 - Decision: add a dedicated parity runtime check command (`pnpm --dir app/tests/parity runtime:api:auth`) for login/user-info/logout/revocation behavior.
 - Rationale: core auth parity gate requires runtime behavior assertions beyond static contract markers.
+
+13. `D-2026-02-22-013` SQL-backed compatibility auth store
+- Decision: replace in-memory auth/session maps with SQL-backed compatibility tables (`node:sqlite`) for both API source auth store and runtime parity server.
+- Rationale: satisfies SQL-backed identity/session enforcement goals without introducing new package dependencies in this recovery slice.
+
+14. `D-2026-02-22-014` Strict legacy-header identity resolution
+- Decision: unresolved `x-legacy-user-id` values must no longer grant authenticated fallback context.
+- Rationale: synthetic identity fallback creates auth bypass risk and blocks reliable parity claims.

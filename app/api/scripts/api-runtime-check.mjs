@@ -5,6 +5,7 @@ import path from "node:path";
 import http from "node:http";
 import { spawnSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
+import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -190,29 +191,25 @@ let postCounter = POSTS.length;
 let commentCounter = 1;
 
 const ACCESS_TOKEN_TTL_SECONDS = 60 * 60;
-const SEEDED_RUNTIME_USERS = [
-  {
-    id: "legacy-user",
-    userName: "legacy.user",
-    email: "legacy.user@simoona.local",
-    password: "legacyPass123",
-    culture: "en-US",
-    tenantId: "default",
-    permissions: ["BasicPermissions.Wall", "BasicPermissions.Post", "BasicPermissions.Comment"]
-  },
-  {
-    id: "legacy-admin",
-    userName: "legacy.admin",
-    email: "legacy.admin@simoona.local",
-    password: "legacyAdmin123",
-    culture: "en-US",
-    tenantId: "default",
-    permissions: ["*"]
-  }
+const ALL_KNOWN_PERMISSIONS = [
+  "BasicPermissions.Event",
+  "BasicPermissions.Wall",
+  "BasicPermissions.Post",
+  "BasicPermissions.Comment",
+  "BasicPermissions.ApplicationUser",
+  "BasicPermissions.Office",
+  "BasicPermissions.Floor",
+  "AdministrationPermissions.Organization",
+  "AdministrationPermissions.ExternalLink",
+  "AdministrationPermissions.Blacklist",
+  "AdministrationPermissions.ApplicationUser",
+  "AdministrationPermissions.Office",
+  "AdministrationPermissions.Floor",
+  "AdministrationPermissions.Role"
 ];
-
-const sessionsByAccessToken = new Map();
-const sessionsByRefreshToken = new Map();
+const AUTH_SQLITE_DB_PATH = process.env.MODERN_AUTH_SQLITE_PATH || ":memory:";
+const authDatabase = new DatabaseSync(AUTH_SQLITE_DB_PATH);
+initializeAuthSqlStore();
 
 function sendJson(response, statusCode, payload) {
   response.writeHead(statusCode, { "content-type": "application/json; charset=utf-8" });
@@ -237,30 +234,191 @@ function readHeaderValue(rawHeader) {
   return String(rawHeader ?? "").trim();
 }
 
-function findSeededUserByIdentity(identity) {
-  const normalizedIdentity = String(identity || "").trim().toLowerCase();
-  return SEEDED_RUNTIME_USERS.find((user) => {
-    return (
-      user.userName.toLowerCase() === normalizedIdentity ||
-      user.email.toLowerCase() === normalizedIdentity ||
-      user.id.toLowerCase() === normalizedIdentity
+function initializeAuthSqlStore() {
+  authDatabase.exec(`
+    PRAGMA journal_mode = WAL;
+    PRAGMA foreign_keys = ON;
+
+    CREATE TABLE IF NOT EXISTS auth_users (
+      user_id TEXT PRIMARY KEY,
+      user_name TEXT NOT NULL UNIQUE,
+      email TEXT NOT NULL UNIQUE,
+      password TEXT NOT NULL,
+      tenant_id TEXT NOT NULL,
+      culture TEXT NOT NULL,
+      is_active INTEGER NOT NULL DEFAULT 1
     );
-  });
+
+    CREATE TABLE IF NOT EXISTS auth_user_permissions (
+      user_id TEXT NOT NULL,
+      permission TEXT NOT NULL,
+      PRIMARY KEY (user_id, permission),
+      FOREIGN KEY (user_id) REFERENCES auth_users(user_id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS auth_sessions (
+      session_id TEXT PRIMARY KEY,
+      access_token TEXT NOT NULL UNIQUE,
+      refresh_token TEXT NOT NULL UNIQUE,
+      user_id TEXT NOT NULL,
+      issued_at_utc TEXT NOT NULL,
+      expires_at_utc TEXT NOT NULL,
+      FOREIGN KEY (user_id) REFERENCES auth_users(user_id) ON DELETE CASCADE
+    );
+  `);
+
+  const seededUsersCount = Number(
+    authDatabase.prepare("SELECT COUNT(1) AS count FROM auth_users;").get()?.count ?? 0
+  );
+  if (seededUsersCount > 0) {
+    return;
+  }
+
+  const insertUser = authDatabase.prepare(`
+    INSERT INTO auth_users (user_id, user_name, email, password, tenant_id, culture, is_active)
+    VALUES (?, ?, ?, ?, ?, ?, 1);
+  `);
+  const insertPermission = authDatabase.prepare(`
+    INSERT INTO auth_user_permissions (user_id, permission)
+    VALUES (?, ?);
+  `);
+
+  insertUser.run(
+    "legacy-user",
+    "legacy.user",
+    "legacy.user@simoona.local",
+    "legacyPass123",
+    "default",
+    "en-US"
+  );
+  insertUser.run(
+    "legacy-admin",
+    "legacy.admin",
+    "legacy.admin@simoona.local",
+    "legacyAdmin123",
+    "default",
+    "en-US"
+  );
+
+  for (const permission of [
+    "BasicPermissions.Wall",
+    "BasicPermissions.Post",
+    "BasicPermissions.Comment",
+    "BasicPermissions.Event"
+  ]) {
+    insertPermission.run("legacy-user", permission);
+  }
+
+  for (const permission of ALL_KNOWN_PERMISSIONS) {
+    insertPermission.run("legacy-admin", permission);
+  }
+}
+
+function findSqlUserByIdentity(identity) {
+  const normalizedIdentity = String(identity || "").trim();
+  if (!normalizedIdentity) {
+    return null;
+  }
+
+  return (
+    authDatabase
+      .prepare(
+        `
+      SELECT user_id, user_name, email, password, tenant_id, culture
+      FROM auth_users
+      WHERE is_active = 1
+        AND (
+          lower(user_id) = lower(?)
+          OR lower(user_name) = lower(?)
+          OR lower(email) = lower(?)
+        )
+      LIMIT 1;
+      `
+      )
+      .get(normalizedIdentity, normalizedIdentity, normalizedIdentity) ?? null
+  );
+}
+
+function findSqlUserById(userId) {
+  const normalizedId = String(userId || "").trim();
+  if (!normalizedId) {
+    return null;
+  }
+
+  return (
+    authDatabase
+      .prepare(
+        `
+      SELECT user_id, user_name, email, password, tenant_id, culture
+      FROM auth_users
+      WHERE is_active = 1 AND user_id = ?;
+      `
+      )
+      .get(normalizedId) ?? null
+  );
+}
+
+function findPermissionsByUserId(userId) {
+  const rows =
+    authDatabase
+      .prepare(
+        `
+      SELECT permission
+      FROM auth_user_permissions
+      WHERE user_id = ?
+      ORDER BY permission ASC;
+      `
+      )
+      .all(userId) ?? [];
+
+  return rows.map((row) => String(row.permission));
+}
+
+function toRuntimeAuthUser(sqlUser) {
+  if (!sqlUser) {
+    return null;
+  }
+
+  return {
+    id: String(sqlUser.user_id),
+    userName: String(sqlUser.user_name),
+    email: String(sqlUser.email),
+    password: String(sqlUser.password),
+    tenantId: String(sqlUser.tenant_id),
+    culture: String(sqlUser.culture),
+    permissions: findPermissionsByUserId(sqlUser.user_id)
+  };
 }
 
 function getSessionByAccessToken(accessToken) {
-  const session = sessionsByAccessToken.get(accessToken);
+  const session =
+    authDatabase
+      .prepare(
+        `
+      SELECT session_id, access_token, refresh_token, user_id, issued_at_utc, expires_at_utc
+      FROM auth_sessions
+      WHERE access_token = ?;
+      `
+      )
+      .get(accessToken) ?? null;
+
   if (!session) {
     return null;
   }
 
-  if (new Date(session.expiresAtUtc).getTime() <= Date.now()) {
-    sessionsByAccessToken.delete(session.accessToken);
-    sessionsByRefreshToken.delete(session.refreshToken);
+  if (new Date(session.expires_at_utc).getTime() <= Date.now()) {
+    authDatabase.prepare("DELETE FROM auth_sessions WHERE session_id = ?;").run(session.session_id);
     return null;
   }
 
-  return session;
+  return {
+    sessionId: String(session.session_id),
+    accessToken: String(session.access_token),
+    refreshToken: String(session.refresh_token),
+    userId: String(session.user_id),
+    issuedAtUtc: String(session.issued_at_utc),
+    expiresAtUtc: String(session.expires_at_utc)
+  };
 }
 
 function createAuthSession(userId) {
@@ -275,21 +433,43 @@ function createAuthSession(userId) {
     expiresAtUtc: expiresAt.toISOString()
   };
 
-  sessionsByAccessToken.set(session.accessToken, session);
-  sessionsByRefreshToken.set(session.refreshToken, session);
+  authDatabase
+    .prepare(
+      `
+      INSERT INTO auth_sessions (session_id, access_token, refresh_token, user_id, issued_at_utc, expires_at_utc)
+      VALUES (?, ?, ?, ?, ?, ?);
+      `
+    )
+    .run(
+      session.sessionId,
+      session.accessToken,
+      session.refreshToken,
+      session.userId,
+      session.issuedAtUtc,
+      session.expiresAtUtc
+    );
 
   return session;
 }
 
 function rotateAuthSession(refreshToken) {
-  const previousSession = sessionsByRefreshToken.get(refreshToken);
+  const previousSession =
+    authDatabase
+      .prepare(
+        `
+      SELECT session_id, user_id
+      FROM auth_sessions
+      WHERE refresh_token = ?;
+      `
+      )
+      .get(refreshToken) ?? null;
+
   if (!previousSession) {
     return null;
   }
 
-  sessionsByAccessToken.delete(previousSession.accessToken);
-  sessionsByRefreshToken.delete(previousSession.refreshToken);
-  return createAuthSession(previousSession.userId);
+  authDatabase.prepare("DELETE FROM auth_sessions WHERE session_id = ?;").run(previousSession.session_id);
+  return createAuthSession(previousSession.user_id);
 }
 
 function parseAuthorizationBearerToken(request) {
@@ -311,15 +491,15 @@ function resolveAuthContext(request) {
   if (bearerToken) {
     const session = getSessionByAccessToken(bearerToken);
     if (session) {
-      const seededUser = findSeededUserByIdentity(session.userId);
-      if (seededUser) {
+      const sqlUser = toRuntimeAuthUser(findSqlUserById(session.userId));
+      if (sqlUser) {
         return {
           isAuthenticated: true,
-          userId: seededUser.id,
-          userName: seededUser.userName,
-          tenantId: seededUser.tenantId,
-          culture: seededUser.culture,
-          permissions: seededUser.permissions,
+          userId: sqlUser.id,
+          userName: sqlUser.userName,
+          tenantId: sqlUser.tenantId,
+          culture: sqlUser.culture,
+          permissions: sqlUser.permissions,
           authSource: "bearer-token",
           session
         };
@@ -329,30 +509,19 @@ function resolveAuthContext(request) {
 
   const legacyHeaderUserId = readHeaderValue(request.headers["x-legacy-user-id"]);
   if (legacyHeaderUserId) {
-    const seededUser = findSeededUserByIdentity(legacyHeaderUserId);
-    if (seededUser) {
+    const sqlUser = toRuntimeAuthUser(findSqlUserByIdentity(legacyHeaderUserId));
+    if (sqlUser) {
       return {
         isAuthenticated: true,
-        userId: seededUser.id,
-        userName: seededUser.userName,
-        tenantId: seededUser.tenantId,
-        culture: seededUser.culture,
-        permissions: seededUser.permissions,
+        userId: sqlUser.id,
+        userName: sqlUser.userName,
+        tenantId: sqlUser.tenantId,
+        culture: sqlUser.culture,
+        permissions: sqlUser.permissions,
         authSource: "legacy-header",
         session: null
       };
     }
-
-    return {
-      isAuthenticated: true,
-      userId: legacyHeaderUserId,
-      userName: legacyHeaderUserId,
-      tenantId: readHeaderValue(request.headers["x-tenant-id"]) || "default",
-      culture: "en-US",
-      permissions: ["*"],
-      authSource: "legacy-header",
-      session: null
-    };
   }
 
   return {
@@ -396,8 +565,8 @@ function issueTokenFromRequestPayload(payload) {
       };
     }
 
-    const user = findSeededUserByIdentity(identity);
-    if (!user || user.password !== password) {
+    const sqlUser = toRuntimeAuthUser(findSqlUserByIdentity(identity));
+    if (!sqlUser || sqlUser.password !== password) {
       return {
         status: 401,
         errorCode: "INVALID_CREDENTIALS",
@@ -405,7 +574,7 @@ function issueTokenFromRequestPayload(payload) {
       };
     }
 
-    const session = createAuthSession(user.id);
+    const session = createAuthSession(sqlUser.id);
     return {
       status: 200,
       body: {
@@ -417,12 +586,12 @@ function issueTokenFromRequestPayload(payload) {
         expiresIn: ACCESS_TOKEN_TTL_SECONDS,
         issuedAtUtc: session.issuedAtUtc,
         user: {
-          id: user.id,
-          userName: user.userName,
-          email: user.email,
-          tenantId: user.tenantId,
-          culture: user.culture,
-          permissions: user.permissions
+          id: sqlUser.id,
+          userName: sqlUser.userName,
+          email: sqlUser.email,
+          tenantId: sqlUser.tenantId,
+          culture: sqlUser.culture,
+          permissions: sqlUser.permissions
         }
       }
     };
@@ -447,8 +616,8 @@ function issueTokenFromRequestPayload(payload) {
       };
     }
 
-    const user = findSeededUserByIdentity(session.userId);
-    if (!user) {
+    const sqlUser = toRuntimeAuthUser(findSqlUserById(session.userId));
+    if (!sqlUser) {
       return {
         status: 401,
         errorCode: "INVALID_REFRESH_TOKEN",
@@ -467,12 +636,12 @@ function issueTokenFromRequestPayload(payload) {
         expiresIn: ACCESS_TOKEN_TTL_SECONDS,
         issuedAtUtc: session.issuedAtUtc,
         user: {
-          id: user.id,
-          userName: user.userName,
-          email: user.email,
-          tenantId: user.tenantId,
-          culture: user.culture,
-          permissions: user.permissions
+          id: sqlUser.id,
+          userName: sqlUser.userName,
+          email: sqlUser.email,
+          tenantId: sqlUser.tenantId,
+          culture: sqlUser.culture,
+          permissions: sqlUser.permissions
         }
       }
     };
@@ -591,12 +760,10 @@ async function handleRuntimeRequest(request, response) {
     const bearerToken = parseAuthorizationBearerToken(request);
     let revokedToken = false;
     if (bearerToken) {
-      const session = sessionsByAccessToken.get(bearerToken);
-      if (session) {
-        sessionsByAccessToken.delete(session.accessToken);
-        sessionsByRefreshToken.delete(session.refreshToken);
-        revokedToken = true;
-      }
+      const deleteResult = authDatabase
+        .prepare("DELETE FROM auth_sessions WHERE access_token = ?;")
+        .run(bearerToken);
+      revokedToken = Number(deleteResult?.changes ?? 0) > 0;
     }
 
     sendJson(response, 200, {

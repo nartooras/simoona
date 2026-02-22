@@ -9,7 +9,7 @@ const appRoot = path.resolve(parityRoot, "..", "..");
 const apiRuntimeScript = path.join(appRoot, "api", "scripts", "api-runtime-check.mjs");
 const port = Number(process.env.API_RUNTIME_PORT ?? "4310");
 const baseUrl = `http://127.0.0.1:${String(port)}`;
-const authHeaders = { "x-legacy-user-id": "qa-runtime-user" };
+const authHeaders = { "x-legacy-user-id": "legacy-user" };
 
 function assert(condition, message) {
   if (!condition) {

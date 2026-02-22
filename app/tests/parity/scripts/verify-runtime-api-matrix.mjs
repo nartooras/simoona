@@ -11,7 +11,7 @@ const apiRuntimeScript = path.join(appRoot, "api", "scripts", "api-runtime-check
 const matrixPath = path.join(appRoot, "docs", "parity", "api-endpoint-matrix.csv");
 const port = Number(process.env.API_RUNTIME_PORT ?? "4311");
 const baseUrl = `http://127.0.0.1:${String(port)}`;
-const authHeaders = { "x-legacy-user-id": "qa-matrix-user" };
+const authHeaders = { "x-legacy-user-id": "legacy-user" };
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -60,6 +60,10 @@ function buildRequestBody(routeTemplate, method) {
 
   if (routeTemplate === "Comment/Create") {
     return { postId: "post-1", text: "Matrix runtime comment payload." };
+  }
+
+  if (routeTemplate === "token") {
+    return { username: "legacy.user", password: "legacyPass123", grant_type: "password" };
   }
 
   return {
@@ -173,7 +177,7 @@ async function runMatrixAssertions() {
     }
 
     if (method !== "HEAD") {
-      const expectedCompatibility = row.routeTemplate;
+      const expectedCompatibility = row.routeTemplate === "token" ? "/token" : row.routeTemplate;
       if (authorized.body.compatibility !== expectedCompatibility) {
         failures.push(
           `[compatibility] ${row.method} ${row.routeTemplate} expected compatibility='${expectedCompatibility}', got '${String(

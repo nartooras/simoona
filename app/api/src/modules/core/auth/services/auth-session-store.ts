@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { IncomingHttpHeaders } from "node:http";
+import { DatabaseSync } from "node:sqlite";
 import {
   AuthenticatedUserProfile,
   TokenIssueSuccessResponse,
@@ -7,16 +8,6 @@ import {
 } from "@simoona/contracts/auth";
 import { RuntimeAuthSource } from "@simoona/contracts/auth-claims";
 import { LEGACY_PERMISSION_FLAGS } from "@simoona/contracts/permissions";
-
-interface SeedUser {
-  id: string;
-  userName: string;
-  email: string;
-  password: string;
-  culture: string;
-  tenantId: string;
-  permissions: string[];
-}
 
 interface SessionRecord {
   sessionId: string;
@@ -59,37 +50,112 @@ export interface TokenIssueSuccess {
 
 const ACCESS_TOKEN_TTL_SECONDS = 60 * 60;
 const REFRESH_TOKEN_TTL_SECONDS = 60 * 60 * 24 * 7;
-
+const AUTH_SQLITE_DB_PATH = process.env.MODERN_AUTH_SQLITE_PATH || ":memory:";
+const AUTH_SQLITE_MODE = AUTH_SQLITE_DB_PATH === ":memory:" ? "memory" : "file";
 const ALL_KNOWN_PERMISSIONS = Object.values(LEGACY_PERMISSION_FLAGS);
 
-const SEEDED_USERS: SeedUser[] = [
-  {
-    id: "legacy-user",
-    userName: "legacy.user",
-    email: "legacy.user@simoona.local",
-    password: "legacyPass123",
-    culture: "en-US",
-    tenantId: "default",
-    permissions: [
-      LEGACY_PERMISSION_FLAGS.basicWall,
-      LEGACY_PERMISSION_FLAGS.basicPost,
-      LEGACY_PERMISSION_FLAGS.basicComment,
-      LEGACY_PERMISSION_FLAGS.basicEvent
-    ]
-  },
-  {
-    id: "legacy-admin",
-    userName: "legacy.admin",
-    email: "legacy.admin@simoona.local",
-    password: "legacyAdmin123",
-    culture: "en-US",
-    tenantId: "default",
-    permissions: ALL_KNOWN_PERMISSIONS
-  }
-];
+interface SqlRuntimeUser {
+  user_id: string;
+  user_name: string;
+  email: string;
+  password: string;
+  tenant_id: string;
+  culture: string;
+}
 
-const sessionsByAccessToken = new Map<string, SessionRecord>();
-const sessionsByRefreshToken = new Map<string, SessionRecord>();
+interface SqlRuntimeSession {
+  session_id: string;
+  access_token: string;
+  refresh_token: string;
+  user_id: string;
+  issued_at_utc: string;
+  expires_at_utc: string;
+}
+
+const authDatabase = new DatabaseSync(AUTH_SQLITE_DB_PATH);
+initializeAuthDatabase();
+
+function initializeAuthDatabase(): void {
+  authDatabase.exec(`
+    PRAGMA journal_mode = WAL;
+    PRAGMA foreign_keys = ON;
+
+    CREATE TABLE IF NOT EXISTS auth_users (
+      user_id TEXT PRIMARY KEY,
+      user_name TEXT NOT NULL UNIQUE,
+      email TEXT NOT NULL UNIQUE,
+      password TEXT NOT NULL,
+      tenant_id TEXT NOT NULL,
+      culture TEXT NOT NULL,
+      is_active INTEGER NOT NULL DEFAULT 1
+    );
+
+    CREATE TABLE IF NOT EXISTS auth_user_permissions (
+      user_id TEXT NOT NULL,
+      permission TEXT NOT NULL,
+      PRIMARY KEY (user_id, permission),
+      FOREIGN KEY (user_id) REFERENCES auth_users(user_id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS auth_sessions (
+      session_id TEXT PRIMARY KEY,
+      access_token TEXT NOT NULL UNIQUE,
+      refresh_token TEXT NOT NULL UNIQUE,
+      user_id TEXT NOT NULL,
+      issued_at_utc TEXT NOT NULL,
+      expires_at_utc TEXT NOT NULL,
+      FOREIGN KEY (user_id) REFERENCES auth_users(user_id) ON DELETE CASCADE
+    );
+  `);
+
+  const seededUsersCount = Number(
+    authDatabase.prepare("SELECT COUNT(1) AS count FROM auth_users;").get()?.count ?? 0
+  );
+  if (seededUsersCount > 0) {
+    return;
+  }
+
+  const insertUser = authDatabase.prepare(`
+    INSERT INTO auth_users (user_id, user_name, email, password, tenant_id, culture, is_active)
+    VALUES (?, ?, ?, ?, ?, ?, 1);
+  `);
+  const insertPermission = authDatabase.prepare(`
+    INSERT INTO auth_user_permissions (user_id, permission)
+    VALUES (?, ?);
+  `);
+
+  insertUser.run(
+    "legacy-user",
+    "legacy.user",
+    "legacy.user@simoona.local",
+    "legacyPass123",
+    "default",
+    "en-US"
+  );
+  insertUser.run(
+    "legacy-admin",
+    "legacy.admin",
+    "legacy.admin@simoona.local",
+    "legacyAdmin123",
+    "default",
+    "en-US"
+  );
+
+  const legacyUserPermissions = [
+    LEGACY_PERMISSION_FLAGS.basicWall,
+    LEGACY_PERMISSION_FLAGS.basicPost,
+    LEGACY_PERMISSION_FLAGS.basicComment,
+    LEGACY_PERMISSION_FLAGS.basicEvent
+  ];
+
+  for (const permission of legacyUserPermissions) {
+    insertPermission.run("legacy-user", permission);
+  }
+
+  for (const permission of ALL_KNOWN_PERMISSIONS) {
+    insertPermission.run("legacy-admin", permission);
+  }
+}
 
 function readHeaderValue(raw: string | string[] | undefined): string {
   if (Array.isArray(raw)) {
@@ -106,33 +172,84 @@ function parsePermissionHeader(value: string): string[] {
     .filter(Boolean);
 }
 
-function findUserById(userId: string): SeedUser | undefined {
-  return SEEDED_USERS.find((user) => user.id === userId);
+function findUserById(userId: string): SqlRuntimeUser | undefined {
+  return authDatabase
+    .prepare(
+      `
+      SELECT user_id, user_name, email, password, tenant_id, culture
+      FROM auth_users
+      WHERE is_active = 1 AND user_id = ?;
+      `
+    )
+    .get(userId) as SqlRuntimeUser | undefined;
 }
 
-function findUserByIdentity(identity: string): SeedUser | undefined {
-  const normalizedIdentity = identity.trim().toLowerCase();
-  return SEEDED_USERS.find((user) => {
-    return (
-      user.userName.toLowerCase() === normalizedIdentity ||
-      user.email.toLowerCase() === normalizedIdentity
-    );
-  });
+function findUserByIdentity(identity: string): SqlRuntimeUser | undefined {
+  const normalizedIdentity = identity.trim();
+  if (!normalizedIdentity) {
+    return undefined;
+  }
+
+  return authDatabase
+    .prepare(
+      `
+      SELECT user_id, user_name, email, password, tenant_id, culture
+      FROM auth_users
+      WHERE is_active = 1
+        AND (
+          lower(user_id) = lower(?)
+          OR lower(user_name) = lower(?)
+          OR lower(email) = lower(?)
+        )
+      LIMIT 1;
+      `
+    )
+    .get(normalizedIdentity, normalizedIdentity, normalizedIdentity) as SqlRuntimeUser | undefined;
+}
+
+function findPermissionsByUserId(userId: string): string[] {
+  const rows = authDatabase
+    .prepare(
+      `
+      SELECT permission
+      FROM auth_user_permissions
+      WHERE user_id = ?
+      ORDER BY permission ASC;
+      `
+    )
+    .all(userId) as Array<{ permission: string }>;
+
+  return rows.map((row) => row.permission);
 }
 
 function getSessionByAccessToken(accessToken: string): SessionRecord | undefined {
-  const session = sessionsByAccessToken.get(accessToken);
+  const session = authDatabase
+    .prepare(
+      `
+      SELECT session_id, access_token, refresh_token, user_id, issued_at_utc, expires_at_utc
+      FROM auth_sessions
+      WHERE access_token = ?;
+      `
+    )
+    .get(accessToken) as SqlRuntimeSession | undefined;
+
   if (!session) {
     return undefined;
   }
 
-  if (new Date(session.expiresAtUtc).getTime() <= Date.now()) {
-    sessionsByAccessToken.delete(accessToken);
-    sessionsByRefreshToken.delete(session.refreshToken);
+  if (new Date(session.expires_at_utc).getTime() <= Date.now()) {
+    authDatabase.prepare("DELETE FROM auth_sessions WHERE session_id = ?;").run(session.session_id);
     return undefined;
   }
 
-  return session;
+  return {
+    sessionId: session.session_id,
+    accessToken: session.access_token,
+    refreshToken: session.refresh_token,
+    userId: session.user_id,
+    issuedAtUtc: session.issued_at_utc,
+    expiresAtUtc: session.expires_at_utc
+  };
 }
 
 function createSession(userId: string): SessionRecord {
@@ -147,22 +264,43 @@ function createSession(userId: string): SessionRecord {
     expiresAtUtc: expiresAt.toISOString()
   };
 
-  sessionsByAccessToken.set(session.accessToken, session);
-  sessionsByRefreshToken.set(session.refreshToken, session);
+  authDatabase
+    .prepare(
+      `
+      INSERT INTO auth_sessions (session_id, access_token, refresh_token, user_id, issued_at_utc, expires_at_utc)
+      VALUES (?, ?, ?, ?, ?, ?);
+      `
+    )
+    .run(
+      session.sessionId,
+      session.accessToken,
+      session.refreshToken,
+      session.userId,
+      session.issuedAtUtc,
+      session.expiresAtUtc
+    );
 
   return session;
 }
 
 function rotateSession(refreshToken: string): SessionRecord | undefined {
-  const existingSession = sessionsByRefreshToken.get(refreshToken);
+  const existingSession = authDatabase
+    .prepare(
+      `
+      SELECT session_id, user_id
+      FROM auth_sessions
+      WHERE refresh_token = ?;
+      `
+    )
+    .get(refreshToken) as { session_id: string; user_id: string } | undefined;
+
   if (!existingSession) {
     return undefined;
   }
 
-  sessionsByAccessToken.delete(existingSession.accessToken);
-  sessionsByRefreshToken.delete(existingSession.refreshToken);
+  authDatabase.prepare("DELETE FROM auth_sessions WHERE session_id = ?;").run(existingSession.session_id);
 
-  return createSession(existingSession.userId);
+  return createSession(existingSession.user_id);
 }
 
 function extractBearerToken(authorizationHeader: string): string {
@@ -178,24 +316,14 @@ function extractBearerToken(authorizationHeader: string): string {
   return token.trim();
 }
 
-function resolvePermissionsFromHeaders(headers: IncomingHttpHeaders): string[] {
-  const rawPermissions = readHeaderValue(headers["x-legacy-permissions"]);
-  if (!rawPermissions) {
-    return ALL_KNOWN_PERMISSIONS;
-  }
-
-  const requested = parsePermissionHeader(rawPermissions);
-  return requested.length ? requested : ALL_KNOWN_PERMISSIONS;
-}
-
-function toUserProfile(user: SeedUser): AuthenticatedUserProfile {
+function toUserProfile(user: SqlRuntimeUser): AuthenticatedUserProfile {
   return {
-    id: user.id,
-    userName: user.userName,
+    id: user.user_id,
+    userName: user.user_name,
     email: user.email,
-    tenantId: user.tenantId,
+    tenantId: user.tenant_id,
     culture: user.culture,
-    permissions: user.permissions
+    permissions: findPermissionsByUserId(user.user_id)
   };
 }
 
@@ -206,14 +334,15 @@ export function resolveAuthContext(headers: IncomingHttpHeaders): RuntimeAuthCon
     if (session) {
       const sessionUser = findUserById(session.userId);
       if (sessionUser) {
+        const permissions = findPermissionsByUserId(sessionUser.user_id);
         return {
           isAuthenticated: true,
-          userId: sessionUser.id,
-          userName: sessionUser.userName,
+          userId: sessionUser.user_id,
+          userName: sessionUser.user_name,
           email: sessionUser.email,
-          tenantId: sessionUser.tenantId,
+          tenantId: sessionUser.tenant_id,
           culture: sessionUser.culture,
-          permissions: sessionUser.permissions,
+          permissions,
           authSource: "bearer-token",
           sessionId: session.sessionId,
           expiresAtUtc: session.expiresAtUtc
@@ -224,30 +353,19 @@ export function resolveAuthContext(headers: IncomingHttpHeaders): RuntimeAuthCon
 
   const legacyUserId = readHeaderValue(headers["x-legacy-user-id"]);
   if (legacyUserId) {
-    const seededUser = findUserById(legacyUserId) ?? findUserByIdentity(legacyUserId);
-    if (seededUser) {
+    const sqlUser = findUserById(legacyUserId) ?? findUserByIdentity(legacyUserId);
+    if (sqlUser) {
       return {
         isAuthenticated: true,
-        userId: seededUser.id,
-        userName: seededUser.userName,
-        email: seededUser.email,
-        tenantId: seededUser.tenantId,
-        culture: seededUser.culture,
-        permissions: seededUser.permissions,
+        userId: sqlUser.user_id,
+        userName: sqlUser.user_name,
+        email: sqlUser.email,
+        tenantId: sqlUser.tenant_id,
+        culture: sqlUser.culture,
+        permissions: findPermissionsByUserId(sqlUser.user_id),
         authSource: "legacy-header"
       };
     }
-
-    return {
-      isAuthenticated: true,
-      userId: legacyUserId,
-      userName: legacyUserId,
-      email: `${legacyUserId}@legacy.local`,
-      tenantId: readHeaderValue(headers["x-tenant-id"]) || "default",
-      culture: "en-US",
-      permissions: resolvePermissionsFromHeaders(headers),
-      authSource: "legacy-header"
-    };
   }
 
   return {
@@ -283,19 +401,12 @@ export function resolveUserProfile(authContext: RuntimeAuthContext): Authenticat
     return null;
   }
 
-  const seededUser = findUserById(authContext.userId);
-  if (seededUser) {
-    return toUserProfile(seededUser);
+  const sqlUser = findUserById(authContext.userId);
+  if (sqlUser) {
+    return toUserProfile(sqlUser);
   }
 
-  return {
-    id: authContext.userId,
-    userName: authContext.userName || authContext.userId,
-    email: authContext.email || `${authContext.userId}@legacy.local`,
-    tenantId: authContext.tenantId || "default",
-    culture: authContext.culture || "en-US",
-    permissions: authContext.permissions
-  };
+  return null;
 }
 
 export function revokeSessionByAuthorizationHeader(headers: IncomingHttpHeaders): boolean {
@@ -304,13 +415,15 @@ export function revokeSessionByAuthorizationHeader(headers: IncomingHttpHeaders)
     return false;
   }
 
-  const session = sessionsByAccessToken.get(bearerToken);
-  if (!session) {
+  const deletedRows = Number(
+    authDatabase
+      .prepare("DELETE FROM auth_sessions WHERE access_token = ?;")
+      .run(bearerToken)
+      ?.changes ?? 0
+  );
+  if (deletedRows <= 0) {
     return false;
   }
-
-  sessionsByAccessToken.delete(session.accessToken);
-  sessionsByRefreshToken.delete(session.refreshToken);
   return true;
 }
 
@@ -405,5 +518,6 @@ export function issueLegacyToken(payload: TokenRequest): TokenIssueFailure | Tok
 }
 
 export const AUTH_COMPATIBILITY_SOURCE_MARKER =
-  "auth-session-store-v1";
+  "auth-session-store-v2-sqlite";
 export const REFRESH_TOKEN_TTL_SECONDS_MARKER = REFRESH_TOKEN_TTL_SECONDS;
+export const AUTH_SQLITE_MODE_MARKER = AUTH_SQLITE_MODE;
