@@ -6,7 +6,7 @@ Mode: `full-parity-recovery`
 
 ## Objective
 
-Continue from completed governance/doc sync and first engineering-baseline hardening slice toward true runtime parity.
+Continue from completed governance/doc sync, baseline hardening, and `R2-AUTH-REAL-001A` toward SQL-backed auth parity and web/runtime parity waves.
 
 ## Hard Rules
 
@@ -18,10 +18,11 @@ Continue from completed governance/doc sync and first engineering-baseline harde
 
 ## Immediate Execution Queue
 
-1. `R2-AUTH-REAL-001`
+1. `R2-AUTH-REAL-001B`
 - Owner: `$full-stack-developer`
 - Acceptance:
-  - real token/session/login/user-info behavior and protected route enforcement.
+  - SQL-backed identity/session source for protected auth flows.
+  - unresolved user headers do not silently authenticate.
 
 2. `R3-WEB-REFACTOR-001B`
 - Owner: `$full-stack-developer`

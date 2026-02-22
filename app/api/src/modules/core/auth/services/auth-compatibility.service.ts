@@ -1,22 +1,47 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
+import type { Request } from "express";
 import {
   RegisterExternalRequest,
   RegisterRequest,
   ResetPasswordRequest,
+  TokenIssueSuccessResponse,
   TokenRequest
 } from "@simoona/contracts/auth";
+import {
+  issueLegacyToken,
+  resolveAuthContext,
+  resolveUserProfile,
+  revokeSessionByAuthorizationHeader,
+  RuntimeAuthContext
+} from "./auth-session-store";
+
+function resolveRequestAuthContext(request?: Request): RuntimeAuthContext {
+  const requestContext = (request as Request & { authContext?: RuntimeAuthContext })?.authContext;
+  if (requestContext) {
+    return requestContext;
+  }
+
+  return resolveAuthContext((request?.headers ?? {}) as Request["headers"]);
+}
 
 @Injectable()
 export class AuthCompatibilityService {
-  async getUserInfo() {
+  async getUserInfo(request?: Request) {
+    const authContext = resolveRequestAuthContext(request);
+    if (!authContext.isAuthenticated) {
+      throw new UnauthorizedException("Legacy authentication context is required.");
+    }
+
+    const user = resolveUserProfile(authContext);
+    if (!user) {
+      throw new UnauthorizedException("Authenticated user profile could not be resolved.");
+    }
+
     return {
       status: "implemented",
       compatibility: "Account/UserInfo",
-      user: {
-        id: "legacy-user",
-        userName: "legacy.user",
-        email: "legacy.user@simoona.local"
-      }
+      authSource: authContext.authSource,
+      user
     };
   }
 
@@ -28,7 +53,12 @@ export class AuthCompatibilityService {
     };
   }
 
-  async registerExternal(_payload: RegisterExternalRequest) {
+  async registerExternal(_payload: RegisterExternalRequest, request?: Request) {
+    const authContext = resolveRequestAuthContext(request);
+    if (!authContext.isAuthenticated) {
+      throw new UnauthorizedException("Authenticated session is required.");
+    }
+
     return {
       status: "implemented",
       compatibility: "Account/RegisterExternal",
@@ -76,7 +106,12 @@ export class AuthCompatibilityService {
     };
   }
 
-  async getUserLogins() {
+  async getUserLogins(request?: Request) {
+    const authContext = resolveRequestAuthContext(request);
+    if (!authContext.isAuthenticated) {
+      throw new UnauthorizedException("Authenticated session is required.");
+    }
+
     return {
       status: "implemented",
       compatibility: "User/Logins",
@@ -92,7 +127,12 @@ export class AuthCompatibilityService {
     };
   }
 
-  async unlinkLogin() {
+  async unlinkLogin(request?: Request) {
+    const authContext = resolveRequestAuthContext(request);
+    if (!authContext.isAuthenticated) {
+      throw new UnauthorizedException("Authenticated session is required.");
+    }
+
     return {
       status: "implemented",
       compatibility: "User/DeleteLogin",
@@ -100,18 +140,28 @@ export class AuthCompatibilityService {
     };
   }
 
-  async getLocalizationSettings() {
+  async getLocalizationSettings(request?: Request) {
+    const authContext = resolveRequestAuthContext(request);
+    if (!authContext.isAuthenticated) {
+      throw new UnauthorizedException("Authenticated session is required.");
+    }
+
     return {
       status: "implemented",
       compatibility: "User/GeneralSettings",
       settings: {
-        culture: "en-US",
+        culture: authContext.culture || "en-US",
         timezone: "UTC"
       }
     };
   }
 
-  async changeLocalizationSettings() {
+  async changeLocalizationSettings(request?: Request) {
+    const authContext = resolveRequestAuthContext(request);
+    if (!authContext.isAuthenticated) {
+      throw new UnauthorizedException("Authenticated session is required.");
+    }
+
     return {
       status: "implemented",
       compatibility: "User/GeneralSettings",
@@ -119,7 +169,12 @@ export class AuthCompatibilityService {
     };
   }
 
-  async getUsersForAutocomplete() {
+  async getUsersForAutocomplete(request?: Request) {
+    const authContext = resolveRequestAuthContext(request);
+    if (!authContext.isAuthenticated) {
+      throw new UnauthorizedException("Authenticated session is required.");
+    }
+
     return {
       status: "implemented",
       compatibility: "User/GetUsersForAutocomplete",
@@ -127,16 +182,43 @@ export class AuthCompatibilityService {
     };
   }
 
-  async logout() {
-    return { status: "implemented", compatibility: "Account/Logout", result: "logged_out" };
-  }
+  async logout(request?: Request) {
+    const authContext = resolveRequestAuthContext(request);
+    if (!authContext.isAuthenticated) {
+      throw new UnauthorizedException("Authenticated session is required.");
+    }
 
-  async issueToken(_payload: TokenRequest) {
     return {
       status: "implemented",
-      compatibility: "/token",
-      tokenType: "bearer",
-      expiresIn: 3600
+      compatibility: "Account/Logout",
+      result: "logged_out",
+      revokedToken: revokeSessionByAuthorizationHeader(request?.headers ?? {})
     };
+  }
+
+  async issueToken(payload: TokenRequest): Promise<TokenIssueSuccessResponse> {
+    const result = issueLegacyToken(payload);
+    if (result.ok) {
+      return {
+        status: "implemented",
+        compatibility: "/token",
+        tokenType: result.response.tokenType,
+        accessToken: result.response.accessToken,
+        refreshToken: result.response.refreshToken,
+        expiresIn: result.response.expiresIn,
+        issuedAtUtc: result.response.issuedAtUtc,
+        user: result.response.user
+      };
+    }
+
+    if (result.errorCode === "INVALID_CREDENTIALS" || result.errorCode === "INVALID_REFRESH_TOKEN") {
+      throw new UnauthorizedException(result.errorMessage);
+    }
+
+    if (result.errorCode === "INVALID_TOKEN_REQUEST" || result.errorCode === "UNSUPPORTED_GRANT_TYPE") {
+      throw new BadRequestException(result.errorMessage);
+    }
+
+    throw new BadRequestException("Token request failed.");
   }
 }

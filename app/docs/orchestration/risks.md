@@ -2,15 +2,23 @@
 
 ## Active
 
-1. `RISK-R2-AUTH-STUB`
+1. `RISK-R2-SQL-AUTH-DATASOURCE`
 - Severity: `High`
-- Description: modern auth handlers still return compatibility placeholders instead of real credential/session validation.
-- Impact: authentication appears implemented in contracts but is not production-safe.
-- Mitigation: implement real auth path (`/token`, `/Account/UserInfo`, protected route enforcement) against existing SQL schema.
+- Description: current runtime auth/session enforcement is backed by seeded in-memory users/sessions, not SQL schema-backed identity state.
+- Impact: behavior is improved but still diverges from required production parity source-of-truth.
+- Mitigation: wire auth/session resolution to SQL-backed identity/session storage and remove seeded credential dependence.
 - Owner: `$full-stack-developer`
 - Status: `Open`
 
-2. `RISK-R3-MONOLITHIC-WEB`
+2. `RISK-R2-LEGACY-HEADER-FALLBACK`
+- Severity: `High`
+- Description: unresolved `x-legacy-user-id` values still produce synthetic authenticated identities in compatibility fallback.
+- Impact: unknown identities may obtain authenticated access in fallback paths.
+- Mitigation: default unresolved identity behavior to unauthorized once SQL-backed identity resolution is live.
+- Owner: `$full-stack-developer`
+- Status: `Open`
+
+3. `RISK-R3-MONOLITHIC-WEB`
 - Severity: `High`
 - Description: `app/web/src/main.tsx` remains monolithic and hard to verify safely.
 - Impact: regression risk and slow feature delivery.
@@ -18,7 +26,7 @@
 - Owner: `$full-stack-developer`
 - Status: `Open`
 
-3. `RISK-R3-RUNTIME-DRIFT`
+4. `RISK-R3-RUNTIME-DRIFT`
 - Severity: `High`
 - Description: runtime drift has been reduced by shared runtime module extraction, but major UI rendering logic is still centralized in `main.tsx`.
 - Impact: local/runtime evidence may not reflect deployed behavior.
@@ -26,7 +34,7 @@
 - Owner: `$full-stack-developer`
 - Status: `Open`
 
-4. `RISK-R4-INTEGRATION-PARITY`
+5. `RISK-R4-INTEGRATION-PARITY`
 - Severity: `High`
 - Description: integrations are largely mapped/contracted but not fully behavior-verified.
 - Impact: go-live failures in OAuth, SMTP, storage, callbacks, and job flows.
@@ -34,7 +42,7 @@
 - Owner: `$platform-devops` + `$qa`
 - Status: `Open`
 
-5. `RISK-R5-FALSE-READY-STATE`
+6. `RISK-R5-FALSE-READY-STATE`
 - Severity: `High`
 - Description: previous readiness claims may overstate real parity.
 - Impact: premature release risk.
@@ -42,7 +50,7 @@
 - Owner: `$simoona-modernization-orchestrator` + `$reviewer` + `$qa`
 - Status: `Open`
 
-6. `RISK-RUNTIME-PORT-SANDBOX`
+7. `RISK-RUNTIME-PORT-SANDBOX`
 - Severity: `Medium`
 - Description: local runtime bind/connect can fail in sandbox mode.
 - Impact: browser runtime checks may require unrestricted execution.
@@ -50,7 +58,7 @@
 - Owner: `$platform-devops`
 - Status: `Open`
 
-7. `RISK-DEPENDENCY-NETWORK-SANDBOX`
+8. `RISK-DEPENDENCY-NETWORK-SANDBOX`
 - Severity: `Medium`
 - Description: dependency installation can fail in sandbox due DNS/network restrictions.
 - Impact: full reinstall validation is blocked even when code-level validation succeeds.
@@ -71,3 +79,7 @@
 3. `RISK-DOC-TRUTH-CONFLICT`
 - Resolution date: `2026-02-22`
 - Outcome: orchestration control files and final verification report now share one consistent `NO_GO_RELEASE_FROZEN` truth model.
+
+4. `RISK-R2-AUTH-STUB`
+- Resolution date: `2026-02-22`
+- Outcome: auth compatibility handlers now enforce runtime auth context with token/session lifecycle behavior and protected-route checks.

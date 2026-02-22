@@ -1,5 +1,7 @@
-import { Body, Controller, Delete, Get, HttpCode, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Post, Req, UseGuards } from "@nestjs/common";
+import type { Request } from "express";
 import { AuthCompatibilityService } from "../services/auth-compatibility.service";
+import { LegacyPermissionGuard } from "../../permissions/legacy-permission.guard";
 import {
   RegisterExternalRequest,
   RegisterRequest,
@@ -11,8 +13,9 @@ export class AccountCompatibilityController {
   constructor(private readonly authCompatibilityService: AuthCompatibilityService) {}
 
   @Get("UserInfo")
-  async getUserInfo() {
-    return this.authCompatibilityService.getUserInfo();
+  @UseGuards(LegacyPermissionGuard)
+  async getUserInfo(@Req() request: Request) {
+    return this.authCompatibilityService.getUserInfo(request);
   }
 
   @Post("Register")
@@ -21,8 +24,9 @@ export class AccountCompatibilityController {
   }
 
   @Post("RegisterExternal")
-  async registerExternal(@Body() payload: RegisterExternalRequest) {
-    return this.authCompatibilityService.registerExternal(payload);
+  @UseGuards(LegacyPermissionGuard)
+  async registerExternal(@Body() payload: RegisterExternalRequest, @Req() request: Request) {
+    return this.authCompatibilityService.registerExternal(payload, request);
   }
 
   @Post("RequestPasswordReset")
@@ -58,7 +62,8 @@ export class AccountCompatibilityController {
 
   @Delete("Logout")
   @HttpCode(200)
-  async logout() {
-    return this.authCompatibilityService.logout();
+  @UseGuards(LegacyPermissionGuard)
+  async logout(@Req() request: Request) {
+    return this.authCompatibilityService.logout(request);
   }
 }

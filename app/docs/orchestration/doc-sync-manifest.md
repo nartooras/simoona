@@ -1,13 +1,20 @@
 # Markdown Sync Manifest
 
 Date: `2026-02-22`
-Scope: root + modernization markdown files (`58` total), excluding `src/**` and `build/**` docs.
+Scope: baseline root + modernization markdown synchronization snapshot (`58` files at reset time), excluding `src/**` and `build/**` docs.
 
 ## Summary
 
 - Audited: 58/58
 - Updated: 21
 - Reviewed-no-change: 37
+
+## Post-Baseline Addendum
+
+- Additional markdown artifacts were intentionally added after this baseline synchronization closure as part of ongoing gate evidence:
+  - `app/docs/reviews/2026-02-22-r2-auth-real-001-review.md`
+  - `app/docs/qa/2026-02-22-r2-auth-real-001-qa.md`
+- These post-baseline files are managed through orchestration evidence updates and do not invalidate the original 58/58 synchronization closure.
 
 ## Disposition
 

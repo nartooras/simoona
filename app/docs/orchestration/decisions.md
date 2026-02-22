@@ -41,3 +41,11 @@
 10. `D-2026-02-22-010` Offline-safe validation fallback
 - Decision: keep no-network syntax/contract validation paths as authoritative fallback when dependency reinstall is blocked in sandbox.
 - Rationale: preserves deterministic validation progress under constrained environments while tracking install limitation explicitly.
+
+11. `D-2026-02-22-011` Auth enforcement slice sequencing
+- Decision: ship auth/token/session enforcement slice first (source + runtime check path), then close SQL-backed identity/session parity in a dedicated follow-up task.
+- Rationale: enables immediate removal of placeholder behavior while preserving incremental and reviewable delivery.
+
+12. `D-2026-02-22-012` Runtime auth lifecycle gate
+- Decision: add a dedicated parity runtime check command (`pnpm --dir app/tests/parity runtime:api:auth`) for login/user-info/logout/revocation behavior.
+- Rationale: core auth parity gate requires runtime behavior assertions beyond static contract markers.

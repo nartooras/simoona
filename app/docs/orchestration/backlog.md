@@ -4,11 +4,13 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 
 ## Priority Queue
 
-1. `R2-AUTH-REAL-001` (`P0`, owner `$full-stack-developer`)
+1. `R2-AUTH-REAL-001B` (`P0`, owner `$full-stack-developer`)
 - Scope:
-  - Implement real token/session auth and route protection using existing SQL schema.
+  - Replace seeded runtime auth/session backing with SQL-backed identity and session resolution.
+  - Remove synthetic authenticated fallback for unresolved `x-legacy-user-id`.
 - Acceptance:
-  - `/token`, `/Account/UserInfo`, and protected route flows enforce real auth context.
+  - Auth source for protected routes resolves from SQL-compatible identity/session state.
+  - Unresolved user headers do not silently grant authenticated access.
 
 2. `R3-WEB-REFACTOR-001B` (`P0`, owner `$full-stack-developer`)
 - Scope:
@@ -60,7 +62,14 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 5. `R6-REVIEW-QA-ENFORCEMENT-001A`
 - Outcome: reviewer report (`APPROVED`) and QA report (`GREEN`) published for current recovery slice.
 
+6. `R2-AUTH-REAL-001A`
+- Outcome: real runtime token/session handling and auth-context enforcement landed for `/token`, `/Account/UserInfo`, `/Account/Logout`, and protected compatibility routes (source + runtime check paths).
+
+7. `R6-REVIEW-QA-ENFORCEMENT-001B`
+- Outcome: reviewer (`APPROVED`) and QA (`GREEN`) artifacts published for `R2-AUTH-REAL-001A`.
+
 ## Validation Notes
 
 1. `pnpm --dir app install` currently fails in sandbox (`ENOTFOUND registry.npmjs.org`), but remaining validation gates run successfully.
 2. Runtime smoke uses fallback route checks when sandbox blocks port binding (`EPERM 127.0.0.1:5173`).
+3. `pnpm --dir app/tests/parity runtime:api:auth` requires unrestricted execution in this environment due localhost bind restrictions (`EPERM 127.0.0.1:4313` in sandbox).

@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import http from "node:http";
 import { spawnSync } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -188,6 +189,31 @@ const COMMENTS_BY_POST = new Map([
 let postCounter = POSTS.length;
 let commentCounter = 1;
 
+const ACCESS_TOKEN_TTL_SECONDS = 60 * 60;
+const SEEDED_RUNTIME_USERS = [
+  {
+    id: "legacy-user",
+    userName: "legacy.user",
+    email: "legacy.user@simoona.local",
+    password: "legacyPass123",
+    culture: "en-US",
+    tenantId: "default",
+    permissions: ["BasicPermissions.Wall", "BasicPermissions.Post", "BasicPermissions.Comment"]
+  },
+  {
+    id: "legacy-admin",
+    userName: "legacy.admin",
+    email: "legacy.admin@simoona.local",
+    password: "legacyAdmin123",
+    culture: "en-US",
+    tenantId: "default",
+    permissions: ["*"]
+  }
+];
+
+const sessionsByAccessToken = new Map();
+const sessionsByRefreshToken = new Map();
+
 function sendJson(response, statusCode, payload) {
   response.writeHead(statusCode, { "content-type": "application/json; charset=utf-8" });
   response.end(JSON.stringify(payload));
@@ -203,18 +229,147 @@ function sendLegacyError(response, statusCode, pathName, errorCode, message) {
   });
 }
 
-function resolveLegacyUserId(request) {
-  const rawHeader = request.headers["x-legacy-user-id"];
+function readHeaderValue(rawHeader) {
   if (Array.isArray(rawHeader)) {
-    return rawHeader[0] ?? "";
+    return String(rawHeader[0] ?? "").trim();
   }
 
-  return rawHeader ?? "";
+  return String(rawHeader ?? "").trim();
+}
+
+function findSeededUserByIdentity(identity) {
+  const normalizedIdentity = String(identity || "").trim().toLowerCase();
+  return SEEDED_RUNTIME_USERS.find((user) => {
+    return (
+      user.userName.toLowerCase() === normalizedIdentity ||
+      user.email.toLowerCase() === normalizedIdentity ||
+      user.id.toLowerCase() === normalizedIdentity
+    );
+  });
+}
+
+function getSessionByAccessToken(accessToken) {
+  const session = sessionsByAccessToken.get(accessToken);
+  if (!session) {
+    return null;
+  }
+
+  if (new Date(session.expiresAtUtc).getTime() <= Date.now()) {
+    sessionsByAccessToken.delete(session.accessToken);
+    sessionsByRefreshToken.delete(session.refreshToken);
+    return null;
+  }
+
+  return session;
+}
+
+function createAuthSession(userId) {
+  const issuedAt = new Date();
+  const expiresAt = new Date(issuedAt.getTime() + ACCESS_TOKEN_TTL_SECONDS * 1000);
+  const session = {
+    sessionId: randomUUID(),
+    userId,
+    accessToken: randomUUID().replaceAll("-", ""),
+    refreshToken: randomUUID().replaceAll("-", ""),
+    issuedAtUtc: issuedAt.toISOString(),
+    expiresAtUtc: expiresAt.toISOString()
+  };
+
+  sessionsByAccessToken.set(session.accessToken, session);
+  sessionsByRefreshToken.set(session.refreshToken, session);
+
+  return session;
+}
+
+function rotateAuthSession(refreshToken) {
+  const previousSession = sessionsByRefreshToken.get(refreshToken);
+  if (!previousSession) {
+    return null;
+  }
+
+  sessionsByAccessToken.delete(previousSession.accessToken);
+  sessionsByRefreshToken.delete(previousSession.refreshToken);
+  return createAuthSession(previousSession.userId);
+}
+
+function parseAuthorizationBearerToken(request) {
+  const authorizationHeader = readHeaderValue(request.headers.authorization);
+  if (!authorizationHeader) {
+    return "";
+  }
+
+  const [scheme, token] = authorizationHeader.split(/\s+/, 2);
+  if (!scheme || !token || scheme.toLowerCase() !== "bearer") {
+    return "";
+  }
+
+  return token.trim();
+}
+
+function resolveAuthContext(request) {
+  const bearerToken = parseAuthorizationBearerToken(request);
+  if (bearerToken) {
+    const session = getSessionByAccessToken(bearerToken);
+    if (session) {
+      const seededUser = findSeededUserByIdentity(session.userId);
+      if (seededUser) {
+        return {
+          isAuthenticated: true,
+          userId: seededUser.id,
+          userName: seededUser.userName,
+          tenantId: seededUser.tenantId,
+          culture: seededUser.culture,
+          permissions: seededUser.permissions,
+          authSource: "bearer-token",
+          session
+        };
+      }
+    }
+  }
+
+  const legacyHeaderUserId = readHeaderValue(request.headers["x-legacy-user-id"]);
+  if (legacyHeaderUserId) {
+    const seededUser = findSeededUserByIdentity(legacyHeaderUserId);
+    if (seededUser) {
+      return {
+        isAuthenticated: true,
+        userId: seededUser.id,
+        userName: seededUser.userName,
+        tenantId: seededUser.tenantId,
+        culture: seededUser.culture,
+        permissions: seededUser.permissions,
+        authSource: "legacy-header",
+        session: null
+      };
+    }
+
+    return {
+      isAuthenticated: true,
+      userId: legacyHeaderUserId,
+      userName: legacyHeaderUserId,
+      tenantId: readHeaderValue(request.headers["x-tenant-id"]) || "default",
+      culture: "en-US",
+      permissions: ["*"],
+      authSource: "legacy-header",
+      session: null
+    };
+  }
+
+  return {
+    isAuthenticated: false,
+    userId: "",
+    userName: "",
+    tenantId: "",
+    culture: "en-US",
+    permissions: [],
+    authSource: "anonymous",
+    session: null
+  };
 }
 
 function requireAuth(request, response, pathName) {
-  const legacyUserId = resolveLegacyUserId(request);
-  if (!legacyUserId) {
+  const authContext = resolveAuthContext(request);
+  if (!authContext.isAuthenticated) {
     sendLegacyError(
       response,
       401,
@@ -225,7 +380,109 @@ function requireAuth(request, response, pathName) {
     return null;
   }
 
-  return legacyUserId;
+  return authContext;
+}
+
+function issueTokenFromRequestPayload(payload) {
+  const grantType = String(payload.grant_type || "password").trim().toLowerCase();
+  if (grantType === "password") {
+    const identity = String(payload.username || "").trim();
+    const password = String(payload.password || "").trim();
+    if (!identity || !password) {
+      return {
+        status: 400,
+        errorCode: "INVALID_TOKEN_REQUEST",
+        message: "Both username and password are required."
+      };
+    }
+
+    const user = findSeededUserByIdentity(identity);
+    if (!user || user.password !== password) {
+      return {
+        status: 401,
+        errorCode: "INVALID_CREDENTIALS",
+        message: "Invalid username or password."
+      };
+    }
+
+    const session = createAuthSession(user.id);
+    return {
+      status: 200,
+      body: {
+        status: "implemented",
+        compatibility: "/token",
+        tokenType: "bearer",
+        accessToken: session.accessToken,
+        refreshToken: session.refreshToken,
+        expiresIn: ACCESS_TOKEN_TTL_SECONDS,
+        issuedAtUtc: session.issuedAtUtc,
+        user: {
+          id: user.id,
+          userName: user.userName,
+          email: user.email,
+          tenantId: user.tenantId,
+          culture: user.culture,
+          permissions: user.permissions
+        }
+      }
+    };
+  }
+
+  if (grantType === "refresh_token") {
+    const refreshToken = String(payload.refresh_token || "").trim();
+    if (!refreshToken) {
+      return {
+        status: 400,
+        errorCode: "INVALID_TOKEN_REQUEST",
+        message: "Refresh token is required for refresh_token grant type."
+      };
+    }
+
+    const session = rotateAuthSession(refreshToken);
+    if (!session) {
+      return {
+        status: 401,
+        errorCode: "INVALID_REFRESH_TOKEN",
+        message: "Refresh token is invalid or expired."
+      };
+    }
+
+    const user = findSeededUserByIdentity(session.userId);
+    if (!user) {
+      return {
+        status: 401,
+        errorCode: "INVALID_REFRESH_TOKEN",
+        message: "Refresh token user could not be resolved."
+      };
+    }
+
+    return {
+      status: 200,
+      body: {
+        status: "implemented",
+        compatibility: "/token",
+        tokenType: "bearer",
+        accessToken: session.accessToken,
+        refreshToken: session.refreshToken,
+        expiresIn: ACCESS_TOKEN_TTL_SECONDS,
+        issuedAtUtc: session.issuedAtUtc,
+        user: {
+          id: user.id,
+          userName: user.userName,
+          email: user.email,
+          tenantId: user.tenantId,
+          culture: user.culture,
+          permissions: user.permissions
+        }
+      }
+    };
+  }
+
+  return {
+    status: 400,
+    errorCode: "UNSUPPORTED_GRANT_TYPE",
+    message: `Unsupported grant type '${grantType}'.`
+  };
 }
 
 function findWall(wallId) {
@@ -280,16 +537,88 @@ async function handleRuntimeRequest(request, response) {
     return;
   }
 
+  if (requestMethod === "POST" && pathName === "/token") {
+    const payload = await readJsonBody(request);
+    if (!payload) {
+      sendLegacyError(response, 400, pathName, "INVALID_JSON", "Request payload must be valid JSON.");
+      return;
+    }
+
+    const tokenIssue = issueTokenFromRequestPayload(payload);
+    if (tokenIssue.status !== 200) {
+      sendLegacyError(
+        response,
+        tokenIssue.status,
+        pathName,
+        tokenIssue.errorCode,
+        tokenIssue.message
+      );
+      return;
+    }
+
+    sendJson(response, 200, tokenIssue.body);
+    return;
+  }
+
+  if (requestMethod === "GET" && pathName === "/Account/UserInfo") {
+    const authContext = requireAuth(request, response, pathName);
+    if (!authContext) {
+      return;
+    }
+
+    sendJson(response, 200, {
+      status: "implemented",
+      compatibility: "Account/UserInfo",
+      authSource: authContext.authSource,
+      user: {
+        id: authContext.userId,
+        userName: authContext.userName,
+        email: `${authContext.userName}@simoona.local`,
+        tenantId: authContext.tenantId || "default",
+        culture: authContext.culture || "en-US",
+        permissions: authContext.permissions
+      }
+    });
+    return;
+  }
+
+  if (pathName === "/Account/Logout") {
+    const authContext = requireAuth(request, response, pathName);
+    if (!authContext) {
+      return;
+    }
+
+    const bearerToken = parseAuthorizationBearerToken(request);
+    let revokedToken = false;
+    if (bearerToken) {
+      const session = sessionsByAccessToken.get(bearerToken);
+      if (session) {
+        sessionsByAccessToken.delete(session.accessToken);
+        sessionsByRefreshToken.delete(session.refreshToken);
+        revokedToken = true;
+      }
+    }
+
+    sendJson(response, 200, {
+      status: "implemented",
+      compatibility: "Account/Logout",
+      result: "logged_out",
+      revokedToken,
+      authSource: authContext.authSource
+    });
+    return;
+  }
+
   if (requestMethod === "GET" && pathName === "/Wall/List") {
-    const legacyUserId = requireAuth(request, response, pathName);
-    if (!legacyUserId) {
+    const authContext = requireAuth(request, response, pathName);
+    if (!authContext) {
       return;
     }
 
     sendJson(response, 200, {
       status: "ok",
       compatibility: "Wall/List",
-      legacyUserId,
+      legacyUserId: authContext.userId,
       items: WALLS,
       total: WALLS.length
     });
@@ -297,8 +626,8 @@ async function handleRuntimeRequest(request, response) {
   }
 
   if (requestMethod === "GET" && pathName === "/Wall/Posts") {
-    const legacyUserId = requireAuth(request, response, pathName);
-    if (!legacyUserId) {
+    const authContext = requireAuth(request, response, pathName);
+    if (!authContext) {
       return;
     }
 
@@ -322,7 +651,7 @@ async function handleRuntimeRequest(request, response) {
     sendJson(response, 200, {
       status: "ok",
       compatibility: "Wall/Posts",
-      legacyUserId,
+      legacyUserId: authContext.userId,
       wall,
       items: posts,
       total: posts.length
@@ -331,8 +660,8 @@ async function handleRuntimeRequest(request, response) {
   }
 
   if (requestMethod === "POST" && pathName === "/Post/Create") {
-    const legacyUserId = requireAuth(request, response, pathName);
-    if (!legacyUserId) {
+    const authContext = requireAuth(request, response, pathName);
+    if (!authContext) {
       return;
     }
 
@@ -371,7 +700,7 @@ async function handleRuntimeRequest(request, response) {
       id: `post-${String(postCounter)}`,
       wallId,
       text: text.trim(),
-      createdBy: legacyUserId,
+      createdBy: authContext.userId,
       createdAtUtc: new Date().toISOString(),
       likeCount: 0
     };
@@ -387,8 +716,8 @@ async function handleRuntimeRequest(request, response) {
   }
 
   if (requestMethod === "POST" && pathName === "/Comment/Create") {
-    const legacyUserId = requireAuth(request, response, pathName);
-    if (!legacyUserId) {
+    const authContext = requireAuth(request, response, pathName);
+    if (!authContext) {
       return;
     }
 
@@ -421,7 +750,7 @@ async function handleRuntimeRequest(request, response) {
       id: `comment-${String(commentCounter)}`,
       postId,
       text: text.trim(),
-      createdBy: legacyUserId,
+      createdBy: authContext.userId,
       createdAtUtc: new Date().toISOString()
     };
 
@@ -439,10 +768,10 @@ async function handleRuntimeRequest(request, response) {
 
   const matrixRouteMatch = matchApiMatrixRoute(requestMethod, pathName);
   if (matrixRouteMatch) {
-    const legacyUserId = matrixRouteMatch.authRequired
+    const authContext = matrixRouteMatch.authRequired
       ? requireAuth(request, response, pathName)
-      : resolveLegacyUserId(request);
-    if (matrixRouteMatch.authRequired && !legacyUserId) {
+      : resolveAuthContext(request);
+    if (matrixRouteMatch.authRequired && !authContext) {
       return;
     }
 
@@ -456,7 +785,8 @@ async function handleRuntimeRequest(request, response) {
     sendJson(response, 200, {
       status: "ok",
       compatibility: matrixRouteMatch.routeTemplate,
-      legacyUserId: legacyUserId || null,
+      legacyUserId: authContext?.userId || null,
+      authSource: authContext?.authSource || "anonymous",
       method: requestMethod,
       params: matrixRouteMatch.params,
       query: Object.fromEntries(url.searchParams.entries()),
