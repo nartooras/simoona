@@ -13,7 +13,9 @@ Modern web runtime for the Simoona modernization workspace.
 
 - `src/main.tsx`: React bootstrap entry.
 - `src/app/App.tsx`: shell + feature view components.
+- `src/app/layout/AppShell.tsx`: extracted shell/layout wrapper for top bar + left rail composition.
 - `src/app/runtime-data.ts`: route-to-runtime payload resolver shared by app + Vite middleware.
+- `src/app/hooks/useInteractiveTable.ts`: shared table search/sort/pagination behavior extracted from `App.tsx`.
 - `src/shell/*`: shell compatibility boundary/state modules.
 - `scripts/live-web-runtime.mjs`: Vite wrapper for `dev`/`preview`/`build`.
 

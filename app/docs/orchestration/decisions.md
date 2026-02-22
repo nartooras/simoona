@@ -81,3 +81,7 @@
 20. `D-2026-02-22-020` Dedicated React frontend skill routing
 - Decision: frontend/web implementation tasks must default to `$react-frontend-developer`, while backend/full-stack implementation tasks stay with `$full-stack-developer`.
 - Rationale: enforces React best-practice ownership for web work and reduces role ambiguity in orchestration.
+
+21. `D-2026-02-22-021` Web structure recovery execution track
+- Decision: run a dedicated `R3-WEB-STRUCTURE-002` track to decompose `App.tsx`, split runtime data modules, remove dead compatibility runtime files, migrate active web runtime code to TypeScript-first modules, and move inline style payload to maintainable CSS.
+- Rationale: current React runtime works, but structural complexity and dead compatibility paths increase maintenance risk and reduce frontend delivery velocity.

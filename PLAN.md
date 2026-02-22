@@ -91,6 +91,29 @@ Align `status.md`, `backlog.md`, `risks.md`, `decisions.md`, `evidence.md`, `rel
       fallback/
 ```
 
+## Workstream 3B: Web Structure Recovery (Week 2-4)
+1. Decompose `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/App.tsx` into route/layout/feature modules.
+- Target: `App.tsx` becomes orchestration-only and stays below ~400 lines.
+2. Split `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/app/runtime-data.ts` into focused runtime data modules.
+- Target modules:
+  - `src/runtime/data/contracts.ts`
+  - `src/runtime/data/resolvers/*`
+  - `src/runtime/data/fixtures/*`
+  - `src/runtime/data/payload.ts`
+3. Remove dead compatibility rendering chain once parity checks confirm no runtime dependency.
+- Candidate removals:
+  - `src/runtime/runtime-views.js`
+  - `src/runtime/runtime-interactions.js`
+  - legacy `src/features/**/render.js` and `src/features/**/interactions.js` files that are no longer imported by active React runtime.
+4. Migrate active frontend runtime modules from `.js` to `.ts/.tsx` and tighten compiler settings.
+- Target: `allowJs: false` after migration and strict type checks pass.
+5. Move large inline style payload out of `legacy-runtime-styles.js` into maintainable CSS modules/files.
+- Target:
+  - `src/shared/styles/tokens.css`
+  - `src/shared/styles/globals.css`
+  - feature-specific style files as needed.
+6. Implement in safe slices under `R3-WEB-STRUCTURE-002A..E`, each with reviewer `APPROVED` and QA `GREEN`.
+
 ## Workstream 4: Real Auth and Permission Enforcement (Week 2-3)
 1. Implement real modern auth using existing SQL schema.
 2. Enforce token/session checks for protected routes and APIs.

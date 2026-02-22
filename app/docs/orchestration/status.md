@@ -62,9 +62,10 @@
 
 ## Assigned Tasks
 
-1. `R4-INTEGRATION-PARITY-001` (`$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`): run integration failure-path parity wave.
-2. `R3-FEATURE-WAVE-D` (`$react-frontend-developer` + `$full-stack-developer`): execute runtime parity for features domains.
-3. `R6-REVIEW-QA-ENFORCEMENT-001` (`$reviewer` + `$qa`): continue recording review/QA artifacts for each completed parity slice.
+1. `R3-WEB-STRUCTURE-002` (`$react-frontend-developer`): execute frontend structure recovery slices (App decomposition, runtime-data split, dead compatibility path cleanup, JS->TS tightening).
+2. `R4-INTEGRATION-PARITY-001` (`$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`): run integration failure-path parity wave.
+3. `R3-FEATURE-WAVE-D` (`$react-frontend-developer` + `$full-stack-developer`): execute runtime parity for features domains.
+4. `R6-REVIEW-QA-ENFORCEMENT-001` (`$reviewer` + `$qa`): continue recording review/QA artifacts for each completed parity slice.
 
 ## Blocked Tasks
 
@@ -79,8 +80,8 @@
 
 ## Next 3 Tasks
 
-1. Execute `R4-INTEGRATION-PARITY-001` failure-path evidence pack.
-2. Execute `R3-FEATURE-WAVE-D` runtime parity checks for features domains.
+1. Execute `R3-WEB-STRUCTURE-002A` first slice: extract shell/layout from `App.tsx` and keep route behavior parity stable.
+2. Execute `R3-WEB-STRUCTURE-002B`: split runtime-data contracts/resolvers into dedicated modules.
 3. Continue `R6-REVIEW-QA-ENFORCEMENT-001` artifacts for each completed parity slice.
 
 ## Gate Status

@@ -7,25 +7,15 @@ import type {
   RuntimeFormModel,
   RuntimeTableModel
 } from "./runtime-data";
+import { FallbackView } from "../features/fallback/FallbackView";
+import { AppShell } from "./layout/AppShell";
+import { normalizeText } from "./lib/normalize-text";
+import { useInteractiveTable } from "./hooks/useInteractiveTable";
 
 declare global {
   interface Window {
     __SIMOONA_RUNTIME_DATA__?: RuntimeData;
   }
-}
-
-function normalizeText(value: unknown): string {
-  return String(value ?? "").trim().toLowerCase();
-}
-
-function compareValues(leftValue: unknown, rightValue: unknown): number {
-  const left = normalizeText(leftValue);
-  const right = normalizeText(rightValue);
-  if (left === right) {
-    return 0;
-  }
-
-  return left < right ? -1 : 1;
 }
 
 function renderActions(actions: unknown, className: string) {
@@ -63,86 +53,6 @@ function renderActions(actions: unknown, className: string) {
       </button>
     );
   });
-}
-
-function useInteractiveTable(options: {
-  table: RuntimeTableModel;
-  initialSearch?: string;
-}) {
-  const { table, initialSearch = "" } = options;
-  const columns = Array.isArray(table.columns) ? table.columns : [];
-  const sourceRows = Array.isArray(table.rows) ? table.rows : [];
-  const pageSize = Number(table.pageSize) > 0 ? Number(table.pageSize) : 8;
-  const firstSortable = columns.find((column) => column.sortable)?.key || columns[0]?.key || "";
-
-  const [search, setSearch] = useState(initialSearch);
-  const [page, setPage] = useState(1);
-  const [sortKey, setSortKey] = useState(table.defaultSort?.key || firstSortable);
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">(
-    table.defaultSort?.direction === "desc" ? "desc" : "asc"
-  );
-
-  const filteredRows = useMemo(() => {
-    const searchTerm = normalizeText(search);
-    const rows = sourceRows.filter((row) => {
-      if (!searchTerm) {
-        return true;
-      }
-
-      const lookup = columns
-        .filter((column) => column.key !== "actions")
-        .map((column) => String((row as Record<string, unknown>)[column.key] ?? ""))
-        .join(" ")
-        .toLowerCase();
-
-      return lookup.includes(searchTerm);
-    });
-
-    if (!sortKey) {
-      return rows;
-    }
-
-    return [...rows].sort((leftRow, rightRow) => {
-      const left = (leftRow as Record<string, unknown>)[sortKey];
-      const right = (rightRow as Record<string, unknown>)[sortKey];
-      const compare = compareValues(left, right);
-      return sortDirection === "asc" ? compare : compare * -1;
-    });
-  }, [columns, search, sortDirection, sortKey, sourceRows]);
-
-  const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
-  const currentPage = Math.min(page, totalPages);
-
-  const pagedRows = useMemo(() => {
-    const start = (currentPage - 1) * pageSize;
-    return filteredRows.slice(start, start + pageSize);
-  }, [currentPage, filteredRows, pageSize]);
-
-  function handleSort(nextSortKey: string) {
-    if (!nextSortKey) {
-      return;
-    }
-
-    setPage(1);
-    if (nextSortKey === sortKey) {
-      setSortDirection((current) => (current === "asc" ? "desc" : "asc"));
-      return;
-    }
-
-    setSortKey(nextSortKey);
-    setSortDirection("asc");
-  }
-
-  return {
-    columns,
-    search,
-    setSearch,
-    currentPage,
-    setPage,
-    totalPages,
-    pagedRows,
-    handleSort
-  };
 }
 
 function WallFeedView({ runtimeData }: { runtimeData: RuntimeData }) {
@@ -2040,30 +1950,12 @@ function AdminView({ runtimeData }: { runtimeData: RuntimeData }) {
   );
 }
 
-function FallbackView({ runtimeData }: { runtimeData: RuntimeData }) {
-  return (
-    <section className="route-placeholder">
-      <h2>{runtimeData.routeMatch?.routeKey || "Route"}</h2>
-      <p>This route is recognized and mapped, but detailed UI parity is still in progress.</p>
-      <p>
-        Current route: <code>{runtimeData.route}</code>
-      </p>
-    </section>
-  );
-}
-
 export function App({ initialData }: { initialData: RuntimeData }) {
   const runtimeData = initialData;
 
   useEffect(() => {
     window.__SIMOONA_RUNTIME_DATA__ = runtimeData;
   }, [runtimeData]);
-
-  const leftMenuGroups = Array.isArray(runtimeData.leftMenu?.groups)
-    ? runtimeData.leftMenu.groups
-    : [];
-
-  const topLinks = Array.isArray(runtimeData.navItems) ? runtimeData.navItems : [];
 
   let mainContent = <FallbackView runtimeData={runtimeData} />;
 
@@ -2083,88 +1975,10 @@ export function App({ initialData }: { initialData: RuntimeData }) {
     mainContent = <WallFeedView runtimeData={runtimeData} />;
   }
 
-  const isAuthShell = runtimeData.shellMode === "auth";
-
   return (
     <>
       <style>{legacyRuntimeStyles}</style>
-      <main
-        className="app-shell"
-        data-app="simoona-modern-web-runtime"
-        data-route-key={runtimeData.routeMatch?.routeKey || "unknown"}
-      >
-        {isAuthShell ? (
-          <header className="topbar topbar--auth">
-            <div className="brand">SIMOONA</div>
-            <div className="topbar-auth-spacer"></div>
-            <div className="topbar-right topbar-right--auth">
-              {topLinks.map((item) => (
-                <a key={item.id} href={item.path} className="top-nav-link" data-nav={item.id}>
-                  {item.title}
-                </a>
-              ))}
-            </div>
-          </header>
-        ) : (
-          <header className="topbar">
-            <div className="brand">SIMOONA</div>
-            <div className="topbar-search-wrap">
-              <input
-                className="topbar-search"
-                type="search"
-                placeholder="Search in walls..."
-                aria-label="Search in walls"
-              />
-            </div>
-            <div className="topbar-right">
-              {topLinks.map((item) => (
-                <a key={item.id} href={item.path} className="top-nav-link" data-nav={item.id}>
-                  {item.title}
-                </a>
-              ))}
-              <span className="profile-name">{runtimeData.shell?.userName || "User"}</span>
-              <span aria-hidden="true">⌄</span>
-              <span aria-hidden="true">✉</span>
-              <span className="counter-badge">{runtimeData.shell?.notificationCount || 0}</span>
-            </div>
-          </header>
-        )}
-
-        <section className={isAuthShell ? "shell-main shell-main--auth" : "shell-main"}>
-          {!isAuthShell ? (
-            <aside className="left-rail" data-ui="legacy-left-rail">
-              {leftMenuGroups.map((group) => (
-                <section key={group.id} className="left-menu-group menu-group" data-group={group.id}>
-                  <h3 className="left-menu-group-title">{group.title}</h3>
-                  <ul>
-                    {Array.isArray(group.items)
-                      ? group.items.map((item) => {
-                          const activeClass = isPathActive(item.path, runtimeData.route)
-                            ? " left-menu-link is-active"
-                            : " left-menu-link";
-                          const externalProps = item.external
-                            ? { target: "_blank", rel: "noopener noreferrer" }
-                            : {};
-                          return (
-                            <li key={item.id}>
-                              <a className={activeClass} href={item.path} {...externalProps}>
-                                {item.label}
-                              </a>
-                            </li>
-                          );
-                        })
-                      : null}
-                  </ul>
-                </section>
-              ))}
-            </aside>
-          ) : null}
-
-          <section className={isAuthShell ? "shell-content shell-content--auth" : "shell-content"}>
-            {mainContent}
-          </section>
-        </section>
-      </main>
+      <AppShell runtimeData={runtimeData}>{mainContent}</AppShell>
     </>
   );
 }
