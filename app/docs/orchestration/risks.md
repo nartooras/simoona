@@ -2,23 +2,7 @@
 
 ## Active
 
-1. `RISK-R3-MONOLITHIC-WEB`
-- Severity: `High`
-- Description: `app/web/src/main.tsx` remains monolithic and hard to verify safely.
-- Impact: regression risk and slow feature delivery.
-- Mitigation: decompose into feature modules and shared rendering/interaction units.
-- Owner: `$full-stack-developer`
-- Status: `Open`
-
-2. `RISK-R3-RUNTIME-DRIFT`
-- Severity: `High`
-- Description: runtime drift has been reduced by shared runtime module extraction, but major UI rendering logic is still centralized in `main.tsx`.
-- Impact: local/runtime evidence may not reflect deployed behavior.
-- Mitigation: continue extracting feature modules from `main.tsx` and keep shared runtime models in reusable source modules.
-- Owner: `$full-stack-developer`
-- Status: `Open`
-
-3. `RISK-R4-INTEGRATION-PARITY`
+1. `RISK-R4-INTEGRATION-PARITY`
 - Severity: `High`
 - Description: integrations are largely mapped/contracted but not fully behavior-verified.
 - Impact: go-live failures in OAuth, SMTP, storage, callbacks, and job flows.
@@ -26,12 +10,28 @@
 - Owner: `$platform-devops` + `$qa`
 - Status: `Open`
 
-4. `RISK-R5-FALSE-READY-STATE`
+2. `RISK-R5-FALSE-READY-STATE`
 - Severity: `High`
 - Description: previous readiness claims may overstate real parity.
 - Impact: premature release risk.
 - Mitigation: enforce reviewer/QA gate policy and runtime evidence-only parity closure.
 - Owner: `$simoona-modernization-orchestrator` + `$reviewer` + `$qa`
+- Status: `Open`
+
+3. `RISK-R3-MONOLITHIC-WEB`
+- Severity: `Medium`
+- Description: `main.tsx` has been decomposed, but extracted runtime modules remain large and complex.
+- Impact: ongoing regression risk and slower review velocity.
+- Mitigation: continue domain-level extraction for wall, employee, profile/settings, admin, and auth utility runtime paths.
+- Owner: `$full-stack-developer`
+- Status: `Open`
+
+4. `RISK-R3-RUNTIME-DRIFT`
+- Severity: `Medium`
+- Description: runtime drift risk decreased after shared runtime model and decomposition, but full domain isolation is incomplete.
+- Impact: local/runtime evidence may diverge from deployed behavior in later waves.
+- Mitigation: keep shared runtime models centralized and complete domain-level module extraction.
+- Owner: `$full-stack-developer`
 - Status: `Open`
 
 5. `RISK-RUNTIME-PORT-SANDBOX`

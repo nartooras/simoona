@@ -4,25 +4,25 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 
 ## Priority Queue
 
-1. `R3-WEB-REFACTOR-001B` (`P0`, owner `$full-stack-developer`)
-- Scope:
-  - Continue decomposing `app/web/src/main.tsx` into feature modules.
-  - Remove remaining drift between browser runtime rendering and runtime server payload generation.
-- Acceptance:
-  - Main runtime module decomposition complete for wall, employee list, auth utility, profile/settings, and admin slices.
-
-2. `R3-FEATURE-WAVE-D` (`P0`, owner `$full-stack-developer`)
-- Scope:
-  - Full parity for feature domains previously treated as gated scope:
-    events, kudos, lotteries, vacations, service requests, books, projects, committees, office map, organizational structure, submit ticket, widgets.
-- Acceptance:
-  - Runtime behavior parity and tests pass for all domains.
-
-3. `R4-INTEGRATION-PARITY-001` (`P0`, owner `$platform-devops` + `$full-stack-developer`)
+1. `R4-INTEGRATION-PARITY-001` (`P0`, owner `$platform-devops` + `$full-stack-developer`)
 - Scope:
   - Integration parity for OAuth, SMTP, storage/media, external callbacks, localization, background jobs.
 - Acceptance:
   - Failure-path coverage and runtime evidence captured.
+
+2. `R3-FEATURE-WAVE-D` (`P0`, owner `$full-stack-developer`)
+- Scope:
+  - Full parity for features domains previously treated as gated scope:
+    events, kudos, lotteries, vacations, service requests, books, projects, committees, office map, organizational structure, submit ticket, widgets.
+- Acceptance:
+  - Runtime behavior parity and tests pass for all domains.
+
+3. `R3-WEB-REFACTOR-001C` (`P1`, owner `$full-stack-developer`)
+- Scope:
+  - Continue decomposing extracted runtime modules by feature domain.
+  - Reduce large-file risk in `runtime-views.js` and `runtime-interactions.js`.
+- Acceptance:
+  - Domain-level runtime modules introduced for wall, employee, profile/settings, admin, and auth utility slices with parity checks still green.
 
 4. `R6-REVIEW-QA-ENFORCEMENT-001` (`P0`, owner `$reviewer` + `$qa`)
 - Scope:
@@ -65,6 +65,12 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 
 9. `R6-REVIEW-QA-ENFORCEMENT-001C`
 - Outcome: reviewer (`APPROVED`) and QA (`GREEN`) artifacts published for `R2-AUTH-REAL-001B`.
+
+10. `R3-WEB-REFACTOR-001B`
+- Outcome: web runtime monolith split from `main.tsx` into dedicated styles/render/interactions runtime modules while keeping shell route checks and runtime build green.
+
+11. `R6-REVIEW-QA-ENFORCEMENT-001D`
+- Outcome: reviewer (`APPROVED`) and QA (`GREEN`) artifacts published for `R3-WEB-REFACTOR-001B`.
 
 ## Validation Notes
 

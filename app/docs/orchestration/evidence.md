@@ -73,22 +73,29 @@
 - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/reviews/2026-02-22-r2-auth-real-001b-review.md`
 - `/Users/arturasnikoncukas/code/repo/simoona/app/docs/qa/2026-02-22-r2-auth-real-001b-qa.md`
 
-### `R2-AUTH-REAL-001A` command evidence (pass/fail)
+## 2026-02-22 `R3-WEB-REFACTOR-001B` Evidence
 
-- `PNPM_FETCH_RETRIES=0 PNPM_FETCH_RETRY_MINTIMEOUT=1 PNPM_FETCH_RETRY_MAXTIMEOUT=1 pnpm --dir app install`: `FAIL` (`ENOTFOUND registry.npmjs.org` in sandbox; fetch retries still attempted by pnpm before termination).
-- `pnpm --dir app/api lint`: `PASS`.
-- `pnpm --dir app/api typecheck`: `PASS`.
-- `pnpm --dir app/api build`: `PASS`.
-- `pnpm --dir app/api test`: `PASS`.
-- `pnpm --dir app/tests/parity runtime:api:auth`: `PASS` (unrestricted mode required in this environment).
-- `pnpm --dir app/tests/parity runtime:api:wall-feed`: `PASS` (unrestricted mode required in this environment).
-- `pnpm --dir app/tests/parity runtime:api:matrix`: `PASS` (unrestricted mode required in this environment).
-- `pnpm --dir app verify`: `PASS`.
-- `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'`: `PASS` (no matches; command exit `1` by design).
+### Scope delivered in this checkpoint
 
-### Command evidence (pass/fail)
+1. `app/web/src/main.tsx` was reduced to runtime orchestration logic.
+2. Extracted runtime rendering into `app/web/src/runtime/runtime-views.js`.
+3. Extracted runtime interaction handlers into `app/web/src/runtime/runtime-interactions.js`.
+4. Extracted runtime CSS bundle into `app/web/src/runtime/legacy-runtime-styles.js`.
+5. Reviewer/QA hard gate artifacts were published for this slice.
+
+### Key artifacts updated
+
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/main.tsx`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/runtime/runtime-views.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/runtime/runtime-interactions.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/web/src/runtime/legacy-runtime-styles.js`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/reviews/2026-02-22-r3-web-refactor-001b-review.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/qa/2026-02-22-r3-web-refactor-001b-qa.md`
+
+### `R3-WEB-REFACTOR-001B` command evidence (pass/fail)
 
 - `pnpm --dir app install`: `FAIL` (`ENOTFOUND registry.npmjs.org` in sandbox).
+- `pnpm --dir app/web lint`: `PASS`.
 - `pnpm --dir app lint`: `PASS`.
 - `pnpm --dir app typecheck`: `PASS`.
 - `pnpm --dir app test`: `PASS`.
@@ -99,11 +106,10 @@
 - `pnpm --dir app/api lint`: `PASS`.
 - `pnpm --dir app/api typecheck`: `PASS`.
 - `pnpm --dir app/api test`: `PASS`.
-- `pnpm --dir app/tests/parity runtime:api:auth`: `PASS` (requires unrestricted execution in this environment due sandbox `EPERM` on `127.0.0.1:4313`).
 - `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'`: `PASS` (no matches; command exit `1` by design).
 
 ### Remaining evidence needed before release
 
-1. Full web module decomposition evidence (`R3-WEB-REFACTOR-001B`).
+1. Feature-domain runtime parity evidence wave (`R3-FEATURE-WAVE-D`).
 2. Integration failure-path parity evidence (`R4-INTEGRATION-PARITY-001`).
-3. Reviewer `APPROVED` and QA `GREEN` artifacts per completed wave.
+3. Final-wave reviewer `APPROVED` and QA `GREEN` artifacts for all remaining parity slices.

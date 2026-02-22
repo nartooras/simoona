@@ -6,7 +6,7 @@ Mode: `full-parity-recovery`
 
 ## Objective
 
-Continue from completed governance/doc sync, baseline hardening, and completed `R2` auth parity toward web/runtime parity waves.
+Continue from completed governance/doc sync, baseline hardening, completed `R2` auth parity, and completed `R3-WEB-REFACTOR-001B` toward features and integration parity waves.
 
 ## Hard Rules
 
@@ -18,20 +18,20 @@ Continue from completed governance/doc sync, baseline hardening, and completed `
 
 ## Immediate Execution Queue
 
-1. `R3-WEB-REFACTOR-001B`
-- Owner: `$full-stack-developer`
-- Acceptance:
-  - further decomposition of `app/web/src/main.tsx` into feature modules.
-
-2. `R4-INTEGRATION-PARITY-001`
+1. `R4-INTEGRATION-PARITY-001`
 - Owner: `$platform-devops` + `$full-stack-developer`
 - Acceptance:
   - integration failure-path parity evidence (OAuth/SMTP/storage/jobs/callbacks/localization).
 
-3. `R3-FEATURE-WAVE-D`
+2. `R3-FEATURE-WAVE-D`
 - Owner: `$full-stack-developer`
 - Acceptance:
   - runtime parity coverage for features domains previously treated as gated scope.
+
+3. `R3-WEB-REFACTOR-001C`
+- Owner: `$full-stack-developer`
+- Acceptance:
+  - split `runtime-views.js` and `runtime-interactions.js` into domain modules while preserving route-pack parity checks.
 
 4. `R6-REVIEW-QA-ENFORCEMENT-001`
 - Owner: `$reviewer` then `$qa`

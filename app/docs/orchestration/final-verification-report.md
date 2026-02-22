@@ -28,9 +28,15 @@ Scope: `/Users/arturasnikoncukas/code/repo/simoona/app/**`
 
 ## Current Blocking Gaps
 
-1. Web runtime decomposition is partial; `app/web/src/main.tsx` still carries significant monolith surface.
-2. Integration behavior parity remains incomplete.
-3. Reviewer/QA hard-gate artifacts are not complete for all parity waves.
+1. Integration behavior parity remains incomplete.
+2. Features-domain runtime parity wave is incomplete.
+3. Reviewer/QA hard-gate artifacts are not complete for all remaining parity waves.
+
+## Recent Progress
+
+1. `R3-WEB-REFACTOR-001B` completed: `main.tsx` decomposed into runtime styles/render/interactions modules.
+2. Reviewer report: `APPROVED` (`2026-02-22-r3-web-refactor-001b-review.md`).
+3. QA report: `GREEN` (`2026-02-22-r3-web-refactor-001b-qa.md`).
 
 ## Verdict
 

@@ -57,3 +57,7 @@
 14. `D-2026-02-22-014` Strict legacy-header identity resolution
 - Decision: unresolved `x-legacy-user-id` values must no longer grant authenticated fallback context.
 - Rationale: synthetic identity fallback creates auth bypass risk and blocks reliable parity claims.
+
+15. `D-2026-02-22-015` Web runtime decomposition boundary
+- Decision: keep `main.tsx` as a runtime orchestrator and move styles, rendering, and interaction logic into dedicated runtime modules.
+- Rationale: improves readability and supports parity-safe incremental extraction without changing route payload contracts.

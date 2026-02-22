@@ -36,11 +36,17 @@
 9. `R6-REVIEW-QA-ENFORCEMENT-001C` (`$reviewer` + `$qa`)
 - Outcome: reviewer `APPROVED` and QA `GREEN` reports captured for `R2-AUTH-REAL-001B`.
 
+10. `R3-WEB-REFACTOR-001B` (`$full-stack-developer`)
+- Outcome: decomposed `app/web/src/main.tsx` into runtime modules for styles, route rendering, and route interactions (`legacy-runtime-styles.js`, `runtime-views.js`, `runtime-interactions.js`).
+
+11. `R6-REVIEW-QA-ENFORCEMENT-001D` (`$reviewer` + `$qa`)
+- Outcome: reviewer `APPROVED` and QA `GREEN` reports captured for `R3-WEB-REFACTOR-001B`.
+
 ## Assigned Tasks
 
-1. `R3-WEB-REFACTOR-001B` (`$full-stack-developer`): continue decomposing `app/web/src/main.tsx` into feature modules.
-2. `R4-INTEGRATION-PARITY-001` (`$platform-devops` + `$full-stack-developer`): run integration failure-path parity wave.
-3. `R3-FEATURE-WAVE-D` (`$full-stack-developer`): execute runtime parity for features domains.
+1. `R4-INTEGRATION-PARITY-001` (`$platform-devops` + `$full-stack-developer`): run integration failure-path parity wave.
+2. `R3-FEATURE-WAVE-D` (`$full-stack-developer`): execute runtime parity for features domains.
+3. `R3-WEB-REFACTOR-001C` (`$full-stack-developer`): continue slicing `runtime-views.js` and `runtime-interactions.js` into domain modules.
 4. `R6-REVIEW-QA-ENFORCEMENT-001` (`$reviewer` + `$qa`): continue recording review/QA artifacts for each completed parity slice.
 
 ## Blocked Tasks
@@ -49,8 +55,8 @@
 
 ## Open Risks
 
-1. `RISK-R3-MONOLITHIC-WEB`: `app/web/src/main.tsx` is still oversized despite first decomposition slice (`High`).
-2. `RISK-R3-RUNTIME-DRIFT`: reduced by shared runtime module, but remaining UI/runtime drift risk persists (`Medium`).
+1. `RISK-R3-MONOLITHIC-WEB`: `main.tsx` is now decomposed, but extracted runtime modules are still large and increase review surface (`Medium`).
+2. `RISK-R3-RUNTIME-DRIFT`: reduced by shared runtime model and decomposition, but parity drift risk remains until domain modules are fully isolated (`Medium`).
 3. `RISK-R4-INTEGRATION-COVERAGE`: integration parity mapped but not fully behavior-verified (`High`).
 4. `RISK-RUNTIME-PORT-SANDBOX`: runtime smoke bind/connect can fail under sandbox restrictions (`Medium`).
 5. `RISK-DEPENDENCY-NETWORK-SANDBOX`: dependency install can fail in sandbox due DNS/network restrictions (`Medium`).
@@ -58,9 +64,9 @@
 
 ## Next 3 Tasks
 
-1. Land `R3-WEB-REFACTOR-001B` by splitting route render/interaction modules out of `main.tsx`.
-2. Execute `R4-INTEGRATION-PARITY-001` failure-path evidence pack.
-3. Start `R3-FEATURE-WAVE-D` runtime parity checks for features domains.
+1. Execute `R4-INTEGRATION-PARITY-001` failure-path evidence pack.
+2. Start `R3-FEATURE-WAVE-D` runtime parity checks for features domains.
+3. Land `R3-WEB-REFACTOR-001C` by splitting runtime view/interaction modules by domain.
 
 ## Gate Status
 
