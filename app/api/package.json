@@ -3,10 +3,11 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "lint": "node ./scripts/api-runtime-check.mjs lint",
-    "typecheck": "node ./scripts/api-runtime-check.mjs typecheck",
-    "test": "node ./scripts/api-runtime-check.mjs test",
-    "build": "node ./scripts/api-runtime-check.mjs build",
+    "syntax:check": "node ./scripts/verify-api-syntax.mjs",
+    "lint": "pnpm syntax:check && node ./scripts/api-runtime-check.mjs lint",
+    "typecheck": "pnpm syntax:check && node ./scripts/api-runtime-check.mjs typecheck",
+    "test": "pnpm syntax:check && node ./scripts/api-runtime-check.mjs test",
+    "build": "pnpm syntax:check && node ./scripts/api-runtime-check.mjs build",
     "start": "node ./scripts/api-runtime-check.mjs start"
   }
 }

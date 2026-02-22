@@ -2,74 +2,44 @@
 
 Date: `2026-02-22`
 Branch: `modernization`
-Mode: `parity-recovery-truth-reset`
+Mode: `full-parity-recovery`
 
 ## Objective
 
-Continue parity recovery from deployed state:
-- staging and production are published and reachable,
-- root placeholder hotfix is deployed,
-- next target is replacing mock-runtime UI/API behavior with source-backed parity implementation.
+Continue from completed governance/doc sync and first engineering-baseline hardening slice toward true runtime parity.
 
 ## Hard Rules
 
 1. Work only on branch `modernization`.
-2. Do not change `/src` or `/build`.
-3. Do not mark any phase complete from matrix/contracts only; require user-visible runtime parity evidence.
-4. Keep all work scoped to `/app`.
-5. Any new parity claim must keep runtime evidence standard (no offline-only promotion).
+2. Do not change `src/**` or `build/**` unless explicitly requested.
+3. Do not close parity from contracts/matrices alone; runtime behavior evidence is mandatory.
+4. Require reviewer `APPROVED` and QA `GREEN` before completion claims.
+5. Keep production publish frozen unless explicit GO decision is recorded.
 
 ## Immediate Execution Queue
 
-1. `RECOV-R3-013` (`$full-stack-developer`)
-- In scope:
-  - Replace wall feed + employee list mock/static runtime models with source-backed behavior implementation.
+1. `R2-AUTH-REAL-001`
+- Owner: `$full-stack-developer`
 - Acceptance:
-  - No placeholder fallback for these routes and behavior is parity-verified at runtime.
+  - real token/session/login/user-info behavior and protected route enforcement.
 
-2. `RECOV-R3-014` (`$qa` + `$parity-analyst`)
-- In scope:
-  - Re-verify route families against runtime behavior and screenshots.
+2. `R3-WEB-REFACTOR-001B`
+- Owner: `$full-stack-developer`
 - Acceptance:
-  - Evidence added for true rendered parity, not contract-only checks.
+  - further decomposition of `app/web/src/main.tsx` into feature modules.
 
-3. `RECOV-R5-REBASE` (`$simoona-modernization-orchestrator`)
-- In scope:
-  - Rebase gates to reopened `R3/R5` truth state and drive implementation to genuine parity closure.
+3. `R4-INTEGRATION-PARITY-001`
+- Owner: `$platform-devops` + `$full-stack-developer`
 - Acceptance:
-  - Status/backlog/risks/decisions remain aligned with runtime reality.
+  - integration failure-path parity evidence (OAuth/SMTP/storage/jobs/callbacks/localization).
 
-## Current Working Evidence
+4. `R6-REVIEW-QA-ENFORCEMENT-001`
+- Owner: `$reviewer` then `$qa`
+- Acceptance:
+  - review report (`APPROVED`) and QA report (`GREEN`) for each completed slice.
 
-- Wall/feed runtime evidence:
-  - `pnpm --dir app/tests/e2e runtime:wall-feed` (`PASS` in unrestricted mode)
-- Employee-list runtime evidence:
-  - `pnpm --dir app/tests/e2e runtime:employee-list` (`PASS` in unrestricted mode)
-- Profile/settings runtime evidence:
-  - `pnpm --dir app/tests/e2e runtime:profile-settings` (`PASS` in unrestricted mode)
-- Admin runtime evidence:
-  - `pnpm --dir app/tests/e2e runtime:admin` (`PASS` in unrestricted mode)
-- Auth/Public/Utility runtime evidence:
-  - `pnpm --dir app/tests/e2e runtime:auth-utility` (`PASS` in unrestricted mode)
-- Client features runtime evidence:
-  - `pnpm --dir app/tests/e2e runtime:client-features` (`PASS` in unrestricted mode)
-- Foundation verification:
-  - `pnpm --dir app verify` (`PASS`, with expected sandbox runtime smoke fallback)
-- Latest hold-phase verification refresh:
-  - `pnpm --dir app verify` (`PASS`, expected sandbox smoke fallback)
-  - `pnpm --dir app deploy:cloudflare:check` (`PASS`)
-- Staging deploys:
-  - `https://staging.simoona-modern-web.pages.dev`
-  - `https://simoona-modern-api-staging.arturas-nikoncukas.workers.dev`
-- Production deploys:
-  - `https://simoona-modern-web.pages.dev`
-  - `https://simoona-modern-api.arturas-nikoncukas.workers.dev`
-- Reality checkpoint:
-  - Deployed app is reachable and no longer blank at root after hotfix.
-  - Implementation remains mock-heavy and requires parity recovery before any release-ready claims.
+## Deferred Until Prerequisites Are Met
 
-## Explicitly Deferred
-
-1. DNS custom-domain traffic switching (outside current execution scope).
-2. Data migrations.
-3. Any final GO-LIVE declaration.
+1. Production release unfreeze.
+2. Final go-live declaration.
+3. Any parity closure claim without reviewer/QA evidence.

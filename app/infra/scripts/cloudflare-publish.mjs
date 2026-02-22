@@ -139,6 +139,9 @@ function printHelp() {
   console.log("");
   console.log("Default behavior prints the publish plan only (no commands executed).");
   console.log("Add --execute to run commands.");
+  console.log("");
+  console.log("Production publish guard:");
+  console.log("  Set ALLOW_PROD_PUBLISH=1 to allow --env production --execute.");
 }
 
 let options;
@@ -170,6 +173,13 @@ if (!options.execute) {
     "[cloudflare-publish] Plan only. Re-run with --execute after explicit approval and valid Cloudflare auth."
   );
   process.exit(0);
+}
+
+if (options.env === "production" && process.env.ALLOW_PROD_PUBLISH !== "1") {
+  console.error(
+    "[cloudflare-publish] Production publish is frozen. Set ALLOW_PROD_PUBLISH=1 only after explicit GO approval."
+  );
+  process.exit(1);
 }
 
 run("npx", ["wrangler", "whoami"], process.cwd());

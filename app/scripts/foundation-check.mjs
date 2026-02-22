@@ -42,7 +42,7 @@ const requiredFixtureDirs = [
   "tests/parity/fixtures/wall",
   "tests/parity/fixtures/profile",
   "tests/parity/fixtures/admin",
-  "tests/parity/fixtures/premium"
+  "tests/parity/fixtures/features"
 ];
 
 function hasMissing(items) {

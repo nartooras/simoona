@@ -1,46 +1,66 @@
 # Backlog
 
-Modernization source-of-truth backlog for the reset delivery model (`R0` to `R5`).
-
-Use `app/docs/orchestration/next-agent-handoff.md` as the immediate execution brief for the next AI agent.
+Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 
 ## Priority Queue
 
-1. `RECOV-R3-013` (`P0`, owner `$full-stack-developer`): Replace wall feed + employee list mock/static shell behavior with source-backed parity implementation.
-   - Acceptance:
-     - `/default/Wall/Feed` and `/default/Employee/List` render from explicit source-backed view models with real interaction behavior (filter/sort/page/comment/reply actions wired).
-     - No generic `route-placeholder` output for these routes.
-2. `RECOV-R3-014` (`P0`, owner `$qa` + `$parity-analyst`): Re-verify recovery families against runtime behavior, not only matrix contracts.
-   - Acceptance:
-     - Runtime assertion evidence and screenshots prove user-visible parity for wall feed + employee list + profile/settings/admin checkpoints.
-3. `RECOV-R5-REBASE` (`P0`, owner `$simoona-modernization-orchestrator`): Rebase gates and phase truth to runtime parity reality.
-   - Acceptance:
-     - `status.md`, `decisions.md`, and `risks.md` are aligned to reopened `R3/R5`.
-4. `POST-R5-001` (`P1`, owner `$qa`): Run remote runtime parity suite against published staging and production URLs.
-   - Acceptance:
-     - Route-family assertions pass against deployed hosts after parity recovery is complete.
-5. `POST-R5-002` (`P1`, owner `$platform-devops`): Execute rollback rehearsal for Pages and API worker/container deploys.
-   - Acceptance:
-     - Rollback commands + elapsed timings documented in `evidence.md`.
+1. `R2-AUTH-REAL-001` (`P0`, owner `$full-stack-developer`)
+- Scope:
+  - Implement real token/session auth and route protection using existing SQL schema.
+- Acceptance:
+  - `/token`, `/Account/UserInfo`, and protected route flows enforce real auth context.
+
+2. `R3-WEB-REFACTOR-001B` (`P0`, owner `$full-stack-developer`)
+- Scope:
+  - Continue decomposing `app/web/src/main.tsx` into feature modules.
+  - Remove remaining drift between browser runtime rendering and runtime server payload generation.
+- Acceptance:
+  - Main runtime module decomposition complete for wall, employee list, auth utility, profile/settings, and admin slices.
+
+3. `R3-FEATURE-WAVE-D` (`P0`, owner `$full-stack-developer`)
+- Scope:
+  - Full parity for feature domains previously treated as gated scope:
+    events, kudos, lotteries, vacations, service requests, books, projects, committees, office map, organizational structure, submit ticket, widgets.
+- Acceptance:
+  - Runtime behavior parity and tests pass for all domains.
+
+4. `R4-INTEGRATION-PARITY-001` (`P0`, owner `$platform-devops` + `$full-stack-developer`)
+- Scope:
+  - Integration parity for OAuth, SMTP, storage/media, external callbacks, localization, background jobs.
+- Acceptance:
+  - Failure-path coverage and runtime evidence captured.
+
+5. `R6-REVIEW-QA-ENFORCEMENT-001` (`P0`, owner `$reviewer` + `$qa`)
+- Scope:
+  - Produce review and QA reports for each implementation slice before closure.
+- Acceptance:
+  - Reviewer decision `APPROVED` exists before QA.
+  - QA decision `GREEN` exists before merge/closure.
+
+6. `R5-RELEASE-UNFREEZE-001` (`P0`, owner `$qa` + `$reviewer` + `$simoona-modernization-orchestrator`)
+- Scope:
+  - Final GO/NO-GO decision for production unfreeze.
+- Acceptance:
+  - Reviewer `APPROVED`, QA `GREEN`, no open P0/P1 parity issues, rollback evidence complete.
 
 ## Completed
 
-1. `R0-001` (`P0`, owner `$platform-devops`): Hard-delete obsolete modernization artifacts from orchestration, wave scaffolding, and foundation docs.
-2. `R0-002` (`P0`, owner `$simoona-modernization-orchestrator`): Recreate orchestration control files with gate model `R0-R5`.
-3. `R1-001` (`P0`, owner `$parity-analyst`): Re-baseline API/UI matrices.
-4. `R1-002` (`P0`, owner `$platform-devops`): Replace placeholder command wrappers with runtime-backed command contracts.
-5. `R1-003` (`P0`, owner `$full-stack-developer`): Implement shared contracts package wiring into API/web.
-6. `R2-001` to `R2-005` (`P0`, owner `$full-stack-developer`): API implementation waves.
-7. `RECOV-R2-003` (`P0`, owner `$full-stack-developer` + `$qa`): Runtime API matrix verification to `190/190 verified`.
-8. `RECOV-R3-005` (`P0`, owner `$full-stack-developer`): Wall/feed UI runtime replacement with legacy-like shell and behavior interactions.
-9. `RECOV-R3-006` (`P0`, owner `$full-stack-developer` + `$qa`): Employee-list UI runtime implementation with filter/sort/pagination and runtime evidence harness.
-10. `RECOV-R3-007` (`P0`, owner `$full-stack-developer` + `$qa`): Profile/Settings UI runtime implementation with route-family tabs/forms and runtime evidence harness.
-11. `RECOV-R3-008` (`P0`, owner `$full-stack-developer` + `$qa`): Admin route-family runtime implementation with list/form interactions and runtime evidence harness.
-12. `RECOV-R3-009` (`P0`, owner `$qa` + `$parity-analyst`): Re-run implemented-family runtime evidence and re-baseline matrix rows to evidence-backed verification only.
-13. `RECOV-R3-010` (`P0`, owner `$full-stack-developer` + `$qa`): Implement Auth/Public/Utility route-family runtime views + dedicated runtime evidence harness.
-14. `RECOV-R3-011` (`P0`, owner `$full-stack-developer`): Implement remaining client route-family runtime views (`events`, `kudos`, `books`, `projects`, `service requests`, `vacation`, `committees`, `office`, `organizational structure`, `submit ticket`, and wall sub-routes).
-15. `RECOV-R3-012` (`P0`, owner `$qa` + `$parity-analyst`): Add dedicated runtime evidence harness for `RECOV-R3-011` and promote UI matrix to `115/115 verified`.
-16. `RECOV-R5-RECERTIFY` (`P1`, owner `$qa` + `$parity-analyst`): Reconfirmed release-readiness docs and gates against latest runtime parity evidence (`R2 190/190`, `R3 115/115`).
-17. `RECOV-R5-PUBLISH-READY` (`P1`, owner `$platform-devops`): Refreshed final pre-publish command pack and rollback-oriented publish sequence; publish remains unexecuted until explicit approval.
-18. `RECOV-R4-002` (`P1`, owner `$platform-devops`): Added Cloudflare publish wrapper command contracts (`plan` and `publish`) so Pages+Containers release can run as a single explicit command path after approval.
-19. `RECOV-R4-PLAN-HOLD` (`P0`, owner `$platform-devops`): Completed hold-to-publish transition; auth established and publish executed to staging + production with smoke checks.
+1. `R0-DOC-SYNC-001`
+- Outcome: 58/58 in-scope markdown files audited and synchronized (`app/docs/orchestration/doc-sync-manifest.md`).
+
+2. `R1-GATE-HARDEN-001A`
+- Outcome: web/api lint/typecheck/test/build now include real source syntax checks (`verify-web-syntax.mjs`, `verify-api-syntax.mjs`).
+
+3. `R3-WEB-REFACTOR-001A`
+- Outcome: shared runtime module introduced (`app/web/src/runtime/runtime-shared.js`) and consumed by both `main.tsx` and `live-web-runtime.mjs`.
+
+4. `R5-RELEASE-FREEZE-001`
+- Outcome: Cloudflare production publish guard enforced by default.
+
+5. `R6-REVIEW-QA-ENFORCEMENT-001A`
+- Outcome: reviewer report (`APPROVED`) and QA report (`GREEN`) published for current recovery slice.
+
+## Validation Notes
+
+1. `pnpm --dir app install` currently fails in sandbox (`ENOTFOUND registry.npmjs.org`), but remaining validation gates run successfully.
+2. Runtime smoke uses fallback route checks when sandbox blocks port binding (`EPERM 127.0.0.1:5173`).

@@ -1,60 +1,44 @@
-# Publish Execution Plan (Executed)
+# Publish Execution Plan (Production Freeze Active)
 
-Date: `2026-02-21`
+Date: `2026-02-22`
 Branch: `modernization`
-Status: `EXECUTED_STAGING_AND_PRODUCTION`
+Status: `PRODUCTION_FROZEN`
 
-## Preconditions
+## Preconditions (Mandatory)
 
-1. Explicit user approval to run publish commands.
-2. Clean git state on `modernization`.
-3. Re-run `pnpm --dir app verify` and confirm green before publish.
-4. Confirm Cloudflare credentials availability in execution environment.
+1. Explicit user approval for publish execution.
+2. `R5` checklist fully green.
+3. Reviewer `APPROVED` + QA `GREEN` for final parity wave.
+4. Rollback rehearsal evidence updated.
+5. Clean `modernization` branch state.
 
-## Planned Sequence (Do Not Execute Yet)
-
-1. Revalidate deployment artifacts:
-   - `pnpm --dir app deploy:cloudflare:check`
-2. Verify workspace health:
-   - `pnpm --dir app verify`
-3. Verify API-specific health:
-   - `pnpm --dir app/api test`
-4. Print publish plan for selected target environment:
-   - `pnpm --dir app deploy:cloudflare:plan`
-   - `pnpm --dir app deploy:cloudflare:plan:staging`
-   - `pnpm --dir app deploy:cloudflare:plan:production`
-5. Execute Cloudflare Pages + Containers publish via wrapper (deferred, run only after explicit approval):
-   - `pnpm --dir app deploy:cloudflare:publish`
-   - `pnpm --dir app deploy:cloudflare:publish:staging`
-   - `pnpm --dir app deploy:cloudflare:publish:production`
-6. Run post-publish smoke and parity checks.
-7. Record release evidence and rollback status.
-
-## Pre-Publish Command Pack
+## Plan Commands
 
 ```bash
 pnpm --dir app deploy:cloudflare:check
 pnpm --dir app verify
 pnpm --dir app/api test
-pnpm --dir app deploy:cloudflare:plan
+pnpm --dir app deploy:cloudflare:plan:staging
+pnpm --dir app deploy:cloudflare:plan:production
 ```
 
-Expected: all commands `PASS` immediately before any publish step.
+## Execute Commands (Approval + GO Required)
 
-## Rollback-Oriented Controls
+```bash
+pnpm --dir app deploy:cloudflare:publish:staging
+pnpm --dir app deploy:cloudflare:publish:production
+```
 
-1. Keep previous deploy target references accessible for immediate re-point.
-2. Keep rollback runbook references in orchestration evidence.
-3. Block traffic switching until post-publish smoke is green.
-4. If post-publish checks fail, roll back to previous known-good deployment target.
+Production execute is blocked by default unless explicit override is provided by release owner policy.
+Guarded override command pattern:
 
-## Out of Scope (Current Mode)
+```bash
+ALLOW_PROD_PUBLISH=1 pnpm --dir app deploy:cloudflare:publish:production
+```
 
-- DNS cutover or production traffic switching.
-- Permanent environment secret changes.
+## Rollback Controls
 
-## Execution Update
-
-- Staging publish executed successfully for Pages + API.
-- Production publish executed successfully for Pages + API.
-- Post-publish smoke checks passed for web root and API `/healthz`.
+1. Keep previous deployment references available.
+2. Validate health endpoints immediately after publish.
+3. Run parity smoke pack against deployed URLs.
+4. If any P0/P1 regression appears, rollback immediately and record evidence.

@@ -10,7 +10,7 @@
       "notifications"
     ],
     "outOfScopeEntityGroups": [
-      "premium-modules",
+      "feature-modules",
       "external-integration-payload-stores",
       "full-media-binary-copy"
     ]

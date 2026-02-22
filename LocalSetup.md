@@ -1,18 +1,24 @@
-# Installation from Binaries
+# Installation from Binaries (Legacy Runtime)
+
+This document describes the legacy Windows/IIS installation path.
+
+For active modernization work, use `app/**` workflows and follow `AGENTS.md` + `app/docs/orchestration/*`.
 
 ## Required Software
 
-1. Internet Information Services (IIS) Server (<https://www.iis.net/>) - can be turned on as Windows feature
-2. IIS URL Rewrite extension for IIS (<https://www.iis.net/downloads/microsoft/url-rewrite>)
-3. SQL Server Express (<https://www.microsoft.com/en-us/sql-server/sql-server-editions-express>) - Basic version should be enough
+1. Internet Information Services (IIS) Server (<https://www.iis.net/>)
+2. IIS URL Rewrite extension (<https://www.iis.net/downloads/microsoft/url-rewrite>)
+3. SQL Server Express (<https://www.microsoft.com/en-us/sql-server/sql-server-editions-express>)
 
 ## Installation Process
 
-1. To download precompiled binaries, please navigate to [Simoona releases](https://github.com/VismaLietuva/simoona/releases) and download latest stable version package.
-1. Unzip download packages where you would like to run Simoona from.
-1. Execute `install.bat` *as Administrator* from unzipped package and provide MSSQL connection string when asked.
-1. After successful installation Simoona should be accessible on `http://app.simoona.local`.
+1. Download the latest stable package from [Simoona releases](https://github.com/VismaLietuva/simoona/releases).
+2. Unzip the package to a target directory.
+3. Execute `install.bat` as Administrator and provide MSSQL connection string.
+4. After successful setup, open `http://app.simoona.local`.
 
-- Default organization name: `testorg`
-- Default username: `tester@example.com`
-- Default password: `testerPass123`
+Default legacy seed credentials:
+
+- Organization name: `testorg`
+- Username: `tester@example.com`
+- Password: `testerPass123`

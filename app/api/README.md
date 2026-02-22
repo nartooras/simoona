@@ -24,6 +24,8 @@ This package provides a runnable local runtime check boundary.
 
 ### Command contract
 
+- `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/api syntax:check`
+  - validates syntax for API source and scripts before other gates
 - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/api start`
   - starts a local runtime server on `127.0.0.1:4300` by default
   - health endpoints:

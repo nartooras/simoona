@@ -15,7 +15,19 @@ Shell compatibility baseline for the modern React/Vite web application.
 ## Validation
 
 - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/web shell:check`
+- `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/web syntax:check`
+- `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/web lint`
+- `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/web typecheck`
+- `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/web test`
+- `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/web build`
 - `pnpm --dir /Users/arturasnikoncukas/code/repo/simoona/app/packages/ui primitives:check`
+
+## Shared Runtime Module
+
+- `src/runtime/runtime-shared.js`
+  - shared seed data + route/path helpers consumed by both:
+    - browser runtime (`src/main.tsx`)
+    - local runtime server (`scripts/live-web-runtime.mjs`)
 
 ## Live Runtime
 

@@ -1,67 +1,37 @@
-# Final Verification Report (R5-002)
+# Final Verification Report (Recovery Baseline)
 
-Date: `2026-02-21`
+Date: `2026-02-22`
 Branch: `modernization`
 Scope: `/Users/arturasnikoncukas/code/repo/simoona/app/**`
 
 ## Status
 
-`RECERTIFIED_GREEN_PUBLISHED` - report baseline remained green through publish execution to staging and production.
+`IN_PROGRESS_NOT_RELEASE_READY`
 
-## Command Pack
+## Validation Pack Results
 
-```bash
-pnpm --dir app install
-pnpm --dir app lint
-pnpm --dir app typecheck
-pnpm --dir app test
-pnpm --dir app smoke
-pnpm --dir app build
-pnpm --dir app verify
-pnpm --dir app/api build
-pnpm --dir app/api lint
-pnpm --dir app/api typecheck
-pnpm --dir app/api test
-pnpm --dir app deploy:cloudflare:check
-git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'
-git status --short
-```
+- `pnpm --dir app install`: `FAIL` (`ENOTFOUND registry.npmjs.org` in sandbox).
+- `pnpm --dir app lint`: `PASS`.
+- `pnpm --dir app typecheck`: `PASS`.
+- `pnpm --dir app test`: `PASS`.
+- `pnpm --dir app smoke`: `PASS` (fallback path used due sandbox `EPERM` bind failure on `127.0.0.1:5173`).
+- `pnpm --dir app build`: `PASS`.
+- `pnpm --dir app verify`: `PASS`.
+- `pnpm --dir app/api build`: `PASS`.
+- `pnpm --dir app/api lint`: `PASS`.
+- `pnpm --dir app/api typecheck`: `PASS`.
+- `pnpm --dir app/api test`: `PASS`.
+- `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'`: `PASS` (no tracked generated artifacts).
 
-## Results
+## Current Blocking Gaps
 
-| Command | Result | Notes |
-| --- | --- | --- |
-| `pnpm --dir app install` | PASS | DNS metadata fetch warning in sandbox (`ENOTFOUND`), workspace remains usable. |
-| `pnpm --dir app lint` | PASS | Includes API + web shell + parity contract checks. |
-| `pnpm --dir app typecheck` | PASS | Includes API source contract and web shell checks. |
-| `pnpm --dir app test` | PASS | Includes API tests, parity contracts, and web shell checks. |
-| `pnpm --dir app smoke` | PASS | Runtime bind blocked (`EPERM` at `127.0.0.1:5173`) and expected fallback checks passed. |
-| `pnpm --dir app build` | PASS | API and web runtime-build contract checks passed. |
-| `pnpm --dir app verify` | PASS | Full consolidated gate including `deploy:cloudflare:check`. |
-| `pnpm --dir app/api build` | PASS | API runtime checks passed. |
-| `pnpm --dir app/api lint` | PASS | API lint/parity contract chain passed. |
-| `pnpm --dir app/api typecheck` | PASS | API type contract passed. |
-| `pnpm --dir app/api test` | PASS | API + parity contract chain passed. |
-| `pnpm --dir app deploy:cloudflare:check` | PASS | Cloudflare artifact contract passed. |
-| `git ls-files \| rg ...` | PASS | No tracked generated artifacts (`rg` exit `1` expected for no matches). |
-| `git status --short` | PASS | Working tree contains expected in-progress modernization updates prior to commit. |
-
-## Residual Risks
-
-1. Cloudflare Containers beta behavior remains an operational risk until live publish rehearsal.
-2. Offline parity verification confidence depends on continued QA sampling because legacy runtime execution is unavailable.
-3. Full remote route-family parity checks and rollback drill evidence are still pending.
+1. Real auth and permission enforcement parity is incomplete.
+2. Web runtime decomposition is partial; `app/web/src/main.tsx` still carries significant monolith surface.
+3. Integration behavior parity remains incomplete.
+4. Reviewer/QA hard-gate artifacts exist for this recovery slice, but are not complete for all parity waves.
 
 ## Verdict
 
-- `GREEN` for readiness phase completion.
-- `R5` moved from approval-ready to published state with smoke-green checks.
-- Remaining closure work: remote route-family parity assertions + rollback rehearsal evidence.
-
-## Runtime Parity Baseline
-
-As of `2026-02-21`, runtime parity recovery has completed:
-
-- API matrix: `190/190` runtime-verified.
-- UI matrix: `115/115` runtime-verified with desktop/tablet/mobile artifacts.
-- `R2` and `R3` remain re-closed; publish has been executed with smoke-green status and `R5` moved to post-publish monitoring.
+- Release decision: `NO_GO`.
+- Production publish remains frozen.
+- Continue execution through `R2`, `R3`, and `R4` before next final verification cycle.

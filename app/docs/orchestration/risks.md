@@ -2,80 +2,72 @@
 
 ## Active
 
-1. `RISK-R3-MOCK-RUNTIME-GAP`
+1. `RISK-R2-AUTH-STUB`
 - Severity: `High`
-- Description: Current app/web and app/api runtime layers still depend heavily on mock/static source contracts instead of full source-backed feature implementations.
-- Impact: Reported completion states can diverge from user-visible product reality; deployment may appear available but functionally incomplete.
-- Mitigation: Reopen `R3/R5`; require source-backed runtime behavior evidence per route family before any re-closure.
-- Owner: `$simoona-modernization-orchestrator` + `$full-stack-developer` + `$qa`
+- Description: modern auth handlers still return compatibility placeholders instead of real credential/session validation.
+- Impact: authentication appears implemented in contracts but is not production-safe.
+- Mitigation: implement real auth path (`/token`, `/Account/UserInfo`, protected route enforcement) against existing SQL schema.
+- Owner: `$full-stack-developer`
 - Status: `Open`
 
-2. `RISK-R4-CONTAINERS-BETA`
-- Severity: `Medium`
-- Description: Cloudflare Containers runtime remains beta and requires explicit rollback discipline.
-- Impact: Deployment stability and change safety can degrade without hardened rollback controls.
-- Mitigation: Define versioned deploy rollback playbook in `R4` and require rehearsal before production go-live.
-- Owner: `$platform-devops`
-- Status: `Open`
-
-3. `RISK-R3-VISUAL-REFERENCE-COVERAGE`
-- Severity: `Medium`
-- Description: Runtime parity screenshots now cover all route families, but direct legacy production screenshot coverage is still limited for some historical pages.
-- Impact: Some visual confidence still relies on legacy source interpretation rather than side-by-side production captures.
-- Mitigation: Continue collecting legacy reference captures where available and attach to parity docs before final publish.
-- Owner: `$parity-analyst` + `$qa`
-- Status: `Open`
-
-4. `RISK-RUNTIME-PORT-SANDBOX`
+2. `RISK-R3-MONOLITHIC-WEB`
 - Severity: `High`
-- Description: Local runtime bind/connect is blocked inside sandbox (`EPERM` on `127.0.0.1:*`), so runtime verification requires unrestricted execution.
-- Impact: Hard-gate runtime evidence commands cannot run in default sandbox mode.
-- Mitigation: Run runtime parity evidence commands in unrestricted mode and keep fallback contracts for constrained environments.
+- Description: `app/web/src/main.tsx` remains monolithic and hard to verify safely.
+- Impact: regression risk and slow feature delivery.
+- Mitigation: decompose into feature modules and shared rendering/interaction units.
+- Owner: `$full-stack-developer`
+- Status: `Open`
+
+3. `RISK-R3-RUNTIME-DRIFT`
+- Severity: `High`
+- Description: runtime drift has been reduced by shared runtime module extraction, but major UI rendering logic is still centralized in `main.tsx`.
+- Impact: local/runtime evidence may not reflect deployed behavior.
+- Mitigation: continue extracting feature modules from `main.tsx` and keep shared runtime models in reusable source modules.
+- Owner: `$full-stack-developer`
+- Status: `Open`
+
+4. `RISK-R4-INTEGRATION-PARITY`
+- Severity: `High`
+- Description: integrations are largely mapped/contracted but not fully behavior-verified.
+- Impact: go-live failures in OAuth, SMTP, storage, callbacks, and job flows.
+- Mitigation: integration parity wave with strict failure-path assertions.
 - Owner: `$platform-devops` + `$qa`
 - Status: `Open`
 
-5. `RISK-R5-REMOTE-UI-PARITY-UNVERIFIED`
+5. `RISK-R5-FALSE-READY-STATE`
+- Severity: `High`
+- Description: previous readiness claims may overstate real parity.
+- Impact: premature release risk.
+- Mitigation: enforce reviewer/QA gate policy and runtime evidence-only parity closure.
+- Owner: `$simoona-modernization-orchestrator` + `$reviewer` + `$qa`
+- Status: `Open`
+
+6. `RISK-RUNTIME-PORT-SANDBOX`
 - Severity: `Medium`
-- Description: Remote web smoke checks are green, but full route-family UI parity suite has not yet been executed against deployed staging/production URLs.
-- Impact: Deployment could still hide route-level regressions not visible via health/basic smoke checks.
-- Mitigation: Run remote runtime route-family pack and capture evidence before final GO-LIVE declaration.
-- Owner: `$qa`
+- Description: local runtime bind/connect can fail in sandbox mode.
+- Impact: browser runtime checks may require unrestricted execution.
+- Mitigation: execute runtime evidence in unrestricted mode and preserve constrained-mode fallback checks.
+- Owner: `$platform-devops`
+- Status: `Open`
+
+7. `RISK-DEPENDENCY-NETWORK-SANDBOX`
+- Severity: `Medium`
+- Description: dependency installation can fail in sandbox due DNS/network restrictions.
+- Impact: full reinstall validation is blocked even when code-level validation succeeds.
+- Mitigation: run install/reinstall verification in unrestricted environment and keep offline-safe checks in CI/sandbox runs.
+- Owner: `$platform-devops`
 - Status: `Open`
 
 ## Resolved
 
-1. `RISK-R0-STALE-ORCHESTRATION`
-- Resolution date: `2026-02-20`
-- Outcome: Obsolete orchestration and wave-specific artifacts removed; control files reset to `R0-R5`.
+1. `RISK-BRANCH-POLICY-CONFLICT`
+- Resolution date: `2026-02-22`
+- Outcome: branch guidance aligned to `modernization` in root governance docs.
 
-2. `RISK-R2-API-COVERAGE`
-- Resolution date: `2026-02-20`
-- Outcome: API parity matrix promoted to `verified` coverage (`190/190`) under offline verification policy.
+2. `RISK-SKILL-OPTIONAL-EXECUTION`
+- Resolution date: `2026-02-22`
+- Outcome: `AGENTS.md` now mandates skill utilization protocol and fallback behavior when skills are unavailable.
 
-3. `RISK-R3-UI-COVERAGE`
-- Resolution date: `2026-02-20`
-- Outcome: UI route matrix promoted to `verified` coverage (`115/115`) under offline verification policy with executable UI contract assertions.
-
-4. `RISK-R2-OFFLINE-VERIFICATION-CONFIDENCE`
-- Resolution date: `2026-02-21`
-- Outcome: API/UI offline-only verification has been replaced by runtime-backed matrix assertions and visual evidence (`R2 190/190`, `R3 115/115` verified).
-
-5. `RISK-CORR-FALSE_READY_STATE`
-- Resolution date: `2026-02-21`
-- Outcome: `R2` and `R3` were re-opened and re-closed using hard runtime parity evidence, removing false-ready gate status.
-
-6. `RISK-R3-PLAYWRIGHT-INSTALL-DNS`
-- Resolution date: `2026-02-21`
-- Outcome: Approved unrestricted install path stabilized local Playwright runner for browser interaction assertions.
-
-7. `RISK-R3-PARTIAL-UI-PARITY`
-- Resolution date: `2026-02-21`
-- Outcome: UI parity matrix is re-closed at `115/115 verified` with route-family runtime evidence and screenshots.
-
-8. `RISK-R4-CLOUDFLARE-AUTH-SESSION`
-- Resolution date: `2026-02-21`
-- Outcome: Wrangler OAuth session refreshed with required Pages + Containers scopes and publish commands now execute.
-
-9. `RISK-R4-PUBLISH-DEFERRED`
-- Resolution date: `2026-02-21`
-- Outcome: Deferred publish risk retired after successful staging + production deploy execution and smoke checks.
+3. `RISK-DOC-TRUTH-CONFLICT`
+- Resolution date: `2026-02-22`
+- Outcome: orchestration control files and final verification report now share one consistent `NO_GO_RELEASE_FROZEN` truth model.

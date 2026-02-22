@@ -52,6 +52,12 @@ pnpm --dir app deploy:cloudflare:publish:staging
 pnpm --dir app deploy:cloudflare:publish:production
 ```
 
+Production publish is frozen by default. To execute production publish after explicit GO approval, set:
+
+```bash
+ALLOW_PROD_PUBLISH=1 pnpm --dir app deploy:cloudflare:publish:production
+```
+
 Auth precheck:
 
 ```bash

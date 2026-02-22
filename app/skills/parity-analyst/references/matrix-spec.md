@@ -32,7 +32,7 @@ Use these schemas for parity artifacts.
 
 - `Core Features`
 - `Admin Features`
-- `Premium Features`
+- `Feature Domains`
 - `Integrations`
 - `Background Jobs`
 

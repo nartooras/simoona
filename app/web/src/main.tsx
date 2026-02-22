@@ -1,7 +1,16 @@
+import {
+  employeeRows,
+  escapeHtml,
+  isPathActive,
+  legacyLeftMenuGroups,
+  normalizePath,
+  wallFeedPosts
+} from "./runtime/runtime-shared.js";
+
 const root = document.getElementById("app");
 const runtimeDataElement = document.getElementById("simoona-runtime-data");
 
-if (!root || !runtimeDataElement) {
+if (!(root instanceof HTMLElement) || !(runtimeDataElement instanceof HTMLScriptElement)) {
   throw new Error("Missing runtime root elements.");
 }
 
@@ -53,117 +62,9 @@ try {
   console.error("[web-runtime] Failed to parse runtime payload:", error);
 }
 
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-function normalizePath(pathname) {
-  const input = String(pathname || "/").trim();
-  const collapsed = input.replace(/\/{2,}/g, "/");
-  if (collapsed === "/") {
-    return "/";
-  }
-  return collapsed.endsWith("/") ? collapsed.slice(0, -1) : collapsed;
-}
-
-function isPathActive(itemPath, routePath) {
-  if (!itemPath || itemPath.startsWith("http")) {
-    return false;
-  }
-
-  const normalizedItemPath = normalizePath(itemPath).toLowerCase();
-  const normalizedRoutePath = normalizePath(routePath).toLowerCase();
-
-  if (normalizedItemPath === normalizedRoutePath) {
-    return true;
-  }
-
-  return normalizedRoutePath.startsWith(`${normalizedItemPath}/`);
-}
-
-const defaultLeftMenuGroups = [
-  {
-    id: "walls",
-    title: "Walls",
-    items: [
-      { id: "walls-my", label: "My walls", path: "/default/Wall/Feed" },
-      { id: "walls-all", label: "All walls", path: "/default/Wall/All" },
-      { id: "walls-discover", label: "Discover walls", path: "/default/Wall/List" },
-      { id: "walls-official", label: "Official", path: "/default/Wall/Feed?wall=official" },
-      { id: "walls-tech", label: "Techies", path: "/default/Wall/Feed?wall=techies" }
-    ]
-  },
-  {
-    id: "activities",
-    title: "Activities",
-    items: [
-      { id: "activities-events", label: "Events", path: "/default/Events/List" },
-      { id: "activities-kudos", label: "Kudos", path: "/default/Kudos" },
-      { id: "activities-service", label: "Service Request", path: "/default/ServiceRequests/List" },
-      { id: "activities-books", label: "Books", path: "/default/Books/List" }
-    ]
-  },
-  {
-    id: "company",
-    title: "Company",
-    items: [
-      { id: "company-employees", label: "Employees", path: "/default/Employee/List" },
-      { id: "company-office", label: "Office Map", path: "/default/Office" },
-      { id: "company-org", label: "Organizational Structure", path: "/default/OrganizationalStructure" },
-      { id: "company-projects", label: "Projects", path: "/default/Projects/List" },
-      { id: "company-committees", label: "Committees", path: "/default/Committees/List" }
-    ]
-  }
-];
-
-const defaultWallFeedPosts = [
-  {
-    id: "post-1",
-    wallName: "twoday Buzz",
-    author: "Vardenis Pavardenis",
-    timestamp: "2026-02-17, 13:06",
-    content:
-      "Su Uzgavenemis! Kad ziema greiciau pasitrauktu, o pavasaris butu siltas ir sauletas, VRK komanda suorganizavo blynus.",
-    hashtags: "#Wall #Community",
-    likeSummary: "You and 12 others",
-    replyCountLabel: "Show all 8 replies",
-    likeCount: 12,
-    commentCount: 8,
-    hasImage: true
-  },
-  {
-    id: "post-2",
-    wallName: "twoday Buzz",
-    author: "Vardenis Pavardenis",
-    timestamp: "2026-02-05, 09:35",
-    content:
-      "KUDOS LOTERIJA! iPad A16 Wi-Fi, 128 GB. Bilieto kaina: 2 kudos. Bilietus isigyti galite iki 2026-02-13 10:00.",
-    hashtags: "#KudosLoterija #KudosKomitetas",
-    likeSummary: "You and 7 others",
-    replyCountLabel: "Show all 8 replies",
-    likeCount: 7,
-    commentCount: 3,
-    hasImage: false
-  }
-];
-
-const defaultEmployeeRows = [
-  { id: "emp-1", fullName: "dummy value", birthDate: "05-07", jobTitle: "Developer", workingHours: "08:00 - 17:00" },
-  { id: "emp-2", fullName: "dummy value", birthDate: "01-06", jobTitle: "Accountant", workingHours: "08:00 - 17:00" },
-  { id: "emp-3", fullName: "dummy value", birthDate: "04-01", jobTitle: "JAVA developer", workingHours: "08:00 - 17:00" },
-  { id: "emp-4", fullName: "dummy value", birthDate: "06-02", jobTitle: "Finance manager", workingHours: "07:00 - 16:00" },
-  { id: "emp-5", fullName: "dummy value", birthDate: "01-02", jobTitle: "Microsoft 365 Admin", workingHours: "08:00 - 17:00" },
-  { id: "emp-6", fullName: "dummy value", birthDate: "11-11", jobTitle: "Accountant", workingHours: "08:00 - 17:00" },
-  { id: "emp-7", fullName: "dummy value", birthDate: "07-10", jobTitle: "Full-Stack Developer", workingHours: "08:00 - 17:00" },
-  { id: "emp-8", fullName: "dummy value", birthDate: "03-21", jobTitle: "QA", workingHours: "09:30 - 19:00" },
-  { id: "emp-9", fullName: "dummy value", birthDate: "05-28", jobTitle: ".NET developer", workingHours: "00:00 - 00:00" },
-  { id: "emp-10", fullName: "dummy value", birthDate: "01-22", jobTitle: ".NET developer", workingHours: "00:00 - 00:00" }
-];
+const defaultLeftMenuGroups = legacyLeftMenuGroups;
+const defaultWallFeedPosts = wallFeedPosts;
+const defaultEmployeeRows = employeeRows;
 
 function ensureClientSideRuntimePayload() {
   const browserPath = normalizePath(window.location.pathname || runtimeData.route || "/");
@@ -2773,6 +2674,10 @@ function setupEmployeeListInteractions() {
     return;
   }
 
+  const employeeRowsContainerElement = employeeRowsContainer;
+  const filterInputElement = filterInput;
+  const paginationElement = pagination;
+
   const listData = runtimeData.employeeList;
   const sourceRows = Array.isArray(listData?.rows) ? listData.rows : [];
   const pageSize = Number(listData?.pageSize) > 0 ? Number(listData.pageSize) : 10;
@@ -2827,7 +2732,7 @@ function setupEmployeeListInteractions() {
       );
     }
 
-    pagination.innerHTML = `
+    paginationElement.innerHTML = `
       <button type="button" class="pager-btn" data-page-nav="first" ${prevDisabled ? "disabled" : ""}>«</button>
       <button type="button" class="pager-btn" data-page-nav="prev" ${prevDisabled ? "disabled" : ""}>‹</button>
       ${pageButtons.join("")}
@@ -2835,17 +2740,17 @@ function setupEmployeeListInteractions() {
       <button type="button" class="pager-btn" data-page-nav="last" ${nextDisabled ? "disabled" : ""}>»</button>
     `;
 
-    for (const pageButton of pagination.querySelectorAll("[data-page]")) {
+    for (const pageButton of paginationElement.querySelectorAll("[data-page]")) {
       pageButton.addEventListener("click", () => {
         state.page = Number(pageButton.getAttribute("data-page") || "1");
         render();
       });
     }
 
-    const firstButton = pagination.querySelector('[data-page-nav="first"]');
-    const prevButton = pagination.querySelector('[data-page-nav="prev"]');
-    const nextButton = pagination.querySelector('[data-page-nav="next"]');
-    const lastButton = pagination.querySelector('[data-page-nav="last"]');
+    const firstButton = paginationElement.querySelector('[data-page-nav="first"]');
+    const prevButton = paginationElement.querySelector('[data-page-nav="prev"]');
+    const nextButton = paginationElement.querySelector('[data-page-nav="next"]');
+    const lastButton = paginationElement.querySelector('[data-page-nav="last"]');
 
     firstButton?.addEventListener("click", () => {
       state.page = 1;
@@ -2879,7 +2784,7 @@ function setupEmployeeListInteractions() {
     const start = (state.page - 1) * pageSize;
     const pagedRows = visibleRows.slice(start, start + pageSize);
 
-    employeeRowsContainer.innerHTML = pagedRows
+    employeeRowsContainerElement.innerHTML = pagedRows
       .map((row) => {
         const rowClass = row.id === state.selectedId ? "employee-row-selected" : "";
         return `
@@ -2893,7 +2798,7 @@ function setupEmployeeListInteractions() {
       })
       .join("");
 
-    for (const rowNode of employeeRowsContainer.querySelectorAll("tr[data-row-id]")) {
+    for (const rowNode of employeeRowsContainerElement.querySelectorAll("tr[data-row-id]")) {
       rowNode.addEventListener("click", () => {
         state.selectedId = rowNode.getAttribute("data-row-id") || "";
         render();
@@ -2922,8 +2827,8 @@ function setupEmployeeListInteractions() {
     });
   }
 
-  filterInput.addEventListener("input", () => {
-    state.search = filterInput.value;
+  filterInputElement.addEventListener("input", () => {
+    state.search = filterInputElement.value;
     state.page = 1;
     render();
   });
@@ -3203,6 +3108,8 @@ function setupClientFeatureInteractions() {
   const sortButtons = root.querySelectorAll(".client-sort-link");
 
   if (tableConfig && rowsContainer && pagination) {
+    const rowsContainerElement = rowsContainer;
+    const paginationElement = pagination;
     const columns = Array.isArray(tableConfig.columns) ? tableConfig.columns : [];
     const sourceRows = Array.isArray(tableConfig.rows) ? tableConfig.rows : [];
     const pageSize = Number(tableConfig.pageSize) > 0 ? Number(tableConfig.pageSize) : 8;
@@ -3261,7 +3168,7 @@ function setupClientFeatureInteractions() {
         );
       }
 
-      pagination.innerHTML = `
+      paginationElement.innerHTML = `
         <button type="button" class="pager-btn" data-client-page-nav="first" ${prevDisabled ? "disabled" : ""}>«</button>
         <button type="button" class="pager-btn" data-client-page-nav="prev" ${prevDisabled ? "disabled" : ""}>‹</button>
         ${pageButtons.join("")}
@@ -3269,26 +3176,26 @@ function setupClientFeatureInteractions() {
         <button type="button" class="pager-btn" data-client-page-nav="last" ${nextDisabled ? "disabled" : ""}>»</button>
       `;
 
-      for (const pageButton of pagination.querySelectorAll("[data-client-page]")) {
+      for (const pageButton of paginationElement.querySelectorAll("[data-client-page]")) {
         pageButton.addEventListener("click", () => {
           state.page = Number(pageButton.getAttribute("data-client-page") || "1");
           render();
         });
       }
 
-      pagination.querySelector('[data-client-page-nav="first"]')?.addEventListener("click", () => {
+      paginationElement.querySelector('[data-client-page-nav="first"]')?.addEventListener("click", () => {
         state.page = 1;
         render();
       });
-      pagination.querySelector('[data-client-page-nav="prev"]')?.addEventListener("click", () => {
+      paginationElement.querySelector('[data-client-page-nav="prev"]')?.addEventListener("click", () => {
         state.page = Math.max(1, state.page - 1);
         render();
       });
-      pagination.querySelector('[data-client-page-nav="next"]')?.addEventListener("click", () => {
+      paginationElement.querySelector('[data-client-page-nav="next"]')?.addEventListener("click", () => {
         state.page = Math.min(totalPages, state.page + 1);
         render();
       });
-      pagination.querySelector('[data-client-page-nav="last"]')?.addEventListener("click", () => {
+      paginationElement.querySelector('[data-client-page-nav="last"]')?.addEventListener("click", () => {
         state.page = totalPages;
         render();
       });
@@ -3332,7 +3239,7 @@ function setupClientFeatureInteractions() {
 
       const startIndex = (state.page - 1) * pageSize;
       const pagedRows = visibleRows.slice(startIndex, startIndex + pageSize);
-      rowsContainer.innerHTML = pagedRows
+      rowsContainerElement.innerHTML = pagedRows
         .map(
           (row) => `
             <tr data-client-row-id="${escapeHtml(row.id || "")}">
@@ -3412,6 +3319,8 @@ function setupAdminPageInteractions() {
   const sortButtons = root.querySelectorAll(".admin-sort-link");
 
   if (tableConfig && rowsContainer && pagination) {
+    const rowsContainerElement = rowsContainer;
+    const paginationElement = pagination;
     const columns = Array.isArray(tableConfig.columns) ? tableConfig.columns : [];
     const sourceRows = Array.isArray(tableConfig.rows) ? tableConfig.rows : [];
     const pageSize = Number(tableConfig.pageSize) > 0 ? Number(tableConfig.pageSize) : 8;
@@ -3470,7 +3379,7 @@ function setupAdminPageInteractions() {
         );
       }
 
-      pagination.innerHTML = `
+      paginationElement.innerHTML = `
         <button type="button" class="pager-btn" data-admin-page-nav="first" ${prevDisabled ? "disabled" : ""}>«</button>
         <button type="button" class="pager-btn" data-admin-page-nav="prev" ${prevDisabled ? "disabled" : ""}>‹</button>
         ${pageButtons.join("")}
@@ -3478,26 +3387,26 @@ function setupAdminPageInteractions() {
         <button type="button" class="pager-btn" data-admin-page-nav="last" ${nextDisabled ? "disabled" : ""}>»</button>
       `;
 
-      for (const pageButton of pagination.querySelectorAll("[data-admin-page]")) {
+      for (const pageButton of paginationElement.querySelectorAll("[data-admin-page]")) {
         pageButton.addEventListener("click", () => {
           state.page = Number(pageButton.getAttribute("data-admin-page") || "1");
           render();
         });
       }
 
-      pagination.querySelector('[data-admin-page-nav="first"]')?.addEventListener("click", () => {
+      paginationElement.querySelector('[data-admin-page-nav="first"]')?.addEventListener("click", () => {
         state.page = 1;
         render();
       });
-      pagination.querySelector('[data-admin-page-nav="prev"]')?.addEventListener("click", () => {
+      paginationElement.querySelector('[data-admin-page-nav="prev"]')?.addEventListener("click", () => {
         state.page = Math.max(1, state.page - 1);
         render();
       });
-      pagination.querySelector('[data-admin-page-nav="next"]')?.addEventListener("click", () => {
+      paginationElement.querySelector('[data-admin-page-nav="next"]')?.addEventListener("click", () => {
         state.page = Math.min(totalPages, state.page + 1);
         render();
       });
-      pagination.querySelector('[data-admin-page-nav="last"]')?.addEventListener("click", () => {
+      paginationElement.querySelector('[data-admin-page-nav="last"]')?.addEventListener("click", () => {
         state.page = totalPages;
         render();
       });
@@ -3542,7 +3451,7 @@ function setupAdminPageInteractions() {
 
       const startIndex = (state.page - 1) * pageSize;
       const pagedRows = visibleRows.slice(startIndex, startIndex + pageSize);
-      rowsContainer.innerHTML = pagedRows
+      rowsContainerElement.innerHTML = pagedRows
         .map(
           (row) => `
             <tr data-admin-row-id="${escapeHtml(row.id || "")}">
