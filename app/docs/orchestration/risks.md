@@ -2,7 +2,15 @@
 
 ## Active
 
-1. `RISK-R4-CONTAINERS-BETA`
+1. `RISK-R3-MOCK-RUNTIME-GAP`
+- Severity: `High`
+- Description: Current app/web and app/api runtime layers still depend heavily on mock/static source contracts instead of full source-backed feature implementations.
+- Impact: Reported completion states can diverge from user-visible product reality; deployment may appear available but functionally incomplete.
+- Mitigation: Reopen `R3/R5`; require source-backed runtime behavior evidence per route family before any re-closure.
+- Owner: `$simoona-modernization-orchestrator` + `$full-stack-developer` + `$qa`
+- Status: `Open`
+
+2. `RISK-R4-CONTAINERS-BETA`
 - Severity: `Medium`
 - Description: Cloudflare Containers runtime remains beta and requires explicit rollback discipline.
 - Impact: Deployment stability and change safety can degrade without hardened rollback controls.
@@ -10,7 +18,7 @@
 - Owner: `$platform-devops`
 - Status: `Open`
 
-2. `RISK-R3-VISUAL-REFERENCE-COVERAGE`
+3. `RISK-R3-VISUAL-REFERENCE-COVERAGE`
 - Severity: `Medium`
 - Description: Runtime parity screenshots now cover all route families, but direct legacy production screenshot coverage is still limited for some historical pages.
 - Impact: Some visual confidence still relies on legacy source interpretation rather than side-by-side production captures.
@@ -18,7 +26,7 @@
 - Owner: `$parity-analyst` + `$qa`
 - Status: `Open`
 
-3. `RISK-RUNTIME-PORT-SANDBOX`
+4. `RISK-RUNTIME-PORT-SANDBOX`
 - Severity: `High`
 - Description: Local runtime bind/connect is blocked inside sandbox (`EPERM` on `127.0.0.1:*`), so runtime verification requires unrestricted execution.
 - Impact: Hard-gate runtime evidence commands cannot run in default sandbox mode.
@@ -26,7 +34,7 @@
 - Owner: `$platform-devops` + `$qa`
 - Status: `Open`
 
-4. `RISK-R5-REMOTE-UI-PARITY-UNVERIFIED`
+5. `RISK-R5-REMOTE-UI-PARITY-UNVERIFIED`
 - Severity: `Medium`
 - Description: Remote web smoke checks are green, but full route-family UI parity suite has not yet been executed against deployed staging/production URLs.
 - Impact: Deployment could still hide route-level regressions not visible via health/basic smoke checks.

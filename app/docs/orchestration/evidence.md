@@ -1,5 +1,60 @@
 # Evidence
 
+## RECOV-R3-HOTFIX-001 Static Deploy Placeholder Removal
+
+Date: `2026-02-22`
+
+### Scope
+
+- Remove default root-route placeholder rendering from Cloudflare Pages static deployment.
+- Add client-side runtime payload fallback to populate:
+  - left navigation groups,
+  - wall feed default model,
+  - employee list default model,
+  - auth utility model.
+- Republish staging and production deployments.
+
+### Changed Files
+
+- `app/web/src/main.tsx`
+- `app/docs/orchestration/status.md`
+- `app/docs/orchestration/backlog.md`
+- `app/docs/orchestration/decisions.md`
+- `app/docs/orchestration/risks.md`
+
+### Validation and Deploy Commands
+
+Executed:
+
+```bash
+pnpm --dir app/web build
+pnpm --dir app verify
+pnpm --dir app deploy:cloudflare:publish:staging
+pnpm --dir app deploy:cloudflare:publish:production
+curl -sS -o /dev/null -w "staging_web=%{http_code}\n" https://staging.simoona-modern-web.pages.dev
+curl -sS -o /dev/null -w "prod_web=%{http_code}\n" https://simoona-modern-web.pages.dev
+curl -sS -o /dev/null -w "staging_api_health=%{http_code}\n" https://simoona-modern-api-staging.arturas-nikoncukas.workers.dev/healthz
+curl -sS -o /dev/null -w "prod_api_health=%{http_code}\n" https://simoona-modern-api.arturas-nikoncukas.workers.dev/healthz
+npx playwright screenshot --wait-for-timeout=4000 https://simoona-modern-web.pages.dev /tmp/simoona-prod-after-fallback.png
+```
+
+Results:
+
+- `pnpm --dir app/web build`: `PASS`
+- `pnpm --dir app verify`: `PASS` (sandbox smoke fallback still expected due local bind `EPERM`)
+- staging publish: `PASS`
+- production publish: `PASS`
+- `staging_web=200`
+- `prod_web=200`
+- `staging_api_health=200`
+- `prod_api_health=200`
+- production screenshot captured at `/tmp/simoona-prod-after-fallback.png` showing non-placeholder wall feed layout.
+
+### Outcome Classification
+
+- This hotfix is classified as `availability recovery`, not final parity closure.
+- `R3` and `R5` are reopened due unresolved mock-runtime implementation gap.
+
 ## R0 Cleanup Reset
 
 Date: `2026-02-20`

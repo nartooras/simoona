@@ -204,3 +204,13 @@
 4. `D-RECOV-019` Execute publish transition
 - Decision: Move from publish-hold into staged+production publish execution after successful pre-publish verify and refreshed Wrangler OAuth scopes.
 - Rationale: User requested continuation; gates were green and deployment blockers were resolved in-sequence (auth scopes, Pages project existence, web dist artifact generation).
+
+## 2026-02-22 (Reality Rebase)
+
+1. `D-RECOV-020` Runtime truth-over-gate reset
+- Decision: Reopen `R3` and `R5` despite previous complete states because user-visible runtime does not yet represent full legacy parity.
+- Rationale: Completion gates cannot rely on matrix or contract signals alone when delivered UX/runtime does not match expected product behavior.
+
+2. `D-RECOV-021` Static deploy placeholder hotfix classification
+- Decision: Keep the client-side fallback payload fix as a hotfix only; it removes blank placeholder screens but is not accepted as final parity implementation.
+- Rationale: The fallback improves deploy usability, but the underlying implementation remains mock-heavy and must be replaced by source-backed feature delivery.

@@ -1,37 +1,43 @@
 # Next Agent Handoff Plan
 
-Date: `2026-02-21`
+Date: `2026-02-22`
 Branch: `modernization`
-Mode: `post-publish-hardening`
+Mode: `parity-recovery-truth-reset`
 
 ## Objective
 
-Continue post-publish hardening from deployed state:
-- staging and production publish commands executed,
-- staging and production smoke checks are green,
-- next target is remote parity assertions + rollback rehearsal evidence.
+Continue parity recovery from deployed state:
+- staging and production are published and reachable,
+- root placeholder hotfix is deployed,
+- next target is replacing mock-runtime UI/API behavior with source-backed parity implementation.
 
 ## Hard Rules
 
 1. Work only on branch `modernization`.
 2. Do not change `/src` or `/build`.
-3. Any further publish/rollback commands must capture evidence and deployed version IDs.
+3. Do not mark any phase complete from matrix/contracts only; require user-visible runtime parity evidence.
 4. Keep all work scoped to `/app`.
 5. Any new parity claim must keep runtime evidence standard (no offline-only promotion).
 
 ## Immediate Execution Queue
 
-1. `POST-R5-001` (`$qa`)
+1. `RECOV-R3-013` (`$full-stack-developer`)
 - In scope:
-  - Run route-family parity checks against deployed staging + production URLs.
+  - Replace wall feed + employee list mock/static runtime models with source-backed behavior implementation.
 - Acceptance:
-  - Remote runtime assertions evidence is added to orchestration docs.
+  - No placeholder fallback for these routes and behavior is parity-verified at runtime.
 
-2. `POST-R5-002` (`$platform-devops`)
+2. `RECOV-R3-014` (`$qa` + `$parity-analyst`)
 - In scope:
-  - Execute rollback rehearsal for Pages + API deploys and capture timings.
+  - Re-verify route families against runtime behavior and screenshots.
 - Acceptance:
-  - Rollback evidence recorded with command transcript + restored target versions.
+  - Evidence added for true rendered parity, not contract-only checks.
+
+3. `RECOV-R5-REBASE` (`$simoona-modernization-orchestrator`)
+- In scope:
+  - Rebase gates to reopened `R3/R5` truth state and drive implementation to genuine parity closure.
+- Acceptance:
+  - Status/backlog/risks/decisions remain aligned with runtime reality.
 
 ## Current Working Evidence
 
@@ -58,12 +64,12 @@ Continue post-publish hardening from deployed state:
 - Production deploys:
   - `https://simoona-modern-web.pages.dev`
   - `https://simoona-modern-api.arturas-nikoncukas.workers.dev`
-- UI matrix state:
-  - `115/115` rows `verified`
-- API matrix state:
-  - `190/190` rows `verified`
+- Reality checkpoint:
+  - Deployed app is reachable and no longer blank at root after hotfix.
+  - Implementation remains mock-heavy and requires parity recovery before any release-ready claims.
 
 ## Explicitly Deferred
 
 1. DNS custom-domain traffic switching (outside current execution scope).
 2. Data migrations.
+3. Any final GO-LIVE declaration.

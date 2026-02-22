@@ -6,10 +6,20 @@ Use `app/docs/orchestration/next-agent-handoff.md` as the immediate execution br
 
 ## Priority Queue
 
-1. `POST-R5-001` (`P0`, owner `$qa`): Run remote runtime parity suite against published staging and production URLs.
+1. `RECOV-R3-013` (`P0`, owner `$full-stack-developer`): Replace wall feed + employee list mock/static shell behavior with source-backed parity implementation.
    - Acceptance:
-     - Route-family assertions pass against deployed hosts.
-2. `POST-R5-002` (`P0`, owner `$platform-devops`): Execute rollback rehearsal for Pages and API worker/container deploys.
+     - `/default/Wall/Feed` and `/default/Employee/List` render from explicit source-backed view models with real interaction behavior (filter/sort/page/comment/reply actions wired).
+     - No generic `route-placeholder` output for these routes.
+2. `RECOV-R3-014` (`P0`, owner `$qa` + `$parity-analyst`): Re-verify recovery families against runtime behavior, not only matrix contracts.
+   - Acceptance:
+     - Runtime assertion evidence and screenshots prove user-visible parity for wall feed + employee list + profile/settings/admin checkpoints.
+3. `RECOV-R5-REBASE` (`P0`, owner `$simoona-modernization-orchestrator`): Rebase gates and phase truth to runtime parity reality.
+   - Acceptance:
+     - `status.md`, `decisions.md`, and `risks.md` are aligned to reopened `R3/R5`.
+4. `POST-R5-001` (`P1`, owner `$qa`): Run remote runtime parity suite against published staging and production URLs.
+   - Acceptance:
+     - Route-family assertions pass against deployed hosts after parity recovery is complete.
+5. `POST-R5-002` (`P1`, owner `$platform-devops`): Execute rollback rehearsal for Pages and API worker/container deploys.
    - Acceptance:
      - Rollback commands + elapsed timings documented in `evidence.md`.
 

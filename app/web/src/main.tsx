@@ -93,12 +93,212 @@ const defaultLeftMenuGroups = [
     items: [
       { id: "walls-my", label: "My walls", path: "/default/Wall/Feed" },
       { id: "walls-all", label: "All walls", path: "/default/Wall/All" },
-      { id: "walls-discover", label: "Discover walls", path: "/default/Wall/List" }
+      { id: "walls-discover", label: "Discover walls", path: "/default/Wall/List" },
+      { id: "walls-official", label: "Official", path: "/default/Wall/Feed?wall=official" },
+      { id: "walls-tech", label: "Techies", path: "/default/Wall/Feed?wall=techies" }
+    ]
+  },
+  {
+    id: "activities",
+    title: "Activities",
+    items: [
+      { id: "activities-events", label: "Events", path: "/default/Events/List" },
+      { id: "activities-kudos", label: "Kudos", path: "/default/Kudos" },
+      { id: "activities-service", label: "Service Request", path: "/default/ServiceRequests/List" },
+      { id: "activities-books", label: "Books", path: "/default/Books/List" }
+    ]
+  },
+  {
+    id: "company",
+    title: "Company",
+    items: [
+      { id: "company-employees", label: "Employees", path: "/default/Employee/List" },
+      { id: "company-office", label: "Office Map", path: "/default/Office" },
+      { id: "company-org", label: "Organizational Structure", path: "/default/OrganizationalStructure" },
+      { id: "company-projects", label: "Projects", path: "/default/Projects/List" },
+      { id: "company-committees", label: "Committees", path: "/default/Committees/List" }
     ]
   }
 ];
 
-const leftMenuGroups = Array.isArray(runtimeData.leftMenu?.groups)
+const defaultWallFeedPosts = [
+  {
+    id: "post-1",
+    wallName: "twoday Buzz",
+    author: "Vardenis Pavardenis",
+    timestamp: "2026-02-17, 13:06",
+    content:
+      "Su Uzgavenemis! Kad ziema greiciau pasitrauktu, o pavasaris butu siltas ir sauletas, VRK komanda suorganizavo blynus.",
+    hashtags: "#Wall #Community",
+    likeSummary: "You and 12 others",
+    replyCountLabel: "Show all 8 replies",
+    likeCount: 12,
+    commentCount: 8,
+    hasImage: true
+  },
+  {
+    id: "post-2",
+    wallName: "twoday Buzz",
+    author: "Vardenis Pavardenis",
+    timestamp: "2026-02-05, 09:35",
+    content:
+      "KUDOS LOTERIJA! iPad A16 Wi-Fi, 128 GB. Bilieto kaina: 2 kudos. Bilietus isigyti galite iki 2026-02-13 10:00.",
+    hashtags: "#KudosLoterija #KudosKomitetas",
+    likeSummary: "You and 7 others",
+    replyCountLabel: "Show all 8 replies",
+    likeCount: 7,
+    commentCount: 3,
+    hasImage: false
+  }
+];
+
+const defaultEmployeeRows = [
+  { id: "emp-1", fullName: "dummy value", birthDate: "05-07", jobTitle: "Developer", workingHours: "08:00 - 17:00" },
+  { id: "emp-2", fullName: "dummy value", birthDate: "01-06", jobTitle: "Accountant", workingHours: "08:00 - 17:00" },
+  { id: "emp-3", fullName: "dummy value", birthDate: "04-01", jobTitle: "JAVA developer", workingHours: "08:00 - 17:00" },
+  { id: "emp-4", fullName: "dummy value", birthDate: "06-02", jobTitle: "Finance manager", workingHours: "07:00 - 16:00" },
+  { id: "emp-5", fullName: "dummy value", birthDate: "01-02", jobTitle: "Microsoft 365 Admin", workingHours: "08:00 - 17:00" },
+  { id: "emp-6", fullName: "dummy value", birthDate: "11-11", jobTitle: "Accountant", workingHours: "08:00 - 17:00" },
+  { id: "emp-7", fullName: "dummy value", birthDate: "07-10", jobTitle: "Full-Stack Developer", workingHours: "08:00 - 17:00" },
+  { id: "emp-8", fullName: "dummy value", birthDate: "03-21", jobTitle: "QA", workingHours: "09:30 - 19:00" },
+  { id: "emp-9", fullName: "dummy value", birthDate: "05-28", jobTitle: ".NET developer", workingHours: "00:00 - 00:00" },
+  { id: "emp-10", fullName: "dummy value", birthDate: "01-22", jobTitle: ".NET developer", workingHours: "00:00 - 00:00" }
+];
+
+function ensureClientSideRuntimePayload() {
+  const browserPath = normalizePath(window.location.pathname || runtimeData.route || "/");
+  runtimeData.route = browserPath === "/" ? "/default/Wall/Feed" : browserPath;
+
+  if (!Array.isArray(runtimeData.leftMenu?.groups) || runtimeData.leftMenu.groups.length === 0) {
+    runtimeData.leftMenu = {
+      groups: defaultLeftMenuGroups
+    };
+  }
+
+  if (!Array.isArray(runtimeData.navItems) || runtimeData.navItems.length === 0) {
+    runtimeData.navItems = [
+      { id: "home", title: "Home", path: "/default/Wall/Feed" },
+      { id: "profile", title: "Profile", path: "/default/Profiles/1" }
+    ];
+  }
+
+  const normalizedLower = runtimeData.route.toLowerCase();
+  const hasAnyExplicitView =
+    runtimeData.wallFeed ||
+    runtimeData.employeeList ||
+    runtimeData.profilePage ||
+    runtimeData.settingsPage ||
+    runtimeData.clientFeaturePage ||
+    runtimeData.adminPage ||
+    runtimeData.authUtilityPage;
+
+  if (hasAnyExplicitView) {
+    return;
+  }
+
+  if (normalizedLower.includes("/employee")) {
+    runtimeData.employeeList = {
+      title: "Employee List",
+      pageSize: 10,
+      rows: defaultEmployeeRows
+    };
+    runtimeData.routeMatch = {
+      routeKey: "tenant.employee.list",
+      normalizedPath: runtimeData.route,
+      isKnownLegacyRoute: true
+    };
+    return;
+  }
+
+  if (
+    normalizedLower === "/" ||
+    normalizedLower.includes("/wall/feed") ||
+    normalizedLower.endsWith("/wall") ||
+    normalizedLower.endsWith("/wall/all")
+  ) {
+    runtimeData.wallFeed = {
+      posts: defaultWallFeedPosts,
+      rightSidebar: {
+        quickActions: [
+          { id: "create-post", symbol: "+", title: "Create post" },
+          { id: "apps", symbol: "▦", title: "Apps" },
+          { id: "basket", symbol: "🛒", title: "Kudos basket" }
+        ],
+        kudosFeed: [
+          { score: "+2", date: "02-18", fullName: "Vardenis Pavardenis", reason: "Saldainiai" },
+          { score: "+1", date: "02-17", fullName: "Vardenis Pavardenis 2", reason: "Sokoladas" },
+          { score: "+3", date: "02-17", fullName: "Vardenis Pavardenis 3", reason: "Lauktuves" }
+        ],
+        widgets: [
+          {
+            title: "Upcoming events",
+            items: ["FPV dronu surinkimo workshop'as Nr1", "ISTQB Advanced hub", "Vaiku Svente 2026"]
+          },
+          {
+            title: "Most Kudos in 3 months",
+            items: ["Vardenis Pavardenis (459)", "Jona Jonaite (195)"]
+          }
+        ]
+      }
+    };
+    runtimeData.routeMatch = {
+      routeKey: "tenant.wall.feed",
+      normalizedPath: runtimeData.route,
+      isKnownLegacyRoute: true
+    };
+    return;
+  }
+
+  if (
+    normalizedLower === "/login" ||
+    normalizedLower.endsWith("/login") ||
+    normalizedLower.endsWith("/register") ||
+    normalizedLower.endsWith("/forgot") ||
+    normalizedLower.endsWith("/reset")
+  ) {
+    runtimeData.shellMode = "auth";
+    runtimeData.authUtilityPage = {
+      view: "tenant-login",
+      title: "Sign in",
+      subtitle: "Use your account to continue",
+      form: {
+        id: "auth-tenant-login-form",
+        submitLabel: "Login",
+        submitSuccessMessage: "Login validated.",
+        fields: [
+          { id: "email", label: "Email", type: "email", placeholder: "Enter email address", required: true, value: "" },
+          { id: "password", label: "Password", type: "password", placeholder: "Enter password", required: true, value: "" }
+        ]
+      },
+      links: [{ label: "Forgot password", path: "/default/Forgot", kind: "link" }]
+    };
+    runtimeData.routeMatch = {
+      routeKey: "tenant.login",
+      normalizedPath: runtimeData.route,
+      isKnownLegacyRoute: true
+    };
+    return;
+  }
+
+  runtimeData.wallFeed = {
+    posts: defaultWallFeedPosts,
+    rightSidebar: {
+      quickActions: [],
+      kudosFeed: [],
+      widgets: []
+    }
+  };
+  runtimeData.routeMatch = {
+    routeKey: "tenant.wall.feed",
+    normalizedPath: runtimeData.route,
+    isKnownLegacyRoute: true
+  };
+}
+
+ensureClientSideRuntimePayload();
+
+const leftMenuGroups = Array.isArray(runtimeData.leftMenu?.groups) &&
+  runtimeData.leftMenu.groups.length > 0
   ? runtimeData.leftMenu.groups
   : defaultLeftMenuGroups;
 
