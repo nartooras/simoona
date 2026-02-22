@@ -1,4 +1,5 @@
-import { All, Controller, UseGuards } from "@nestjs/common";
+import { All, Controller, Req, UseGuards } from "@nestjs/common";
+import type { Request } from "express";
 import { LegacyPermissionGuard } from "../../permissions/legacy-permission.guard";
 import { IntegrationCompatibilityService } from "../services/integration-compatibility.service";
 
@@ -8,7 +9,7 @@ export class PictureCompatibilityController {
   constructor(private readonly integrationService: IntegrationCompatibilityService) {}
 
   @All("Upload")
-  upload() {
-    return this.integrationService.uploadPicture();
+  upload(@Req() request: Request) {
+    return this.integrationService.uploadPicture(request);
   }
 }

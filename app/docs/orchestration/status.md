@@ -66,9 +66,15 @@
 17. `R6-REVIEW-QA-ENFORCEMENT-001G` (`$reviewer` + `$qa`)
 - Outcome: reviewer `APPROVED` and QA `GREEN` artifacts captured for `R3-WEB-STRUCTURE-002`.
 
+18. `R4-INTEGRATION-PARITY-001A` (`$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`)
+- Outcome: integration parity failure-path runtime coverage implemented and validated across OAuth (`Account/ExternalLogin(s)`), SMTP/background jobs (`ExternalJobs/*`), storage/media upload (`Picture/Upload`), and localization settings (`User/GeneralSettings`) with deterministic timeout/auth-failure simulation and persisted localization update behavior.
+
+19. `R6-REVIEW-QA-ENFORCEMENT-001H` (`$reviewer` + `$qa`)
+- Outcome: reviewer `APPROVED` and QA `GREEN` artifacts captured for `R4-INTEGRATION-PARITY-001A`.
+
 ## Assigned Tasks
 
-1. `R4-INTEGRATION-PARITY-001` (`$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`): run integration failure-path parity wave.
+1. `R4-INTEGRATION-PARITY-001B` (`$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`): validate remaining provider-backed integration adapter behavior in staging contracts after runtime failure-path coverage baseline.
 2. `R3-FEATURE-WAVE-D` (`$react-frontend-developer` + `$full-stack-developer`): execute runtime parity for features domains.
 3. `R6-REVIEW-QA-ENFORCEMENT-001` (`$reviewer` + `$qa`): continue recording review/QA artifacts for each completed parity slice.
 
@@ -78,14 +84,14 @@
 
 ## Open Risks
 
-1. `RISK-R4-INTEGRATION-COVERAGE`: integration parity mapped but not fully behavior-verified (`High`).
+1. `RISK-R4-INTEGRATION-PARITY`: integration runtime failure paths are now covered, but provider-backed staging adapter behavior still needs final verification (`Medium`).
 2. `RISK-RUNTIME-PORT-SANDBOX`: runtime smoke bind/connect can fail under sandbox restrictions (`Medium`).
 3. `RISK-DEPENDENCY-NETWORK-SANDBOX`: dependency install can fail in sandbox due DNS/network restrictions (`Medium`).
 4. `RISK-NODE-SQLITE-EXPERIMENTAL`: runtime auth now uses `node:sqlite`, which currently emits experimental warnings on Node 22 (`Low`).
 
 ## Next 3 Tasks
 
-1. Execute `R4-INTEGRATION-PARITY-001` failure-path evidence pack.
+1. Execute `R4-INTEGRATION-PARITY-001B` provider-backed integration validation pack.
 2. Execute `R3-FEATURE-WAVE-D` runtime parity checks for features domains.
 3. Continue `R6-REVIEW-QA-ENFORCEMENT-001` artifacts for each completed parity slice.
 

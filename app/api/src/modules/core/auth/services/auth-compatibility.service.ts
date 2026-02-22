@@ -12,8 +12,16 @@ import {
   resolveAuthContext,
   resolveUserProfile,
   revokeSessionByAuthorizationHeader,
-  RuntimeAuthContext
+  RuntimeAuthContext,
+  updateUserCulture
 } from "./auth-session-store";
+import {
+  INTEGRATION_FAILURE_MODES,
+  throwIfIntegrationFailure
+} from "../../integration/services/integration-failure-policy";
+
+const SUPPORTED_CULTURES = new Set(["en-US", "lt-LT"]);
+const SUPPORTED_TIMEZONES = new Set(["UTC", "Europe/Vilnius"]);
 
 function resolveRequestAuthContext(request?: Request): RuntimeAuthContext {
   const requestContext = (request as Request & { authContext?: RuntimeAuthContext })?.authContext;
@@ -90,11 +98,19 @@ export class AuthCompatibilityService {
     };
   }
 
-  async externalLogins() {
+  async externalLogins(request?: Request) {
+    throwIfIntegrationFailure(request, "Account/ExternalLogins", [
+      INTEGRATION_FAILURE_MODES.oauthTimeout,
+      INTEGRATION_FAILURE_MODES.oauthAuthFailure
+    ]);
+
     return {
       status: "implemented",
       compatibility: "Account/ExternalLogins",
-      providers: ["Google", "Microsoft"]
+      providers: [
+        { name: "Google", registrationRoute: "/Account/ExternalLogin?provider=Google&mode=register" },
+        { name: "Microsoft", registrationRoute: "/Account/ExternalLogin?provider=Microsoft&mode=register" }
+      ]
     };
   }
 
@@ -119,11 +135,19 @@ export class AuthCompatibilityService {
     };
   }
 
-  async externalLogin() {
+  async externalLogin(request?: Request) {
+    throwIfIntegrationFailure(request, "Account/ExternalLogin", [
+      INTEGRATION_FAILURE_MODES.oauthTimeout,
+      INTEGRATION_FAILURE_MODES.oauthAuthFailure
+    ]);
+
+    const provider = String(request?.query?.provider ?? "Google").trim() || "Google";
     return {
       status: "implemented",
       compatibility: "Account/ExternalLogin",
-      result: "external_login_redirect"
+      result: "external_login_redirect",
+      provider,
+      redirectUrl: `https://auth.simoona.local/${provider.toLowerCase()}`
     };
   }
 
@@ -141,6 +165,10 @@ export class AuthCompatibilityService {
   }
 
   async getLocalizationSettings(request?: Request) {
+    throwIfIntegrationFailure(request, "User/GeneralSettings", [
+      INTEGRATION_FAILURE_MODES.localizationTimeout
+    ]);
+
     const authContext = resolveRequestAuthContext(request);
     if (!authContext.isAuthenticated) {
       throw new UnauthorizedException("Authenticated session is required.");
@@ -151,21 +179,60 @@ export class AuthCompatibilityService {
       compatibility: "User/GeneralSettings",
       settings: {
         culture: authContext.culture || "en-US",
-        timezone: "UTC"
-      }
+        timezone: "UTC",
+        availableCultures: Array.from(SUPPORTED_CULTURES),
+        availableTimezones: Array.from(SUPPORTED_TIMEZONES)
+      },
+      result: "loaded"
     };
   }
 
-  async changeLocalizationSettings(request?: Request) {
+  async changeLocalizationSettings(
+    payload: Record<string, unknown>,
+    request?: Request
+  ) {
+    throwIfIntegrationFailure(request, "User/GeneralSettings", [
+      INTEGRATION_FAILURE_MODES.localizationTimeout
+    ]);
+
     const authContext = resolveRequestAuthContext(request);
     if (!authContext.isAuthenticated) {
       throw new UnauthorizedException("Authenticated session is required.");
     }
 
+    const cultureInput = String(
+      payload.culture ?? payload.languageCode ?? authContext.culture ?? "en-US"
+    ).trim();
+    const timezoneInput = String(payload.timezone ?? payload.timeZoneId ?? "UTC").trim();
+
+    if (!SUPPORTED_CULTURES.has(cultureInput)) {
+      throw new BadRequestException(
+        `Unsupported culture '${cultureInput}'. Supported cultures: ${Array.from(
+          SUPPORTED_CULTURES
+        ).join(", ")}.`
+      );
+    }
+
+    if (!SUPPORTED_TIMEZONES.has(timezoneInput)) {
+      throw new BadRequestException(
+        `Unsupported timezone '${timezoneInput}'. Supported timezones: ${Array.from(
+          SUPPORTED_TIMEZONES
+        ).join(", ")}.`
+      );
+    }
+
+    const updatedProfile = authContext.userId
+      ? updateUserCulture(authContext.userId, cultureInput)
+      : null;
+
     return {
       status: "implemented",
       compatibility: "User/GeneralSettings",
-      result: "updated"
+      result: "updated",
+      settings: {
+        culture: updatedProfile?.culture || cultureInput,
+        timezone: timezoneInput
+      }
     };
   }
 

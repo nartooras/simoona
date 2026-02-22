@@ -4,11 +4,11 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 
 ## Priority Queue
 
-1. `R4-INTEGRATION-PARITY-001` (`P0`, owner `$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`)
+1. `R4-INTEGRATION-PARITY-001B` (`P0`, owner `$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`)
 - Scope:
-  - Integration parity for OAuth, SMTP, storage/media, external callbacks, localization, background jobs.
+  - Complete remaining integration parity after `R4-INTEGRATION-PARITY-001A` by validating provider-backed adapter wiring and staging callback behavior against real environment contracts.
 - Acceptance:
-  - Failure-path coverage and runtime evidence captured.
+  - Runtime failure-path + provider adapter evidence captured and reviewed.
 
 2. `R3-FEATURE-WAVE-D` (`P0`, owner `$react-frontend-developer` + `$full-stack-developer`)
 - Scope:
@@ -86,8 +86,14 @@ Modernization source-of-truth backlog for full-parity recovery (`R0` to `R5`).
 18. `R6-REVIEW-QA-ENFORCEMENT-001G`
 - Outcome: reviewer (`APPROVED`) and QA (`GREEN`) artifacts published for `R3-WEB-STRUCTURE-002`.
 
+19. `R4-INTEGRATION-PARITY-001A`
+- Outcome: integration runtime failure-path coverage implemented and verified for OAuth, SMTP, storage/media upload, external jobs callbacks, and localization settings via dedicated parity runtime gate (`runtime:api:integration`), with source compatibility handlers and runtime API harness aligned on deterministic failure policy.
+
+20. `R6-REVIEW-QA-ENFORCEMENT-001H`
+- Outcome: reviewer (`APPROVED`) and QA (`GREEN`) artifacts published for `R4-INTEGRATION-PARITY-001A`.
+
 ## Validation Notes
 
 1. `pnpm --dir app install` passes in unrestricted mode; constrained sandbox mode can still fail with DNS/network limits (`ENOTFOUND registry.npmjs.org`).
 2. Runtime smoke uses fallback route checks when sandbox blocks port binding (`EPERM 127.0.0.1:5173`).
-3. `pnpm --dir app/tests/parity runtime:api:auth`, `runtime:api:wall-feed`, and `runtime:api:matrix` require unrestricted execution in this environment due localhost bind restrictions (`EPERM` in sandbox).
+3. `pnpm --dir app/tests/parity runtime:api:auth`, `runtime:api:wall-feed`, `runtime:api:matrix`, and `runtime:api:integration` require unrestricted execution in this environment due localhost bind restrictions (`EPERM` in sandbox).

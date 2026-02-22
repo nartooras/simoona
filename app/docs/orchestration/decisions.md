@@ -89,3 +89,11 @@
 22. `D-2026-02-22-022` Web structure recovery closure criteria met
 - Decision: mark `R3-WEB-STRUCTURE-002` complete after achieving orchestration-only `App.tsx`, runtime-data module split (`contracts/fixtures/resolver` + facade), dead compatibility runtime/render file removal, TypeScript-only active source (`allowJs: false`), and CSS-based legacy style loading.
 - Rationale: structural maintainability targets for R3 UI foundation are now satisfied without regression in runtime parity validation gates.
+
+23. `D-2026-02-22-023` Integration failure-policy baseline
+- Decision: establish deterministic integration failure simulation policy (`x-simoona-integration-failure` / `simulateFailure`) across source compatibility handlers and runtime API harness for OAuth, SMTP, storage, external jobs callbacks, and localization.
+- Rationale: R4 parity requires runtime-verifiable timeout/auth-failure behavior; marker-only integration claims are insufficient.
+
+24. `D-2026-02-22-024` Integration runtime gate command
+- Decision: add dedicated parity runtime command `pnpm --dir app/tests/parity runtime:api:integration` and require unrestricted execution when sandbox blocks localhost bind.
+- Rationale: integration parity closure needs an explicit executable gate separate from generic API matrix checks.

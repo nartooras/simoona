@@ -17,6 +17,10 @@ Compatibility baseline for the modern NestJS API application.
   - wall read/feed/mutation/membership compatibility controllers
   - post/comment compatibility controllers (including post interaction routes)
   - notification and user-notification compatibility controllers
+- `core/integration/integration-compatibility.module`
+  - external jobs compatibility controllers (`ExternalJobs/*`)
+  - storage/media upload compatibility controller (`Picture/Upload`)
+  - deterministic integration failure policy (`x-simoona-integration-failure`, `simulateFailure`)
 
 ## Runtime Check Contract
 
@@ -43,3 +47,18 @@ This package provides a runnable local runtime check boundary.
   - purpose: override local runtime listen port
 
 No secrets are required for this runtime check flow.
+
+## Integration Failure-Path Contract
+
+- Header toggle: `x-simoona-integration-failure`
+- Query toggle: `simulateFailure`
+- Supported values:
+  - `oauth-timeout`
+  - `oauth-auth-failure`
+  - `smtp-timeout`
+  - `smtp-auth-failure`
+  - `storage-timeout`
+  - `storage-auth-failure`
+  - `external-jobs-timeout`
+  - `external-jobs-auth-failure`
+  - `localization-timeout`

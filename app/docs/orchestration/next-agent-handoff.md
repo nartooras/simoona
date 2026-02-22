@@ -6,7 +6,7 @@ Mode: `full-parity-recovery`
 
 ## Objective
 
-Continue from completed governance/doc sync, completed Workstream 3 baseline, and completed `R2` auth parity toward remaining feature and integration parity waves.
+Continue from completed governance/doc sync, completed Workstream 3 baseline, completed `R2` auth parity, and completed `R4-INTEGRATION-PARITY-001A` runtime failure-path baseline toward remaining feature and integration parity waves.
 
 ## Hard Rules
 
@@ -18,10 +18,10 @@ Continue from completed governance/doc sync, completed Workstream 3 baseline, an
 
 ## Immediate Execution Queue
 
-1. `R4-INTEGRATION-PARITY-001`
+1. `R4-INTEGRATION-PARITY-001B`
 - Owner: `$platform-devops` + `$react-frontend-developer` + `$full-stack-developer`
 - Acceptance:
-  - integration failure-path parity evidence (OAuth/SMTP/storage/jobs/callbacks/localization).
+  - provider-backed integration adapter and staging callback validation evidence after runtime failure-path baseline.
 
 2. `R3-FEATURE-WAVE-D`
 - Owner: `$react-frontend-developer` + `$full-stack-developer`

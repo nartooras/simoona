@@ -409,6 +409,37 @@ export function resolveUserProfile(authContext: RuntimeAuthContext): Authenticat
   return null;
 }
 
+export function updateUserCulture(userId: string, culture: string): AuthenticatedUserProfile | null {
+  const normalizedUserId = String(userId || "").trim();
+  const normalizedCulture = String(culture || "").trim();
+  if (!normalizedUserId || !normalizedCulture) {
+    return null;
+  }
+
+  const changedRows = Number(
+    authDatabase
+      .prepare(
+        `
+      UPDATE auth_users
+      SET culture = ?
+      WHERE user_id = ? AND is_active = 1;
+      `
+      )
+      .run(normalizedCulture, normalizedUserId)
+      ?.changes ?? 0
+  );
+  if (changedRows <= 0) {
+    return null;
+  }
+
+  const sqlUser = findUserById(normalizedUserId);
+  if (!sqlUser) {
+    return null;
+  }
+
+  return toUserProfile(sqlUser);
+}
+
 export function revokeSessionByAuthorizationHeader(headers: IncomingHttpHeaders): boolean {
   const bearerToken = extractBearerToken(readHeaderValue(headers.authorization));
   if (!bearerToken) {
@@ -451,7 +482,7 @@ export function issueLegacyToken(payload: TokenRequest): TokenIssueFailure | Tok
       };
     }
 
-    const session = createSession(user.id);
+    const session = createSession(user.user_id);
     return {
       ok: true,
       response: {

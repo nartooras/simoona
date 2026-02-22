@@ -1,4 +1,5 @@
-import { Controller, Post, UseGuards } from "@nestjs/common";
+import { Controller, Post, Req, UseGuards } from "@nestjs/common";
+import type { Request } from "express";
 import { LegacyPermissionGuard } from "../../permissions/legacy-permission.guard";
 import { IntegrationCompatibilityService } from "../services/integration-compatibility.service";
 
@@ -8,22 +9,22 @@ export class ExternalJobsCompatibilityController {
   constructor(private readonly integrationService: IntegrationCompatibilityService) {}
 
   @Post("SendDailyMails")
-  sendDailyMails() {
-    return this.integrationService.sendDailyMails();
+  sendDailyMails(@Req() request: Request) {
+    return this.integrationService.sendDailyMails(request);
   }
 
   @Post("SendBirthdaysNotifications")
-  sendBirthdaysNotifications() {
-    return this.integrationService.sendBirthdaysNotifications();
+  sendBirthdaysNotifications(@Req() request: Request) {
+    return this.integrationService.sendBirthdaysNotifications(request);
   }
 
   @Post("AnonymizeUsers")
-  anonymizeUsers() {
-    return this.integrationService.anonymizeUsers();
+  anonymizeUsers(@Req() request: Request) {
+    return this.integrationService.anonymizeUsers(request);
   }
 
   @Post("ProcessExpiredBlacklistUsers")
-  processExpiredBlacklistUsers() {
-    return this.integrationService.processExpiredBlacklistUsers();
+  processExpiredBlacklistUsers(@Req() request: Request) {
+    return this.integrationService.processExpiredBlacklistUsers(request);
   }
 }

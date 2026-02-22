@@ -246,8 +246,49 @@
 - `pnpm --dir app verify`: `PASS`
 - `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'`: `PASS` (no matches; command exit `1` by design)
 
+## 2026-02-22 `R4-INTEGRATION-PARITY-001A` Evidence
+
+### Scope delivered in this checkpoint
+
+1. Added deterministic integration failure policy in API source compatibility handlers (`x-simoona-integration-failure` header or `simulateFailure` query) for OAuth, SMTP, storage, external jobs callbacks, and localization timeout/auth-failure scenarios.
+2. Upgraded integration compatibility service endpoints (`ExternalJobs/*`, `Picture/Upload`) from static marker responses to behavior-aware runtime handlers with explicit failure-path branching.
+3. Upgraded auth compatibility integration surfaces:
+   - `Account/ExternalLogins` and `Account/ExternalLogin` now enforce OAuth failure-path handling.
+   - `User/GeneralSettings` now validates supported culture/timezone values and persists localization culture changes to SQL-backed auth user state.
+4. Aligned runtime parity API harness (`api-runtime-check.mjs`) with integration failure policy and added route-level handlers for integration endpoints prior to generic matrix fallback.
+5. Added dedicated runtime integration parity gate:
+   - `pnpm --dir app/tests/parity runtime:api:integration`.
+6. Fixed SQL-backed token issuance bug in source auth store (`createSession(user.user_id)`), preventing invalid session user IDs during password grant flow.
+
+### Key artifacts updated
+
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/integration/services/integration-failure-policy.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/integration/services/integration-compatibility.service.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/integration/controllers/external-jobs-compatibility.controller.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/integration/controllers/picture-compatibility.controller.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/auth/services/auth-compatibility.service.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/auth/services/auth-session-store.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/auth/controllers/account-compatibility.controller.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/src/modules/core/auth/controllers/user-compatibility.controller.ts`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/api/scripts/api-runtime-check.mjs`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/scripts/verify-runtime-api-integration.mjs`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/tests/parity/package.json`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/reviews/2026-02-22-r4-integration-parity-001a-review.md`
+- `/Users/arturasnikoncukas/code/repo/simoona/app/docs/qa/2026-02-22-r4-integration-parity-001a-qa.md`
+
+### `R4-INTEGRATION-PARITY-001A` command evidence (pass/fail)
+
+- `pnpm --dir app/api lint`: `PASS`
+- `pnpm --dir app/tests/parity contract:core`: `PASS`
+- `pnpm --dir app/tests/parity runtime:api:auth`: `PASS` (unrestricted mode)
+- `pnpm --dir app/tests/parity runtime:api:matrix`: `PASS` (unrestricted mode)
+- `pnpm --dir app/tests/parity runtime:api:integration`: `PASS` (unrestricted mode)
+- `pnpm --dir app verify`: `PASS`
+- `pnpm --dir app install`: `PASS`
+- `git ls-files | rg '(^|/)node_modules/|(^|/)dist/|(^|/)bin/|(^|/)obj/'`: `PASS` (no matches; command exit `1` by design)
+
 ### Remaining evidence needed before release
 
 1. Feature-domain runtime parity evidence wave (`R3-FEATURE-WAVE-D`).
-2. Integration failure-path parity evidence (`R4-INTEGRATION-PARITY-001`).
+2. Provider-backed staging adapter validation (`R4-INTEGRATION-PARITY-001B`).
 3. Final-wave reviewer `APPROVED` and QA `GREEN` artifacts for all remaining parity slices.

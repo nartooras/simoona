@@ -14,8 +14,8 @@ export class UserCompatibilityController {
   }
 
   @Put("GeneralSettings")
-  async changeLocalizationSettings(@Body() _payload: Record<string, unknown>, @Req() request: Request) {
-    return this.authCompatibilityService.changeLocalizationSettings(request);
+  async changeLocalizationSettings(@Body() payload: Record<string, unknown>, @Req() request: Request) {
+    return this.authCompatibilityService.changeLocalizationSettings(payload, request);
   }
 
   @Get("Logins")

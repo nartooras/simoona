@@ -14,6 +14,21 @@ const apiRoot = path.resolve(__dirname, "..");
 const appRoot = path.resolve(apiRoot, "..");
 const mode = process.argv[2] ?? "build";
 const port = Number(process.env.API_RUNTIME_PORT ?? "4300");
+const INTEGRATION_FAILURE_HEADER = "x-simoona-integration-failure";
+const INTEGRATION_FAILURE_QUERY_KEY = "simulateFailure";
+const INTEGRATION_FAILURE_MODES = new Set([
+  "oauth-timeout",
+  "oauth-auth-failure",
+  "smtp-timeout",
+  "smtp-auth-failure",
+  "storage-timeout",
+  "storage-auth-failure",
+  "external-jobs-timeout",
+  "external-jobs-auth-failure",
+  "localization-timeout"
+]);
+const SUPPORTED_LOCALIZATION_CULTURES = new Set(["en-US", "lt-LT"]);
+const SUPPORTED_LOCALIZATION_TIMEZONES = new Set(["UTC", "Europe/Vilnius"]);
 
 const requiredFiles = [
   path.join(apiRoot, "src/main.ts"),
@@ -234,6 +249,65 @@ function readHeaderValue(rawHeader) {
   return String(rawHeader ?? "").trim();
 }
 
+function normalizeIntegrationFailureMode(rawMode) {
+  const normalized = String(rawMode ?? "").trim().toLowerCase();
+  if (!normalized || !INTEGRATION_FAILURE_MODES.has(normalized)) {
+    return "";
+  }
+
+  return normalized;
+}
+
+function resolveIntegrationFailureMode(request, url) {
+  const fromHeader = normalizeIntegrationFailureMode(
+    readHeaderValue(request.headers?.[INTEGRATION_FAILURE_HEADER])
+  );
+  if (fromHeader) {
+    return fromHeader;
+  }
+
+  return normalizeIntegrationFailureMode(url.searchParams.get(INTEGRATION_FAILURE_QUERY_KEY));
+}
+
+function sendIntegrationFailure(response, pathName, failureMode, handledModes = []) {
+  if (!failureMode) {
+    return false;
+  }
+
+  if (handledModes.length > 0 && !handledModes.includes(failureMode)) {
+    return false;
+  }
+
+  if (
+    failureMode === "oauth-timeout" ||
+    failureMode === "smtp-timeout" ||
+    failureMode === "storage-timeout" ||
+    failureMode === "external-jobs-timeout" ||
+    failureMode === "localization-timeout"
+  ) {
+    sendLegacyError(response, 504, pathName, "INTEGRATION_TIMEOUT", `${failureMode} was triggered.`);
+    return true;
+  }
+
+  if (
+    failureMode === "oauth-auth-failure" ||
+    failureMode === "smtp-auth-failure" ||
+    failureMode === "storage-auth-failure" ||
+    failureMode === "external-jobs-auth-failure"
+  ) {
+    sendLegacyError(
+      response,
+      502,
+      pathName,
+      "INTEGRATION_AUTH_FAILURE",
+      `${failureMode} was triggered.`
+    );
+    return true;
+  }
+
+  return false;
+}
+
 function initializeAuthSqlStore() {
   authDatabase.exec(`
     PRAGMA journal_mode = WAL;
@@ -356,6 +430,32 @@ function findSqlUserById(userId) {
       )
       .get(normalizedId) ?? null
   );
+}
+
+function updateAuthUserCulture(userId, culture) {
+  const normalizedUserId = String(userId || "").trim();
+  const normalizedCulture = String(culture || "").trim();
+  if (!normalizedUserId || !normalizedCulture) {
+    return null;
+  }
+
+  const updatedRows = Number(
+    authDatabase
+      .prepare(
+        `
+      UPDATE auth_users
+      SET culture = ?
+      WHERE user_id = ? AND is_active = 1;
+      `
+      )
+      .run(normalizedCulture, normalizedUserId)
+      ?.changes ?? 0
+  );
+  if (updatedRows <= 0) {
+    return null;
+  }
+
+  return toRuntimeAuthUser(findSqlUserById(normalizedUserId));
 }
 
 function findPermissionsByUserId(userId) {
@@ -696,6 +796,7 @@ async function handleRuntimeRequest(request, response) {
   const url = new URL(request.url ?? "/", `http://127.0.0.1:${String(port)}`);
   const pathName = url.pathname;
   const requestMethod = (request.method ?? "GET").toUpperCase();
+  const integrationFailureMode = resolveIntegrationFailureMode(request, url);
 
   if (pathName === "/healthz" || pathName === "/readyz") {
     sendJson(response, 200, {
@@ -771,6 +872,235 @@ async function handleRuntimeRequest(request, response) {
       compatibility: "Account/Logout",
       result: "logged_out",
       revokedToken,
+      authSource: authContext.authSource
+    });
+    return;
+  }
+
+  if (requestMethod === "GET" && pathName === "/Account/ExternalLogins") {
+    if (
+      integrationFailureMode &&
+      sendIntegrationFailure(response, pathName, integrationFailureMode, [
+        "oauth-timeout",
+        "oauth-auth-failure"
+      ])
+    ) {
+      return;
+    }
+
+    sendJson(response, 200, {
+      status: "implemented",
+      compatibility: "Account/ExternalLogins",
+      providers: [
+        { name: "Google", registrationRoute: "/Account/ExternalLogin?provider=Google&mode=register" },
+        {
+          name: "Microsoft",
+          registrationRoute: "/Account/ExternalLogin?provider=Microsoft&mode=register"
+        }
+      ]
+    });
+    return;
+  }
+
+  if (requestMethod === "GET" && pathName === "/Account/ExternalLogin") {
+    if (
+      integrationFailureMode &&
+      sendIntegrationFailure(response, pathName, integrationFailureMode, [
+        "oauth-timeout",
+        "oauth-auth-failure"
+      ])
+    ) {
+      return;
+    }
+
+    const provider = String(url.searchParams.get("provider") ?? "Google").trim() || "Google";
+    sendJson(response, 200, {
+      status: "implemented",
+      compatibility: "Account/ExternalLogin",
+      result: "external_login_redirect",
+      provider,
+      redirectUrl: `https://auth.simoona.local/${provider.toLowerCase()}`
+    });
+    return;
+  }
+
+  if (requestMethod === "GET" && pathName === "/User/GeneralSettings") {
+    const authContext = requireAuth(request, response, pathName);
+    if (!authContext) {
+      return;
+    }
+
+    if (
+      integrationFailureMode &&
+      sendIntegrationFailure(response, pathName, integrationFailureMode, ["localization-timeout"])
+    ) {
+      return;
+    }
+
+    sendJson(response, 200, {
+      status: "implemented",
+      compatibility: "User/GeneralSettings",
+      settings: {
+        culture: authContext.culture || "en-US",
+        timezone: "UTC",
+        availableCultures: Array.from(SUPPORTED_LOCALIZATION_CULTURES),
+        availableTimezones: Array.from(SUPPORTED_LOCALIZATION_TIMEZONES)
+      },
+      result: "loaded"
+    });
+    return;
+  }
+
+  if (requestMethod === "PUT" && pathName === "/User/GeneralSettings") {
+    const authContext = requireAuth(request, response, pathName);
+    if (!authContext) {
+      return;
+    }
+
+    if (
+      integrationFailureMode &&
+      sendIntegrationFailure(response, pathName, integrationFailureMode, ["localization-timeout"])
+    ) {
+      return;
+    }
+
+    const payload = await readJsonBody(request);
+    if (!payload) {
+      sendLegacyError(response, 400, pathName, "INVALID_JSON", "Request payload must be valid JSON.");
+      return;
+    }
+
+    const requestedCulture = String(
+      payload.culture ?? payload.languageCode ?? authContext.culture ?? "en-US"
+    ).trim();
+    const requestedTimezone = String(payload.timezone ?? payload.timeZoneId ?? "UTC").trim();
+
+    if (!SUPPORTED_LOCALIZATION_CULTURES.has(requestedCulture)) {
+      sendLegacyError(
+        response,
+        400,
+        pathName,
+        "INVALID_LOCALIZATION_CULTURE",
+        `Unsupported culture '${requestedCulture}'.`
+      );
+      return;
+    }
+
+    if (!SUPPORTED_LOCALIZATION_TIMEZONES.has(requestedTimezone)) {
+      sendLegacyError(
+        response,
+        400,
+        pathName,
+        "INVALID_LOCALIZATION_TIMEZONE",
+        `Unsupported timezone '${requestedTimezone}'.`
+      );
+      return;
+    }
+
+    const updatedUser = updateAuthUserCulture(authContext.userId, requestedCulture);
+    sendJson(response, 200, {
+      status: "implemented",
+      compatibility: "User/GeneralSettings",
+      result: "updated",
+      settings: {
+        culture: updatedUser?.culture || requestedCulture,
+        timezone: requestedTimezone
+      }
+    });
+    return;
+  }
+
+  const externalJobRouteByPath = {
+    "/ExternalJobs/SendDailyMails": "ExternalJobs/SendDailyMails",
+    "/ExternalJobs/SendBirthdaysNotifications": "ExternalJobs/SendBirthdaysNotifications",
+    "/ExternalJobs/AnonymizeUsers": "ExternalJobs/AnonymizeUsers",
+    "/ExternalJobs/ProcessExpiredBlacklistUsers": "ExternalJobs/ProcessExpiredBlacklistUsers"
+  };
+  const externalJobFailureModesByPath = {
+    "/ExternalJobs/SendDailyMails": [
+      "smtp-timeout",
+      "smtp-auth-failure",
+      "external-jobs-timeout",
+      "external-jobs-auth-failure"
+    ],
+    "/ExternalJobs/SendBirthdaysNotifications": [
+      "smtp-timeout",
+      "smtp-auth-failure",
+      "external-jobs-timeout",
+      "external-jobs-auth-failure"
+    ],
+    "/ExternalJobs/AnonymizeUsers": ["external-jobs-timeout", "external-jobs-auth-failure"],
+    "/ExternalJobs/ProcessExpiredBlacklistUsers": [
+      "external-jobs-timeout",
+      "external-jobs-auth-failure"
+    ]
+  };
+  if (
+    requestMethod === "POST" &&
+    Object.prototype.hasOwnProperty.call(externalJobRouteByPath, pathName)
+  ) {
+    const authContext = requireAuth(request, response, pathName);
+    if (!authContext) {
+      return;
+    }
+
+    if (
+      integrationFailureMode &&
+      sendIntegrationFailure(
+        response,
+        pathName,
+        integrationFailureMode,
+        externalJobFailureModesByPath[pathName]
+      )
+    ) {
+      return;
+    }
+
+    sendJson(response, 200, {
+      status: "implemented",
+      compatibility: externalJobRouteByPath[pathName],
+      result: "queued",
+      authSource: authContext.authSource
+    });
+    return;
+  }
+
+  if (pathName === "/Picture/Upload") {
+    const authContext = requireAuth(request, response, pathName);
+    if (!authContext) {
+      return;
+    }
+
+    if (
+      integrationFailureMode &&
+      sendIntegrationFailure(response, pathName, integrationFailureMode, [
+        "storage-timeout",
+        "storage-auth-failure"
+      ])
+    ) {
+      return;
+    }
+
+    const contentType = readHeaderValue(request.headers["content-type"]).toLowerCase();
+    if (contentType && !contentType.includes("multipart/form-data") && !contentType.includes("application/json")) {
+      sendLegacyError(
+        response,
+        415,
+        pathName,
+        "UNSUPPORTED_MEDIA_TYPE",
+        "Picture upload expects multipart form-data payload."
+      );
+      return;
+    }
+
+    sendJson(response, 200, {
+      status: "implemented",
+      compatibility: "Picture/Upload",
+      media: {
+        url: "/media/placeholder",
+        access: "private",
+        provider: "storage"
+      },
       authSource: authContext.authSource
     });
     return;

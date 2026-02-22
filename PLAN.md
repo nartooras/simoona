@@ -138,6 +138,9 @@ Events, Kudos, Lotteries, Vacations, Service Requests, Books, Projects, Committe
 5. Wave E: Integration parity:
 OAuth/external auth, SMTP/email templates, storage/media URLs, external jobs/callbacks, localization, background jobs.
 6. No domain marked complete until runtime behavior and data correctness are verified.
+7. Execution checkpoint (`2026-02-22`): `IN_PROGRESS`.
+- `R4-INTEGRATION-PARITY-001A` complete: runtime failure-path baseline implemented and verified (`runtime:api:integration`) for OAuth/SMTP/storage/external-jobs/localization.
+- `R4-INTEGRATION-PARITY-001B` pending: provider-backed staging adapter verification and callback evidence.
 
 ## Workstream 6: Reviewer + QA Enforcement (Continuous)
 1. Every implementation task must produce reviewer report in `/Users/arturasnikoncukas/code/repo/simoona/app/docs/reviews/`.

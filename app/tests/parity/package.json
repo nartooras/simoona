@@ -16,6 +16,7 @@
     "contract:ui": "node ./scripts/verify-ui-implementation-contract.mjs",
     "contract:core": "pnpm contract:auth && pnpm contract:tenant-permission && pnpm contract:error-shape && pnpm contract:conventions && pnpm contract:social-user && pnpm contract:admin-reference && pnpm contract:integration && pnpm contract:catchup && pnpm contract:ui && node ./scripts/verify-core-implementation-contract.mjs",
     "runtime:api:auth": "node ./scripts/verify-runtime-auth-lifecycle.mjs",
+    "runtime:api:integration": "node ./scripts/verify-runtime-api-integration.mjs",
     "runtime:api:wall-feed": "node ./scripts/verify-runtime-api-wall-feed.mjs",
     "runtime:api:matrix": "node ./scripts/verify-runtime-api-matrix.mjs"
   }

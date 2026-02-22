@@ -10,7 +10,7 @@ Date: `2026-02-22`
 
 ## 2) Critical Gaps (P0/P1)
 
-1. `P0` Integration feature parity remains incomplete (OAuth, SMTP, storage, callbacks, jobs, localization).
+1. `P0` Integration parity remains incomplete: runtime failure paths are covered, but provider-backed staging adapter behavior is still pending (`R4-INTEGRATION-PARITY-001B`).
 2. `P0` Features-domain runtime parity (events, kudos, lotteries, vacations, service requests, books, projects, committees, office map, org structure, submit ticket, widgets) is not fully verified.
 
 ## 3) Medium/Low Gaps (P2/P3)
@@ -24,6 +24,6 @@ Date: `2026-02-22`
 
 ## 5) Recommended Next Tasks
 
-1. Execute `R4-INTEGRATION-PARITY-001` failure-path parity wave.
+1. Execute `R4-INTEGRATION-PARITY-001B` provider-backed integration validation wave.
 2. Execute `R3-FEATURE-WAVE-D` runtime evidence wave and promote parity only on reviewer/QA-green outcomes.
 3. Keep production publish frozen until `R5` checklist closure.

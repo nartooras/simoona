@@ -3,10 +3,10 @@
 ## Active
 
 1. `RISK-R4-INTEGRATION-PARITY`
-- Severity: `High`
-- Description: integrations are largely mapped/contracted but not fully behavior-verified.
-- Impact: go-live failures in OAuth, SMTP, storage, callbacks, and job flows.
-- Mitigation: integration parity wave with strict failure-path assertions.
+- Severity: `Medium`
+- Description: integration runtime failure paths are now behavior-verified, but provider-backed staging adapter behavior is not fully closed.
+- Impact: residual go-live risk in real provider wiring despite local runtime failure-path parity coverage.
+- Mitigation: execute remaining `R4-INTEGRATION-PARITY-001B` staging adapter verification with reviewer/QA gating.
 - Owner: `$platform-devops` + `$qa`
 - Status: `Open`
 
@@ -83,3 +83,7 @@
 10. `RISK-R3-WEB-RUNTIME-SERVER-DRIFT`
 - Resolution date: `2026-02-22`
 - Outcome: custom runtime-server logic was replaced by Vite middleware payload injection with shared route resolver, reducing duplicate behavior paths.
+
+11. `RISK-R4-NO-RUNTIME-INTEGRATION-GATE`
+- Resolution date: `2026-02-22`
+- Outcome: dedicated runtime integration parity command (`runtime:api:integration`) now verifies OAuth/SMTP/storage/external-jobs/localization failure paths.

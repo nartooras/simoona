@@ -1,4 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnsupportedMediaTypeException } from "@nestjs/common";
+import type { Request } from "express";
+import {
+  INTEGRATION_FAILURE_MODES,
+  throwIfIntegrationFailure
+} from "./integration-failure-policy";
 
 @Injectable()
 export class IntegrationCompatibilityService {
@@ -10,27 +15,68 @@ export class IntegrationCompatibilityService {
     };
   }
 
-  sendDailyMails() {
-    return this.implemented("ExternalJobs/SendDailyMails", { result: "queued" });
+  sendDailyMails(request?: Request) {
+    throwIfIntegrationFailure(request, "ExternalJobs/SendDailyMails", [
+      INTEGRATION_FAILURE_MODES.smtpTimeout,
+      INTEGRATION_FAILURE_MODES.smtpAuthFailure,
+      INTEGRATION_FAILURE_MODES.externalJobsTimeout,
+      INTEGRATION_FAILURE_MODES.externalJobsAuthFailure
+    ]);
+
+    return this.implemented("ExternalJobs/SendDailyMails", {
+      result: "queued",
+      provider: "smtp"
+    });
   }
 
-  sendBirthdaysNotifications() {
-    return this.implemented("ExternalJobs/SendBirthdaysNotifications", { result: "queued" });
+  sendBirthdaysNotifications(request?: Request) {
+    throwIfIntegrationFailure(request, "ExternalJobs/SendBirthdaysNotifications", [
+      INTEGRATION_FAILURE_MODES.smtpTimeout,
+      INTEGRATION_FAILURE_MODES.smtpAuthFailure,
+      INTEGRATION_FAILURE_MODES.externalJobsTimeout,
+      INTEGRATION_FAILURE_MODES.externalJobsAuthFailure
+    ]);
+
+    return this.implemented("ExternalJobs/SendBirthdaysNotifications", {
+      result: "queued",
+      provider: "smtp"
+    });
   }
 
-  anonymizeUsers() {
+  anonymizeUsers(request?: Request) {
+    throwIfIntegrationFailure(request, "ExternalJobs/AnonymizeUsers", [
+      INTEGRATION_FAILURE_MODES.externalJobsTimeout,
+      INTEGRATION_FAILURE_MODES.externalJobsAuthFailure
+    ]);
+
     return this.implemented("ExternalJobs/AnonymizeUsers", { result: "queued" });
   }
 
-  processExpiredBlacklistUsers() {
+  processExpiredBlacklistUsers(request?: Request) {
+    throwIfIntegrationFailure(request, "ExternalJobs/ProcessExpiredBlacklistUsers", [
+      INTEGRATION_FAILURE_MODES.externalJobsTimeout,
+      INTEGRATION_FAILURE_MODES.externalJobsAuthFailure
+    ]);
+
     return this.implemented("ExternalJobs/ProcessExpiredBlacklistUsers", { result: "queued" });
   }
 
-  uploadPicture() {
+  uploadPicture(request?: Request) {
+    const contentType = String(request?.headers?.["content-type"] ?? "");
+    if (!contentType.includes("multipart/form-data") && !contentType.includes("application/json")) {
+      throw new UnsupportedMediaTypeException("Picture upload expects multipart form-data payload.");
+    }
+
+    throwIfIntegrationFailure(request, "Picture/Upload", [
+      INTEGRATION_FAILURE_MODES.storageTimeout,
+      INTEGRATION_FAILURE_MODES.storageAuthFailure
+    ]);
+
     return this.implemented("Picture/Upload", {
       media: {
         url: "/media/placeholder",
-        access: "private"
+        access: "private",
+        provider: "storage"
       }
     });
   }

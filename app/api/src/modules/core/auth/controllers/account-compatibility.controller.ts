@@ -46,8 +46,8 @@ export class AccountCompatibilityController {
   }
 
   @Get("ExternalLogins")
-  async externalLogins() {
-    return this.authCompatibilityService.externalLogins();
+  async externalLogins(@Req() request: Request) {
+    return this.authCompatibilityService.externalLogins(request);
   }
 
   @Get("InternalLogins")
@@ -56,8 +56,8 @@ export class AccountCompatibilityController {
   }
 
   @Get("ExternalLogin")
-  async externalLogin() {
-    return this.authCompatibilityService.externalLogin();
+  async externalLogin(@Req() request: Request) {
+    return this.authCompatibilityService.externalLogin(request);
   }
 
   @Delete("Logout")
